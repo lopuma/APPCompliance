@@ -127,7 +127,43 @@
       "risk":"",
       "impact":"",
       "variable": [
-	"directory=\"/BDistribuidoWf/\""
+        "directory=\"/BDistribuidoWf/\""
+      ]
+    },
+    {
+      "directory": "/appsrv/",
+      "owner": "---",
+      "tipo": "/C/",
+      "ownerGroup": "Group Customer",
+      "user" : [
+                ""
+      ],
+      "code" : "2-DOC",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk":"GENERICO",
+      "impact":"GENERICO",
+      "variable": [
+        ""
+      ]
+    },
+    {
+      "directory": "",
+      "owner": "---",
+      "tipo": "/C/",
+      "ownerGroup": "Group Customer",
+      "user" : [
+                ""
+      ],
+      "code" : "2-DOC",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk":"GENERICO",
+      "impact":"GENERICO",
+      "variable": [
+        ""
       ]
     }
   ]
