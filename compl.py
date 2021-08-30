@@ -28,11 +28,23 @@ path_icon = path+"compliance/image/"
 path_modulo = path+"compliance/file/" #TODO variable de modulos
 
 list_client = [
-"AFB",
-"ASISA",
-"LBK"
+    "AFB",
+    "ASISA",
+    "CESCE",
+    "CTTI",
+    "ENEL",
+    "EUROFRED",
+    "FT",
+    "INFRA",
+    "IDISO",
+    "LBK",
+    "PLANETA",
+    "SERVIHABITAT"
 ]  
-
+list_issues = [
+    "DESVIACIONES",
+    "EXTRACIONES"
+]
 class Directory(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -353,15 +365,23 @@ class Aplicacion():
                             font=('Source Sans Pro',20,font.BOLD))
     def iconos(self):
         self.Desviaciones_icon = ImageTk.PhotoImage(
-            Image.open(path_icon+r"OpenDesviaciones.png").resize((80, 80)))
+            Image.open(path_icon+r"openDesviaciones.png").resize((80, 80)))
         self.Extracion_icon = ImageTk.PhotoImage(
-            Image.open(path_icon+r"OpenExtraciones.png").resize((80, 80)))
+            Image.open(path_icon+r"openExtraciones.png").resize((80, 80)))
         self.Abrir_icon = ImageTk.PhotoImage(
-            Image.open(path_icon+r"OpenDesviaciones.png").resize((30, 30)))
+            Image.open(path_icon+r"abrir.png").resize((30, 30)))
         self.Client_icon = ImageTk.PhotoImage(
-            Image.open(path_icon+r"OpenExtraciones.png").resize((30, 30)))
+            Image.open(path_icon+r"clientes.png").resize((30, 30)))
         self.Salir_icon = ImageTk.PhotoImage(
-            Image.open(path_icon+r"OpenExtraciones.png").resize((30, 30)))
+            Image.open(path_icon+r"salir.png").resize((30, 30)))
+        self.CopiarBar_icon = ImageTk.PhotoImage(
+            Image.open(path_icon+r"copiarBarra.png").resize((30, 30)))
+        self.PegarBar_icon = ImageTk.PhotoImage(
+            Image.open(path_icon+r"pegarBarra.png").resize((30, 30)))
+        self.Ayuda_icon = ImageTk.PhotoImage(
+            Image.open(path_icon+r"ayuda.png").resize((30, 30)))
+        self.AcercaDe_icon = ImageTk.PhotoImage(
+            Image.open(path_icon+r"acercaDe.png").resize((30, 30)))
     def abrir_issuesDesviacion(self):
         global desviacion
         desviacion = Desviacion(self)
@@ -373,7 +393,7 @@ class Aplicacion():
         self.menuBar.config(background='#1A1C20',
                             foreground='#CF7500',
                             font=('Sans serif',12,font.BOLD),
-                            activebackground='#055052',
+                            activebackground='#003638',
                             activeforeground='#53B8BB',
                             )
         
@@ -384,10 +404,19 @@ class Aplicacion():
                             activebackground='#003638',
                             activeforeground='#53B8BB',
                             )
-        self.fileMenu.add_command(label="  Abrir",
-                                    compound=LEFT,
-                                    image=self.Abrir_icon)
+
+        # --- INICIAMOS SUB MENU -------------------------- #
         self.clientMenu = Menu(self.fileMenu, tearoff=0)
+        self.issuesMenu = Menu(self.fileMenu, tearoff=0)
+        # -------------------------------------------------- #
+
+        self.issuesMenu.config(background='#003638',
+                            foreground='#F3F2C9',
+                            font=('Sans serifo',12,font.BOLD),
+                            activebackground='#003638',
+                            activeforeground='#53B8BB',
+                            selectcolor='#CF7500'
+                            )
         self.clientMenu.config(background='#003638',
                             foreground='#F3F2C9',
                             font=('Sans serifo',12,font.BOLD),
@@ -395,43 +424,66 @@ class Aplicacion():
                             activeforeground='#53B8BB',
                             selectcolor='#CF7500'
                             )
+
+        self.fileMenu.add_cascade(label="  Abrir",
+                                    compound=LEFT,
+                                    image=self.Abrir_icon,
+                                    menu = self.issuesMenu)
+
         self.fileMenu.add_cascade(label="  Clientes",
                                     image=self.Client_icon,
                                     compound=LEFT,
                                     menu=self.clientMenu)
+
         self.fileMenu.add_separator()
+
         self.fileMenu.add_command(label="  Salir",
                                     image=self.Salir_icon,
                                     compound=LEFT,
                                     command=self.root.quit)
+
         self.ClientVar = tk.IntVar()
         for i, m in enumerate(list_client):
             self.clientMenu.add_radiobutton(label=m,
                                             variable=self.ClientVar,
                                             value=i,
                                             )
-                                            
+
+        self.IssuesVar = tk.IntVar()
+        for i, m in enumerate(list_issues):
+            self.issuesMenu.add_radiobutton(label=m,
+                                            variable=self.IssuesVar,
+                                            value=i,
+                                            )
 
         self.editMenu = Menu(self.menuBar, tearoff=0)
-        self.editMenu.config(background='#055052',
-                            foreground='#CDFFEB',
+        self.editMenu.config(background='#003638',
+                            foreground='#F3F2C9',
                             font=('Sans serif',12,font.BOLD),
-                            activebackground='#055052',
+                            activebackground='#003638',
                             activeforeground='#53B8BB',
                             )
-        self.editMenu.add_command(label="Copiar")
-        self.editMenu.add_command(label="Pegar")
+        self.editMenu.add_command(label="  Copiar",
+                                    image=self.CopiarBar_icon,
+                                    compound=LEFT)
+        self.editMenu.add_command(label="  Pegar",
+                                    image=self.PegarBar_icon,
+                                    compound=LEFT)
 
         self.helpMenu = Menu(self.menuBar, tearoff=0)
-        self.helpMenu.config(background='#055052',
-                            foreground='#CDFFEB',
+        self.helpMenu.config(background='#003638',
+                            foreground='#F3F2C9',
                             font=('Sans serif',12,font.BOLD),
-                            activebackground='#055052',
+                            activebackground='#003638',
                             activeforeground='#53B8BB',
                             )
-        self.helpMenu.add_command(label="Ayuda")
+        self.helpMenu.add_command(label="  Ayuda",
+                                    image=self.Ayuda_icon,
+                                    compound=LEFT,)
         self.helpMenu.add_separator()
-        self.helpMenu.add_command(label="Acerca de...")
+        self.helpMenu.add_command(label="  Acerca de...",
+                                    image=self.AcercaDe_icon,
+                                    compound=LEFT,)
 
         self.menuBar.add_cascade(label=" Archivo ", menu=self.fileMenu)
         self.menuBar.add_cascade(label=" Editar ", menu=self.editMenu)
