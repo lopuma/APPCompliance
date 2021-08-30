@@ -77,39 +77,57 @@
   ],
   "LBK": [
     {
-      "directory": "/opt/IBM/LBK1/",
-      "owner": "ownerLBK1",
-      "tipo": "tipoLBK1",
-      "ownerGroup": "groupLBK1",
+      "directory": "/BDistribuido/",
+      "owner": "root1",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
       "user" : [
-         "User1","User2"
+         ""
       ],
       "code" : "1-OK",
       "servers": [
         "ALL servers"
       ],
-      "risk":"GENERICO",
-      "impact":"GENERICO",
+      "risk":"",
+      "impact":"",
       "variable": [
-	"directory=\"/opt/IBM/LBK1/\""
+	"directory=\"/BDistribuido/\""
       ]
     },
     {
-      "directory": "/opt/IBM/LBK2/",
-      "owner": "ownerLBK2",
-      "tipo": "tipoLBK2",
-      "ownerGroup": "groupLBK2",
+      "directory": "/BDistribuidoBatchDESA/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
       "user" : [
-         "User1","User2"
+         ""
       ],
       "code" : "1-OK",
       "servers": [
         "ALL servers"
       ],
-      "risk":"GENERICO",
-      "impact":"GENERICO",
+      "risk":"",
+      "impact":"",
       "variable": [
-	"directory=\"/opt/IBM/LBK2/\""
+	"directory=\"/BDistribuidoBatchDESA/\""
+      ]
+    },
+    {
+      "directory": "/BDistribuidoWf/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user" : [
+         ""
+      ],
+      "code" : "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk":"",
+      "impact":"",
+      "variable": [
+	"directory=\"/BDistribuidoWf/\""
       ]
     }
   ]

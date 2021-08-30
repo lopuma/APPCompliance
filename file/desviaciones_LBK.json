@@ -30,23 +30,23 @@
 "SO":"Linux"
 },
 {
-"modulo" : "",
-"descripcion" : "",
-"comprobacion" : "",
+"modulo" : "Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories",
+"descripcion" : "Sticky bit is not set on world-writable directory: $directory",
+"comprobacion" : "##Hay que tener en cuenta el tipo de owner al que pertenece, cada directorio RAIZ.\n\n##Ya sea de tipo '/C/F/S'\nSi es /C/, se pasa a excepcion con RISK e IMPACT\n##por favor revisar la seccion de RISK e IMPACT\n\n##Si es de tipo /F/S, se debe preguntar al owner, si podemos modificar los permisos(REVISAR DIRECTORY).",
 "copia" : "",
-"editar" : "",
+"editar" : "##Se puede quitar de forma 'recursiva' o por 'individual'\n$directory : es la variable del directorio raiz a cambiar permisos.\n\n##Asi quitamos de permisos de W a Other, en los directorios('recursivo'):\n\nfind $directory -type d -perm -o=w -exec chmod o-w {} +\n\n##Asi quitamos de permisos de W a Other, en los ficheros('recursivo'):\n\nfind $directory -type f -perm -o=w -exec chmod o-w {} +\n\n\nAsi quitamos permisos, de W a other de forma('individual'):\n\nchmod o-w $directory",
 "refrescar" : "",
-"evidencia" : "",
+"evidencia" : "##De forma ('recursiva'):\n\nclear\ndate\nhostname\nfind $directory -type d -perm -o=wx | wc -l\nfind $directory -type f -perm -o=wx | wc -l\nls -ld $directory\n\n##De forma('individual'):\n\nls -ld $directory",
 "SO":"Linux"
 },
 {
-"modulo" : "",
-"descripcion" : "",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
+"modulo" : "Protecting Resources-OSRs/CRON Full Path Restriction",
+"descripcion" : "Missing $MissingPath path: null. $MissingPath path must be used for commands in CRON.",
+"comprobacion" : "## Entrar al Servidor\n## Mirar cual es el PATH del fichero/s\n\nfind / -name '$MissingPath'\n##Donde '$MissingPath', es la variable del fichero que le falta el path\n\n##Buscar en los ficheros del CRON, el fichero $MissingPath, para añadir el path correcto.\n\ncat /var/spool/cron/crontabs  | grep -i \"$MissingPath\"\ncat /var/spool/cron/root | grep -i \"$MissingPath\"\ncat /var/spool/cron/tabs/root  | grep -i \"$MissingPath\"\ncat /etc/crontab | grep -i \"$MissingPath\"",
+"copia" : "cp -p 'FICHERO DEL CRON' /home/$(logname)/\"$MissingPath\"_`date +%d%m%y`",
+"editar" : "vi /var/spool/cron/root\n\n##insertar EJEMPLO:\n/usr/bin/$MissingPath",
 "refrescar" : "",
-"evidencia" : "",
+"evidencia" : "clear\ndate\nhostname\ncat /var/spool/cron/root | grep -i \"$MissingPath\"",
 "SO":"Linux"
 },
 {
