@@ -10,8 +10,8 @@
 "SO":"Linux"
 },
 {
-"modulo" : "",
-"descripcion" : "",
+"modulo" : "Filesystem Configuration/nodev option set on \tmp partition",
+"descripcion" : "Ensure nodev option set on /tmp partition if it exist",
 "comprobacion" : "",
 "copia" : "",
 "editar" : "",
@@ -20,8 +20,8 @@
 "SO":"Linux"
 },
 {
-"modulo" : "",
-"descripcion" : "",
+"modulo" : "Filesystem Configuration/nosuid option set on \tmp partition",
+"descripcion" : "Ensure nosuid option set on /tmp partition if it exist",
 "comprobacion" : "",
 "copia" : "",
 "editar" : "",
@@ -30,8 +30,8 @@
 "SO":"Linux"
 },
 {
-"modulo" : "",
-"descripcion" : "",
+"modulo" : "Filesystem Configuration/noexec option set on \tmp partition",
+"descripcion" : "Ensure noexec option set on /tmp partition if it exist",
 "comprobacion" : "",
 "copia" : "",
 "editar" : "",
@@ -40,8 +40,8 @@
 "SO":"Linux"
 },
 {
-"modulo" : "",
-"descripcion" : "",
+"modulo" : "Filesystem Configuration/nodev option set on \\home partition",
+"descripcion" : "Ensure nodev option set on /home partition if it exist",
 "comprobacion" : "",
 "copia" : "",
 "editar" : "",
@@ -50,8 +50,8 @@
 "SO":"Linux"
 },
 {
-"modulo" : "",
-"descripcion" : "",
+"modulo" : "Filesystem Configuration/noexec option set on \\dev\\shm partition",
+"descripcion" : "Ensure noexec option set on /dev/shm partition if it exist",
 "comprobacion" : "",
 "copia" : "",
 "editar" : "",
@@ -60,8 +60,8 @@
 "SO":"Linux"
 },
 {
-"modulo" : "",
-"descripcion" : "",
+"modulo" : "Filesystem Configuration/Disable filesystem type cramfs",
+"descripcion" : "Filesystem type \"cramfs\" is enabled. It should be disabled if not needed",
 "comprobacion" : "",
 "copia" : "",
 "editar" : "",
@@ -70,8 +70,8 @@
 "SO":"Linux"
 },
 {
-"modulo" : "",
-"descripcion" : "",
+"modulo" : "Filesystem Configuration/Disable filesystem type squashfs",
+"descripcion" : "Filesystem type \"squashfs\" is enabled. It should be disabled if not needed",
 "comprobacion" : "",
 "copia" : "",
 "editar" : "",
@@ -80,8 +80,8 @@
 "SO":"Linux"
 },
 {
-"modulo" : "",
-"descripcion" : "",
+"modulo" : "Filesystem Configuration/Disable filesystem type udf",
+"descripcion" : "Filesystem type \"udf\" is enabled. It should be disabled if not needed",
 "comprobacion" : "",
 "copia" : "",
 "editar" : "",
@@ -90,8 +90,8 @@
 "SO":"Linux"
 },
 {
-"modulo" : "",
-"descripcion" : "",
+"modulo" : "Password Requirements/Automatic Logoff support shells",
+"descripcion" : "/usr/bin/tmux Ensure that /etc/shells only allows users to select shells which support time out.\n\n/bin/tmux Ensure that /etc/shells only allows users to select shells which support time out.",
 "comprobacion" : "",
 "copia" : "",
 "editar" : "",
@@ -100,8 +100,8 @@
 "SO":"Linux"
 },
 {
-"modulo" : "",
-"descripcion" : "",
+"modulo" : "Protecting Resources-OSRs/Set gpgcheck in yum file",
+"descripcion" : "Set gpgcheck=1 in /etc/yum.conf file",
 "comprobacion" : "",
 "copia" : "",
 "editar" : "",
