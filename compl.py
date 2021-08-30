@@ -433,9 +433,9 @@ class Aplicacion():
         self.helpMenu.add_separator()
         self.helpMenu.add_command(label="Acerca de...")
 
-        self.menuBar.add_cascade(label="Archivo", menu=self.fileMenu)
-        self.menuBar.add_cascade(label="Editar", menu=self.editMenu)
-        self.menuBar.add_cascade(label="Ayuda", menu=self.helpMenu)
+        self.menuBar.add_cascade(label=" Archivo ", menu=self.fileMenu)
+        self.menuBar.add_cascade(label=" Editar ", menu=self.editMenu)
+        self.menuBar.add_cascade(label=" Ayuda ", menu=self.helpMenu)
 
         self.btn_AbrirDesv = ttk.Button(self.contenedor, text='DESVIACIONES',
                                     width=15,

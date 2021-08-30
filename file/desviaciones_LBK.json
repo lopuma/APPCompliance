@@ -1,0 +1,122 @@
+[
+{
+"modulo" : "Protecting Resources-OSRs/Log File Restrictions",
+"descripcion" : "Invalid Permissions or Ownership for log file: /var/log/wtmp;   -rw-rw-r--.;  owner:  root;   group:  utmp. For more information see rule description.",
+"comprobacion" : "##Se le debe quitar W al grupo.",
+"copia" : "",
+"editar" : "##Quitar permisos:\nchmod g-w /var/log/wtmp\n\n##dejar esta linea para REHL 7:\n\nvi /lib/tmpfiles.d/var.conf\nf /var/log/wtmp 0644 root utmp -\n\n##dejar esta linea para REHL 6\n\nvi /etc/rc.sysinit\nchmod 0644 /var/run/utmp /var/log/wtmp",
+"refrescar" : "",
+"evidencia" : "clear\ndate\nhostname\nls -la /var/log/wtmp",
+"SO":"Linux"
+},
+{
+"modulo" : "Business Use Notice/Business Use Notice Required",
+"descripcion" : "Missing or Incorrect Business Use Notice. It should be set in /etc/motd",
+"comprobacion" : "##Debe tener el BUN actual.",
+"copia" : "",
+"editar" : "vi /etc/motd\n\n##Añadir :\n\nThis system should be used for conducting IBM Cloud business or for purposes authorized by IBM Cloud management.\nIt is mandatory to comply with all the requirements listed in the applicable security policy and only process or store the data classes approved for this asset type. Use is subject to audit at any time by IBM Cloud management",
+"refrescar" : "",
+"evidencia" : "clear\ndate\nhostname\ncat /etc/motd",
+"SO":"Linux"
+},
+{
+"modulo" : "Network Settings/Ensure nfs-utils is not enabled and active",
+"descripcion" : "Ensure nfs is not enabled. Command: systemctl is-enabled nfs",
+"comprobacion" : "##No es un servicio requerido, por lo que se puede deshabilitar.\n##Antes de nada comprobar que no tenga: shares/filesystem compartiendo.\n##Debe salir vacio:\n\ncat /etc/export\n\n##En el caso de tener shares/filesystem, contactar con el SOPORTE TECNICO.",
+"copia" : "",
+"editar" : "systemctl stop nfs.service\nsystemctl disabled nfs.service",
+"refrescar" : "",
+"evidencia" : "clear\ndate\nhostname\nsystemctl status nfs.service",
+"SO":"Linux"
+},
+{
+"modulo" : "",
+"descripcion" : "",
+"comprobacion" : "",
+"copia" : "",
+"editar" : "",
+"refrescar" : "",
+"evidencia" : "",
+"SO":"Linux"
+},
+{
+"modulo" : "",
+"descripcion" : "",
+"comprobacion" : "",
+"copia" : "",
+"editar" : "",
+"refrescar" : "",
+"evidencia" : "",
+"SO":"Linux"
+},
+{
+"modulo" : "",
+"descripcion" : "",
+"comprobacion" : "",
+"copia" : "",
+"editar" : "",
+"refrescar" : "",
+"evidencia" : "",
+"SO":"Linux"
+},
+{
+"modulo" : "",
+"descripcion" : "",
+"comprobacion" : "",
+"copia" : "",
+"editar" : "",
+"refrescar" : "",
+"evidencia" : "",
+"SO":"Linux"
+},
+{
+"modulo" : "",
+"descripcion" : "",
+"comprobacion" : "",
+"copia" : "",
+"editar" : "",
+"refrescar" : "",
+"evidencia" : "",
+"SO":"Linux"
+},
+{
+"modulo" : "",
+"descripcion" : "",
+"comprobacion" : "",
+"copia" : "",
+"editar" : "",
+"refrescar" : "",
+"evidencia" : "",
+"SO":"Linux"
+},
+{
+"modulo" : "",
+"descripcion" : "",
+"comprobacion" : "",
+"copia" : "",
+"editar" : "",
+"refrescar" : "",
+"evidencia" : "",
+"SO":"Linux"
+},
+{
+"modulo" : "",
+"descripcion" : "",
+"comprobacion" : "",
+"copia" : "",
+"editar" : "",
+"refrescar" : "",
+"evidencia" : "",
+"SO":"Linux"
+},
+{
+"modulo" : "",
+"descripcion" : "",
+"comprobacion" : "",
+"copia" : "",
+"editar" : "",
+"refrescar" : "",
+"evidencia" : "",
+"SO":"Linux"
+}
+]
