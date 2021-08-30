@@ -410,6 +410,7 @@ class Aplicacion():
                                             variable=self.ClientVar,
                                             value=i,
                                             )
+                                            
 
         self.editMenu = Menu(self.menuBar, tearoff=0)
         self.editMenu.config(background='#055052',
