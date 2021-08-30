@@ -1,0 +1,116 @@
+{
+  "AFB": [
+    {
+      "service": "/opt/IBM/AFB1/",
+      "owner": "ownerAFB1",
+      "tipo": "tipoAFB1",
+      "ownerGroup": "groupAFB1",
+      "user" : [
+         "User1","User2"
+      ],
+      "code" : "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk":"GENERICO",
+      "impact":"GENERICO",
+      "variable": [
+	"service=\"/opt/IBM/AFB1/\""
+      ]
+    },
+    {
+      "service": "/opt/IBM/AFB2/",
+      "owner": "ownerAFB2",
+      "tipo": "tipoAFB2",
+      "ownerGroup": "groupAFB2",
+      "user" : [
+         "User1","User2"
+      ],
+      "code" : "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk":"GENERICO",
+      "impact":"GENERICO",
+      "variable": [
+	"service=\"/opt/IBM/AFB2/\""
+      ]
+    }
+  ],
+  "ASISA": [
+    {
+      "service": "/opt/IBM/ASISA1/",
+      "owner": "ownerASISA1",
+      "tipo": "tipoASISA1",
+      "ownerGroup": "groupASISA1",
+      "user" : [
+         "User1","User2"
+      ],
+      "code" : "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk":"GENERICO",
+      "impact":"GENERICO",
+      "variable": [
+	"service=\"/opt/IBM/ASISA1/\""
+      ]
+    },
+    {
+      "service": "/opt/IBM/ASISA2/",
+      "owner": "ownerASISA2",
+      "tipo": "tipoASISA2",
+      "ownerGroup": "groupASISA2",
+      "user" : [
+         "User1","User2"
+      ],
+      "code" : "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk":"GENERICO",
+      "impact":"GENERICO",
+      "variable": [
+	"service=\"/opt/IBM/ASISA2/\""
+      ]
+    }
+  ],
+  "LBK": [
+    {
+      "service": "/opt/IBM/LBK1/",
+      "owner": "ownerLBK1",
+      "tipo": "tipoLBK1",
+      "ownerGroup": "groupLBK1",
+      "user" : [
+         "User1","User2"
+      ],
+      "code" : "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk":"GENERICO",
+      "impact":"GENERICO",
+      "variable": [
+	"service=\"/opt/IBM/LBK1/\""
+      ]
+    },
+    {
+      "service": "/opt/IBM/LBK2/",
+      "owner": "ownerLBK2",
+      "tipo": "tipoLBK2",
+      "ownerGroup": "groupLBK2",
+      "user" : [
+         "User1","User2"
+      ],
+      "code" : "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk":"GENERICO",
+      "impact":"GENERICO",
+      "variable": [
+	"service=\"/opt/IBM/LBK2/\""
+      ]
+    }
+  ]
+}
