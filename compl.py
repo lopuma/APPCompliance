@@ -272,23 +272,7 @@ class Desviacion(ttk.Frame):
         cities = ('CASTELL DE L''ARENY',
              'CASTELLADRAL',
              'CASTELLAR',
-             'CASTELLAR DE N''HUG',
-             'CASTELLAR DEL RIU',
-             'CASTELLBELL I VILLAR',
-             'CASTELLBISBAL',
-             'CASTELLCIR',
-             'CASTELLDEFELS',
-             'CASTELLET',
-             'CASTELLFOLLIT DE RIUBREGOS',
-             'CASTELLFOLLIT DEL BOIX',
-             'CASTELLGALI',
-             'CASTELLNOU DE BAGES',
-             'CASTELLOLI',
-             'CASTELLTALLAT',
-             'CASTELLTERÇOL',
-             'CASTELLVI DE LA MARCA',
-             'CASTELLVI DE ROSANES',
-             'CENTELLES')    
+             'CASTELLAR DE N''HUG',)    
         self.listbox.insert(tk.END,*cities)
         self.xScroll['command'] = self.listbox.xview
         self.yScroll['command'] = self.listbox.yview
