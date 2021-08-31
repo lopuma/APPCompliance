@@ -256,9 +256,9 @@ class Desviacion(ttk.Frame):
         self.DESfr1_optMn.grid(row=0, column=0, padx=5, pady=5, sticky='new', columnspan=2)
         # -----------------------------------------------------------------------------#
         # --- widgets para buscar -----------------------------------------------------#
-        self.DESfr1_entry = ttk.Entry(self.DESV_frame1, width=25)
+        self.DESfr1_entry = ttk.Entry(self.DESV_frame1, width=30)
         self.DESfr1_entry.config(foreground="black",
-                                    font=('Source Sans Pro', 15, font.BOLD))
+                                    font=('Source Sans Pro', 13))
         self.DESfr1_entry.grid(row=1, column=0, pady=5, padx=5, ipady=8, sticky='nsew',columnspan=2)
         self.DESfr1_button = ttk.Button(self.DESV_frame1, text='H', width=5)
         self.DESfr1_button.grid(row=1, column=0, pady=5, padx=5, ipady=8, sticky='e',columnspan=2)
