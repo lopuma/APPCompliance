@@ -272,7 +272,8 @@ class Desviacion(ttk.Frame):
         cities = ('CASTELL DE L''ARENY',
              'CASTELLADRAL',
              'CASTELLAR',
-             'CASTELLAR DE N''HUG',)    
+             'CASTELLAR DE N''HUG',
+             'lopuma')    
         self.listbox.insert(tk.END,*cities)
         self.xScroll['command'] = self.listbox.xview
         self.yScroll['command'] = self.listbox.yview
