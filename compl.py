@@ -27,7 +27,7 @@ path_Service = path+"compliance/file/service.json"
 path_icon = path+"compliance/image/"
 clt = ''
 path_modulo = path+"compliance/file/desviaciones_{}.json"
-list_client = (
+list_client = [
     "AFB",
     "ASISA",
     "CESCE",
@@ -40,7 +40,7 @@ list_client = (
     "LBK",
     "PLANETA",
     "SERVIHABITAT"
-)  
+]  
 list_issues = (
     "DESVIACIONES",
     "EXTRACIONES"
@@ -286,7 +286,6 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_lblModulo = ttk.Label(self.DESV_frame3, text='EDITAR')
         self.DESVfr3_lblModulo.grid(row=0, column=0, padx=5, pady=5, sticky='new')
     def selecionar_modulo(self, event):
-        print('selecionar')
         global modulo_selecionado
         modulo_selecionado = event.widget.get(ANCHOR)
         modulo_selecionado = str(modulo_selecionado).strip()
@@ -309,23 +308,27 @@ class Desviacion(ttk.Frame):
         ## --- LIMPIAR ---
         self.DESVfr1_listbox.delete(0,END)
         ## ----------------------------------------- ##
-        global customer
         customer = self.clientesVar.get()
+        print('+++++++++++++++++++++++++++++++++++++++++')
+        print(self.clientesVar.get())
+        print('+++++++++++++++++++++++++++++++++++++++++')
         global CLIT
         CLIT = customer
         print('---------------------------')
         print('cliente inicial : ', CLIT)
         print('---------------------------')
+        print("/////////////////////////////////////////////")
         print(path_modulo.format(customer))
+        print("/////////////////////////////////////////////")
         with open(path_modulo.format(customer)) as g:
             data = json.load(g)
             for md in data:
-                self.DESVfr1_listbox.insert(END,md['modulo']) 
-        self.callback(customer)
+                self.DESVfr1_listbox.insert(END,md['modulo'])
+        self.cambiarNamePestaña(customer)
     def abrir_file(self):
         global Directory
         files = Directory(self)
-    def callback(*args):
+    def cambiarNamePestaña(self, customer):
         id_tab = app.cuaderno.index(app.cuaderno.select())
         app.cuaderno.tab(id_tab, text='DESVIACIONES : {}'.format(customer))
 class ButtonNotebook(ttk.Notebook):
@@ -427,8 +430,10 @@ class Aplicacion():
     def alCambiar_Pestaña(self, event):
         print(event.widget.index(tk.CURRENT))
         index = event.widget.index(tk.CURRENT)
+        ## --- IMPRIME EL NOMBRE DE LA PESTAÑA
         print(event.widget.tab(index)['text'])
         tab = event.widget.tab(index)['text']
+        ## ---------------------------------------
         global CLIT
         if tab == 'DESVIACIONES : AFB':
             CLIT = 'AFB'
@@ -525,6 +530,13 @@ class Aplicacion():
         desviacion = Desviacion(self)
         self.cuaderno.add(desviacion, text='Issues DESVIACIONES')
         self.cuaderno.select(desviacion)
+    def cargame_elmodulo(self):
+        print(self.ClientVar.get())
+        id = self.ClientVar.get()
+        print(list_client[id])
+        id_clien = list_client[id]
+        desviacion.clientesVar.set(id_clien)
+        desviacion.cargar_modulos(id_clien)
     def widgets_APP(self):
         self.menuBar = tk.Menu(self.root, relief=FLAT, border=0)
         self.root.config(menu=self.menuBar)
@@ -585,7 +597,7 @@ class Aplicacion():
             self.clientMenu.add_radiobutton(label=m,
                                             variable=self.ClientVar,
                                             value=i,
-                                            )
+                                            command=self.cargame_elmodulo)
 
         self.IssuesVar = tk.IntVar()
         for i, m in enumerate(list_issues):
