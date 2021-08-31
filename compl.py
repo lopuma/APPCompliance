@@ -201,33 +201,103 @@ class Directory(tk.Frame):
         self.cbxUser.grid(column=1, row=2, pady=10, padx=10, sticky='nsew')
         self.tree.bind("<ButtonRelease-1>", self.selecionar_elemntFile)
         self.cargar_files()
-class Desviacion(tk.Frame):
+class Desviacion(ttk.Frame):
     def __init__(self, parent, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.columnconfigure(0, weight=1)
-        self.columnconfigure(1, weight=5)
-        self.columnconfigure(2, weight=5)
+        #self.columnconfigure(0, weight=1)
+        self.columnconfigure(1, weight=1)
+        self.columnconfigure(2, weight=1)
         self.rowconfigure(0, weight=1)
-        self.frame1=ttk.LabelFrame(self, 
+        self.widgets_DESVIACION()
+    def widgets_DESVIACION(self):
+        # --- DEFINIMOS LOS FRAME, QUE CONTENDRAN LOS WIDGETS --------------------------#
+        self.DESV_frame1=ttk.LabelFrame(self, 
                                         text="CLIENTE / MODULO", 
                                         border=1, 
                                         relief='sunken')
-        self.frame1.grid(column=0, row=0, padx=10, pady=10, sticky='nsew')
-        global clientesVar
+        self.DESV_frame1.grid(column=0, row=0, padx=10, pady=10, sticky='nsew')
+        self.DESV_frame2=ttk.LabelFrame(self, 
+                                        text="SISTEMA OPERATIVO", 
+                                        border=1, 
+                                        relief='sunken')
+        self.DESV_frame2.grid(column=1, row=0, padx=10, pady=10, sticky='nsew')
+        self.DESV_frame3=ttk.LabelFrame(self, 
+                                        text="EDITAR / EVIDENCIA", 
+                                        border=1, 
+                                        relief='sunken')
+        self.DESV_frame3.grid(column=2, row=0, padx=10, pady=10, sticky='nsew')
+        # -----------------------------------------------------------------------------#
+        self.DESV_frame1.columnconfigure(0, weight=1)
+        #self.DESV_frame1.columnconfigure(1, weight=1)
+
+        self.DESV_frame2.columnconfigure(0, weight=1)
+        self.DESV_frame3.columnconfigure(0, weight=1)
+        #self.DESV_frame1.rowconfigure(0, weight=1)
+        #self.DESV_frame1.rowconfigure(1, weight=1)
+        self.DESV_frame1.rowconfigure(2, weight=5)
+
+        self.DESV_frame2.rowconfigure(0, weight=1)
+        self.DESV_frame3.rowconfigure(0, weight=1)
+        # --- Variable del OptionMenu, lista de clientes ------------------------------#
         clientesVar = tk.StringVar(self)
         clientesVar.set('CLIENTES')
-
-        self.fr1_optMn = tk.OptionMenu(self.frame1, clientesVar, *list_client, command=self.cargar_modulo)
-        self.fr1_optMn.config(width=25)
-        self.fr1_optMn["menu"].config(background='#EEC4C4',
-                                            selectcolor='gray2',
-                                            activebackground='#F29191',
-                                            foreground="gray3",
-                                            font=('Trajan', 12))
-        self.fr1_optMn.grid(row=0, column=0, padx=5, pady=5, columnspan=2, sticky='ew')
-
-        self.fr1_btn = ttk.Button(self.frame1, text='Abrir', command=self.abrir_file)
-        self.fr1_btn.grid(row=1,column=0)
+        # -----------------------------------------------------------------------------#
+        ## ======================== FRAME 1 ========================================= ##
+        # --- OptionMenu, lista de clientes ------------------------------ #
+        self.DESfr1_optMn = ttk.OptionMenu(self.DESV_frame1, 
+                                            clientesVar, 
+                                            *list_client, 
+                                            command=self.cargar_modulo)
+        self.DESfr1_optMn["menu"].config(background='#3A6351',
+                                            selectcolor='#082032',
+                                            activebackground='#5F939A',
+                                            foreground="#F2EDD7",
+                                            font=('Source Sans Pro', 13, font.BOLD))
+        self.DESfr1_optMn.grid(row=0, column=0, padx=5, pady=5, sticky='new', columnspan=2)
+        # -----------------------------------------------------------------------------#
+        # --- widgets para buscar -----------------------------------------------------#
+        self.DESfr1_entry = ttk.Entry(self.DESV_frame1, width=25)
+        self.DESfr1_entry.config(foreground="black",
+                                    font=('Source Sans Pro', 15, font.BOLD))
+        self.DESfr1_entry.grid(row=1, column=0, pady=5, padx=5, ipady=8, sticky='nsew',columnspan=2)
+        self.DESfr1_button = ttk.Button(self.DESV_frame1, text='H', width=5)
+        self.DESfr1_button.grid(row=1, column=0, pady=5, padx=5, ipady=8, sticky='e',columnspan=2)
+        # -----------------------------------------------------------------------------#
+        self.yScroll = tk.Scrollbar(self.DESV_frame1, orient=tk.VERTICAL)
+        self.yScroll.grid(row=2, column=1, pady=5, sticky='nse')
+        self.xScroll = tk.Scrollbar(self.DESV_frame1, orient=tk.HORIZONTAL)
+        self.xScroll.grid(row=3, column=0, padx=5, sticky='ew', columnspan=2)
+        self.listbox = tk.Listbox(self.DESV_frame1, xscrollcommand=self.xScroll.set, yscrollcommand=self.yScroll.set)
+        self.listbox.grid(row=2, column=0, pady=5, padx=5, sticky='nsew')
+        cities = ('CASTELL DE L''ARENY',
+             'CASTELLADRAL',
+             'CASTELLAR',
+             'CASTELLAR DE N''HUG',
+             'CASTELLAR DEL RIU',
+             'CASTELLBELL I VILLAR',
+             'CASTELLBISBAL',
+             'CASTELLCIR',
+             'CASTELLDEFELS',
+             'CASTELLET',
+             'CASTELLFOLLIT DE RIUBREGOS',
+             'CASTELLFOLLIT DEL BOIX',
+             'CASTELLGALI',
+             'CASTELLNOU DE BAGES',
+             'CASTELLOLI',
+             'CASTELLTALLAT',
+             'CASTELLTERÇOL',
+             'CASTELLVI DE LA MARCA',
+             'CASTELLVI DE ROSANES',
+             'CENTELLES')    
+        self.listbox.insert(tk.END,*cities)
+        self.xScroll['command'] = self.listbox.xview
+        self.yScroll['command'] = self.listbox.yview
+        ## ======================== FRAME 2 ========================================= ##
+        self.DESfr2_lblModulo = ttk.Label(self.DESV_frame2, text='MODULO')
+        self.DESfr2_lblModulo.grid(row=0, column=0, padx=5, pady=5, sticky='new')
+        ## ======================== FRAME 3 ========================================= ##
+        self.DESfr3_lblModulo = ttk.Label(self.DESV_frame3, text='EDITAR')
+        self.DESfr3_lblModulo.grid(row=0, column=0, padx=5, pady=5, sticky='new')
     def abrir_file(self):
         global Directory
         files = Directory(self)
@@ -341,6 +411,13 @@ class Aplicacion():
         self.style.configure('TFrame',
                             background='#f1ecc3',
         )
+        self.style.configure('TLabelframe',
+                            background='#f1ecc3',
+        )
+        self.style.configure('TLabelframe.Label',
+                            background='#1A1C20',
+                            foreground='#F0A500',
+        )
         self.style.configure('ButtonNotebook',
                             background='#082032'
         )
@@ -363,6 +440,17 @@ class Aplicacion():
                             background = "#082032",
                             foreground = "#CDFFEB",
                             font=('Source Sans Pro',20,font.BOLD))
+        self.style.configure('TMenubutton',
+                            background = "#5F939A",
+                            foreground = "#F2EDD7",
+                            padding = 5,
+                            font=('Source Sans Pro',15,font.BOLD))
+        self.style.map('TMenubutton',
+                            background = [('active',"#3A6351")],
+                            foreground = [('active',"#A0937D")],
+                            relief=[('active','ridge'),('pressed','groove')],
+                            borderwidth=[('active',1)],
+                            )
     def iconos(self):
         self.Desviaciones_icon = ImageTk.PhotoImage(
             Image.open(path_icon+r"openDesviaciones.png").resize((80, 80)))
