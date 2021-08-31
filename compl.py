@@ -6,7 +6,7 @@ from tkinter import scrolledtext as st
 import json
 from getpass import getuser
 import os
-from tkinter.ttk import Style
+from tkinter.ttk import Notebook, Style
 
 try:
     import tkinter as tk
@@ -25,9 +25,9 @@ path_Account = path+"compliance/file/account.json"
 path_Command = path+"compliance/file/command.json"
 path_Service = path+"compliance/file/service.json"
 path_icon = path+"compliance/image/"
-path_modulo = path+"compliance/file/" #TODO variable de modulos
-
-list_client = [
+clt = ''
+path_modulo = path+"compliance/file/desviaciones_{}.json"
+list_client = (
     "AFB",
     "ASISA",
     "CESCE",
@@ -40,11 +40,11 @@ list_client = [
     "LBK",
     "PLANETA",
     "SERVIHABITAT"
-]  
-list_issues = [
+)  
+list_issues = (
     "DESVIACIONES",
     "EXTRACIONES"
-]
+)
 class Directory(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -113,7 +113,7 @@ class Directory(tk.Frame):
         self.tree_scrollbar.grid(column=1, row=0, sticky=N+S, pady=10)
         #creamos el treeview
         self.tree = ttk.Treeview(self.labelframe1, 
-                                yscrollcommand=self.tree_scrollbar.set,
+                                DESVlist_yScrollcommand=self.tree_scrollbar.set,
                                 height=9)
         #configuramos el scroll al trieview
         self.tree_scrollbar.config(command=self.tree.yview)
@@ -144,14 +144,14 @@ class Directory(tk.Frame):
         self.lbl1 = ttk.Label(self.labelframe2, text='SERVER')
         self.lbl1.grid(row=0, column=0, pady=5, padx=5)
 
-        self.listServer = tk.Listbox(self.labelframe2, height=3)
+        self.listServer = tk.DESVfr1_listbox(self.labelframe2, height=3)
         self.fr2_scroll1 = tk.Scrollbar(self.labelframe2, orient=tk.VERTICAL)
         self.listServer.config(foreground='blue',
                                     selectforeground='white', 
                                     selectbackground='#347083', 
                                     font=('Trajan', 12),
                                     height=8, width=20,
-                                    yscrollcommand=self.fr2_scroll1.set)
+                                    DESVlist_yScrollcommand=self.fr2_scroll1.set)
         self.fr2_scroll1.config(command=self.listServer.yview)
         self.listServer.grid(column=0, row=1, padx=5, pady=5, sticky=N+E+S+W, rowspan=2)
         self.fr2_scroll1.grid(column=0, row=1, sticky='nse', pady=5, rowspan=2)
@@ -209,6 +209,7 @@ class Desviacion(ttk.Frame):
         self.columnconfigure(2, weight=1)
         self.rowconfigure(0, weight=1)
         self.widgets_DESVIACION()
+        self.DESVfr1_listbox.bind('<<ListboxSelect>>',self.selecionar_modulo)
     def widgets_DESVIACION(self):
         # --- DEFINIMOS LOS FRAME, QUE CONTENDRAN LOS WIDGETS --------------------------#
         self.DESV_frame1=ttk.LabelFrame(self, 
@@ -239,62 +240,94 @@ class Desviacion(ttk.Frame):
         self.DESV_frame2.rowconfigure(0, weight=1)
         self.DESV_frame3.rowconfigure(0, weight=1)
         # --- Variable del OptionMenu, lista de clientes ------------------------------#
-        clientesVar = tk.StringVar(self)
-        clientesVar.set('CLIENTES')
+        self.clientesVar = tk.StringVar(self)
+        self.clientesVar.set('CLIENTES')
         # -----------------------------------------------------------------------------#
         ## ======================== FRAME 1 ========================================= ##
         # --- OptionMenu, lista de clientes ------------------------------ #
-        self.DESfr1_optMn = ttk.OptionMenu(self.DESV_frame1, 
-                                            clientesVar, 
+        self.DESVfr1_optMn = tk.OptionMenu(self.DESV_frame1, 
+                                            self.clientesVar, 
                                             *list_client, 
-                                            command=self.cargar_modulo)
-        self.DESfr1_optMn["menu"].config(background='#3A6351',
+                                            command=self.cargar_modulos)
+        self.DESVfr1_optMn["menu"].config(background='#3A6351',
                                             selectcolor='#082032',
                                             activebackground='#5F939A',
                                             foreground="#F2EDD7",
                                             font=('Source Sans Pro', 13, font.BOLD))
-        self.DESfr1_optMn.grid(row=0, column=0, padx=5, pady=5, sticky='new', columnspan=2)
+        self.DESVfr1_optMn.grid(row=0, column=0, padx=5, pady=5, sticky='new', columnspan=2)
         # -----------------------------------------------------------------------------#
         # --- widgets para buscar -----------------------------------------------------#
-        self.DESfr1_entry = ttk.Entry(self.DESV_frame1, width=30)
-        self.DESfr1_entry.config(foreground="black",
+        self.DESVfr1_entry = ttk.Entry(self.DESV_frame1, width=30)
+        self.DESVfr1_entry.config(foreground="black",
                                     font=('Source Sans Pro', 13))
-        self.DESfr1_entry.grid(row=1, column=0, pady=5, padx=5, ipady=8, sticky='nsew',columnspan=2)
-        self.DESfr1_button = ttk.Button(self.DESV_frame1, text='H', width=5)
-        self.DESfr1_button.grid(row=1, column=0, pady=5, padx=5, ipady=8, sticky='e',columnspan=2)
+        self.DESVfr1_entry.grid(row=1, column=0, pady=5, padx=5, ipady=8, sticky='nsew',columnspan=2)
+        self.DESVfr1_button = ttk.Button(self.DESV_frame1, text='H', width=5)
+        self.DESVfr1_button.grid(row=1, column=0, pady=5, padx=5, ipady=8, sticky='e',columnspan=2)
         # -----------------------------------------------------------------------------#
-        self.yScroll = tk.Scrollbar(self.DESV_frame1, orient=tk.VERTICAL)
-        self.yScroll.grid(row=2, column=1, pady=5, sticky='nse')
-        self.xScroll = tk.Scrollbar(self.DESV_frame1, orient=tk.HORIZONTAL)
-        self.xScroll.grid(row=3, column=0, padx=5, sticky='ew', columnspan=2)
-        self.listbox = tk.Listbox(self.DESV_frame1, xscrollcommand=self.xScroll.set, yscrollcommand=self.yScroll.set)
-        self.listbox.grid(row=2, column=0, pady=5, padx=5, sticky='nsew')
-        cities = ('CASTELL DE L''ARENY',
-             'CASTELLADRAL',
-             'CASTELLAR',
-             'CASTELLAR DE N''HUG',
-             'lopuma',
-             'Kyndryl')    
-        self.listbox.insert(tk.END,*cities)
-        self.xScroll['command'] = self.listbox.xview
-        self.yScroll['command'] = self.listbox.yview
+        self.DESVlist_yScroll = tk.Scrollbar(self.DESV_frame1, orient=tk.VERTICAL)
+        self.DESVlist_yScroll.grid(row=2, column=1, pady=5, sticky='nse')
+        self.DESVlist_xScroll = tk.Scrollbar(self.DESV_frame1, orient=tk.HORIZONTAL)
+        self.DESVlist_xScroll.grid(row=3, column=0, padx=5, sticky='ew', columnspan=2)
+        self.DESVfr1_listbox = tk.Listbox(self.DESV_frame1, 
+                                            xscrollcommand=self.DESVlist_xScroll.set, 
+                                            yscrollcommand=self.DESVlist_yScroll.set,
+                                            font=('Source Sans Pro', 13),
+                                            foreground='blue',
+                                            )
+        self.DESVfr1_listbox.grid(row=2, column=0, pady=5, padx=5, sticky='nsew')
+        self.DESVlist_xScroll['command'] = self.DESVfr1_listbox.xview
+        self.DESVlist_yScroll['command'] = self.DESVfr1_listbox.yview
         ## ======================== FRAME 2 ========================================= ##
-        self.DESfr2_lblModulo = ttk.Label(self.DESV_frame2, text='MODULO')
-        self.DESfr2_lblModulo.grid(row=0, column=0, padx=5, pady=5, sticky='new')
+        self.DESVfr2_lblModulo = ttk.Label(self.DESV_frame2, text='MODULO')
+        self.DESVfr2_lblModulo.grid(row=0, column=0, padx=5, pady=5, sticky='new')
+        self.DESVfr2_srcDescripcion = st.ScrolledText(self.DESV_frame2)
+        self.DESVfr2_srcDescripcion.grid(row=1, column=0, padx=5, pady=5, sticky='nsew')
         ## ======================== FRAME 3 ========================================= ##
-        self.DESfr3_lblModulo = ttk.Label(self.DESV_frame3, text='EDITAR')
-        self.DESfr3_lblModulo.grid(row=0, column=0, padx=5, pady=5, sticky='new')
+        self.DESVfr3_lblModulo = ttk.Label(self.DESV_frame3, text='EDITAR')
+        self.DESVfr3_lblModulo.grid(row=0, column=0, padx=5, pady=5, sticky='new')
+    def selecionar_modulo(self, event):
+        print('selecionar')
+        global modulo_selecionado
+        modulo_selecionado = event.widget.get(ANCHOR)
+        modulo_selecionado = str(modulo_selecionado).strip()
+        print(modulo_selecionado)
+        if 'CLIT' in globals():
+            with open(path_modulo.format(CLIT)) as g:
+                    data = json.load(g)
+                    for md in data:
+                        if modulo_selecionado == md['modulo']:
+                            ## --- LIMPIAR ------------------------------------- ##                      
+                            self.DESVfr2_lblModulo['text'] = ''
+                            self.DESVfr2_srcDescripcion.delete('1.0',tk.END)
+                            ## ------------------------------------------------- ##
+                            self.DESVfr2_lblModulo['text'] = md['modulo']
+                            self.DESVfr2_srcDescripcion.insert(END,md['descripcion'])
+                    print("**********************************")
+                    print('Cliente al selecionar', CLIT)
+                    print("**********************************")
+    def cargar_modulos(self, *args):
+        ## --- LIMPIAR ---
+        self.DESVfr1_listbox.delete(0,END)
+        ## ----------------------------------------- ##
+        global customer
+        customer = self.clientesVar.get()
+        global CLIT
+        CLIT = customer
+        print('---------------------------')
+        print('cliente inicial : ', CLIT)
+        print('---------------------------')
+        print(path_modulo.format(customer))
+        with open(path_modulo.format(customer)) as g:
+            data = json.load(g)
+            for md in data:
+                self.DESVfr1_listbox.insert(END,md['modulo']) 
+        self.callback(customer)
     def abrir_file(self):
         global Directory
         files = Directory(self)
     def callback(*args):
         id_tab = app.cuaderno.index(app.cuaderno.select())
-        app.cuaderno.tab(id_tab, text='DESVIACIONES : '+clt)
-    def cargar_modulo(self, *args):
-        global clt
-        clt = clientesVar.get()
-        print('cliente al cargar modulo : ',clt)
-        self.callback(clt)
+        app.cuaderno.tab(id_tab, text='DESVIACIONES : {}'.format(customer))
 class ButtonNotebook(ttk.Notebook):
     _initialized = False
     def __init__(self, parent, *args, **kwargs):
@@ -387,9 +420,40 @@ class Aplicacion():
         self.contenedor.rowconfigure(1, weight=1)
         self.cuaderno.add(self.contenedor, text='WorkSpace')
         self.cuaderno.pack(expand=1, fill='both')
+        self.cuaderno.bind("<<NotebookTabChanged>>",self.alCambiar_Pestaña)
         self.iconos()
         self.widgets_APP()
         self.estilos()
+    def alCambiar_Pestaña(self, event):
+        print(event.widget.index(tk.CURRENT))
+        index = event.widget.index(tk.CURRENT)
+        print(event.widget.tab(index)['text'])
+        tab = event.widget.tab(index)['text']
+        global CLIT
+        if tab == 'DESVIACIONES : AFB':
+            CLIT = 'AFB'
+        elif tab == 'DESVIACIONES : ASISA':
+            CLIT = 'ASISA'
+        elif tab == 'DESVIACIONES : CESCE':
+            CLIT = 'CESCE'
+        elif tab == 'DESVIACIONES : CTTI':
+            CLIT = 'CTTI'
+        elif tab == 'DESVIACIONES : ENEL':
+            CLIT = 'ENEL'
+        elif tab == 'DESVIACIONES : EUROFRED':
+            CLIT = 'EUROFRED'
+        elif tab == 'DESVIACIONES : FT':
+            CLIT = 'FT'
+        elif tab == 'DESVIACIONES : INFRA':
+            CLIT = 'INFRA'
+        elif tab == 'DESVIACIONES : IDISO':
+            CLIT = 'IDISO'
+        elif tab == 'DESVIACIONES : LBK':
+            CLIT = 'LBK'
+        elif tab == 'DESVIACIONES : PLANETA':
+            CLIT = 'PLANETA'
+        elif tab == 'DESVIACIONES : SERVIHABITAT':
+            CLIT = 'SERVIHABITAT'
     def estilos(self):
         self.style = Style()
         self.style.configure('.',
@@ -597,6 +661,7 @@ class Aplicacion():
                                     sticky='sew')
     def mainloop(self):
         self.root.mainloop()
+
 if __name__ == "__main__":
     app = Aplicacion()
     app.mainloop()
