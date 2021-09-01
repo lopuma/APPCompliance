@@ -210,6 +210,7 @@ class Desviacion(ttk.Frame):
         self.rowconfigure(0, weight=1)
         self.widgets_DESVIACION()
         self.DESVfr1_listbox.bind('<<ListboxSelect>>',self.selecionar_modulo)
+        self.DESVfr2_lblModulo.bind("<Configure>", self.label_resize)
     def widgets_DESVIACION(self):
         # --- DEFINIMOS LOS FRAME, QUE CONTENDRAN LOS WIDGETS --------------------------#
         self.DESV_frame1=ttk.LabelFrame(self, 
@@ -248,9 +249,18 @@ class Desviacion(ttk.Frame):
         self.DESVfr1_optMn = tk.OptionMenu(self.DESV_frame1, 
                                             self.clientesVar, 
                                             *list_client, 
-                                            command=self.cargar_modulos)
+                                            command=self.cargar_modulos,
+                                            )
+        self.DESVfr1_optMn.config(background = "#5F939A",
+                                    foreground = "#F2EDD7",
+                                    font=('Source Sans Pro',15,font.BOLD),
+                                    activebackground="#3A6351",
+                                    activeforeground="#A0937D",
+                                    relief="groove",
+                                    borderwidth=2
+                                    )
         self.DESVfr1_optMn["menu"].config(background='#3A6351',
-                                            selectcolor='#082032',
+                                            selectcolor='red',
                                             activebackground='#5F939A',
                                             foreground="#F2EDD7",
                                             font=('Source Sans Pro', 13, font.BOLD))
@@ -278,15 +288,17 @@ class Desviacion(ttk.Frame):
         self.DESVlist_xScroll['command'] = self.DESVfr1_listbox.xview
         self.DESVlist_yScroll['command'] = self.DESVfr1_listbox.yview
         ## ======================== FRAME 2 ========================================= ##
-        self.DESVfr2_lblModulo = ttk.Label(self.DESV_frame2, text='MODULO')
+        self.DESVfr2_lblModulo = ttk.Label(self.DESV_frame2, text='MODULO', padding=(5,5), width=10)
         self.DESVfr2_lblModulo.grid(row=0, column=0, padx=5, pady=5, sticky='new')
         self.DESVfr2_srcDescripcion = st.ScrolledText(self.DESV_frame2)
+        self.DESVfr2_srcDescripcion.config(width=10, wrap='word')
         self.DESVfr2_srcDescripcion.grid(row=1, column=0, padx=5, pady=5, sticky='nsew')
         ## ======================== FRAME 3 ========================================= ##
         self.DESVfr3_lblModulo = ttk.Label(self.DESV_frame3, text='EDITAR')
         self.DESVfr3_lblModulo.grid(row=0, column=0, padx=5, pady=5, sticky='new')
+    def label_resize(self, event):
+        event.widget['wraplength'] = event.width
     def selecionar_modulo(self, event):
-        global modulo_selecionado
         modulo_selecionado = event.widget.get(ANCHOR)
         modulo_selecionado = str(modulo_selecionado).strip()
         print(modulo_selecionado)
@@ -305,10 +317,10 @@ class Desviacion(ttk.Frame):
                     print('Cliente al selecionar', CLIT)
                     print("**********************************")
     def cargar_modulos(self, *args):
+        customer = self.clientesVar.get()
         ## --- LIMPIAR ---
         self.DESVfr1_listbox.delete(0,END)
         ## ----------------------------------------- ##
-        customer = self.clientesVar.get()
         print('+++++++++++++++++++++++++++++++++++++++++')
         print(self.clientesVar.get())
         print('+++++++++++++++++++++++++++++++++++++++++')
@@ -421,7 +433,7 @@ class Aplicacion():
         self.contenedor = ttk.Frame(self.cuaderno)
         self.contenedor.columnconfigure(1, weight=1)
         self.contenedor.rowconfigure(1, weight=1)
-        self.cuaderno.add(self.contenedor, text='WorkSpace')
+        self.cuaderno.add(self.contenedor, text='WorkSpace', underline=0)
         self.cuaderno.pack(expand=1, fill='both')
         self.cuaderno.bind("<<NotebookTabChanged>>",self.alCambiar_Pestaña)
         self.iconos()
@@ -495,17 +507,17 @@ class Aplicacion():
                             background = "#082032",
                             foreground = "#CDFFEB",
                             font=('Source Sans Pro',20,font.BOLD))
-        self.style.configure('TMenubutton',
-                            background = "#5F939A",
-                            foreground = "#F2EDD7",
-                            padding = 5,
-                            font=('Source Sans Pro',15,font.BOLD))
-        self.style.map('TMenubutton',
-                            background = [('active',"#3A6351")],
-                            foreground = [('active',"#A0937D")],
-                            relief=[('active','ridge'),('pressed','groove')],
-                            borderwidth=[('active',1)],
-                            )
+        # self.style.configure('TMenubutton',
+        #                     background = "#5F939A",
+        #                     foreground = "#F2EDD7",
+        #                     padding = 5,
+        #                     font=('Source Sans Pro',15,font.BOLD))
+        # self.style.map('TMenubutton',
+        #                     background = [('active',"#3A6351")],
+        #                     foreground = [('active',"#A0937D")],
+        #                     relief=[('active','ridge'),('pressed','groove')],
+        #                     borderwidth=[('active',1)],
+        #                     )
     def iconos(self):
         self.Desviaciones_icon = ImageTk.PhotoImage(
             Image.open(path_icon+r"openDesviaciones.png").resize((80, 80)))
