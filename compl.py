@@ -208,10 +208,16 @@ class Desviacion(ttk.Frame):
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=1)
         self.rowconfigure(0, weight=1)
+        self.iconos()
         self.widgets_DESVIACION()
         self.DESVfr1_listbox.bind('<<ListboxSelect>>',self.selecionar_modulo)
         self.DESVfr2_lblModulo.bind("<Configure>", self.label_resize)
         self.DESVfr2_lblDescripcion.bind("<Configure>", self.label_resize)
+        #self.DESVfr2_srcBackup.bind("<Motion>",app.alCambiar_Pestaña2)
+        #self.DESVfr2_srcComprobacion.bind("<Motion>",app.alCambiar_Pestaña2)
+    def iconos(self):
+        self.BuscarModulo_icon = ImageTk.PhotoImage(
+                    Image.open(path_icon+r"buscar.png").resize((30, 30)))
     def widgets_DESVIACION(self):
         # --- DEFINIMOS LOS FRAME, QUE CONTENDRAN LOS WIDGETS --------------------------#
         self.DESV_frame1=ttk.LabelFrame(self, 
@@ -273,8 +279,11 @@ class Desviacion(ttk.Frame):
         self.DESVfr1_entry.config(foreground="black",
                                     font=('Source Sans Pro', 13))
         self.DESVfr1_entry.grid(row=1, column=0, pady=5, padx=5, ipady=8, sticky='nsew',columnspan=2)
-        self.DESVfr1_button = ttk.Button(self.DESV_frame1, text='H', width=5)
-        self.DESVfr1_button.grid(row=1, column=0, pady=5, padx=5, ipady=8, sticky='e',columnspan=2)
+        self.DESVfr1_btnBuscar = ttk.Button(self.DESV_frame1, 
+                                                    text='Buscar', 
+                                                    width=5, 
+                                                    image=self.BuscarModulo_icon)
+        self.DESVfr1_btnBuscar.grid(row=1, column=0, pady=5, padx=5, ipady=8, sticky='e',columnspan=2)
         # -----------------------------------------------------------------------------#
         self.DESVlist_yScroll = tk.Scrollbar(self.DESV_frame1, orient=tk.VERTICAL)
         self.DESVlist_yScroll.grid(row=2, column=1, pady=5, sticky='nse')
@@ -344,13 +353,7 @@ class Desviacion(ttk.Frame):
                     for md in data:
                         if modulo_selecionado == md['modulo']:
                             ## --- LIMPIAR ------------------------------------- ##                      
-                            self.DESVfr2_lblModulo['text'] = ''
-                            self.DESVfr2_lblDescripcion['text'] = ''
-                            self.DESVfr2_srcComprobacion.delete('1.0',END)
-                            self.DESVfr2_srcBackup.delete('1.0',END)
-                            self.DESVfr3_srcEditar.delete('1.0',END)
-                            self.DESVfr3_srcRefrescar.delete('1.0',END)
-                            self.DESVfr3_srcEvidencia.delete('1.0',END)
+                            self.limpiar_widgets()
                             ## ------------------------------------------------- ##
                             self.DESVfr2_lblModulo['text'] = md['modulo']
                             self.DESVfr2_lblDescripcion['text'] = md['descripcion']
@@ -362,10 +365,19 @@ class Desviacion(ttk.Frame):
                     print("**********************************")
                     print('Cliente al selecionar', CLIT)
                     print("**********************************")
+    def limpiar_widgets(self):
+        self.DESVfr2_lblModulo['text'] = ''
+        self.DESVfr2_lblDescripcion['text'] = ''
+        self.DESVfr2_srcComprobacion.delete('1.0',END)
+        self.DESVfr2_srcBackup.delete('1.0',END)
+        self.DESVfr3_srcEditar.delete('1.0',END)
+        self.DESVfr3_srcRefrescar.delete('1.0',END)
+        self.DESVfr3_srcEvidencia.delete('1.0',END)
     def cargar_modulos(self, *args):
         customer = self.clientesVar.get()
         ## --- LIMPIAR ---
         self.DESVfr1_listbox.delete(0,END)
+        self.limpiar_widgets()
         ## ----------------------------------------- ##
         print('+++++++++++++++++++++++++++++++++++++++++')
         print(self.clientesVar.get())
@@ -468,28 +480,51 @@ class ButtonNotebook(ttk.Notebook):
                                                       ("active", "#FF6B6B")],
                                         foreground = [("selected", "#ffffff"),
                                                       ("active", "#012443")]
-                 ) 
+                 )
 class Aplicacion():
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("CONTINOUS COMPLIANCE")
         self.root.geometry("1028x768")
         #self.root.resizable(0,0)
-        self.cuaderno = ButtonNotebook(self.root)
+        self.cuaderno = ButtonNotebook(self)
         self.contenedor = ttk.Frame(self.cuaderno)
         self.contenedor.columnconfigure(1, weight=1)
         self.contenedor.rowconfigure(1, weight=1)
         self.cuaderno.add(self.contenedor, text='WorkSpace', underline=0)
         self.cuaderno.pack(expand=1, fill='both')
         self.cuaderno.bind("<<NotebookTabChanged>>",self.alCambiar_Pestaña)
+
         self.iconos()
         self.widgets_APP()
         self.estilos()
+        #self.root.bind("<Motion>",self.alCambiar_Pestaña2)
+        self.root.bind("<Motion>",self.alCambiar_Pestaña2)
+    def alCambiar_Pestaña2(self, event):
+        # print(event.widget.index(tk.CURRENT))
+        # index = event.widget.index(tk.CURRENT)
+        # ## --- IMPRIME EL NOMBRE DE LA PESTAÑA
+        # print(event.widget.tab(index)['text'])
+        # tab = event.widget.tab(index)['text']
+        ## ---------------------------------------
+        ## me muestra todo los INDENTY 
+        #call = event.widget
+        #print(call)
+        ## ---
+        pass
+        ## --- OBTENER EL INDEX de la pestaña
+        #index = event.widget.index("@%d,%d" % (event.x, event.y))
+        #print(index)
+        ## -------
+        # print("Mouse position: (%s %s)" % (event.x_root, event.y_root))
+        # return
     def alCambiar_Pestaña(self, event):
-        print(event.widget.index(tk.CURRENT))
+        #print(event.widget.index(tk.CURRENT))
         index = event.widget.index(tk.CURRENT)
+        calli = event.widget
+        print(calli)
         ## --- IMPRIME EL NOMBRE DE LA PESTAÑA
-        print(event.widget.tab(index)['text'])
+        #print(event.widget.tab(index)['text'])
         tab = event.widget.tab(index)['text']
         ## ---------------------------------------
         global CLIT
@@ -517,6 +552,10 @@ class Aplicacion():
             CLIT = 'PLANETA'
         elif tab == 'DESVIACIONES : SERVIHABITAT':
             CLIT = 'SERVIHABITAT'
+        elif tab == 'WorkSpace':
+            self.fileMenu.entryconfig('  Clientes', state='disabled')
+        else:
+            self.fileMenu.entryconfig('  Clientes', state='normal')
     def estilos(self):
         self.style = Style()
         self.style.configure('.',
@@ -543,11 +582,23 @@ class Aplicacion():
                             borderwidth=5,
                             )
         self.style.map('APP.TButton',
-                            background = [('active',"#F6D167"),('pressed','red')],
-                            foreground = [('active',"#DF2E2E"),('pressed','red')],
+                            background = [('active',"#F6D167")],
+                            foreground = [('active',"#DF2E2E")],
                             padding=[('active',20),('pressed',100)],
                             relief=[('active','ridge'),('pressed','groove')],
                             borderwidth=[('active',5)],
+                            )
+        self.style.configure('TButton',
+                            background = "#297F87",
+                            foreground = "#FFF7AE",
+                            relief='sunke',
+                            borderwidth=1,
+                            )
+        self.style.map('TButton',
+                            background = [('active',"#F6D167")],
+                            foreground = [('active',"#DF2E2E")],
+                            relief=[('active','ridge'),('pressed','groove')],
+                            borderwidth=[('active',1)],
                             )
         self.style.configure('APP.TLabel',
                             background = "#082032",
@@ -592,13 +643,26 @@ class Aplicacion():
         desviacion = Desviacion(self)
         self.cuaderno.add(desviacion, text='Issues DESVIACIONES')
         self.cuaderno.select(desviacion)
+    def abrir_issues(self):
+        id = self.IssuesVar.get()
+        if id == 0:
+            global desviacion
+            desviacion = Desviacion(self)
+            self.cuaderno.add(desviacion, text='Issues DESVIACIONES')
+            self.cuaderno.select(desviacion)
+        elif id == 1:
+            print("abre extracaciones")
     def cargame_elmodulo(self):
-        print(self.ClientVar.get())
+        print('el evento cargado es : -----------------')
+        id_tab = app.cuaderno.index(app.cuaderno.select())
+        print(id_tab)
+        print('*------------------------------------------*')
         id = self.ClientVar.get()
-        print(list_client[id])
-        id_clien = list_client[id]
-        desviacion.clientesVar.set(id_clien)
-        desviacion.cargar_modulos(id_clien)
+        clit = list_client[id]
+        print('el ID de cliente es : ', clit)
+        desviacion.clientesVar.set(clit)
+        desviacion.limpiar_widgets()
+        desviacion.cargar_modulos(clit)
     def widgets_APP(self):
         self.menuBar = tk.Menu(self.root, relief=FLAT, border=0)
         self.root.config(menu=self.menuBar)
@@ -666,7 +730,7 @@ class Aplicacion():
             self.issuesMenu.add_radiobutton(label=m,
                                             variable=self.IssuesVar,
                                             value=i,
-                                            )
+                                            command=self.abrir_issues)
 
         self.editMenu = Menu(self.menuBar, tearoff=0)
         self.editMenu.config(background='#003638',
@@ -735,7 +799,6 @@ class Aplicacion():
                                     sticky='sew')
     def mainloop(self):
         self.root.mainloop()
-
 if __name__ == "__main__":
     app = Aplicacion()
     app.mainloop()

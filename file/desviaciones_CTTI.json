@@ -22,11 +22,11 @@
 {
 "modulo" : "CTTI2",
 "descripcion" : "CTTI2",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
+"comprobacion" : "COMPR2",
+"copia" : "COPIA2",
+"editar" : "EDITAR2",
+"refrescar" : "REFRES2",
+"evidencia" : "EVID2",
 "SO":"Linux"
 },
 {
