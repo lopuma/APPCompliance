@@ -12,11 +12,11 @@
 {
 "modulo" : "CTTI1",
 "descripcion" : "CTTI1",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
+"comprobacion" : "COMPR1",
+"copia" : "COPIA1",
+"editar" : "EDITAR1",
+"refrescar" : "REFRES1",
+"evidencia" : "EVID1",
 "SO":"Linux"
 },
 {
