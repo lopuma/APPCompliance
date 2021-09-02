@@ -213,11 +213,28 @@ class Desviacion(ttk.Frame):
         self.DESVfr1_listbox.bind('<<ListboxSelect>>',self.selecionar_modulo)
         self.DESVfr2_lblModulo.bind("<Configure>", self.label_resize)
         self.DESVfr2_lblDescripcion.bind("<Configure>", self.label_resize)
-        #self.DESVfr2_srcBackup.bind("<Motion>",app.alCambiar_Pestaña2)
-        #self.DESVfr2_srcComprobacion.bind("<Motion>",app.alCambiar_Pestaña2)
+        ## --- COPIAR AL ACTIVAR EL SCR DESVIACION
+        self.DESVfr2_srcComprobacion.bind("<Motion>",lambda e:self.copiar_scrDesv(e))
+        self.DESVfr2_srcBackup.bind("<Motion>",lambda e:self.copiar_scrDesv(e))
+        self.DESVfr3_srcEditar.bind("<Motion>",lambda e:self.copiar_scrDesv(e))
+        self.DESVfr3_srcRefrescar.bind("<Motion>",lambda e:self.copiar_scrDesv(e))
+        self.DESVfr3_srcEvidencia.bind("<Motion>",lambda e:self.copiar_scrDesv(e))
+        ## --- MOSTRAR MENU DERECHO
+        self.DESVfr2_srcComprobacion.bind("<Button-3>", app.display_menu_clickDerecho)
+        self.DESVfr2_srcBackup.bind("<Button-3>", app.display_menu_clickDerecho)
+        self.DESVfr3_srcEditar.bind("<Button-3>", app.display_menu_clickDerecho)
+        self.DESVfr3_srcRefrescar.bind("<Button-3>", app.display_menu_clickDerecho)
+        self.DESVfr3_srcEvidencia.bind("<Button-3>", app.display_menu_clickDerecho)
+
     def iconos(self):
         self.BuscarModulo_icon = ImageTk.PhotoImage(
-                    Image.open(path_icon+r"buscar.png").resize((30, 30)))
+                    Image.open(path_icon+r"buscar.png").resize((20, 20)))
+    def copiar_scrDesv(self, event):
+        call = event.widget
+        if call:
+            call.focus()
+            #app.display_menu_clickDerecho
+            call.event_generate("<<Copy>>")
     def widgets_DESVIACION(self):
         # --- DEFINIMOS LOS FRAME, QUE CONTENDRAN LOS WIDGETS --------------------------#
         self.DESV_frame1=ttk.LabelFrame(self, 
@@ -278,12 +295,11 @@ class Desviacion(ttk.Frame):
         self.DESVfr1_entry = ttk.Entry(self.DESV_frame1, width=30)
         self.DESVfr1_entry.config(foreground="black",
                                     font=('Source Sans Pro', 13))
-        self.DESVfr1_entry.grid(row=1, column=0, pady=5, padx=5, ipady=8, sticky='nsew',columnspan=2)
+        self.DESVfr1_entry.grid(row=1, column=0, pady=5, padx=5, ipady=5, sticky='nsew',columnspan=2)
         self.DESVfr1_btnBuscar = ttk.Button(self.DESV_frame1, 
                                                     text='Buscar', 
-                                                    width=5, 
                                                     image=self.BuscarModulo_icon)
-        self.DESVfr1_btnBuscar.grid(row=1, column=0, pady=5, padx=5, ipady=8, sticky='e',columnspan=2)
+        self.DESVfr1_btnBuscar.grid(row=1, column=0, pady=5, padx=5, sticky='nse',columnspan=2)
         # -----------------------------------------------------------------------------#
         self.DESVlist_yScroll = tk.Scrollbar(self.DESV_frame1, orient=tk.VERTICAL)
         self.DESVlist_yScroll.grid(row=2, column=1, pady=5, sticky='nse')
@@ -294,6 +310,10 @@ class Desviacion(ttk.Frame):
                                             yscrollcommand=self.DESVlist_yScroll.set,
                                             font=('Source Sans Pro', 13),
                                             foreground='blue',
+                                            selectbackground='#297F87',
+                                            selectforeground='#F6D167',
+                                            disabledforeground='black',
+                                            exportselection=False,
                                             )
         self.DESVfr1_listbox.grid(row=2, column=0, pady=5, padx=5, sticky='nsew')
         self.DESVlist_xScroll['command'] = self.DESVfr1_listbox.xview
@@ -313,32 +333,58 @@ class Desviacion(ttk.Frame):
         self.DESVfr2_lblComprobacion = ttk.Label(self.DESV_frame2, text='COMPROBACION', width=10) 
         self.DESVfr2_lblComprobacion.grid(row=2, column=0, padx=5, pady=5, sticky='new')
         self.DESVfr2_srcComprobacion = st.ScrolledText(self.DESV_frame2)
-        self.DESVfr2_srcComprobacion.config(width=10, wrap='word')
+        self.DESVfr2_srcComprobacion.config(width=10, 
+                                            wrap='word',
+                                            font=('Source Sans Pro', 13), 
+                                            selectbackground='#297F87',
+                                            selectforeground='#F6D167',
+                                            selectborderwidth=0)
         self.DESVfr2_srcComprobacion.grid(row=3, column=0, padx=5, pady=5, sticky='new')
         ## --- Backup
         self.DESVfr2_lblBackup = ttk.Label(self.DESV_frame2, text='BACKUP', width=10) 
         self.DESVfr2_lblBackup.grid(row=4, column=0, padx=5, pady=5, sticky='new')
         self.DESVfr2_srcBackup = st.ScrolledText(self.DESV_frame2)
-        self.DESVfr2_srcBackup.config(width=10, wrap='word')
+        self.DESVfr2_srcBackup.config(width=10, 
+                                            wrap='word',
+                                            font=('Source Sans Pro', 13), 
+                                            selectbackground='#297F87',
+                                            selectforeground='#F6D167',
+                                            selectborderwidth=0)
         self.DESVfr2_srcBackup.grid(row=5, column=0, padx=5, pady=5, sticky='new')
         ## ======================== FRAME 3 ========================================= ##
         ## --- Editar
-        self.DESVfr3_lblEditar = ttk.Label(self.DESV_frame3, text='EDITAR')
+        self.DESVfr3_lblEditar = ttk.Label(self.DESV_frame3, text='EDITAR ✍')
         self.DESVfr3_lblEditar.grid(row=0, column=0, padx=5, pady=5, sticky='new')
         self.DESVfr3_srcEditar = st.ScrolledText(self.DESV_frame3)
-        self.DESVfr3_srcEditar.config(width=10, wrap='word')
+        self.DESVfr3_srcEditar.config(width=10, 
+                                            wrap='word',
+                                            font=('Source Sans Pro', 13), 
+                                            selectbackground='#297F87',
+                                            selectforeground='#F6D167',
+                                            selectborderwidth=0,
+                                            )
         self.DESVfr3_srcEditar.grid(row=1, column=0, padx=5, pady=5, sticky='new')
         ## --- Refrescar
         self.DESVfr3_lblRefrescar = ttk.Label(self.DESV_frame3, text='REFRESCAR')
         self.DESVfr3_lblRefrescar.grid(row=2, column=0, padx=5, pady=5, sticky='new')
         self.DESVfr3_srcRefrescar = st.ScrolledText(self.DESV_frame3)
-        self.DESVfr3_srcRefrescar.config(width=10, wrap='word')
+        self.DESVfr3_srcRefrescar.config(width=10, 
+                                            wrap='word',
+                                            font=('Source Sans Pro', 13), 
+                                            selectbackground='#297F87',
+                                            selectforeground='#F6D167',
+                                            selectborderwidth=0)
         self.DESVfr3_srcRefrescar.grid(row=3, column=0, padx=5, pady=5, sticky='new')
         ## --- Evidencia
         self.DESVfr3_lblEvidencia = ttk.Label(self.DESV_frame3, text='EVIDENCIA')
         self.DESVfr3_lblEvidencia.grid(row=4, column=0, padx=5, pady=5, sticky='new')
         self.DESVfr3_srcEvidencia = st.ScrolledText(self.DESV_frame3)
-        self.DESVfr3_srcEvidencia.config(width=10, wrap='word')
+        self.DESVfr3_srcEvidencia.config(width=10, 
+                                            wrap='word',
+                                            font=('Source Sans Pro', 13), 
+                                            selectbackground='#297F87',
+                                            selectforeground='#F6D167',
+                                            selectborderwidth=0)
         self.DESVfr3_srcEvidencia.grid(row=5, column=0, padx=5, pady=5, sticky='new')
         ## ------------------------------------------------------------------------------ ##
     def label_resize(self, event):
@@ -362,9 +408,6 @@ class Desviacion(ttk.Frame):
                             self.DESVfr3_srcEditar.insert(END,md['editar'])
                             self.DESVfr3_srcRefrescar.insert(END,md['refrescar'])
                             self.DESVfr3_srcEvidencia.insert(END,md['evidencia'])
-                    print("**********************************")
-                    print('Cliente al selecionar', CLIT)
-                    print("**********************************")
     def limpiar_widgets(self):
         self.DESVfr2_lblModulo['text'] = ''
         self.DESVfr2_lblDescripcion['text'] = ''
@@ -379,17 +422,8 @@ class Desviacion(ttk.Frame):
         self.DESVfr1_listbox.delete(0,END)
         self.limpiar_widgets()
         ## ----------------------------------------- ##
-        print('+++++++++++++++++++++++++++++++++++++++++')
-        print(self.clientesVar.get())
-        print('+++++++++++++++++++++++++++++++++++++++++')
         global CLIT
         CLIT = customer
-        print('---------------------------')
-        print('cliente inicial : ', CLIT)
-        print('---------------------------')
-        print("/////////////////////////////////////////////")
-        print(path_modulo.format(customer))
-        print("/////////////////////////////////////////////")
         with open(path_modulo.format(customer)) as g:
             data = json.load(g)
             for md in data:
@@ -493,38 +527,50 @@ class Aplicacion():
         self.contenedor.rowconfigure(1, weight=1)
         self.cuaderno.add(self.contenedor, text='WorkSpace', underline=0)
         self.cuaderno.pack(expand=1, fill='both')
-        self.cuaderno.bind("<<NotebookTabChanged>>",self.alCambiar_Pestaña)
-
+        self.cuaderno.bind_all("<<NotebookTabChanged>>",lambda e:self.alCambiar_Pestaña(e))
+        self.menu_clickDerecho()
         self.iconos()
         self.widgets_APP()
         self.estilos()
-        #self.root.bind("<Motion>",self.alCambiar_Pestaña2)
-        self.root.bind("<Motion>",self.alCambiar_Pestaña2)
-    def alCambiar_Pestaña2(self, event):
-        # print(event.widget.index(tk.CURRENT))
-        # index = event.widget.index(tk.CURRENT)
-        # ## --- IMPRIME EL NOMBRE DE LA PESTAÑA
-        # print(event.widget.tab(index)['text'])
-        # tab = event.widget.tab(index)['text']
-        ## ---------------------------------------
-        ## me muestra todo los INDENTY 
-        #call = event.widget
-        #print(call)
-        ## ---
-        pass
-        ## --- OBTENER EL INDEX de la pestaña
-        #index = event.widget.index("@%d,%d" % (event.x, event.y))
-        #print(index)
-        ## -------
-        # print("Mouse position: (%s %s)" % (event.x_root, event.y_root))
-        # return
+    def menu_clickDerecho(self):
+        self.menu = Menu(self.root, tearoff=0)
+        self.menu.add_command(label="  Copiar", 
+                                #image=self.copy2_icon,
+                                compound=LEFT,
+                                background='#ccffff', foreground='black',
+                                activebackground='#004c99',activeforeground='white',
+                                font=('Source Sans Pro', 13),
+                                #command=lambda:self.clickDerecho_copy(None),
+                                )
+        self.menu.add_command(label="  Cerrar pestaña", 
+                                #image=self.cerrar_icon,
+                                compound=LEFT,
+                                background='#ccffff', foreground='black',
+                                activebackground='#004c99',activeforeground='white',
+                                font=('Source Sans Pro', 13),
+                                )
+        self.menuTop = Menu(self.root, tearoff=0)
+    def display_menu_clickDerecho(self, event):
+            try:
+                self.menu.tk_popup(event.x_root, event.y_root)
+            except:
+                self.menu.grab_release()
+    def clickDerecho_copy(self, event):
+            desviacion.DESVfr2_srcComprobacion.event_generate("<<Copy>>")
+            desviacion.DESVfr2_srcComprobacion.event_generate("<<Copy>>")
+            desviacion.DESVfr3_srcEditar.event_generate("<<Copy>>")
+            desviacion.DESVfr3_srcRefrescar.event_generate("<<Copy>>")
+            desviacion.DESVfr3_srcEvidencia.event_generate("<<Copy>>")
     def alCambiar_Pestaña(self, event):
-        #print(event.widget.index(tk.CURRENT))
         index = event.widget.index(tk.CURRENT)
-        calli = event.widget
-        print(calli)
+        # calli = event.widget
+        # print(calli)
+        # desviacion.focus_set()
+        # tt = self.cuaderno.focus_get()
+        # print(tt)
+        # if tt:
+        #     print('activo')
         ## --- IMPRIME EL NOMBRE DE LA PESTAÑA
-        #print(event.widget.tab(index)['text'])
         tab = event.widget.tab(index)['text']
         ## ---------------------------------------
         global CLIT
@@ -640,9 +686,13 @@ class Aplicacion():
             Image.open(path_icon+r"acercaDe.png").resize((30, 30)))
     def abrir_issuesDesviacion(self):
         global desviacion
-        desviacion = Desviacion(self)
+        desviacion = Desviacion(self.root)
         self.cuaderno.add(desviacion, text='Issues DESVIACIONES')
         self.cuaderno.select(desviacion)
+        #desviacion.DESVfr1_entry.focus()
+        print('-------------------------------------')
+        print(desviacion)
+        print('-------------------------------------')
     def abrir_issues(self):
         id = self.IssuesVar.get()
         if id == 0:
@@ -653,13 +703,9 @@ class Aplicacion():
         elif id == 1:
             print("abre extracaciones")
     def cargame_elmodulo(self):
-        print('el evento cargado es : -----------------')
         id_tab = app.cuaderno.index(app.cuaderno.select())
-        print(id_tab)
-        print('*------------------------------------------*')
         id = self.ClientVar.get()
         clit = list_client[id]
-        print('el ID de cliente es : ', clit)
         desviacion.clientesVar.set(clit)
         desviacion.limpiar_widgets()
         desviacion.cargar_modulos(clit)
