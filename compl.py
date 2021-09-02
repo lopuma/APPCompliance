@@ -324,13 +324,14 @@ class Desviacion(ttk.Frame):
         self.DESVfr2_lblModulo.grid(row=0, column=0, padx=5, pady=5, sticky='new')
         ## --- Descripcion
         self.DESVfr2_lblDescripcion = ttk.Label(self.DESV_frame2, 
-                                                    text='', 
+                                                    text='',
+                                                    font=('Source Sans Pro', 12),
                                                     width=10, 
                                                     background='#f1ecc3',
                                                     foreground='gray55') 
         self.DESVfr2_lblDescripcion.grid(row=1, column=0, padx=5, pady=5, sticky='new')
         ## --- Comprobacion
-        self.DESVfr2_lblComprobacion = ttk.Label(self.DESV_frame2, text='COMPROBACION', width=10) 
+        self.DESVfr2_lblComprobacion = ttk.Label(self.DESV_frame2, text='COMPROBACIÓN', width=10) 
         self.DESVfr2_lblComprobacion.grid(row=2, column=0, padx=5, pady=5, sticky='new')
         self.DESVfr2_srcComprobacion = st.ScrolledText(self.DESV_frame2)
         self.DESVfr2_srcComprobacion.config(width=10, 
@@ -426,8 +427,11 @@ class Desviacion(ttk.Frame):
         CLIT = customer
         with open(path_modulo.format(customer)) as g:
             data = json.load(g)
+            lisl = []
             for md in data:
-                self.DESVfr1_listbox.insert(END,md['modulo'])
+                lisl.append(md['modulo'])
+        lisl.sort()
+        self.DESVfr1_listbox.insert(END,*lisl)
         self.cambiarNamePestaña(customer)
     def abrir_file(self):
         global Directory

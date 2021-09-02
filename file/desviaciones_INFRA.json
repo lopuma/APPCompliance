@@ -1,122 +1,192 @@
 [
-{
-"modulo" : "Protecting Resources-OSRs/Log File Restrictions",
-"descripcion" : "Invalid Permissions or Ownership for log file: /var/log/wtmp;   -rw-rw-r--.;  owner:  root;   group:  utmp. For more information see rule description.",
-"comprobacion" : "##Se le debe quitar W al grupo.",
-"copia" : "",
-"editar" : "##Quitar permisos:\nchmod g-w /var/log/wtmp\n\n##dejar esta linea para REHL 7:\n\nvi /lib/tmpfiles.d/var.conf\nf /var/log/wtmp 0644 root utmp -\n\n##dejar esta linea para REHL 6\n\nvi /etc/rc.sysinit\nchmod 0644 /var/run/utmp /var/log/wtmp",
-"refrescar" : "",
-"evidencia" : "clear\ndate\nhostname\nls -la /var/log/wtmp",
-"SO":"Linux"
-},
-{
-"modulo" : "Filesystem Configuration/nodev option set on \tmp partition",
-"descripcion" : "Ensure nodev option set on /tmp partition if it exist",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
-"SO":"Linux"
-},
-{
-"modulo" : "Filesystem Configuration/nosuid option set on \tmp partition",
-"descripcion" : "Ensure nosuid option set on /tmp partition if it exist",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
-"SO":"Linux"
-},
-{
-"modulo" : "Filesystem Configuration/noexec option set on \tmp partition",
-"descripcion" : "Ensure noexec option set on /tmp partition if it exist",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
-"SO":"Linux"
-},
-{
-"modulo" : "Filesystem Configuration/nodev option set on \\home partition",
-"descripcion" : "Ensure nodev option set on /home partition if it exist",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
-"SO":"Linux"
-},
-{
-"modulo" : "Filesystem Configuration/noexec option set on \\dev\\shm partition",
-"descripcion" : "Ensure noexec option set on /dev/shm partition if it exist",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
-"SO":"Linux"
-},
-{
-"modulo" : "Filesystem Configuration/Disable filesystem type cramfs",
-"descripcion" : "Filesystem type \"cramfs\" is enabled. It should be disabled if not needed",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
-"SO":"Linux"
-},
-{
-"modulo" : "Filesystem Configuration/Disable filesystem type squashfs",
-"descripcion" : "Filesystem type \"squashfs\" is enabled. It should be disabled if not needed",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
-"SO":"Linux"
-},
-{
-"modulo" : "Filesystem Configuration/Disable filesystem type udf",
-"descripcion" : "Filesystem type \"udf\" is enabled. It should be disabled if not needed",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
-"SO":"Linux"
-},
-{
-"modulo" : "Password Requirements/Automatic Logoff support shells",
-"descripcion" : "/usr/bin/tmux Ensure that /etc/shells only allows users to select shells which support time out.\n\n/bin/tmux Ensure that /etc/shells only allows users to select shells which support time out.",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
-"SO":"Linux"
-},
-{
-"modulo" : "Protecting Resources-OSRs/Set gpgcheck in yum file",
-"descripcion" : "Set gpgcheck=1 in /etc/yum.conf file",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
-"SO":"Linux"
-},
-{
-"modulo" : "",
-"descripcion" : "",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
-"SO":"Linux"
-}
+    {
+        "modulo": "Protecting Resources-OSRs/Log File Restrictions",
+        "descripcion": "Invalid Permissions or Ownership for log file: /var/log/wtmp;   -rw-rw-r--.;  owner:  root;   group:  utmp. For more information see rule description.",
+        "comprobacion": "##Se le debe quitar W al grupo.",
+        "copia": "",
+        "editar": "##Quitar permisos:\nchmod g-w /var/log/wtmp\n\n##dejar esta linea para REHL 7:\n\nvi /lib/tmpfiles.d/var.conf\nf /var/log/wtmp 0644 root utmp -\n\n##dejar esta linea para REHL 6\n\nvi /etc/rc.sysinit\nchmod 0644 /var/run/utmp /var/log/wtmp",
+        "refrescar": "",
+        "evidencia": "clear\ndate\nhostname\nls -la /var/log/wtmp",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Filesystem Configuration/nodev option set on \tmp partition",
+        "descripcion": "Ensure nodev option set on /tmp partition if it exist",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Filesystem Configuration/nosuid option set on \tmp partition",
+        "descripcion": "Ensure nosuid option set on /tmp partition if it exist",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Filesystem Configuration/noexec option set on \tmp partition",
+        "descripcion": "Ensure noexec option set on /tmp partition if it exist",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Filesystem Configuration/nodev option set on \\home partition",
+        "descripcion": "Ensure nodev option set on /home partition if it exist",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Filesystem Configuration/noexec option set on \\dev\\shm partition",
+        "descripcion": "Ensure noexec option set on /dev/shm partition if it exist",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Filesystem Configuration/Disable filesystem type cramfs",
+        "descripcion": "Filesystem type \"cramfs\" is enabled. It should be disabled if not needed",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Filesystem Configuration/Disable filesystem type squashfs",
+        "descripcion": "Filesystem type \"squashfs\" is enabled. It should be disabled if not needed",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Filesystem Configuration/Disable filesystem type udf",
+        "descripcion": "Filesystem type \"udf\" is enabled. It should be disabled if not needed",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Password Requirements/Automatic Logoff support shells",
+        "descripcion": "/usr/bin/tmux Ensure that /etc/shells only allows users to select shells which support time out.\n\n/bin/tmux Ensure that /etc/shells only allows users to select shells which support time out.",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Protecting Resources-OSRs/Set gpgcheck in yum file",
+        "descripcion": "Set gpgcheck=1 in /etc/yum.conf file",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "AD.1.9.1.4 Protecting Resources - User Resources",
+        "descripcion": "File /etc/profile.d/IBMsinit.csh must exist.",
+        "comprobacion": "##Debe existir /etc/profile.d/IBMsinit.csh y contener el correcto script para UMASK.\n\nls -l /etc/profile.d/IBMsinit.csh\ncat /etc/profile.d/IBMsinit.csh",
+        "copia": "##Obtener usuario logueado:\nuser=$(logname)\n\n##BACKUP con usuario en MAYUSCULAS\ncp -p /etc/profile.d/IBMsinit.csh /home/${user^^}/IBMsinit.csh_`date +%d%m%y`\ncd /home/${user^^}/\n\n##BACKUP con usuario en minusculas:\ncp -p /etc/profile.d/IBMsinit.csh /home/${user,,}/IBMsinit.csh_`date +%d%m%y`\ncd /home/${user,,}/",
+        "editar": "##Creamos fichero y asignamos los correctos permisos.\n\ntouch /etc/profile.d/IBMsinit.csh\nchmod 0755 /etc/profile.d/IBMsinit.csh\n\n##Editar y añadir el siguiente SCRIPT:\n\nvi /etc/profile.d/IBMsinit.csh\n\n#--------- begin IBMsinit.csh ---------#\nif ($uid > 199) then\n    umask 077\nendif\n#--------- end IBMsinit.csh  ---------#\n\n##Ademas debemos implementar la invocacion a la llamada del fichero.\n##La invocacion se implementa en la ultima linea.\n\nvi  /etc/csh.login\nsource /etc/profile.d/IBMsinit.csh",
+        "refrescar": "",
+        "evidencia": "clear\ndate\nhostname\ncat /etc/profile.d/IBMsinit.csh\ncat /etc/csh.login  | grep -i  IBMsinit.csh\nls -l /etc/profile.d/IBMsinit.csh",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Network Settings/TCP Configuration Files Restrictions",
+        "descripcion": "Incorrect /etc/sysctl.conf or proc files setting for\n\nnet.ipv4.conf.all.accept_source_route: 1 should be 0\nnet.ipv4.conf.all.secure_redirects: 1 should be 0\nnet.ipv4.conf.default.secure_redirects: 1 should be 0\nnet.ipv4.conf.all.log_martians: 0 should be 1\nnet.ipv4.ip_forward: 1 should be 0\nnet.ipv4.conf.default.log_martians: 0 should be 1\net.ipv4.conf.all.rp_filter: 0 should be 1\nnet.ipv6.conf.all.accept_ra: 1 should be 0\nnet.ipv6.conf.default.accept_ra: 1 should be 0\nnet.ipv6.conf.all.accept_redirects: 1 should be 0\nnet.ipv6.conf.default.accept_redirects: 1 should be 0",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "##Para hacer el cambio:\n\n/sbin/sysctl -w net.ipv4.conf.all.secure_redirects=0\n/sbin/sysctl -w net.ipv4.conf.default.secure_redirects=0\n/sbin/sysctl -w net.ipv4.conf.all.log_martians=1\n/sbin/sysctl -w net.ipv4.conf.default.log_martians=1\n/sbin/sysctl -w net.ipv4.conf.all.rp_filter=1\n/sbin/sysctl -w net.ipv4.conf.default.rp_filter=1\n/sbin/sysctl -w net.ipv6.conf.all.accept_ra=0\n/sbin/sysctl -w net.ipv6.conf.default.accept_ra=0\n/sbin/sysctl -w net.ipv6.conf.all.accept_redirects=0\n/sbin/sysctl -w net.ipv6.conf.default.accept_redirects=0\n/sbin/sysctl -w net.ipv4.ip_forward=0\n/sbin/sysctl -w net.ipv4.conf.default.accept_source_route=0\n/sbin/sysctl -w net.ipv4.conf.all.accept_source_route=0",
+        "refrescar": "\n\nsysctl -p",
+        "evidencia": "clear\ndate\nhostname\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.all.accept_source_route\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.all.secure_redirects\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.default.secure_redirects\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.all.log_martians\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.default.log_martians\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.all.rp_filter\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.default.rp_filter\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.default.accept_source_route\"\n/sbin/sysctl -a |grep -i \"net.ipv6.conf.all.accept_ra\"\n/sbin/sysctl -a |grep -i \"net.ipv6.conf.default.accept_ra\"\n/sbin/sysctl -a |grep -i \"net.ipv6.conf.all.accept_redirects\"\n/sbin/sysctl -a |grep -i \"net.ipv6.conf.default.accept_redirects\"\n/sbin/sysctl -a |grep -i \"net.ipv4.ip_forward\"",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Password Requirements/Automatic Logoff IBMsinit sh TMOUT",
+        "descripcion": "/etc/profile.d/IBMsinit.sh Default: Set systems to terminate a session after 21600 seconds of inactivity. File must  contain \"TMOUT=21600\" followed by \"export TMOUT\". A shorter time frame may be specified.",
+        "comprobacion": "##En /etc/profile.d/IBMsinit.sh, al final del SCRIPT de UMASK\n##Debe tener un TMOUT\n(\"TMOUT solo debe estar implementado en 'IBMsinit.sh'\"):\n\ncat /etc/profile.d/IBMsinit.sh\n\n##SET muestra el valor global:\nset | grep OUT",
+        "copia": "##Obtener usuario logueado:\nuser=$(logname)\n\n##BACKUP con usuario en MAYUSCULAS\ncp -p /etc/profile.d/IBMsinit.sh /home/${user^^}/IBMsinit.sh_`date +%d%m%y`\ncd /home/${user^^}/\n\n##BACKUP con usuario en minusculas:\ncp -p /etc/profile.d/IBMsinit.sh /home/${user,,}/IBMsinit.sh_`date +%d%m%y`\ncd /home/${user,,}/",
+        "editar": "vi /etc/profile.d/IBMsinit.sh\n\n##Añadir al final de SCRIPT:\n\nTMOUT=21600\nexport TMOUT",
+        "refrescar": "",
+        "evidencia": "##SET muestra el valor global('comprobar en otra seccion'):\n\nclear\ndate\nhostname\ncat /etc/profile.d/IBMsinit.sh\nset | grep OUT",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories",
+        "descripcion": "Sticky bit is not set on world-writable directory: /home/ess01012/RHEL",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Network Settings/Ensure LDAP Server is not enabled",
+        "descripcion": "Ensure  LDAP Server is not enabled. Command: systemctl is-enabled slapd",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Password Requirements/\\etc\\profile IBMsinit sh",
+        "descripcion": "/etc/profile should not set/reset the time out control after '. /etc/profile.d/IBMsinit.sh' invocation.",
+        "comprobacion": "##No deben existir 2 controles TMOUT en el servidor.\n##Revisar en /etc/profile, si tiene un TMOUT definido\n\ncat /etc/profile | grep TMOUT\n\n##En /etc/profile.d/IBMsinit.sh, al final del SCRIPT de UMASK\n##Debe tener un TMOUT:\n\ncat /etc/profile.d/IBMsinit.sh",
+        "copia": "##Obtener usuario logueado:\nuser=$(logname)\n\n##BACKUP con usuario en MAYUSCULAS\ncp -p /etc/profile.d/IBMsinit.sh /home/${user^^}/IBMsinit.sh_`date +%d%m%y`\ncd /home/${user^^}/\n\n##BACKUP con usuario en minusculas:\ncp -p /etc/profile.d/IBMsinit.sh /home/${user,,}/IBMsinit.sh_`date +%d%m%y`\ncd /home/${user,,}/",
+        "editar": "##Eliminar/Comentar la entrada TMOUT en /etc/profile.\n\nvi /etc/profile",
+        "refrescar": "",
+        "evidencia": "clear\ndate\nhostname\ncat /etc/profile | grep TMOUT\ncat /etc/profile.d/IBMsinit.sh",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Password Requirements/Automatic Logoff IBMsinit csh autologout",
+        "descripcion": "/etc/profile.d/IBMsinit.csh Default: Set systems to terminate a session after 360 minutes of inactivity. File must contain \"set autologout=360\". A shorter time frame may be specified.",
+        "comprobacion": "##En /etc/profile.d/IBMsinit.csh, al final del SCRIPT de UMASK\n##Debe tener un autologout\n(\"autologout solo debe estar implementado en 'IBMsinit.csh'\"):\n\ncat /etc/profile.d/IBMsinit.csh",
+        "copia": "##Obtener usuario logueado:\nuser=$(logname)\n\n##BACKUP con usuario en MAYUSCULAS\ncp -p /etc/profile.d/IBMsinit.csh /home/${user^^}/IBMsinit.csh_`date +%d%m%y`\ncd /home/${user^^}/\n\n##BACKUP con usuario en minusculas:\ncp -p /etc/profile.d/IBMsinit.csh /home/${user,,}/IBMsinit.csh_`date +%d%m%y`\ncd /home/${user,,}/",
+        "editar": "vi /etc/profile.d/IBMsinit.csh\n\n##Añadir al final de SCRIPT:\n\nset autologout=360",
+        "refrescar": "",
+        "evidencia": "clear\ndate\nhostname\ncat /etc/profile.d/IBMsinit.csh",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "",
+        "descripcion": "",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    }
 ]
