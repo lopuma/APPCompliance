@@ -225,16 +225,37 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_srcEditar.bind("<Button-3>", app.display_menu_clickDerecho)
         self.DESVfr3_srcRefrescar.bind("<Button-3>", app.display_menu_clickDerecho)
         self.DESVfr3_srcEvidencia.bind("<Button-3>", app.display_menu_clickDerecho)
-
+        app.root.bind("<Button-3>", app.display_menu_clickDerecho)
+        app.root.bind_all("<Motion>", self.disabled_menuContextual)
+    def disabled_menuContextual(self, event):
+        widgets_name = event.widget
+        otros_widgets_name = self.DESVfr1_listbox.winfo_name()
+        # print('otros : ',otros_widgets_name)
+        # print(widgets_name)
+        if str(widgets_name )== ".!buttonnotebook":
+            print(idOpenTab)
+            app.menu_Contextual.entryconfig('  Copiar', state='disabled')
+            app.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
+        # if str(otros_widgets_name) == "!listbox":
+        #     print('otro en if: >> ',otros_widgets_name)
+        #     app.menu_Contextual.entryconfig('  Copiar', state='disabled')
+        #     app.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
+        # else:
+        #     app.menu_Contextual.entryconfig('  Copiar', state='normal')
+        #     app.menu_Contextual.entryconfig('  Seleccionar todo', state='normal')
     def iconos(self):
         self.BuscarModulo_icon = ImageTk.PhotoImage(
                     Image.open(path_icon+r"buscar.png").resize((20, 20)))
     def copiar_scrDesv(self, event):
         call = event.widget
         if call:
+            #app.menu_Contextual.grab_release()
+            app.menu_Contextual.entryconfig('  Copiar', state='normal')
+            app.menu_Contextual.entryconfig('  Seleccionar todo', state='normal')
             call.focus()
-            #app.display_menu_clickDerecho
             call.event_generate("<<Copy>>")
+    def buscar_modulo(self):
+        print('buscar')
     def widgets_DESVIACION(self):
         # --- DEFINIMOS LOS FRAME, QUE CONTENDRAN LOS WIDGETS --------------------------#
         self.DESV_frame1=ttk.LabelFrame(self, 
@@ -292,13 +313,14 @@ class Desviacion(ttk.Frame):
         self.DESVfr1_optMn.grid(row=0, column=0, padx=5, pady=5, sticky='new', columnspan=2)
         # -----------------------------------------------------------------------------#
         # --- widgets para buscar -----------------------------------------------------#
-        self.DESVfr1_entry = ttk.Entry(self.DESV_frame1, width=30)
-        self.DESVfr1_entry.config(foreground="black",
+        self.DESVfr1_entModulo = ttk.Entry(self.DESV_frame1, width=30)
+        self.DESVfr1_entModulo.config(foreground="black",
                                     font=('Source Sans Pro', 13))
-        self.DESVfr1_entry.grid(row=1, column=0, pady=5, padx=5, ipady=5, sticky='nsew',columnspan=2)
+        self.DESVfr1_entModulo.grid(row=1, column=0, pady=5, padx=5, ipady=5, sticky='nsew',columnspan=2)
         self.DESVfr1_btnBuscar = ttk.Button(self.DESV_frame1, 
                                                     text='Buscar', 
-                                                    image=self.BuscarModulo_icon)
+                                                    image=self.BuscarModulo_icon,
+                                                    command=self.buscar_modulo)
         self.DESVfr1_btnBuscar.grid(row=1, column=0, pady=5, padx=5, sticky='nse',columnspan=2)
         # -----------------------------------------------------------------------------#
         self.DESVlist_yScroll = tk.Scrollbar(self.DESV_frame1, orient=tk.VERTICAL)
@@ -463,6 +485,7 @@ class ButtonNotebook(ttk.Notebook):
         if name == "tab_btn_close":
             index = self.index("@%d,%d" % (event.x, event.y))
             if index != 0:
+                app.menu_Contextual.entryconfig('  Cerrar pestaña', state='normal')
                 if self._active == index:
                     self.forget(index)
                     self.event_generate("<<NotebookTabClosed>>")
@@ -537,45 +560,38 @@ class Aplicacion():
         self.widgets_APP()
         self.estilos()
     def menu_clickDerecho(self):
-        self.menu = Menu(self.root, tearoff=0)
-        self.menu.add_command(label="  Copiar", 
+        self.menu_Contextual = Menu(self.root, tearoff=0)
+        self.menu_Contextual.add_command(label="  Copiar", 
                                 #image=self.copy2_icon,
                                 compound=LEFT,
                                 background='#ccffff', foreground='black',
                                 activebackground='#004c99',activeforeground='white',
                                 font=('Source Sans Pro', 13),
-                                #command=lambda:self.clickDerecho_copy(None),
                                 )
-        self.menu.add_command(label="  Cerrar pestaña", 
-                                #image=self.cerrar_icon,
+        self.menu_Contextual.add_command(label="  Seleccionar todo", 
+                                #image=self.copy2_icon,
                                 compound=LEFT,
                                 background='#ccffff', foreground='black',
                                 activebackground='#004c99',activeforeground='white',
                                 font=('Source Sans Pro', 13),
                                 )
-        self.menuTop = Menu(self.root, tearoff=0)
+        self.menu_Contextual.add_separator(background='#ccffff')
+        self.menu_Contextual.add_command(label="  Cerrar pestaña", 
+                                #image=self.cerrar_icon,
+                                compound=LEFT,
+                                background='#ccffff', foreground='black',
+                                activebackground='#004c99',activeforeground='white',
+                                font=('Source Sans Pro', 13),
+                                command=self.cerrar_vtnDesviacion
+                                )
     def display_menu_clickDerecho(self, event):
-            try:
-                self.menu.tk_popup(event.x_root, event.y_root)
-            except:
-                self.menu.grab_release()
-    def clickDerecho_copy(self, event):
-            desviacion.DESVfr2_srcComprobacion.event_generate("<<Copy>>")
-            desviacion.DESVfr2_srcComprobacion.event_generate("<<Copy>>")
-            desviacion.DESVfr3_srcEditar.event_generate("<<Copy>>")
-            desviacion.DESVfr3_srcRefrescar.event_generate("<<Copy>>")
-            desviacion.DESVfr3_srcEvidencia.event_generate("<<Copy>>")
+        self.menu_Contextual.tk_popup(event.x_root, event.y_root)
     def alCambiar_Pestaña(self, event):
-        index = event.widget.index(tk.CURRENT)
-        # calli = event.widget
-        # print(calli)
-        # desviacion.focus_set()
-        # tt = self.cuaderno.focus_get()
-        # print(tt)
-        # if tt:
-        #     print('activo')
-        ## --- IMPRIME EL NOMBRE DE LA PESTAÑA
-        tab = event.widget.tab(index)['text']
+        global idOpenTab
+        idOpenTab = event.widget.index(tk.CURRENT)
+        tab = event.widget.tab(idOpenTab)['text']
+        if idOpenTab != 0:
+            self.menu_Contextual.entryconfig('  Cerrar pestaña', state='normal')
         ## ---------------------------------------
         global CLIT
         if tab == 'DESVIACIONES : AFB':
@@ -604,8 +620,18 @@ class Aplicacion():
             CLIT = 'SERVIHABITAT'
         elif tab == 'WorkSpace':
             self.fileMenu.entryconfig('  Clientes', state='disabled')
+            self.menu_Contextual.entryconfig('  Copiar', state='disabled')
+            self.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
+            self.menu_Contextual.entryconfig('  Cerrar pestaña', state='disabled')
         else:
             self.fileMenu.entryconfig('  Clientes', state='normal')
+            # self.menu_Contextual.entryconfig('  Copiar', state='normal')
+            self.menu_Contextual.entryconfig('  Cerrar pestaña', state='normal')
+    def cerrar_vtnDesviacion(self):
+        try:
+            self.cuaderno.hide(idOpenTab)
+        except:
+            pass
     def estilos(self):
         self.style = Style()
         self.style.configure('.',
@@ -693,10 +719,7 @@ class Aplicacion():
         desviacion = Desviacion(self.root)
         self.cuaderno.add(desviacion, text='Issues DESVIACIONES')
         self.cuaderno.select(desviacion)
-        #desviacion.DESVfr1_entry.focus()
-        print('-------------------------------------')
-        print(desviacion)
-        print('-------------------------------------')
+        desviacion.DESVfr1_entModulo.focus()
     def abrir_issues(self):
         id = self.IssuesVar.get()
         if id == 0:
@@ -849,6 +872,7 @@ class Aplicacion():
                                     sticky='sew')
     def mainloop(self):
         self.root.mainloop()
+
 if __name__ == "__main__":
     app = Aplicacion()
     app.mainloop()

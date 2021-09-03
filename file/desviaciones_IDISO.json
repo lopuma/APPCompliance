@@ -1,112 +1,112 @@
 [
-{
-"modulo" : "Protecting Resources-OSRs/Log File Restrictions",
-"descripcion" : "Invalid Permissions or Ownership for log file: /var/log/wtmp;   -rw-rw-r--.;  owner:  root;   group:  utmp. For more information see rule description.",
-"comprobacion" : "##Se le debe quitar W al grupo.",
-"copia" : "",
-"editar" : "##Quitar permisos:\nchmod g-w /var/log/wtmp\n\n##dejar esta linea para REHL 7:\n\nvi /lib/tmpfiles.d/var.conf\nf /var/log/wtmp 0644 root utmp -\n\n##dejar esta linea para REHL 6\n\nvi /etc/rc.sysinit\nchmod 0644 /var/run/utmp /var/log/wtmp",
-"refrescar" : "",
-"evidencia" : "clear\ndate\nhostname\nls -la /var/log/wtmp",
-"SO":"Linux"
-},
-{
-"modulo" : "IDISO1",
-"descripcion" : "IDISO1",
-"comprobacion" : "COMPR1",
-"copia" : "COPIA1",
-"editar" : "EDITAR1",
-"refrescar" : "REFRES1",
-"evidencia" : "EVID1",
-"SO":"Linux"
-},
-{
-"modulo" : "IDISO2",
-"descripcion" : "IDISO2",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
-"SO":"Linux"
-},
-{
-"modulo" : "",
-"descripcion" : "",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
-"SO":"Linux"
-},
-{
-"modulo" : "",
-"descripcion" : "",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
-"SO":"Linux"
-},
-{
-"modulo" : "",
-"descripcion" : "",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
-"SO":"Linux"
-},
-{
-"modulo" : "",
-"descripcion" : "",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
-"SO":"Linux"
-},
-{
-"modulo" : "",
-"descripcion" : "",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
-"SO":"Linux"
-},
-{
-"modulo" : "",
-"descripcion" : "",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
-"SO":"Linux"
-},
-{
-"modulo" : "",
-"descripcion" : "",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
-"SO":"Linux"
-},
-{
-"modulo" : "",
-"descripcion" : "",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
-"SO":"Linux"
-}
+    {
+        "modulo": "Protecting Resources-OSRs/Log File Restrictions",
+        "descripcion": "Invalid Permissions or Ownership for log file: /var/log/wtmp;   -rw-rw-r--.;  owner:  root;   group:  utmp. For more information see rule description.",
+        "comprobacion": "##Se le debe quitar W al grupo.",
+        "copia": "",
+        "editar": "##Quitar permisos:\nchmod g-w /var/log/wtmp\n\n##------------------------------------------------------------\n##dejar esta linea para REHL 7:\n##------------------------------------------------------------\n\nvi /lib/tmpfiles.d/var.conf\nf /var/log/wtmp 0644 root utmp -\n\n##------------------------------------------------------------\n##dejar esta linea para REHL 6\n##------------------------------------------------------------\n\nvi /etc/rc.sysinit\nchmod 0644 /var/run/utmp /var/log/wtmp",
+        "refrescar": "",
+        "evidencia": "clear\ndate\nhostname\nls -la /var/log/wtmp\ncat /lib/tmpfiles.d/var.conf | grep -w wtmp",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "IDISO1",
+        "descripcion": "IDISO1",
+        "comprobacion": "COMPR1",
+        "copia": "COPIA1",
+        "editar": "EDITAR1",
+        "refrescar": "REFRES1",
+        "evidencia": "EVID1",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "IDISO2",
+        "descripcion": "IDISO2",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "",
+        "descripcion": "",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "",
+        "descripcion": "",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "",
+        "descripcion": "",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "",
+        "descripcion": "",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "",
+        "descripcion": "",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "",
+        "descripcion": "",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "",
+        "descripcion": "",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "",
+        "descripcion": "",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    }
 ]

@@ -120,7 +120,7 @@
   "LBK": [
     {
       "directory": "/BDistribuido/",
-      "owner": "root1",
+      "owner": "root",
       "tipo": "/F/",
       "ownerGroup": "Sistemas",
       "user": [
@@ -173,8 +173,26 @@
       ]
     },
     {
+      "directory": "/BDistribuidoWfPRE/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        ""
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/BDistribuidoWfPRE/\""
+      ]
+    },
+    {
       "directory": "/appsrv/",
-      "owner": "---",
+      "owner": "nodejs",
       "tipo": "/C/",
       "ownerGroup": "Group Customer",
       "user": [

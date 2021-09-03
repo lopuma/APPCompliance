@@ -5,17 +5,18 @@
       "owner": "ownerAFB1",
       "tipo": "tipoAFB1",
       "ownerGroup": "groupAFB1",
-      "user" : [
-         "User1","User2"
+      "user": [
+        "User1",
+        "User2"
       ],
-      "code" : "1-OK",
+      "code": "1-OK",
       "servers": [
         "ALL servers"
       ],
-      "risk":"GENERICO",
-      "impact":"GENERICO",
+      "risk": "GENERICO",
+      "impact": "GENERICO",
       "variable": [
-	"account=\"/opt/IBM/AFB1/\""
+        "account=\"/opt/IBM/AFB1/\""
       ]
     },
     {
@@ -23,17 +24,18 @@
       "owner": "ownerAFB2",
       "tipo": "tipoAFB2",
       "ownerGroup": "groupAFB2",
-      "user" : [
-         "User1","User2"
+      "user": [
+        "User1",
+        "User2"
       ],
-      "code" : "1-OK",
+      "code": "1-OK",
       "servers": [
         "ALL servers"
       ],
-      "risk":"GENERICO",
-      "impact":"GENERICO",
+      "risk": "GENERICO",
+      "impact": "GENERICO",
       "variable": [
-	"account=\"/opt/IBM/AFB2/\""
+        "account=\"/opt/IBM/AFB2/\""
       ]
     }
   ],
@@ -43,17 +45,18 @@
       "owner": "ownerASISA1",
       "tipo": "tipoASISA1",
       "ownerGroup": "groupASISA1",
-      "user" : [
-         "User1","User2"
+      "user": [
+        "User1",
+        "User2"
       ],
-      "code" : "1-OK",
+      "code": "1-OK",
       "servers": [
         "ALL servers"
       ],
-      "risk":"GENERICO",
-      "impact":"GENERICO",
+      "risk": "GENERICO",
+      "impact": "GENERICO",
       "variable": [
-	"account=\"/opt/IBM/ASISA1/\""
+        "account=\"/opt/IBM/ASISA1/\""
       ]
     },
     {
@@ -61,17 +64,18 @@
       "owner": "ownerASISA2",
       "tipo": "tipoASISA2",
       "ownerGroup": "groupASISA2",
-      "user" : [
-         "User1","User2"
+      "user": [
+        "User1",
+        "User2"
       ],
-      "code" : "1-OK",
+      "code": "1-OK",
       "servers": [
         "ALL servers"
       ],
-      "risk":"GENERICO",
-      "impact":"GENERICO",
+      "risk": "GENERICO",
+      "impact": "GENERICO",
       "variable": [
-	"account=\"/opt/IBM/ASISA2/\""
+        "account=\"/opt/IBM/ASISA2/\""
       ]
     }
   ],
@@ -81,17 +85,17 @@
       "owner": "Customer",
       "tipo": "/C/",
       "ownerGroup": "Group client",
-      "user" : [
-         "Customer"
+      "user": [
+        "Customer"
       ],
-      "code" : "2-DOC",
+      "code": "2-DOC",
       "servers": [
         "ALL servers"
       ],
-      "risk":"GENERICO",
-      "impact":"GENERICO",
+      "risk": "GENERICO",
+      "impact": "GENERICO",
       "variable": [
-	                ""
+        ""
       ]
     },
     {
@@ -99,17 +103,17 @@
       "owner": "Customer",
       "tipo": "/C/",
       "ownerGroup": "Group Customer",
-      "user" : [
-         "Customer"
+      "user": [
+        "Customer"
       ],
-      "code" : "2-DOC",
+      "code": "2-DOC",
       "servers": [
         "ALL servers"
       ],
-      "risk":"GENERICO",
-      "impact":"GENERICO",
+      "risk": "GENERICO",
+      "impact": "GENERICO",
       "variable": [
-	                ""
+        ""
       ]
     },
     {
@@ -117,17 +121,17 @@
       "owner": "Customer",
       "tipo": "/C/",
       "ownerGroup": "Group client",
-      "user" : [
-         "Customer"
+      "user": [
+        "Customer"
       ],
-      "code" : "2-DOC",
+      "code": "2-DOC",
       "servers": [
         "ALL servers"
       ],
-      "risk":"GENERICO",
-      "impact":"GENERICO",
+      "risk": "GENERICO",
+      "impact": "GENERICO",
       "variable": [
-	                ""
+        ""
       ]
     }
   ]
