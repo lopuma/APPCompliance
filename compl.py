@@ -45,6 +45,12 @@ list_issues = (
     "DESVIACIONES",
     "EXTRACIONES"
 )
+# --- VARIABLE GLOBAL ---
+asigne_Ciente = ""
+idOpenTab = 0
+listModulo = []
+listClave = []
+data = []
 class Directory(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -227,22 +233,13 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_srcEvidencia.bind("<Button-3>", app.display_menu_clickDerecho)
         app.root.bind("<Button-3>", app.display_menu_clickDerecho)
         app.root.bind_all("<Motion>", self.disabled_menuContextual)
+        self.DESVfr1_entModulo.bind("<Return>", self.buscar_modulo)
     def disabled_menuContextual(self, event):
         widgets_name = event.widget
         otros_widgets_name = self.DESVfr1_listbox.winfo_name()
-        # print('otros : ',otros_widgets_name)
-        # print(widgets_name)
         if str(widgets_name )== ".!buttonnotebook":
-            print(idOpenTab)
             app.menu_Contextual.entryconfig('  Copiar', state='disabled')
             app.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
-        # if str(otros_widgets_name) == "!listbox":
-        #     print('otro en if: >> ',otros_widgets_name)
-        #     app.menu_Contextual.entryconfig('  Copiar', state='disabled')
-        #     app.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
-        # else:
-        #     app.menu_Contextual.entryconfig('  Copiar', state='normal')
-        #     app.menu_Contextual.entryconfig('  Seleccionar todo', state='normal')
     def iconos(self):
         self.BuscarModulo_icon = ImageTk.PhotoImage(
                     Image.open(path_icon+r"buscar.png").resize((20, 20)))
@@ -254,8 +251,6 @@ class Desviacion(ttk.Frame):
             app.menu_Contextual.entryconfig('  Seleccionar todo', state='normal')
             call.focus()
             call.event_generate("<<Copy>>")
-    def buscar_modulo(self):
-        print('buscar')
     def widgets_DESVIACION(self):
         # --- DEFINIMOS LOS FRAME, QUE CONTENDRAN LOS WIDGETS --------------------------#
         self.DESV_frame1=ttk.LabelFrame(self, 
@@ -320,7 +315,7 @@ class Desviacion(ttk.Frame):
         self.DESVfr1_btnBuscar = ttk.Button(self.DESV_frame1, 
                                                     text='Buscar', 
                                                     image=self.BuscarModulo_icon,
-                                                    command=self.buscar_modulo)
+                                                    command=lambda : self.buscar_modulo(event=None))
         self.DESVfr1_btnBuscar.grid(row=1, column=0, pady=5, padx=5, sticky='nse',columnspan=2)
         # -----------------------------------------------------------------------------#
         self.DESVlist_yScroll = tk.Scrollbar(self.DESV_frame1, orient=tk.VERTICAL)
@@ -414,23 +409,22 @@ class Desviacion(ttk.Frame):
         event.widget['wraplength'] = event.width
     def selecionar_modulo(self, event):
         modulo_selecionado = event.widget.get(ANCHOR)
-        modulo_selecionado = str(modulo_selecionado).strip()
-        print(modulo_selecionado)
-        if 'CLIT' in globals():
-            with open(path_modulo.format(CLIT)) as g:
-                    data = json.load(g)
-                    for md in data:
-                        if modulo_selecionado == md['modulo']:
-                            ## --- LIMPIAR ------------------------------------- ##                      
-                            self.limpiar_widgets()
-                            ## ------------------------------------------------- ##
-                            self.DESVfr2_lblModulo['text'] = md['modulo']
-                            self.DESVfr2_lblDescripcion['text'] = md['descripcion']
-                            self.DESVfr2_srcComprobacion.insert(END,md['comprobacion'])
-                            self.DESVfr2_srcBackup.insert(END,md['copia'])
-                            self.DESVfr3_srcEditar.insert(END,md['editar'])
-                            self.DESVfr3_srcRefrescar.insert(END,md['refrescar'])
-                            self.DESVfr3_srcEvidencia.insert(END,md['evidencia'])
+        with open(path_modulo.format(asigne_Ciente)) as g:
+            data = json.load(g)
+            for md in data:
+                if modulo_selecionado in md['modulo']:
+                    ## --- LIMPIAR ------------------------------------- ##                      
+                    self.limpiar_widgets()
+                    ## ------------------------------------------------- ##
+                    self.mostrar_datosWidgets(md)
+    def mostrar_datosWidgets(self, md):
+        self.DESVfr2_lblModulo['text'] = md['modulo']
+        self.DESVfr2_lblDescripcion['text'] = md['descripcion']
+        self.DESVfr2_srcComprobacion.insert(END,md['comprobacion'])
+        self.DESVfr2_srcBackup.insert(END,md['copia'])
+        self.DESVfr3_srcEditar.insert(END,md['editar'])
+        self.DESVfr3_srcRefrescar.insert(END,md['refrescar'])
+        self.DESVfr3_srcEvidencia.insert(END,md['evidencia'])
     def limpiar_widgets(self):
         self.DESVfr2_lblModulo['text'] = ''
         self.DESVfr2_lblDescripcion['text'] = ''
@@ -440,21 +434,76 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_srcRefrescar.delete('1.0',END)
         self.DESVfr3_srcEvidencia.delete('1.0',END)
     def cargar_modulos(self, *args):
+        global asigne_Ciente
+        global listModulo
+        global listClave
+        #global data          
         customer = self.clientesVar.get()
-        ## --- LIMPIAR ---
+        ## --- LIMPIAR -----------------------------
         self.DESVfr1_listbox.delete(0,END)
         self.limpiar_widgets()
         ## ----------------------------------------- ##
-        global CLIT
-        CLIT = customer
+        asigne_Ciente = customer       
         with open(path_modulo.format(customer)) as g:
             data = json.load(g)
-            lisl = []
+            listModulo = []
+            listClave = []
             for md in data:
-                lisl.append(md['modulo'])
-        lisl.sort()
-        self.DESVfr1_listbox.insert(END,*lisl)
+                listModulo.append(md['modulo'])
+                listClave.append(md['clave'])
+        listModulo.sort()
+        self.DESVfr1_listbox.insert(END,*listModulo)
         self.cambiarNamePestaña(customer)
+    def buscar_modulo(self, event):
+        valor_aBuscar = self.DESVfr1_entModulo.get()
+        clave_Buscado = [n for n in listClave if valor_aBuscar.upper().strip() in n]
+        modulo_Buscado = [n for n in listModulo if valor_aBuscar.strip() in n]
+        if len(clave_Buscado) <= 1:
+            clave_Buscado = str(clave_Buscado).replace("[","").replace("]","").replace("'","")
+        else:
+            clave_Buscado = ""
+        if len(modulo_Buscado) <= 1:
+            modulo_Buscado = str(modulo_Buscado).replace("[","").replace("]","").replace("'","")
+        else:
+            modulo_Buscado = ""
+        print('//---------------------------------------------------//')
+        print("CLAVE BUSCADO -- >< -- : ",clave_Buscado)
+        print("MODULO BUSCADO -- >< -- : ",modulo_Buscado)
+        print('//---------------------------------------------------//')
+        # ## --------- OBTENER MODULO POR CLAVE O MODULO -------------- ## //TODO "definir si buscar por clave o modulo"
+        if len(clave_Buscado) == 0 and len(modulo_Buscado) == 0:
+            self.limpiar_widgets()
+            mb.showerror("ERROR","Esta vacio o no existe el modulo.\nPrueba a buscar por CLAVE o el MODULO completo")
+        elif len(clave_Buscado) != 0:
+            with open(path_modulo.format(asigne_Ciente)) as g:
+                data = []
+                data = json.load(g)
+                for md in data:
+                    if clave_Buscado in md['clave']:
+                        modulo_Encontrado = md['modulo']
+                        ## --- LIMPIAR ------------------------------------- ##                      
+                        self.limpiar_widgets()
+                        ## ------------------------------------------------- ##
+                        self.mostrar_datosWidgets(md)
+                self.DESVfr1_listbox.selection_clear(0, tk.END)        
+                modulo_ListBox = self.DESVfr1_listbox.get(0, tk.END)
+                indice = modulo_ListBox.index(modulo_Encontrado)
+                self.DESVfr1_listbox.selection_set(indice)
+        else:
+            data = []
+            with open(path_modulo.format(asigne_Ciente)) as g:
+                data = json.load(g)
+                for md in data:
+                    if modulo_Buscado in md['modulo']:
+                        modulo_Encontrado = md['modulo']
+                        ## --- LIMPIAR ------------------------------------- ##                      
+                        self.limpiar_widgets()
+                        ## ------------------------------------------------- ##
+                        self.mostrar_datosWidgets(md)
+                self.DESVfr1_listbox.selection_clear(0, tk.END)
+                modulo_ListBox = self.DESVfr1_listbox.get(0, tk.END)
+                indice = modulo_ListBox.index(modulo_Encontrado)
+                self.DESVfr1_listbox.selection_set(indice)
     def abrir_file(self):
         global Directory
         files = Directory(self)
@@ -588,45 +637,55 @@ class Aplicacion():
         self.menu_Contextual.tk_popup(event.x_root, event.y_root)
     def alCambiar_Pestaña(self, event):
         global idOpenTab
+        global asigne_Ciente
         idOpenTab = event.widget.index(tk.CURRENT)
         tab = event.widget.tab(idOpenTab)['text']
         if idOpenTab != 0:
             self.menu_Contextual.entryconfig('  Cerrar pestaña', state='normal')
-        ## ---------------------------------------
-        global CLIT
-        if tab == 'DESVIACIONES : AFB':
-            CLIT = 'AFB'
-        elif tab == 'DESVIACIONES : ASISA':
-            CLIT = 'ASISA'
-        elif tab == 'DESVIACIONES : CESCE':
-            CLIT = 'CESCE'
-        elif tab == 'DESVIACIONES : CTTI':
-            CLIT = 'CTTI'
-        elif tab == 'DESVIACIONES : ENEL':
-            CLIT = 'ENEL'
-        elif tab == 'DESVIACIONES : EUROFRED':
-            CLIT = 'EUROFRED'
-        elif tab == 'DESVIACIONES : FT':
-            CLIT = 'FT'
-        elif tab == 'DESVIACIONES : INFRA':
-            CLIT = 'INFRA'
-        elif tab == 'DESVIACIONES : IDISO':
-            CLIT = 'IDISO'
-        elif tab == 'DESVIACIONES : LBK':
-            CLIT = 'LBK'
-        elif tab == 'DESVIACIONES : PLANETA':
-            CLIT = 'PLANETA'
-        elif tab == 'DESVIACIONES : SERVIHABITAT':
-            CLIT = 'SERVIHABITAT'
-        elif tab == 'WorkSpace':
+        ## -----------ASIGNAMOS A UNA VARIABLE CADA CLIENTE----------------------------
+        if tab == 'WorkSpace':
+            asigne_Ciente = ""
             self.fileMenu.entryconfig('  Clientes', state='disabled')
             self.menu_Contextual.entryconfig('  Copiar', state='disabled')
             self.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
             self.menu_Contextual.entryconfig('  Cerrar pestaña', state='disabled')
+        elif tab == 'DESVIACIONES : AFB':
+            asigne_Ciente = 'AFB'
+        elif tab == 'DESVIACIONES : ASISA':
+            asigne_Ciente = 'ASISA'
+        elif tab == 'DESVIACIONES : CESCE':
+            asigne_Ciente = 'CESCE'
+        elif tab == 'DESVIACIONES : CTTI':
+            asigne_Ciente = 'CTTI'
+        elif tab == 'DESVIACIONES : ENEL':
+            asigne_Ciente = 'ENEL'
+        elif tab == 'DESVIACIONES : EUROFRED':
+            asigne_Ciente = 'EUROFRED'
+        elif tab == 'DESVIACIONES : FT':
+            asigne_Ciente = 'FT'
+        elif tab == 'DESVIACIONES : INFRA':
+            asigne_Ciente = 'INFRA'
+        elif tab == 'DESVIACIONES : IDISO':
+            asigne_Ciente = 'IDISO'
+        elif tab == 'DESVIACIONES : LBK':
+            asigne_Ciente = 'LBK'
+        elif tab == 'DESVIACIONES : PLANETA':
+            asigne_Ciente = 'PLANETA'
+        elif tab == 'DESVIACIONES : SERVIHABITAT':
+            asigne_Ciente = 'SERVIHABITAT'
         else:
             self.fileMenu.entryconfig('  Clientes', state='normal')
-            # self.menu_Contextual.entryconfig('  Copiar', state='normal')
             self.menu_Contextual.entryconfig('  Cerrar pestaña', state='normal')
+        if 'asigne_Ciente' in globals() and len(asigne_Ciente) != 0:
+            with open(path_modulo.format(asigne_Ciente)) as g:
+                global listClave
+                global listModulo
+                data = json.load(g)
+                listModulo = []
+                listClave = []
+                for md in data:
+                    listModulo.append(md['modulo'])
+                    listClave.append(md['clave'])
     def cerrar_vtnDesviacion(self):
         try:
             self.cuaderno.hide(idOpenTab)
@@ -730,12 +789,11 @@ class Aplicacion():
         elif id == 1:
             print("abre extracaciones")
     def cargame_elmodulo(self):
-        id_tab = app.cuaderno.index(app.cuaderno.select())
         id = self.ClientVar.get()
-        clit = list_client[id]
-        desviacion.clientesVar.set(clit)
+        ccl = list_client[id]
+        desviacion.clientesVar.set(ccl)
         desviacion.limpiar_widgets()
-        desviacion.cargar_modulos(clit)
+        desviacion.cargar_modulos(ccl)
     def widgets_APP(self):
         self.menuBar = tk.Menu(self.root, relief=FLAT, border=0)
         self.root.config(menu=self.menuBar)

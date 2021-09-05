@@ -1,122 +1,90 @@
 [
-{
-"modulo" : "Protecting Resources-OSRs/Log File Restrictions",
-"descripcion" : "Invalid Permissions or Ownership for log file: /var/log/wtmp;   -rw-rw-r--.;  owner:  root;   group:  utmp. For more information see rule description.",
-"comprobacion" : "##Se le debe quitar W al grupo.",
-"copia" : "",
-"editar" : "##Quitar permisos:\nchmod g-w /var/log/wtmp\n\n##------------------------------------------------------------\n##dejar esta linea para REHL 7:\n##------------------------------------------------------------\n\n##EDITAR\nvi /lib/tmpfiles.d/var.conf\n\n##AÑADIR / REMPLAZAR\nf /var/log/wtmp 0644 root utmp -\n\n##------------------------------------------------------------\n##dejar esta linea para REHL 6\n##------------------------------------------------------------\n\n##EDITAR\nvi /etc/rc.sysinit\n\n##AÑADIR / REMPLAZAR\nchmod 0644 /var/run/utmp /var/log/wtmp",
-"refrescar" : "",
-"evidencia" : "clear\ndate\nhostname\nls -la /var/log/wtmp\ncat /lib/tmpfiles.d/var.conf | grep -w wtmp",
-"SO":"Linux"
-},
-{
-"modulo" : "Business Use Notice/Business Use Notice Required",
-"descripcion" : "Missing or Incorrect Business Use Notice. It should be set in /etc/motd",
-"comprobacion" : "##Debe tener el BUN actual.",
-"copia" : "",
-"editar" : "vi /etc/motd\n\n##AÑADIR / REMPLAZAR :\n\n******************************************************************************************************************************\n*                                                                                                                            *\n*  Liberbank systems must only be used for conducting Liberbank business or for purposes authorized by Liberbank management. *\n*                                                                                                                            *\n******************************************************************************************************************************\n\n+------------------------------------------------------------------------------+\n| Liberbank systems must only be used for conducting Liberbank business or for |\n| purposes authorized by Liberbank management                                  |\n| Use is subject to audit at any time by IBM management.                       |\n+------------------------------------------------------------------------------+",
-"refrescar" : "",
-"evidencia" : "clear\ndate\nhostname\ncat /etc/motd",
-"SO":"Linux"
-},
-{
-"modulo" : "Network Settings/Ensure nfs-utils is not enabled and active",
-"descripcion" : "Ensure nfs is not enabled. Command: systemctl is-enabled nfs",
-"comprobacion" : "##No es un servicio requerido, por lo que se puede deshabilitar.\n##Antes de nada comprobar que no tenga: shares/filesystem compartiendo.\n##Debe salir vacio:\n\ncat /etc/exports\n\n##En el caso de tener shares/filesystem, contactar con el SOPORTE TECNICO.\n\nsystemctl status nfs\n\n##Debe salir disable en todo :\n(/usr/lib/systemd/system/nfs-server.service; disabled; vendor preset: disabled)",
-"copia" : "",
-"editar" : "systemctl stop nfs.service\nsystemctl disable nfs.service",
-"refrescar" : "",
-"evidencia" : "clear\ndate\nhostname\nsystemctl status nfs.service",
-"SO":"Linux"
-},
-{
-"modulo" : "Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories",
-"descripcion" : "Sticky bit is not set on world-writable directory: $directory",
-"comprobacion" : "##Hay que tener en cuenta el tipo de owner al que pertenece, cada directorio RAIZ.\n\n##Ya sea de tipo '/C/F/S'\nSi es /C/, se pasa a excepcion con RISK e IMPACT\n##por favor revisar la seccion de RISK e IMPACT\n\n##Si es de tipo /F/S, se debe preguntar al owner, si podemos modificar los permisos(REVISAR DIRECTORY).",
-"copia" : "",
-"editar" : "##Se puede quitar de forma 'recursiva' o por 'individual'\n##$directory : es la variable del directorio raiz a cambiar permisos.\n\n##------------------------------------------------------------\n##Asi quitamos de permisos de W a Other, en los directorios('recursivo'):\n##------------------------------------------------------------\n\nfind $directory -type d -perm -o=w -exec chmod o-w {} +\n\n##------------------------------------------------------------\n##Asi quitamos de permisos de W a Other, en los ficheros('recursivo'):\n##------------------------------------------------------------\n\nfind $directory -type f -perm -o=w -exec chmod o-w {} +\n\n\n##------------------------------------------------------------\n##Asi quitamos permisos, de W a other de forma('individual'):\n##------------------------------------------------------------\n\nchmod o-w $directory",
-"refrescar" : "",
-"evidencia" : "##------------------------------------------------------------\n##De forma ('recursiva'):\n##------------------------------------------------------------\n\nclear\ndate\nhostname\nfind $directory -type d -perm -o=wx | wc -l\nfind $directory -type f -perm -o=wx | wc -l\nls -ld $directory\n\n##------------------------------------------------------------\n##De forma('individual'):\n##------------------------------------------------------------\n\nls -ld $directory",
-"SO":"Linux"
-},
-{
-"modulo" : "Protecting Resources-OSRs/CRON Full Path Restriction",
-"descripcion" : "Missing $MissingPath path: null. $MissingPath path must be used for commands in CRON.",
-"comprobacion" : "## Entrar al Servidor\n## Mirar cual es el PATH del fichero/s\n\nfind / -name '$MissingPath'\n##Donde '$MissingPath', es la variable del fichero que le falta el path\n\n##Buscar en los ficheros del CRON, el fichero $MissingPath, para añadir el path correcto.\n\ncat /var/spool/cron/crontabs  | grep -i \"$MissingPath\"\ncat /var/spool/cron/root | grep -i \"$MissingPath\"\ncat /var/spool/cron/tabs/root  | grep -i \"$MissingPath\"\ncat /etc/crontab | grep -i \"$MissingPath\"",
-"copia" : "cp -p 'FICHERO DEL CRON' /home/$(logname)/\"$MissingPath\"_`date +%d%m%y`",
-"editar" : "vi /var/spool/cron/root\n\n##insertar EJEMPLO:\n/usr/bin/$MissingPath",
-"refrescar" : "",
-"evidencia" : "clear\ndate\nhostname\ncat /var/spool/cron/root | grep -i \"$MissingPath\"",
-"SO":"Linux"
-},
-{
-"modulo" : "Password Requirements/Password MIN Age Shadow",
-"descripcion" : "Account $account has invalid Password Min Age setting of null  should be set to Customer Required Setting: 1. Account Type: Customer",
-"comprobacion" : "##Todas las cuentas, ya sean /C/F/S, deben tener el MINAGE a 1.\n\n##Excepto las cuentas del PAM de LBK:\nAccount ibmldadm\nAccount ibmldtsm\nAccount ibmldtiv\nAccount ibmldphc\nAccount ibmldiam\nAccount ibmldebh\nAccount ibmldbd\nadmpam_sys1\n\n##Revisar RISK e IMPACT",
-"copia" : "",
-"editar" : "##Introducir cuenta(entre las \"\"):\naccount=\"\"\n\n##Donde $account, va la cuenta a aplicar MINAGE\n\ncat /etc/passwd | grep -i $account\n\nchage -m 1 $account",
-"refrescar" : "",
-"evidencia" : "clear\ndate\nhostname\nchage -l $account\ncat /etc/passwd | grep -i $account",
-"SO":"Linux"
-},
-{
-"modulo" : "Encryption/Password Encryption Required",
-"descripcion" : "/etc/pam.d/$pam_file Any file in /etc/pam.d containing \"password sufficient pam_unix.so\" stanza must carry the \"sha512 shadow\" options.\n\n/etc/pam.d/$pam_file Any file in /etc/pam.d containing \"password sufficient pam_unix.so\" stanza must carry the \"sha512 shadow\" options.",
-"comprobacion" : "##Todo fichero del PAM que sea valido, debe tener en el modulo 'password sufficient pam_unix.so'\n\n##Los parametro sha512, shadow.\n\n##Introducir el fichero del PAM(entre las \"\"):\npam_file=\"\"\n\ncat /etc/pam.d/$pam_file | grep -i password\n\n##Hay fichero del PAM, que no son validos, los llamados .OLD, .backup, etc etc, son todos los que sean copias de los ficheros:\n\n##/etc/pam.d/system-auth\n##/etc/pam.d/password-auth\n\n##Estos se deben mover al HOME y se corrige la desviación, OJO solo los que son COPIAS/BACKUPS.",
-"copia": "##Obtener nombre de usuario:\nuser=$(logname)\n\n##------------------------------------------------------------\n##Copiar con usuario en MAYÚSCULAS\n##------------------------------------------------------------\n\ncp -p /etc/pam.d/$pam_file /home/${user^^}/\"$pam_file\"_`date +%d%m%y`\n\ncd /home/${user^^}/\nls -la\n\n##------------------------------------------------------------\n##Copiar con usuario en minúsculas\n##------------------------------------------------------------\n\ncp -p /etc/pam.d/$pam_file /home/${user,,}/\"$pam_file\"_`date +%d%m%y`\n\ncd /home/${user,,}/\nls -la\n",
-"editar" : "##------------------------------------------------------------\n##SI son copias/backups, hay que moverlos de /etc/pam.d/ a nuestro HOME\n##------------------------------------------------------------\n\n##------------------------------------------------------------\n##home en MAYUSCULAS\n##------------------------------------------------------------\nmv /etc/pam.d/$pam_file /home/${user^^}/\ncd /home/${user,,}/\nls -la\n\n##------------------------------------------------------------\n##home en MINUSCULAS\n##------------------------------------------------------------\nmv /etc/pam.d/$pam_file /home/${user,,}/\ncd /home/${user,,}/\nls -la\n\n##------------------------------------------------------------\n##Sin son fichero del PAM validos, hay que remplazar md5 por sha512, en el modulo 'password sufficient pam_unix.so'\n##------------------------------------------------------------\n\nvi /etc/pam.d/$pam_file",
-"refrescar" : "",
-"evidencia" : "clear\ndate\nhostname\ncat /etc/pam.d/$pam_file | egrep -i \"password|sha512\"\nls -la /etc/pam.d/$pam_file\n",
-"SO":"Linux"
-},
-{
-"modulo" : "Logging/Ntpd has secure defaults",
-"descripcion" : "Key defaults for both ip4 and ip6 must be set to: nomodify notrap nopeer noquery. Configuration file /etc/ntp.conf",
-"comprobacion" : "",
-"copia": "##Obtener nombre de usuario:\nuser=$(logname)\n\n##------------------------------------------------------------\n##Copiar con usuario en MAYÚSCULAS\n##------------------------------------------------------------\n\ncp -p /etc/ntp.conf /home/${user^^}/ntp_`date +%d%m%y`\n\ncd /home/${user^^}/\nls -la\n\n##------------------------------------------------------------\n##Copiar con usuario en minúsculas\n##------------------------------------------------------------\n\ncp -p /etc/ntp.conf /home/${user,,}/ntp_`date +%d%m%y`\n\ncd /home/${user,,}/\nls -la\n",
-"editar" : "vi /etc/ntp.conf\n\n##AÑADIR / REMPLAZAR en: \n# permit the source to query or modify the service on this system.\n\nrestrict default kod nomodify notrap nopeer noquery\nrestrict -6 default kod nomodify notrap nopeer noquery\n\n##Y por debajo de:\n# the administrative functions.\n\nrestrict 127.0.0.1\nrestrict -6 ::1",
-"refrescar" : "",
-"evidencia" : "clear\ndate\nhostname\ncat /etc/ntp.conf | grep -i restrict",
-"SO":"Linux"
-},
-{
-"modulo" : "",
-"descripcion" : "",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
-"SO":"Linux"
-},
-{
-"modulo" : "",
-"descripcion" : "",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
-"SO":"Linux"
-},
-{
-"modulo" : "",
-"descripcion" : "",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
-"SO":"Linux"
-},
-{
-"modulo" : "",
-"descripcion" : "",
-"comprobacion" : "",
-"copia" : "",
-"editar" : "",
-"refrescar" : "",
-"evidencia" : "",
-"SO":"Linux"
-}
+    {
+        "modulo": "Protecting Resources-OSRs/Log File Restrictions",
+        "clave": "WTMP",
+        "descripcion": "Invalid Permissions or Ownership for log file: /var/log/wtmp;   -rw-rw-r--.;  owner:  root;   group:  utmp. For more information see rule description.",
+        "comprobacion": "##Se le debe quitar W al grupo.",
+        "copia": "",
+        "editar": "##Quitar permisos:\nchmod g-w /var/log/wtmp\n\n##------------------------------------------------------------\n##dejar esta linea para REHL 7:\n##------------------------------------------------------------\n\n##EDITAR\nvi /lib/tmpfiles.d/var.conf\n\n##AÑADIR / REMPLAZAR\nf /var/log/wtmp 0644 root utmp -\n\n##------------------------------------------------------------\n##dejar esta linea para REHL 6\n##------------------------------------------------------------\n\n##EDITAR\nvi /etc/rc.sysinit\n\n##AÑADIR / REMPLAZAR\nchmod 0644 /var/run/utmp /var/log/wtmp",
+        "refrescar": "",
+        "evidencia": "clear\ndate\nhostname\nls -la /var/log/wtmp\ncat /lib/tmpfiles.d/var.conf | grep -w wtmp",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Business Use Notice/Business Use Notice Required",
+        "clave" : "BUN",
+        "descripcion": "Missing or Incorrect Business Use Notice. It should be set in /etc/motd",
+        "comprobacion": "##Debe tener el BUN actual.",
+        "copia": "",
+        "editar": "vi /etc/motd\n\n##AÑADIR / REMPLAZAR :\n\n******************************************************************************************************************************\n*                                                                                                                            *\n*  Liberbank systems must only be used for conducting Liberbank business or for purposes authorized by Liberbank management. *\n*                                                                                                                            *\n******************************************************************************************************************************\n\n+------------------------------------------------------------------------------+\n| Liberbank systems must only be used for conducting Liberbank business or for |\n| purposes authorized by Liberbank management                                  |\n| Use is subject to audit at any time by IBM management.                       |\n+------------------------------------------------------------------------------+",
+        "refrescar": "",
+        "evidencia": "clear\ndate\nhostname\ncat /etc/motd",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Network Settings/Ensure nfs-utils is not enabled and active",
+        "clave" : "NFS",
+        "descripcion": "Ensure nfs is not enabled. Command: systemctl is-enabled nfs",
+        "comprobacion": "##No es un servicio requerido, por lo que se puede deshabilitar.\n##Antes de nada comprobar que no tenga: shares/filesystem compartiendo.\n##Debe salir vacio:\n\ncat /etc/exports\n\n##En el caso de tener shares/filesystem, contactar con el SOPORTE TECNICO.\n\nsystemctl status nfs\n\n##Debe salir disable en todo :\n(/usr/lib/systemd/system/nfs-server.service; disabled; vendor preset: disabled)",
+        "copia": "",
+        "editar": "systemctl stop nfs.service\nsystemctl disable nfs.service",
+        "refrescar": "",
+        "evidencia": "clear\ndate\nhostname\nsystemctl status nfs.service",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories",
+        "clave" : "STICKY",
+        "descripcion": "Sticky bit is not set on world-writable directory: $directory",
+        "comprobacion": "##Hay que tener en cuenta el tipo de owner al que pertenece, cada directorio RAIZ.\n\n##Ya sea de tipo '/C/F/S'\nSi es /C/, se pasa a excepcion con RISK e IMPACT\n##por favor revisar la seccion de RISK e IMPACT\n\n##Si es de tipo /F/S, se debe preguntar al owner, si podemos modificar los permisos(REVISAR DIRECTORY).",
+        "copia": "",
+        "editar": "##Se puede quitar de forma 'recursiva' o por 'individual'\n##$directory : es la variable del directorio raiz a cambiar permisos.\n\n##------------------------------------------------------------\n##Asi quitamos de permisos de W a Other, en los directorios('recursivo'):\n##------------------------------------------------------------\n\nfind $directory -type d -perm -o=w -exec chmod o-w {} +\n\n##------------------------------------------------------------\n##Asi quitamos de permisos de W a Other, en los ficheros('recursivo'):\n##------------------------------------------------------------\n\nfind $directory -type f -perm -o=w -exec chmod o-w {} +\n\n\n##------------------------------------------------------------\n##Asi quitamos permisos, de W a other de forma('individual'):\n##------------------------------------------------------------\n\nchmod o-w $directory",
+        "refrescar": "",
+        "evidencia": "##------------------------------------------------------------\n##De forma ('recursiva'):\n##------------------------------------------------------------\n\nclear\ndate\nhostname\nfind $directory -type d -perm -o=wx | wc -l\nfind $directory -type f -perm -o=wx | wc -l\nls -ld $directory\n\n##------------------------------------------------------------\n##De forma('individual'):\n##------------------------------------------------------------\n\nls -ld $directory",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Protecting Resources-OSRs/CRON Full Path Restriction",
+        "clave" : "CRON",
+        "descripcion": "Missing $MissingPath path: null. $MissingPath path must be used for commands in CRON.",
+        "comprobacion": "## Entrar al Servidor\n## Mirar cual es el PATH del fichero/s\n\nfind / -name '$MissingPath'\n##Donde '$MissingPath', es la variable del fichero que le falta el path\n\n##Buscar en los ficheros del CRON, el fichero $MissingPath, para añadir el path correcto.\n\ncat /var/spool/cron/crontabs  | grep -i \"$MissingPath\"\ncat /var/spool/cron/root | grep -i \"$MissingPath\"\ncat /var/spool/cron/tabs/root  | grep -i \"$MissingPath\"\ncat /etc/crontab | grep -i \"$MissingPath\"",
+        "copia": "cp -p 'FICHERO DEL CRON' /home/$(logname)/\"$MissingPath\"_`date +%d%m%y`",
+        "editar": "vi /var/spool/cron/root\n\n##insertar EJEMPLO:\n/usr/bin/$MissingPath",
+        "refrescar": "",
+        "evidencia": "clear\ndate\nhostname\ncat /var/spool/cron/root | grep -i \"$MissingPath\"",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Password Requirements/Password MIN Age Shadow",
+        "clave" : "MINAGE",
+        "descripcion": "Account $account has invalid Password Min Age setting of null  should be set to Customer Required Setting: 1. Account Type: Customer",
+        "comprobacion": "##Todas las cuentas, ya sean /C/F/S, deben tener el MINAGE a 1.\n\n##Excepto las cuentas del PAM de LBK:\nAccount ibmldadm\nAccount ibmldtsm\nAccount ibmldtiv\nAccount ibmldphc\nAccount ibmldiam\nAccount ibmldebh\nAccount ibmldbd\nadmpam_sys1\n\n##Revisar RISK e IMPACT",
+        "copia": "",
+        "editar": "##Introducir cuenta(entre las \"\"):\naccount=\"\"\n\n##Donde $account, va la cuenta a aplicar MINAGE\n\ncat /etc/passwd | grep -i $account\n\nchage -m 1 $account",
+        "refrescar": "",
+        "evidencia": "clear\ndate\nhostname\nchage -l $account\ncat /etc/passwd | grep -i $account",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Encryption/Password Encryption Required",
+        "clave" : "SHA512",
+        "descripcion": "/etc/pam.d/$pam_file Any file in /etc/pam.d containing \"password sufficient pam_unix.so\" stanza must carry the \"sha512 shadow\" options.\n\n/etc/pam.d/$pam_file Any file in /etc/pam.d containing \"password sufficient pam_unix.so\" stanza must carry the \"sha512 shadow\" options.",
+        "comprobacion": "##Todo fichero del PAM que sea valido, debe tener en el modulo 'password sufficient pam_unix.so'\n\n##Los parametro sha512, shadow.\n\n##Introducir el fichero del PAM(entre las \"\"):\npam_file=\"\"\n\ncat /etc/pam.d/$pam_file | grep -i password\n\n##Hay fichero del PAM, que no son validos, los llamados .OLD, .backup, etc etc, son todos los que sean copias de los ficheros:\n\n##/etc/pam.d/system-auth\n##/etc/pam.d/password-auth\n\n##Estos se deben mover al HOME y se corrige la desviación, OJO solo los que son COPIAS/BACKUPS.",
+        "copia": "##Obtener nombre de usuario:\nuser=$(logname)\n\n##------------------------------------------------------------\n##Copiar con usuario en MAYÚSCULAS\n##------------------------------------------------------------\n\ncp -p /etc/pam.d/$pam_file /home/${user^^}/\"$pam_file\"_`date +%d%m%y`\n\ncd /home/${user^^}/\nls -la\n\n##------------------------------------------------------------\n##Copiar con usuario en minúsculas\n##------------------------------------------------------------\n\ncp -p /etc/pam.d/$pam_file /home/${user,,}/\"$pam_file\"_`date +%d%m%y`\n\ncd /home/${user,,}/\nls -la\n",
+        "editar": "##------------------------------------------------------------\n##SI son copias/backups, hay que moverlos de /etc/pam.d/ a nuestro HOME\n##------------------------------------------------------------\n\n##------------------------------------------------------------\n##home en MAYUSCULAS\n##------------------------------------------------------------\nmv /etc/pam.d/$pam_file /home/${user^^}/\ncd /home/${user,,}/\nls -la\n\n##------------------------------------------------------------\n##home en MINUSCULAS\n##------------------------------------------------------------\nmv /etc/pam.d/$pam_file /home/${user,,}/\ncd /home/${user,,}/\nls -la\n\n##------------------------------------------------------------\n##Sin son fichero del PAM validos, hay que remplazar md5 por sha512, en el modulo 'password sufficient pam_unix.so'\n##------------------------------------------------------------\n\nvi /etc/pam.d/$pam_file",
+        "refrescar": "",
+        "evidencia": "clear\ndate\nhostname\ncat /etc/pam.d/$pam_file | egrep -i \"password|sha512\"\nls -la /etc/pam.d/$pam_file\n",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Logging/Ntpd has secure defaults",
+        "clave" : "NTPD",
+        "descripcion": "Key defaults for both ip4 and ip6 must be set to: nomodify notrap nopeer noquery. Configuration file /etc/ntp.conf",
+        "comprobacion": "",
+        "copia": "##Obtener nombre de usuario:\nuser=$(logname)\n\n##------------------------------------------------------------\n##Copiar con usuario en MAYÚSCULAS\n##------------------------------------------------------------\n\ncp -p /etc/ntp.conf /home/${user^^}/ntp_`date +%d%m%y`\n\ncd /home/${user^^}/\nls -la\n\n##------------------------------------------------------------\n##Copiar con usuario en minúsculas\n##------------------------------------------------------------\n\ncp -p /etc/ntp.conf /home/${user,,}/ntp_`date +%d%m%y`\n\ncd /home/${user,,}/\nls -la\n",
+        "editar": "vi /etc/ntp.conf\n\n##AÑADIR / REMPLAZAR en: \n# permit the source to query or modify the service on this system.\n\nrestrict default kod nomodify notrap nopeer noquery\nrestrict -6 default kod nomodify notrap nopeer noquery\n\n##Y por debajo de:\n# the administrative functions.\n\nrestrict 127.0.0.1\nrestrict -6 ::1",
+        "refrescar": "",
+        "evidencia": "clear\ndate\nhostname\ncat /etc/ntp.conf | grep -i restrict",
+        "SO": "Linux"
+    }
 ]

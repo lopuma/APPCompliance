@@ -1,6 +1,7 @@
 [
     {
         "modulo": "Protecting Resources-OSRs/Log File Restrictions",
+        "clave": "WTMP",
         "descripcion": "Invalid Permissions or Ownership for log file: /var/log/wtmp;   -rw-rw-r--.;  owner:  root;   group:  utmp. For more information see rule description.",
         "comprobacion": "##Se le debe quitar W al grupo.",
         "copia": "",
@@ -11,6 +12,7 @@
     },
     {
         "modulo": "Filesystem Configuration/nodev option set on \tmp partition",
+        "clave": "",
         "descripcion": "Ensure nodev option set on /tmp partition if it exist",
         "comprobacion": "",
         "copia": "",
@@ -21,6 +23,7 @@
     },
     {
         "modulo": "Filesystem Configuration/nosuid option set on \tmp partition",
+        "clave": "",
         "descripcion": "Ensure nosuid option set on /tmp partition if it exist",
         "comprobacion": "",
         "copia": "",
@@ -31,6 +34,7 @@
     },
     {
         "modulo": "Filesystem Configuration/noexec option set on \tmp partition",
+        "clave": "",
         "descripcion": "Ensure noexec option set on /tmp partition if it exist",
         "comprobacion": "",
         "copia": "",
@@ -41,6 +45,7 @@
     },
     {
         "modulo": "Filesystem Configuration/nodev option set on \\home partition",
+        "clave": "",
         "descripcion": "Ensure nodev option set on /home partition if it exist",
         "comprobacion": "",
         "copia": "",
@@ -51,6 +56,7 @@
     },
     {
         "modulo": "Filesystem Configuration/noexec option set on \\dev\\shm partition",
+        "clave": "",
         "descripcion": "Ensure noexec option set on /dev/shm partition if it exist",
         "comprobacion": "",
         "copia": "",
@@ -61,6 +67,7 @@
     },
     {
         "modulo": "Filesystem Configuration/Disable filesystem type cramfs",
+        "clave": "",
         "descripcion": "Filesystem type \"cramfs\" is enabled. It should be disabled if not needed",
         "comprobacion": "",
         "copia": "",
@@ -71,6 +78,7 @@
     },
     {
         "modulo": "Filesystem Configuration/Disable filesystem type squashfs",
+        "clave": "",
         "descripcion": "Filesystem type \"squashfs\" is enabled. It should be disabled if not needed",
         "comprobacion": "",
         "copia": "",
@@ -81,6 +89,7 @@
     },
     {
         "modulo": "Filesystem Configuration/Disable filesystem type udf",
+        "clave": "",
         "descripcion": "Filesystem type \"udf\" is enabled. It should be disabled if not needed",
         "comprobacion": "",
         "copia": "",
@@ -91,6 +100,7 @@
     },
     {
         "modulo": "Password Requirements/Automatic Logoff support shells",
+        "clave": "",
         "descripcion": "/usr/bin/tmux Ensure that /etc/shells only allows users to select shells which support time out.\n\n/bin/tmux Ensure that /etc/shells only allows users to select shells which support time out.",
         "comprobacion": "",
         "copia": "",
@@ -101,6 +111,7 @@
     },
     {
         "modulo": "Protecting Resources-OSRs/Set gpgcheck in yum file",
+        "clave": "",
         "descripcion": "Set gpgcheck=1 in /etc/yum.conf file",
         "comprobacion": "",
         "copia": "",
@@ -111,6 +122,7 @@
     },
     {
         "modulo": "AD.1.9.1.4 Protecting Resources - User Resources",
+        "clave": "IBMSINIT.CSH",
         "descripcion": "File /etc/profile.d/IBMsinit.csh must exist.",
         "comprobacion": "##Debe existir /etc/profile.d/IBMsinit.csh y contener el correcto script para UMASK.\n\nls -l /etc/profile.d/IBMsinit.csh\ncat /etc/profile.d/IBMsinit.csh",
         "copia": "##Obtener usuario logueado:\nuser=$(logname)\n\n##BACKUP con usuario en MAYUSCULAS\ncp -p /etc/profile.d/IBMsinit.csh /home/${user^^}/IBMsinit.csh_`date +%d%m%y`\ncd /home/${user^^}/\n\n##BACKUP con usuario en minusculas:\ncp -p /etc/profile.d/IBMsinit.csh /home/${user,,}/IBMsinit.csh_`date +%d%m%y`\ncd /home/${user,,}/",
@@ -121,6 +133,7 @@
     },
     {
         "modulo": "Network Settings/TCP Configuration Files Restrictions",
+        "clave": "SYSCTL",
         "descripcion": "Incorrect /etc/sysctl.conf or proc files setting for\n\nnet.ipv4.conf.all.accept_source_route: 1 should be 0\nnet.ipv4.conf.all.secure_redirects: 1 should be 0\nnet.ipv4.conf.default.secure_redirects: 1 should be 0\nnet.ipv4.conf.all.log_martians: 0 should be 1\nnet.ipv4.ip_forward: 1 should be 0\nnet.ipv4.conf.default.log_martians: 0 should be 1\net.ipv4.conf.all.rp_filter: 0 should be 1\nnet.ipv6.conf.all.accept_ra: 1 should be 0\nnet.ipv6.conf.default.accept_ra: 1 should be 0\nnet.ipv6.conf.all.accept_redirects: 1 should be 0\nnet.ipv6.conf.default.accept_redirects: 1 should be 0",
         "comprobacion": "",
         "copia": "",
@@ -131,6 +144,7 @@
     },
     {
         "modulo": "Password Requirements/Automatic Logoff IBMsinit sh TMOUT",
+        "clave": "TMOUT",
         "descripcion": "/etc/profile.d/IBMsinit.sh Default: Set systems to terminate a session after 21600 seconds of inactivity. File must  contain \"TMOUT=21600\" followed by \"export TMOUT\". A shorter time frame may be specified.",
         "comprobacion": "##En /etc/profile.d/IBMsinit.sh, al final del SCRIPT de UMASK\n##Debe tener un TMOUT\n(\"TMOUT solo debe estar implementado en 'IBMsinit.sh'\"):\n\ncat /etc/profile.d/IBMsinit.sh\n\n##SET muestra el valor global:\nset | grep OUT",
         "copia": "##Obtener usuario logueado:\nuser=$(logname)\n\n##BACKUP con usuario en MAYUSCULAS\ncp -p /etc/profile.d/IBMsinit.sh /home/${user^^}/IBMsinit.sh_`date +%d%m%y`\ncd /home/${user^^}/\n\n##BACKUP con usuario en minusculas:\ncp -p /etc/profile.d/IBMsinit.sh /home/${user,,}/IBMsinit.sh_`date +%d%m%y`\ncd /home/${user,,}/",
@@ -141,6 +155,7 @@
     },
     {
         "modulo": "Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories",
+        "clave": "STICKY",
         "descripcion": "Sticky bit is not set on world-writable directory: /home/ess01012/RHEL",
         "comprobacion": "",
         "copia": "",
@@ -151,6 +166,7 @@
     },
     {
         "modulo": "Network Settings/Ensure LDAP Server is not enabled",
+        "clave": "LDAP",
         "descripcion": "Ensure  LDAP Server is not enabled. Command: systemctl is-enabled slapd",
         "comprobacion": "",
         "copia": "",
@@ -161,6 +177,7 @@
     },
     {
         "modulo": "Password Requirements/\\etc\\profile IBMsinit sh",
+        "clave": "IBMSINIT.SH",
         "descripcion": "/etc/profile should not set/reset the time out control after '. /etc/profile.d/IBMsinit.sh' invocation.",
         "comprobacion": "##No deben existir 2 controles TMOUT en el servidor.\n##Revisar en /etc/profile, si tiene un TMOUT definido\n\ncat /etc/profile | grep TMOUT\n\n##En /etc/profile.d/IBMsinit.sh, al final del SCRIPT de UMASK\n##Debe tener un TMOUT:\n\ncat /etc/profile.d/IBMsinit.sh",
         "copia": "##Obtener usuario logueado:\nuser=$(logname)\n\n##BACKUP con usuario en MAYUSCULAS\ncp -p /etc/profile.d/IBMsinit.sh /home/${user^^}/IBMsinit.sh_`date +%d%m%y`\ncd /home/${user^^}/\n\n##BACKUP con usuario en minusculas:\ncp -p /etc/profile.d/IBMsinit.sh /home/${user,,}/IBMsinit.sh_`date +%d%m%y`\ncd /home/${user,,}/",
@@ -171,6 +188,7 @@
     },
     {
         "modulo": "Password Requirements/Automatic Logoff IBMsinit csh autologout",
+        "clave": "AUTOLOGOUT",
         "descripcion": "/etc/profile.d/IBMsinit.csh Default: Set systems to terminate a session after 360 minutes of inactivity. File must contain \"set autologout=360\". A shorter time frame may be specified.",
         "comprobacion": "##En /etc/profile.d/IBMsinit.csh, al final del SCRIPT de UMASK\n##Debe tener un autologout\n(\"autologout solo debe estar implementado en 'IBMsinit.csh'\"):\n\ncat /etc/profile.d/IBMsinit.csh",
         "copia": "##Obtener usuario logueado:\nuser=$(logname)\n\n##BACKUP con usuario en MAYUSCULAS\ncp -p /etc/profile.d/IBMsinit.csh /home/${user^^}/IBMsinit.csh_`date +%d%m%y`\ncd /home/${user^^}/\n\n##BACKUP con usuario en minusculas:\ncp -p /etc/profile.d/IBMsinit.csh /home/${user,,}/IBMsinit.csh_`date +%d%m%y`\ncd /home/${user,,}/",
@@ -181,6 +199,7 @@
     },
     {
         "modulo": "Password Requirements/Login Retries",
+        "clave": "PAM_TALLY",
         "descripcion": "Non of the Login Retrie options was found in file:/etc/pam.d/password-auth\n\nNon of the Login Retrie options was found in file:/etc/pam.d/system-auth",
         "comprobacion": "##Hace referencia al 'pam_tally2.so' en RHEL7, y al 'pam_faillock.so'  en RHEL8.\n\n##Saber que versión de RHEL es:\ncat /etc/*release\n\n#-***#Saber que PAM_TALLY USA#****-#\nls -ltr /lib64/security/pam_tally*\n\n#-***#Saber que PAM_FAILLOCK USA#****-#\nls -la /usr/sbin/faillock\n\n##------------------------------------------------------------\n##---RHEL 7('system-auth','password-auth')\n##------------------------------------------------------------\n\n\n##Los ficheros del PAM, deben tener en el modulo 'auth required', el parámetro 'pam_tally2.so'\n\n##Los ficheros del PAM, deben tener en el modulo 'account required', el parámetro 'pam_tally2.so'\n\ncat /etc/pam.d/system-auth | grep pam_tally\ncat /etc/pam.d/password-auth | grep pam_tally\n\n##------------------------------------------------------------\n##---RHEL 8('system-auth','password-auth')\n##------------------------------------------------------------\n\n\n##Los ficheros del PAM, deben tener en el modulo 'auth required', el parámetro 'pam_faillock.so'\n\n##Los ficheros del PAM, deben tener en el modulo 'account required', el parámetro 'pam_faillock.so'\n\ncat /etc/pam.d/system-auth | grep pam_faillock.so\ncat /etc/pam.d/password-auth | grep pam_faillock.so",
         "copia": "##Obtener nombre de usuario:\nuser=$(logname)\n\n##Copiar con usuario en MAYÚSCULAS\ncp -p /etc/pam.d/system-auth /home/${user^^}/system-auth_`date +%d%m%y`\ncp -p /etc/pam.d/password-auth /home/${user^^}/password-auth_`date +%d%m%y`\ncd /home/${user^^}/\n\n##Copiar con usuario en minúsculas\ncp -p /etc/pam.d/system-auth /home/${user,,}/system-auth_`date +%d%m%y`\ncp -p /etc/pam.d/password-auth /home/${user,,}/password-auth_`date +%d%m%y`\ncd /home/${user,,}/",
@@ -191,6 +210,7 @@
     },
     {
         "modulo": "Password Requirements/Password History",
+        "clave": "REMEMNER",
         "descripcion": "PAM service file: /etc/pam.d/password-auth must have \"password sufficient pam_unix.so\" stanza with \"remember=8\" parameter. \"sufficient\" can be replaced with \"required\".\n\nPAM service file: /etc/pam.d/system-auth must have \"password sufficient pam_unix.so\" stanza with \"remember=8\" parameter. \"sufficient\" can be replaced with \"required\".",
         "comprobacion": "##Hace referencia al 'remember' en RHEL7 y RHEL8.\n\n##Saber que versión de RHEL es:\ncat /etc/*release\n\n#-***#Saber que PAM_TALLY USA#****-#\nls -ltr /lib64/security/pam_tally*\n\n#-***#Saber que PAM_FAILLOCK USA#****-#\nls -la /usr/sbin/faillock\n\n##------------------------------------------------------------\n##---RHEL 7 & RHEL 8('system-auth','password-auth')\n##------------------------------------------------------------\n\n##Los ficheros del PAM, deben tener en el modulo 'password    sufficient    pam_unix.so', el parámetro 'remember'\n\ncat /etc/pam.d/system-auth | grep remember\ncat /etc/pam.d/password-auth | grep remember\n",
         "copia": "##Obtener nombre de usuario:\nuser=$(logname)\n\n##Copiar con usuario en MAYÚSCULAS\ncp -p /etc/pam.d/system-auth /home/${user^^}/system-auth_`date +%d%m%y`\ncp -p /etc/pam.d/password-auth /home/${user^^}/password-auth_`date +%d%m%y`\ncd /home/${user^^}/\n\n##Copiar con usuario en minúsculas\ncp -p /etc/pam.d/system-auth /home/${user,,}/system-auth_`date +%d%m%y`\ncp -p /etc/pam.d/password-auth /home/${user,,}/password-auth_`date +%d%m%y`\ncd /home/${user,,}/",
@@ -201,22 +221,13 @@
     },
     {
         "modulo": "Encryption/Password Encryption Required",
+        "clave": "SHA512",
         "descripcion": "/etc/pam.d/password-auth. Any file in /etc/pam.d containing \"password sufficient pam_unix.so\" stanza must carry the \"sha512 shadow\" options.\n\n/etc/pam.d/system-auth. Any file in /etc/pam.d containing \"password sufficient pam_unix.so\" stanza must carry the \"sha512 shadow\" options.\n\nIncorrect or missing pam_unix.so module stanza. For more information see coverage matrix document",
         "comprobacion": "##Hace referencia al parametro 'sha512 shadow ' en RHEL7 y RHEL8.\n\n##Saber que versión de RHEL es:\ncat /etc/*release\n\n#-***#Saber que PAM_TALLY USA#****-#\nls -ltr /lib64/security/pam_tally*\n\n#-***#Saber que PAM_FAILLOCK USA#****-#\nls -la /usr/sbin/faillock\n\n##------------------------------------------------------------\n##---RHEL 7 & RHEL 8('system-auth','password-auth')\n##------------------------------------------------------------\n\n\n##Los ficheros del PAM, deben tener en el modulo 'password    sufficient    pam_unix.so', el parámetro 'sha512 shadow '\n\ncat /etc/pam.d/system-auth | egrep \"sha512|shadow\"\ncat /etc/pam.d/password-auth | egrep \"sha512|shadow\"\n\n##Modulo similiar : 'Password Requirements/Password History'",
         "copia": "##Obtener nombre de usuario:\nuser=$(logname)\n\n##Copiar con usuario en MAYÚSCULAS\ncp -p /etc/pam.d/system-auth /home/${user^^}/system-auth_`date +%d%m%y`\ncp -p /etc/pam.d/password-auth /home/${user^^}/password-auth_`date +%d%m%y`\ncd /home/${user^^}/\n\n##Copiar con usuario en minúsculas\ncp -p /etc/pam.d/system-auth /home/${user,,}/system-auth_`date +%d%m%y`\ncp -p /etc/pam.d/password-auth /home/${user,,}/password-auth_`date +%d%m%y`\ncd /home/${user,,}/",
         "editar": "##------------------------------------------------------------\n##---RHEL 7 & RHEL 8('system-auth','password-auth')\n##------------------------------------------------------------\n\n##Añadir en el modulo 'password    sufficient    pam_unix.so', el parámetro 'sha512 shadow'.\n##Remplazar 'md5' por 'sha512'\n\n##Se debe añadir en la segunda linea del modulo.\n##('se aconseja remplazar toda la linea, del modulo 'password    sufficient    pam_unix.so').\n\nvi /etc/pam.d/system-auth\n\npassword    sufficient    pam_unix.so remember=8 use_authtok sha512 shadow try_first_pass\n\n##Lo mismo con 'password-auth'\nvi /etc/pam.d/password-auth\n",
         "refrescar": "",
         "evidencia": "##------------------------------------------------------------\n##---RHEL 7 & RHEL 8('system-auth','password-auth')\n##------------------------------------------------------------\nclear\ndate;hostname\ncat /etc/*release | grep -i release\ncat /etc/pam.d/system-auth | egrep \"sha512|shadow\"\ncat /etc/pam.d/password-auth | egrep \"sha512|shadow\"\n",
-        "SO": "Linux"
-    },
-    {
-        "modulo": "",
-        "descripcion": "",
-        "comprobacion": "",
-        "copia": "",
-        "editar": "",
-        "refrescar": "",
-        "evidencia": "",
         "SO": "Linux"
     }
 ]
