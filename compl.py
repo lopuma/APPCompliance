@@ -210,7 +210,6 @@ class Directory(tk.Frame):
 class Desviacion(ttk.Frame):
     def __init__(self, parent, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        #self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=1)
         self.rowconfigure(0, weight=1)
@@ -219,7 +218,7 @@ class Desviacion(ttk.Frame):
         self.DESVfr1_listbox.bind('<<ListboxSelect>>',self.selecionar_modulo)
         self.DESVfr2_lblModulo.bind("<Configure>", self.label_resize)
         self.DESVfr2_lblDescripcion.bind("<Configure>", self.label_resize)
-        ## --- COPIAR AL ACTIVAR EL SCR DESVIACION
+        ## --- COPIAR AL ACTIVAR EL SCR DESVIACION. --- #
         self.DESVfr2_srcComprobacion.bind("<Motion>",lambda e:self.copiar_scrDesv(e))
         self.DESVfr2_srcBackup.bind("<Motion>",lambda e:self.copiar_scrDesv(e))
         self.DESVfr3_srcEditar.bind("<Motion>",lambda e:self.copiar_scrDesv(e))
@@ -252,7 +251,7 @@ class Desviacion(ttk.Frame):
             call.focus()
             call.event_generate("<<Copy>>")
     def widgets_DESVIACION(self):
-        # --- DEFINIMOS LOS FRAME, QUE CONTENDRAN LOS WIDGETS --------------------------#
+        # --- DEFINIMOS LOS FRAMEs, QUE CONTENDRAN LOS WIDGETS --------------------------#
         self.DESV_frame1=ttk.LabelFrame(self, 
                                         text="CLIENTE / MODULO", 
                                         border=1, 
@@ -269,24 +268,23 @@ class Desviacion(ttk.Frame):
                                         relief='sunken')
         self.DESV_frame3.grid(column=2, row=0, padx=10, pady=10, sticky='nsew')
         # -----------------------------------------------------------------------------#
+        
         self.DESV_frame1.columnconfigure(0, weight=1)
         self.DESV_frame2.columnconfigure(0, weight=1)
         self.DESV_frame3.columnconfigure(0, weight=1)
-
         self.DESV_frame1.rowconfigure(2, weight=5)
-
         self.DESV_frame2.rowconfigure(3, weight=1)
         self.DESV_frame2.rowconfigure(5, weight=1)
-
         self.DESV_frame3.rowconfigure(1, weight=1)
         self.DESV_frame3.rowconfigure(3, weight=1)
         self.DESV_frame3.rowconfigure(5, weight=1)
+       
         # --- Variable del OptionMenu, lista de clientes ------------------------------#
         self.clientesVar = tk.StringVar(self)
         self.clientesVar.set('CLIENTES')
         # -----------------------------------------------------------------------------#
         ## ======================== FRAME 1 ========================================= ##
-        # --- OptionMenu, lista de clientes ------------------------------ #
+        # ---------------- OptionMenu, lista de clientes ---------------------------- ##
         self.DESVfr1_optMn = tk.OptionMenu(self.DESV_frame1, 
                                             self.clientesVar, 
                                             *list_client, 
@@ -307,14 +305,16 @@ class Desviacion(ttk.Frame):
                                             font=('Source Sans Pro', 13, font.BOLD))
         self.DESVfr1_optMn.grid(row=0, column=0, padx=5, pady=5, sticky='new', columnspan=2)
         # -----------------------------------------------------------------------------#
-        # --- widgets para buscar -----------------------------------------------------#
+        # --------- widgets para buscar -----------------------------------------------------#
         self.DESVfr1_entModulo = ttk.Entry(self.DESV_frame1, width=30)
         self.DESVfr1_entModulo.config(foreground="black",
-                                    font=('Source Sans Pro', 13))
+                                    font=('Source Sans Pro', 13),
+                                    state='disabled'),
         self.DESVfr1_entModulo.grid(row=1, column=0, pady=5, padx=5, ipady=5, sticky='nsew',columnspan=2)
         self.DESVfr1_btnBuscar = ttk.Button(self.DESV_frame1, 
                                                     text='Buscar', 
                                                     image=self.BuscarModulo_icon,
+                                                    state='disabled'),
                                                     command=lambda : self.buscar_modulo(event=None))
         self.DESVfr1_btnBuscar.grid(row=1, column=0, pady=5, padx=5, sticky='nse',columnspan=2)
         # -----------------------------------------------------------------------------#
@@ -322,7 +322,8 @@ class Desviacion(ttk.Frame):
         self.DESVlist_yScroll.grid(row=2, column=1, pady=5, sticky='nse')
         self.DESVlist_xScroll = tk.Scrollbar(self.DESV_frame1, orient=tk.HORIZONTAL)
         self.DESVlist_xScroll.grid(row=3, column=0, padx=5, sticky='ew', columnspan=2)
-        self.DESVfr1_listbox = tk.Listbox(self.DESV_frame1, 
+        self.DESVfr1_listbox = tk.Listbox(self.DESV_frame1,
+                                            state='disabled')
                                             xscrollcommand=self.DESVlist_xScroll.set, 
                                             yscrollcommand=self.DESVlist_yScroll.set,
                                             font=('Source Sans Pro', 13),
@@ -336,11 +337,13 @@ class Desviacion(ttk.Frame):
         self.DESVlist_xScroll['command'] = self.DESVfr1_listbox.xview
         self.DESVlist_yScroll['command'] = self.DESVfr1_listbox.yview
         ## ======================== FRAME 2 ========================================= ##
-        ## --- Modulo
-        self.DESVfr2_lblModulo = ttk.Label(self.DESV_frame2, text='MODULO', width=10)
+        ## --------- Modulo ---------66
+        self.DESVfr2_lblModulo = ttk.Label(self.DESV_frame2,
+                                            text='MODULO', 
+                                            width=10)
         self.DESVfr2_lblModulo.grid(row=0, column=0, padx=5, pady=5, sticky='new')
         ## --- Descripcion
-        self.DESVfr2_lblDescripcion = ttk.Label(self.DESV_frame2, 
+        self.DESVfr2_lblDescripcion = ttk.Label(self.DESV_frame2,
                                                     text='',
                                                     font=('Source Sans Pro', 12),
                                                     width=10, 
@@ -351,7 +354,8 @@ class Desviacion(ttk.Frame):
         self.DESVfr2_lblComprobacion = ttk.Label(self.DESV_frame2, text='COMPROBACIÓN', width=10) 
         self.DESVfr2_lblComprobacion.grid(row=2, column=0, padx=5, pady=5, sticky='new')
         self.DESVfr2_srcComprobacion = st.ScrolledText(self.DESV_frame2)
-        self.DESVfr2_srcComprobacion.config(width=10, 
+        self.DESVfr2_srcComprobacion.config(width=10,
+                                            state='disabled'),
                                             wrap='word',
                                             font=('Source Sans Pro', 13), 
                                             selectbackground='#297F87',
@@ -362,7 +366,8 @@ class Desviacion(ttk.Frame):
         self.DESVfr2_lblBackup = ttk.Label(self.DESV_frame2, text='BACKUP', width=10) 
         self.DESVfr2_lblBackup.grid(row=4, column=0, padx=5, pady=5, sticky='new')
         self.DESVfr2_srcBackup = st.ScrolledText(self.DESV_frame2)
-        self.DESVfr2_srcBackup.config(width=10, 
+        self.DESVfr2_srcBackup.config(width=10,
+                                            state='disabled'),
                                             wrap='word',
                                             font=('Source Sans Pro', 13), 
                                             selectbackground='#297F87',
@@ -374,7 +379,8 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_lblEditar = ttk.Label(self.DESV_frame3, text='EDITAR ✍')
         self.DESVfr3_lblEditar.grid(row=0, column=0, padx=5, pady=5, sticky='new')
         self.DESVfr3_srcEditar = st.ScrolledText(self.DESV_frame3)
-        self.DESVfr3_srcEditar.config(width=10, 
+        self.DESVfr3_srcEditar.config(width=10,
+                                            state='disabled'),
                                             wrap='word',
                                             font=('Source Sans Pro', 13), 
                                             selectbackground='#297F87',
@@ -386,7 +392,8 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_lblRefrescar = ttk.Label(self.DESV_frame3, text='REFRESCAR')
         self.DESVfr3_lblRefrescar.grid(row=2, column=0, padx=5, pady=5, sticky='new')
         self.DESVfr3_srcRefrescar = st.ScrolledText(self.DESV_frame3)
-        self.DESVfr3_srcRefrescar.config(width=10, 
+        self.DESVfr3_srcRefrescar.config(width=10,
+                                            state='disabled'),
                                             wrap='word',
                                             font=('Source Sans Pro', 13), 
                                             selectbackground='#297F87',
@@ -397,7 +404,8 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_lblEvidencia = ttk.Label(self.DESV_frame3, text='EVIDENCIA')
         self.DESVfr3_lblEvidencia.grid(row=4, column=0, padx=5, pady=5, sticky='new')
         self.DESVfr3_srcEvidencia = st.ScrolledText(self.DESV_frame3)
-        self.DESVfr3_srcEvidencia.config(width=10, 
+        self.DESVfr3_srcEvidencia.config(width=10,
+                                            state='disabled'),
                                             wrap='word',
                                             font=('Source Sans Pro', 13), 
                                             selectbackground='#297F87',
@@ -433,11 +441,20 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_srcEditar.delete('1.0',END)
         self.DESVfr3_srcRefrescar.delete('1.0',END)
         self.DESVfr3_srcEvidencia.delete('1.0',END)
+    def enabled_modulos(self):
+        self.DESVfr1_entModulo.config(state="normal")
+        self.DESVfr1_entModulo.focus()
+        self.DESVfr1_btnBuscar.config(state="normal")
+        self.DESVfr2_srcComprobacion.config(state="normal")
+        self.DESVfr2_srcBackup.config(state="normal")
+        self.DESVfr3_srcEditar.config(state="normal")
+        self.DESVfr3_srcRefrescar.config(state="normal")
+        self.DESVfr3_srcEvidencia.config(state="normal")
     def cargar_modulos(self, *args):
+        self.enabled_modulos()
         global asigne_Ciente
         global listModulo
         global listClave
-        #global data          
         customer = self.clientesVar.get()
         ## --- LIMPIAR -----------------------------
         self.DESVfr1_listbox.delete(0,END)
