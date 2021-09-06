@@ -364,15 +364,39 @@ class Desviacion(ttk.Frame):
         expandir = Expandir(self)
         if self.DESVfr2_srcComprobacion:
             text_aExpandir = self.DESVfr2_srcComprobacion.get('1.0', tk.END)
-        expandir.EXP_srcWidget.insert('1.0',text_aExpandir)
+            expandir.EXP_srcWidget.insert('1.0',text_aExpandir)
     def expandir2(self):
-        self.DESVfr2_srcBackup.focus()
+        global tittleExpand
+        tittleExpand = "BACKUP"
+        self.DESVfr2_srcBackup.focus()        
+        expandir = Expandir(self)
+        if self.DESVfr2_srcBackup:
+            text_aExpandir = self.DESVfr2_srcBackup.get('1.0', tk.END)
+            expandir.EXP_srcWidget.insert('1.0',text_aExpandir)
     def expandir3(self):
-        self.DESVfr3_srcEditar.focus()
+        global tittleExpand
+        tittleExpand = "EDITAR"
+        self.DESVfr3_srcEditar.focus()        
+        expandir = Expandir(self)
+        if self.DESVfr3_srcEditar:
+            text_aExpandir = self.DESVfr3_srcEditar.get('1.0', tk.END)
+            expandir.EXP_srcWidget.insert('1.0',text_aExpandir)
     def expandir4(self):
-        self.DESVfr3_srcRefrescar.focus()
+        global tittleExpand
+        tittleExpand = "REFRESCAR"
+        self.DESVfr3_srcRefrescar.focus()        
+        expandir = Expandir(self)
+        if self.DESVfr3_srcRefrescar:
+            text_aExpandir = self.DESVfr3_srcRefrescar.get('1.0', tk.END)
+            expandir.EXP_srcWidget.insert('1.0',text_aExpandir)
     def expandir5(self):
-        self.DESVfr3_srcEvidencia.focus()
+        global tittleExpand
+        tittleExpand = "EVIDENCIA"
+        self.DESVfr3_srcEvidencia.focus()        
+        expandir = Expandir(self)
+        if self.DESVfr3_srcEvidencia:
+            text_aExpandir = self.DESVfr3_srcEvidencia.get('1.0', tk.END)
+            expandir.EXP_srcWidget.insert('1.0',text_aExpandir)
     ## ----------------------------------- ##
     def widgets_DESVIACION(self):
         # --- DEFINIMOS LOS FRAMEs, QUE CONTENDRAN LOS WIDGETS --------------------------#
