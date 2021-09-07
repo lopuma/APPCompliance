@@ -224,6 +224,7 @@ class Expandir(tk.Frame):
         self.widgets_EXPANDIR()
         self.EXP_srcWidget.bind("<Button-3>", self.display_menu_clickDerecho)
         self.EXP_srcWidget.bind("<Motion>",lambda e:self.activar_scrExpan(e))
+        self.EXP_srcWidget.bind("<Key>", lambda e: desviacion.widgets_SoloLectura(e))
     ## --- ACTIVAR VENTANA EXPANDIR ------------------ ##
     def activar_scrExpan(self, event):
         global srcWidget_seleccionado
@@ -300,7 +301,7 @@ class Desviacion(ttk.Frame):
         self.rowconfigure(0, weight=1)
         self.iconos()
         self.widgets_DESVIACION()
-        self.DESVfr1_listbox.bind('<<ListboxSelect>>',self.selecionar_modulo)
+        self.DESVfr1_listbox.bind('<<ListboxSelect>>',self.selecionar_Modulos)
         self.DESVfr2_lblModulo.bind("<Configure>", self.label_resize)
         self.DESVfr2_lblDescripcion.bind("<Configure>", self.label_resize)
         ## --- COPIAR AL ACTIVAR EL SCR DESVIACION. --- #
@@ -323,28 +324,27 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_srcEvidencia.bind("<Key>", lambda e: self.widgets_SoloLectura(e))
         app.root.bind("<Button-3>", app.display_menu_clickDerecho)
         app.root.bind_all("<Motion>", self.disabled_menuContextual)
-        self.DESVfr1_entModulo.bind("<Return>", self.buscar_modulo)
+        self.DESVfr1_entModulo.bind("<Return>", self.buscar_Modulos)
+        self.DESVfr1_listbox.bind_all("<Down>", self.OnEntryDown)
+        self.DESVfr1_listbox.bind_all("<Up>", self.OnEntryUp)
     def disabled_menuContextual(self, event):
         widgets_name = event.widget
-        otros_widgets_name = self.DESVfr1_listbox.winfo_name()
         if str(widgets_name )== ".!buttonnotebook":
             app.menu_Contextual.entryconfig('  Copiar', state='disabled')
             app.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
-    def iconos(self):
+    def label_resize(self, event):
+        event.widget['wraplength'] = event.width
+    def iconos(self): #TODO ICONOS DE VENTANA DESVIACION
         self.BuscarModulo_icon = ImageTk.PhotoImage(
                     Image.open(path_icon+r"buscar.png").resize((20, 20)))
         self.Expandir_icon = ImageTk.PhotoImage(
                     Image.open(path_icon+r"expandir.png").resize((20, 20)))
-    ## --- FUNCIONES DE COPIAR --- ##
+    ## --- FUNCIONES DE COPIAR ----------------------------------- ##
     def widgets_SoloLectura(self, event):
-        print(event.state)
-        print(event.keysym)
         if(20==event.state and event.keysym=='c'):
             return
-            print('si')
         else:
             return "break"
-            print('no')
     def copiar_scrDesv(self, event):
         global srcWidget_seleccionado
         global activar_Focus_srcWidget
@@ -355,8 +355,8 @@ class Desviacion(ttk.Frame):
             app.menu_Contextual.entryconfig('  Seleccionar todo', state='normal')
             srcWidget_seleccionado.focus_set()
             activar_Focus_srcWidget = True
-    ## --------------------------- ##
-    ## ------ VENTANAS TOP EXPANDIR ------ ##
+    ## ----------------------------------------------------------- ##
+    ## ------ VENTANAS TOP EXPANDIR ------------------------------ ##
     def expandir1(self):
         global tittleExpand
         tittleExpand = "COMPROBACION"
@@ -397,7 +397,142 @@ class Desviacion(ttk.Frame):
         if self.DESVfr3_srcEvidencia:
             text_aExpandir = self.DESVfr3_srcEvidencia.get('1.0', tk.END)
             expandir.EXP_srcWidget.insert('1.0',text_aExpandir)
-    ## ----------------------------------- ##
+    ## ----------------------------------------------------------- ##
+
+    ## --- FUNCIONES AL SELECIONAR MODULO, O BUSCAR MODULO ------- ##
+    def mostrar_datosWidgets(self, md):
+        self.DESVfr2_lblModulo['text'] = md['modulo']
+        self.DESVfr2_lblDescripcion['text'] = md['descripcion']
+        self.DESVfr2_srcComprobacion.insert(END,md['comprobacion'])
+        self.DESVfr2_srcBackup.insert(END,md['copia'])
+        self.DESVfr3_srcEditar.insert(END,md['editar'])
+        self.DESVfr3_srcRefrescar.insert(END,md['refrescar'])
+        self.DESVfr3_srcEvidencia.insert(END,md['evidencia'])
+    def limpiar_Widgets(self):
+        self.DESVfr2_lblModulo['text'] = ''
+        self.DESVfr2_lblDescripcion['text'] = ''
+        self.DESVfr2_srcComprobacion.delete('1.0',END)
+        self.DESVfr2_srcBackup.delete('1.0',END)
+        self.DESVfr3_srcEditar.delete('1.0',END)
+        self.DESVfr3_srcRefrescar.delete('1.0',END)
+        self.DESVfr3_srcEvidencia.delete('1.0',END)
+    def selecionar_Modulos(self, event):
+        modulo_selecionado = event.widget.get(ANCHOR)
+        with open(path_modulo.format(asigne_Ciente)) as g:
+            data = json.load(g)
+            for md in data:
+                if modulo_selecionado in md['modulo']:
+                    ## --- LIMPIAR ------------------------------------- ##                      
+                    self.limpiar_Widgets()
+                    ## ------------------------------------------------- ##
+                    self.mostrar_datosWidgets(md)
+    def buscar_Modulos(self, event):
+        valor_aBuscar = self.DESVfr1_entModulo.get()
+        clave_Buscado = [n for n in listClave if valor_aBuscar.upper().strip() in n]
+        modulo_Buscado = [n for n in listModulo if valor_aBuscar.strip() in n]
+        if len(clave_Buscado) <= 1:
+            clave_Buscado = str(clave_Buscado).replace("[","").replace("]","").replace("'","")
+        else:
+            clave_Buscado = ""
+        if len(modulo_Buscado) <= 1:
+            modulo_Buscado = str(modulo_Buscado).replace("[","").replace("]","").replace("'","")
+        else:
+            modulo_Buscado = ""
+        # ## --------- OBTENER MODULO POR CLAVE O MODULO -------------- ## //TODO "definir si buscar por clave o modulo"
+        if len(clave_Buscado) == 0 and len(modulo_Buscado) == 0:
+            self.limpiar_Widgets()
+            mb.showerror("ERROR","Esta vacio o no existe el modulo.\nPrueba a buscar por CLAVE o el MODULO completo")
+        elif len(clave_Buscado) != 0:
+            with open(path_modulo.format(asigne_Ciente)) as g:
+                data = []
+                data = json.load(g)
+                for md in data:
+                    if clave_Buscado in md['clave']:
+                        modulo_Encontrado = md['modulo']
+                        ## --- LIMPIAR ------------------------------------- ##                      
+                        self.limpiar_Widgets()
+                        ## ------------------------------------------------- ##
+                        self.mostrar_datosWidgets(md)
+                self.DESVfr1_listbox.selection_clear(0, tk.END)        
+                modulo_ListBox = self.DESVfr1_listbox.get(0, tk.END)
+                indice = modulo_ListBox.index(modulo_Encontrado)
+                self.DESVfr1_listbox.selection_set(indice)
+        else:
+            data = []
+            with open(path_modulo.format(asigne_Ciente)) as g:
+                data = json.load(g)
+                for md in data:
+                    if modulo_Buscado in md['modulo']:
+                        modulo_Encontrado = md['modulo']
+                        ## --- LIMPIAR ------------------------------------- ##                      
+                        self.limpiar_Widgets()
+                        ## ------------------------------------------------- ##
+                        self.mostrar_datosWidgets(md)
+                self.DESVfr1_listbox.selection_clear(0, tk.END)
+                modulo_ListBox = self.DESVfr1_listbox.get(0, tk.END)
+                indice = modulo_ListBox.index(modulo_Encontrado)
+                self.DESVfr1_listbox.selection_set(indice)
+    def OnEntryDown(self, event):
+        self.DESVfr1_listbox.yview_scroll(1,"units")
+        selecion = self.DESVfr1_listbox.curselection()
+        modulo_selecionado = event.widget.get(selecion)
+        with open(path_modulo.format(asigne_Ciente)) as g:
+            data = json.load(g)
+            for md in data:
+                if modulo_selecionado in md['modulo']:
+                    ## --- LIMPIAR ------------------------------------- ##                      
+                    self.limpiar_Widgets()
+                    ## ------------------------------------------------- ##
+                    self.mostrar_datosWidgets(md)
+    def OnEntryUp(self, event):
+        self.limpiar_Widgets()
+        self.DESVfr1_listbox.yview_scroll(-1,"units")
+        selecion = self.DESVfr1_listbox.curselection()
+        modulo_selecionado = event.widget.get(selecion)
+        with open(path_modulo.format(asigne_Ciente)) as g:
+            data = json.load(g)
+            for md in data:
+                if modulo_selecionado in md['modulo']:
+                    ## --- LIMPIAR ------------------------------------- ##                      
+                    self.limpiar_Widgets()
+                    ## ------------------------------------------------- ##
+                    self.mostrar_datosWidgets(md)
+    def enabled_Widgets(self):
+        self.DESVfr1_listbox.config(state="normal")
+        self.DESVfr1_entModulo.config(state="normal")
+        self.DESVfr1_entModulo.focus()
+        self.DESVfr1_btnBuscar.config(state="normal")
+        self.DESVfr2_srcComprobacion.config(state="normal")
+        self.DESVfr2_srcBackup.config(state="normal")
+        self.DESVfr3_srcEditar.config(state="normal")
+        self.DESVfr3_srcRefrescar.config(state="normal")
+        self.DESVfr3_srcEvidencia.config(state="normal")
+        self.DESV_btn1Expandir.config(state='normal')
+        self.DESV_btn2Expandir.config(state='normal')
+        self.DESV_btn3Expandir.config(state='normal')
+        self.DESV_btn4Expandir.config(state='normal')
+        self.DESV_btn5Expandir.config(state='normal')
+    def cargar_Modulos(self, *args):
+        self.enabled_Widgets()
+        global asigne_Ciente
+        global listModulo
+        global listClave
+        customer = self.clientesVar.get()
+        ## --- LIMPIAR -----------------------------
+        self.DESVfr1_listbox.delete(0,END)
+        self.limpiar_Widgets()
+        ## ----------------------------------------- ##
+        asigne_Ciente = customer       
+        with open(path_modulo.format(customer)) as g:
+            data = json.load(g)
+            listModulo = []
+            listClave = []
+            for md in data:
+                listModulo.append(md['modulo'])
+                listClave.append(md['clave'])
+        listModulo.sort()
+        self.DESVfr1_listbox.insert(END,*listModulo)
+        self.cambiar_NamePestaña(customer)
     def widgets_DESVIACION(self):
         # --- DEFINIMOS LOS FRAMEs, QUE CONTENDRAN LOS WIDGETS --------------------------#
         self.DESV_frame1=ttk.LabelFrame(self, 
@@ -416,7 +551,6 @@ class Desviacion(ttk.Frame):
                                         relief='sunken')
         self.DESV_frame3.grid(column=2, row=0, padx=10, pady=10, sticky='nsew')
         # -----------------------------------------------------------------------------#
-        
         self.DESV_frame1.columnconfigure(0, weight=1)
         self.DESV_frame2.columnconfigure(0, weight=1)
         self.DESV_frame3.columnconfigure(0, weight=1)
@@ -435,7 +569,7 @@ class Desviacion(ttk.Frame):
         self.DESVfr1_optMn = tk.OptionMenu(self.DESV_frame1, 
                                             self.clientesVar, 
                                             *list_client, 
-                                            command=self.cargar_modulos,
+                                            command=self.cargar_Modulos,
                                             )
         self.DESVfr1_optMn.config(background = "#5F939A",
                                     foreground = "#F2EDD7",
@@ -462,7 +596,7 @@ class Desviacion(ttk.Frame):
                                                     text='Buscar', 
                                                     image=self.BuscarModulo_icon,
                                                     state='disabled',
-                                                    command=lambda : self.buscar_modulo(event=None))
+                                                    command=lambda : self.buscar_Modulos(event=None))
         self.DESVfr1_btnBuscar.grid(row=1, column=0, pady=5, padx=5, sticky='nse',columnspan=2)
         # -----------------------------------------------------------------------------#
         self.DESVlist_yScroll = tk.Scrollbar(self.DESV_frame1, orient=tk.VERTICAL)
@@ -507,6 +641,7 @@ class Desviacion(ttk.Frame):
                                             background='#297F87',
                                             activebackground='#F6D167',
                                             image=self.Expandir_icon,
+                                            state='disabled',
                                             command=self.expandir1,
                                             )
         self.DESV_btn1Expandir.grid(row=2, column=1, padx=5, pady=5, sticky='nse')
@@ -529,6 +664,7 @@ class Desviacion(ttk.Frame):
                                             background='#297F87',
                                             activebackground='#F6D167',
                                             image=self.Expandir_icon,
+                                            state='disabled',
                                             command=self.expandir2,
                                             )
         self.DESV_btn2Expandir.grid(row=4, column=1, padx=5, pady=5, sticky='nse')
@@ -551,6 +687,7 @@ class Desviacion(ttk.Frame):
                                             background='#297F87',
                                             activebackground='#F6D167',
                                             image=self.Expandir_icon,
+                                            state='disabled',
                                             command=self.expandir3,
                                             )
         self.DESV_btn3Expandir.grid(row=0, column=1, padx=5, pady=5, sticky='nse')
@@ -573,6 +710,7 @@ class Desviacion(ttk.Frame):
                                             background='#297F87',
                                             activebackground='#F6D167',
                                             image=self.Expandir_icon,
+                                            state='disabled',
                                             command=self.expandir4,
                                             )
         self.DESV_btn4Expandir.grid(row=2, column=1, padx=5, pady=5, sticky='nse')
@@ -594,6 +732,7 @@ class Desviacion(ttk.Frame):
                                             background='#297F87',
                                             activebackground='#F6D167',
                                             image=self.Expandir_icon,
+                                            state='disabled',
                                             command=self.expandir5,
                                             )
         self.DESV_btn5Expandir.grid(row=4, column=1, padx=5, pady=5, sticky='nse')
@@ -609,119 +748,18 @@ class Desviacion(ttk.Frame):
                                             highlightcolor='#297F87',)
         self.DESVfr3_srcEvidencia.grid(row=5, column=0, padx=5, pady=5, sticky='new', columnspan=2)
         ## ------------------------------------------------------------------------------ ##
-    def label_resize(self, event):
-        event.widget['wraplength'] = event.width
-    def selecionar_modulo(self, event):
-        modulo_selecionado = event.widget.get(ANCHOR)
-        with open(path_modulo.format(asigne_Ciente)) as g:
-            data = json.load(g)
-            for md in data:
-                if modulo_selecionado in md['modulo']:
-                    ## --- LIMPIAR ------------------------------------- ##                      
-                    self.limpiar_widgets()
-                    ## ------------------------------------------------- ##
-                    self.mostrar_datosWidgets(md)
-    def mostrar_datosWidgets(self, md):
-        self.DESVfr2_lblModulo['text'] = md['modulo']
-        self.DESVfr2_lblDescripcion['text'] = md['descripcion']
-        self.DESVfr2_srcComprobacion.insert(END,md['comprobacion'])
-        self.DESVfr2_srcBackup.insert(END,md['copia'])
-        self.DESVfr3_srcEditar.insert(END,md['editar'])
-        self.DESVfr3_srcRefrescar.insert(END,md['refrescar'])
-        self.DESVfr3_srcEvidencia.insert(END,md['evidencia'])
-    def limpiar_widgets(self):
-        self.DESVfr2_lblModulo['text'] = ''
-        self.DESVfr2_lblDescripcion['text'] = ''
-        self.DESVfr2_srcComprobacion.delete('1.0',END)
-        self.DESVfr2_srcBackup.delete('1.0',END)
-        self.DESVfr3_srcEditar.delete('1.0',END)
-        self.DESVfr3_srcRefrescar.delete('1.0',END)
-        self.DESVfr3_srcEvidencia.delete('1.0',END)
-    def enabled_modulos(self):
-        self.DESVfr1_listbox.config(state="normal")
-        self.DESVfr1_entModulo.config(state="normal")
-        self.DESVfr1_entModulo.focus()
-        self.DESVfr1_btnBuscar.config(state="normal")
-        self.DESVfr2_srcComprobacion.config(state="normal")
-        self.DESVfr2_srcBackup.config(state="normal")
-        self.DESVfr3_srcEditar.config(state="normal")
-        self.DESVfr3_srcRefrescar.config(state="normal")
-        self.DESVfr3_srcEvidencia.config(state="normal")
-    def cargar_modulos(self, *args):
-        self.enabled_modulos()
-        global asigne_Ciente
-        global listModulo
-        global listClave
-        customer = self.clientesVar.get()
-        ## --- LIMPIAR -----------------------------
-        self.DESVfr1_listbox.delete(0,END)
-        self.limpiar_widgets()
-        ## ----------------------------------------- ##
-        asigne_Ciente = customer       
-        with open(path_modulo.format(customer)) as g:
-            data = json.load(g)
-            listModulo = []
-            listClave = []
-            for md in data:
-                listModulo.append(md['modulo'])
-                listClave.append(md['clave'])
-        listModulo.sort()
-        self.DESVfr1_listbox.insert(END,*listModulo)
-        self.cambiarNamePestaña(customer)
-    def buscar_modulo(self, event):
-        valor_aBuscar = self.DESVfr1_entModulo.get()
-        clave_Buscado = [n for n in listClave if valor_aBuscar.upper().strip() in n]
-        modulo_Buscado = [n for n in listModulo if valor_aBuscar.strip() in n]
-        if len(clave_Buscado) <= 1:
-            clave_Buscado = str(clave_Buscado).replace("[","").replace("]","").replace("'","")
-        else:
-            clave_Buscado = ""
-        if len(modulo_Buscado) <= 1:
-            modulo_Buscado = str(modulo_Buscado).replace("[","").replace("]","").replace("'","")
-        else:
-            modulo_Buscado = ""
-        print('//---------------------------------------------------//')
-        print("CLAVE BUSCADO -- >< -- : ",clave_Buscado)
-        print("MODULO BUSCADO -- >< -- : ",modulo_Buscado)
-        print('//---------------------------------------------------//')
-        # ## --------- OBTENER MODULO POR CLAVE O MODULO -------------- ## //TODO "definir si buscar por clave o modulo"
-        if len(clave_Buscado) == 0 and len(modulo_Buscado) == 0:
-            self.limpiar_widgets()
-            mb.showerror("ERROR","Esta vacio o no existe el modulo.\nPrueba a buscar por CLAVE o el MODULO completo")
-        elif len(clave_Buscado) != 0:
-            with open(path_modulo.format(asigne_Ciente)) as g:
-                data = []
-                data = json.load(g)
-                for md in data:
-                    if clave_Buscado in md['clave']:
-                        modulo_Encontrado = md['modulo']
-                        ## --- LIMPIAR ------------------------------------- ##                      
-                        self.limpiar_widgets()
-                        ## ------------------------------------------------- ##
-                        self.mostrar_datosWidgets(md)
-                self.DESVfr1_listbox.selection_clear(0, tk.END)        
-                modulo_ListBox = self.DESVfr1_listbox.get(0, tk.END)
-                indice = modulo_ListBox.index(modulo_Encontrado)
-                self.DESVfr1_listbox.selection_set(indice)
-        else:
-            data = []
-            with open(path_modulo.format(asigne_Ciente)) as g:
-                data = json.load(g)
-                for md in data:
-                    if modulo_Buscado in md['modulo']:
-                        modulo_Encontrado = md['modulo']
-                        ## --- LIMPIAR ------------------------------------- ##                      
-                        self.limpiar_widgets()
-                        ## ------------------------------------------------- ##
-                        self.mostrar_datosWidgets(md)
-                self.DESVfr1_listbox.selection_clear(0, tk.END)
-                modulo_ListBox = self.DESVfr1_listbox.get(0, tk.END)
-                indice = modulo_ListBox.index(modulo_Encontrado)
-                self.DESVfr1_listbox.selection_set(indice)
-    def abrir_file(self):
+    ## --- FUNCIONES PARA ABRIR VENTANAS EMERGENTE --------------- ##
+    def abrir_DIRECTORY(self):
         global directory
         directory = Directory(self)
-    def cambiarNamePestaña(self, customer):
+    def abrir_COMMAND(self):
+        pass
+    def abrir_ACCOUNT(self):
+        pass
+    def abrir_SERVICE(self):
+        pass
+    ## ----------------------------------------------------------- ##
+    def cambiar_NamePestaña(self, customer):
         id_tab = app.cuaderno.index(app.cuaderno.select())
         app.cuaderno.tab(id_tab, text='DESVIACIONES : {}'.format(customer))
 class ButtonNotebook(ttk.Notebook):
@@ -810,6 +848,7 @@ class Aplicacion():
         self.root = tk.Tk()
         self.root.title("CONTINOUS COMPLIANCE")
         self.root.geometry("1028x768")
+        self.root.tk.call('wm', 'iconphoto', self.root._w, tk.PhotoImage(file=path_icon+'compliance.png'))
         #self.root.resizable(0,0)
         self.cuaderno = ButtonNotebook(self)
         self.contenedor = ttk.Frame(self.cuaderno)
@@ -1022,8 +1061,8 @@ class Aplicacion():
         id = self.ClientVar.get()
         ccl = list_client[id]
         desviacion.clientesVar.set(ccl)
-        desviacion.limpiar_widgets()
-        desviacion.cargar_modulos(ccl)
+        desviacion.limpiar_Widgets()
+        desviacion.cargar_Modulos(ccl)
     def widgets_APP(self):
         self.menuBar = tk.Menu(self.root, relief=FLAT, border=0)
         self.root.config(menu=self.menuBar)
