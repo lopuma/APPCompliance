@@ -8,12 +8,14 @@ from getpass import getuser
 import os
 from tkinter.ttk import Notebook, Style
 import subprocess
+import time
 try:
     import tkinter as tk
     from tkinter import ttk
     from tkinter import *
     from PIL import Image, ImageTk
     from tkinter import messagebox as mb
+    import tkinter.font as tkFont
 except ImportError:
     import Tkinter as Tk
     import ttk
@@ -212,15 +214,17 @@ class Directory(tk.Frame):
         self.cargar_files()
 class Expandir(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
+        self.parent = parent
+        print(self.parent)
         super().__init__(*args, **kwargs)
         self.vtn_expandir = Toplevel(self)
         self.vtn_expandir.config(background='#F1ECC3')
-        self.vtn_expandir.geometry("930x550+345+65")
+        self.vtn_expandir.geometry("1005x600+345+65")
         #self.vtn_expandir.resizable(0,0)
         self.vtn_expandir.title("DESVIACIONES : {}".format(asigne_Ciente))
         self.vtn_expandir.columnconfigure(0, weight=1)
-        self.vtn_expandir.columnconfigure(1, weight=1)
         self.vtn_expandir.rowconfigure(1, weight=1)
+        self.text_font = tkFont.Font(family='Consolas', size=13)
         self.menu_clickDerecho()
         self.widgets_EXPANDIR()
         self.EXP_srcWidget.bind("<Button-3>", self.display_menu_clickDerecho)
@@ -236,19 +240,7 @@ class Expandir(tk.Frame):
             activar_Focus_srcWidget = True
     ## ----------------------------------------------- ##
     ## --- MENU CONTEXTUAL --------------------------- ##
-    def copiar_textSeleccionado_srcWidgets(self):
-        global activar_Focus_srcWidget
-        global srcWidget_seleccionado
-        if activar_Focus_srcWidget:
-            seleccion = srcWidget_seleccionado.tag_ranges(tk.SEL)
-            if seleccion:
-                app.root.clipboard_clear()
-                app.root.clipboard_append(srcWidget_seleccionado.get(*seleccion).strip())
-    def seleccionar_ALLtext_srcWidgets(self):
-        if activar_Focus_srcWidget:
-            srcWidget_seleccionado.tag_add("sel","1.0","end")
-            self.copiar_textSeleccionado_srcWidgets()
-    def cerrar_vtnExpandir(self):
+    def cerrar_vtn_expandir(self):
         if activar_Focus_srcWidget:
             self.vtn_expandir.destroy()
     def menu_clickDerecho(self):
@@ -258,16 +250,16 @@ class Expandir(tk.Frame):
                                 compound=LEFT,
                                 background='#ccffff', foreground='black',
                                 activebackground='#004c99',activeforeground='white',
-                                font=('Source Sans Pro', 13),
-                                command= self.copiar_textSeleccionado_srcWidgets,
+                                font=self.text_font,
+                                command= app.copiar_texto_seleccionado,
                                 )
         self.menu_Contextual.add_command(label="  Seleccionar todo", 
                                 #image=self.copy2_icon,
                                 compound=LEFT,
                                 background='#ccffff', foreground='black',
                                 activebackground='#004c99',activeforeground='white',
-                                font=('Source Sans Pro', 13),
-                                command=self.seleccionar_ALLtext_srcWidgets,
+                                font=self.text_font,
+                                command=app.seleccionar_todo,
                                 )
         self.menu_Contextual.add_separator(background='#ccffff')
         self.menu_Contextual.add_command(label="  Cerrar pestaña", 
@@ -275,8 +267,8 @@ class Expandir(tk.Frame):
                                 compound=LEFT,
                                 background='#ccffff', foreground='black',
                                 activebackground='#004c99',activeforeground='white',
-                                font=('Source Sans Pro', 13),
-                                command=self.cerrar_vtnExpandir
+                                font=self.text_font,
+                                command=self.cerrar_vtn_expandir
                                 )
     def display_menu_clickDerecho(self, event):
         self.menu_Contextual.tk_popup(event.x_root, event.y_root)
@@ -292,36 +284,48 @@ class Expandir(tk.Frame):
                                             background='#D4ECDD',
                                             activebackground='#F6D167',
                                             image=desviacion.CopyALL1_icon,
-                                            command=self.seleccionar_ALLtext_srcWidgets,
+                                            #command=self.seleccionar_todo,
                                             borderwidth=0,
                                             border=0,
                                             highlightthickness=1,
                                             highlightbackground='black'
                                             )
-        self.DESV_btnCopyALL.grid(row=0, column=1, pady=5, sticky='ne')
+        self.DESV_btnCopyALL.grid(row=0, column=1, padx=20, pady=5, sticky='ne')
+        self.DESV_btnScreamEvidencia = tk.Button(self.vtn_expandir,
+                                            background='#D4ECDD',
+                                            activebackground='#F6D167',
+                                            image=desviacion.Captura1_icon,
+                                            command=desviacion.ScreamEvidencia,
+                                            borderwidth=0,
+                                            border=0,
+                                            highlightthickness=1,
+                                            highlightbackground='black'
+                                            )
+        self.DESV_btnScreamEvidencia.grid(row=0, column=2, pady=5, sticky='ne')
         self.DESV_btnReducir = tk.Button(self.vtn_expandir,
                                             background='#D4ECDD',
                                             activebackground='#F6D167',
                                             image=desviacion.Reducir_icon,
-                                            command=self.cerrar_vtnExpandir,
+                                            command=self.cerrar_vtn_expandir,
                                             borderwidth=0,
                                             border=0,
                                             highlightthickness=1,
                                             highlightbackground='black'
                                             )
-        self.DESV_btnReducir.grid(row=0, column=2, padx=20, pady=5, sticky='ne')
+        self.DESV_btnReducir.grid(row=0, column=3, padx=20, pady=5, sticky='ne')
         self.EXP_srcWidget = st.ScrolledText(self.vtn_expandir,
                                             wrap='word',
-                                            font=('Source Sans Pro', 15), 
+                                            font=('Consolas', 15), 
                                             selectbackground='#297F87',
                                             selectforeground='#F6D167',
                                             highlightbackground='gray88',
                                             highlightthickness=2,
                                             highlightcolor='#297F87',)
-        self.EXP_srcWidget.grid(row=1, column=0, padx=5, pady=5, sticky='nsew', columnspan=3)
+        self.EXP_srcWidget.grid(row=1, column=0, padx=5, pady=5, sticky='nsew', columnspan=4)
 class Desviacion(ttk.Frame):
     def __init__(self, parent, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.parent = parent
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=1)
         self.rowconfigure(0, weight=1)
@@ -351,8 +355,8 @@ class Desviacion(ttk.Frame):
         app.root.bind("<Button-3>", app.display_menu_clickDerecho)
         app.root.bind_all("<Motion>", self.disabled_menuContextual)
         self.DESVfr1_entModulo.bind("<Return>", self.buscar_Modulos)
-        self.DESVfr1_listbox.bind_all("<Down>", self.ListDown)
-        self.DESVfr1_listbox.bind_all("<Up>", self.ListUp)
+        #self.DESVfr1_listbox.bind_all("<Down>", self.ListDown)
+        #self.DESVfr1_listbox.bind_all("<Up>", self.ListUp)
     def disabled_menuContextual(self, event):
         widgets_name = event.widget
         if str(widgets_name )== ".!buttonnotebook":
@@ -367,6 +371,8 @@ class Desviacion(ttk.Frame):
                     Image.open(path_icon+r"expandir.png").resize((25, 25)))
         self.Captura_icon = ImageTk.PhotoImage(
                     Image.open(path_icon+r"captura.png").resize((25, 25)))
+        self.Captura1_icon = ImageTk.PhotoImage(
+                    Image.open(path_icon+r"captura.png").resize((30, 30)))
         self.Reducir_icon = ImageTk.PhotoImage(
                     Image.open(path_icon+r"reduce.png").resize((30, 30)))
         self.CopyALL_icon = ImageTk.PhotoImage(
@@ -375,7 +381,9 @@ class Desviacion(ttk.Frame):
                     Image.open(path_icon+r"copiarALL.png").resize((30, 30)))
     ## --- FUNCIONES DE COPIAR ----------------------------------- ##
     def widgets_SoloLectura(self, event):
-        if(20==event.state and event.keysym=='c'):
+        print(event.keysym)
+        print(event.state)
+        if(20==event.state and event.keysym=='c' or event.keysym=='Down' or event.keysym=='Up'):
             return
         else:
             return "break"
@@ -508,6 +516,7 @@ class Desviacion(ttk.Frame):
                 indice = modulo_ListBox.index(modulo_Encontrado)
                 self.DESVfr1_listbox.selection_set(indice)
     def ListDown(self, event):
+        #self.DESVfr1_entModulo.focus()
         self.DESVfr1_listbox.yview_scroll(1,"units")
         selecion = self.DESVfr1_listbox.curselection()
         modulo_selecionado = event.widget.get(selecion)
@@ -520,7 +529,7 @@ class Desviacion(ttk.Frame):
                     ## ------------------------------------------------- ##
                     self.mostrar_datosWidgets(md)
     def ListUp(self, event):
-        self.limpiar_Widgets()
+        #self.DESVfr1_entModulo.focus()
         self.DESVfr1_listbox.yview_scroll(-1,"units")
         selecion = self.DESVfr1_listbox.curselection()
         modulo_selecionado = event.widget.get(selecion)
@@ -575,7 +584,8 @@ class Desviacion(ttk.Frame):
     def ScreamEvidencia(self):
         app.root.withdraw()
         code = subprocess.call(["./scream.sh"])
-        mb.askquestion(app.root, "Pay attention: \nThis is the message?")
+        time.sleep(5)
+        mb.showinfo("INFO","Informacion")
         app.root.deiconify()
     def copiarALL(self):
         self.DESVfr3_srcEvidencia.focus()
@@ -585,7 +595,10 @@ class Desviacion(ttk.Frame):
             if seleccion:
                 app.root.clipboard_clear()
                 app.root.clipboard_append(self.DESVfr3_srcEvidencia.get(*seleccion).strip())
+        else:
+            self.DESVfr3_srcEvidencia.tag_remove("sel","1.0","end")
     def widgets_DESVIACION(self):
+        self.text_font = tkFont.Font(family='Consolas', size=13)
         # --- DEFINIMOS LOS FRAMEs, QUE CONTENDRAN LOS WIDGETS --------------------------#
         self.DESV_frame1=ttk.LabelFrame(self, 
                                         text="CLIENTE / MODULO", 
@@ -641,7 +654,7 @@ class Desviacion(ttk.Frame):
         # --------- widgets para buscar -----------------------------------------------------#
         self.DESVfr1_entModulo = ttk.Entry(self.DESV_frame1, width=30)
         self.DESVfr1_entModulo.config(foreground="black",
-                                    font=('Source Sans Pro', 13),
+                                    font=self.text_font,
                                     state='disabled')
         self.DESVfr1_entModulo.grid(row=1, column=0, pady=5, padx=5, ipady=5, sticky='nsew',columnspan=2)
         self.DESVfr1_btnBuscar = ttk.Button(self.DESV_frame1, 
@@ -659,7 +672,7 @@ class Desviacion(ttk.Frame):
                                             state='disabled',
                                             xscrollcommand=self.DESVlist_xScroll.set, 
                                             yscrollcommand=self.DESVlist_yScroll.set,
-                                            font=('Source Sans Pro', 13),
+                                            font=self.text_font,
                                             foreground='blue',
                                             selectbackground='#297F87',
                                             selectforeground='#F6D167',
@@ -690,20 +703,24 @@ class Desviacion(ttk.Frame):
         self.DESVfr2_lblComprobacion = ttk.Label(self.DESV_frame2, text='COMPROBACIÓN', width=15) 
         self.DESVfr2_lblComprobacion.grid(row=2, column=0, padx=5, pady=5, sticky='w')
         self.DESV_btn1Expandir = tk.Button(self.DESV_frame2,
-                                            background='#297F87',
+                                            background='#7FC8A9',
                                             activebackground='#F6D167',
                                             image=self.Expandir_icon,
                                             state='disabled',
                                             command=self.expandir1,
+                                            border=0,
+                                            borderwidth=0,
+                                            highlightthickness=0,
                                             )
         self.DESV_btn1Expandir.grid(row=2, column=1, padx=5, pady=5, sticky='nse')
         self.DESVfr2_srcComprobacion = st.ScrolledText(self.DESV_frame2)
         self.DESVfr2_srcComprobacion.config(width=10,
                                             state='disabled',
                                             wrap='word',
-                                            font=('Source Sans Pro', 13), 
-                                            selectbackground='#297F87',
-                                            selectforeground='#F6D167',
+                                            font=('Consolas', 13), 
+                                            selectbackground='lightblue',
+                                            selectforeground='black',
+                                            insertbackground='#297F87',
                                             highlightbackground='gray88',
                                             highlightthickness=2,
                                             highlightcolor='#297F87',
@@ -713,18 +730,21 @@ class Desviacion(ttk.Frame):
         self.DESVfr2_lblBackup = ttk.Label(self.DESV_frame2, text='BACKUP', width=10) 
         self.DESVfr2_lblBackup.grid(row=4, column=0, padx=5, pady=5, sticky='w')
         self.DESV_btn2Expandir = tk.Button(self.DESV_frame2,
-                                            background='#297F87',
+                                            background='#7FC8A9',
                                             activebackground='#F6D167',
                                             image=self.Expandir_icon,
                                             state='disabled',
                                             command=self.expandir2,
+                                            borderwidth=0,
+                                            border=0,
+                                            highlightthickness=0,
                                             )
         self.DESV_btn2Expandir.grid(row=4, column=1, padx=5, pady=5, sticky='nse')
         self.DESVfr2_srcBackup = st.ScrolledText(self.DESV_frame2)
         self.DESVfr2_srcBackup.config(width=10,
                                             state='disabled',
                                             wrap='word',
-                                            font=('Source Sans Pro', 13), 
+                                            font=self.text_font, 
                                             selectbackground='#297F87',
                                             selectforeground='#F6D167',
                                             highlightbackground='gray88',
@@ -736,18 +756,21 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_lblEditar = ttk.Label(self.DESV_frame3, text='EDITAR ✍')
         self.DESVfr3_lblEditar.grid(row=0, column=0, padx=5, pady=5, sticky='w')
         self.DESV_btn3Expandir = tk.Button(self.DESV_frame3,
-                                            background='#297F87',
+                                            background='#7FC8A9',
                                             activebackground='#F6D167',
                                             image=self.Expandir_icon,
                                             state='disabled',
                                             command=self.expandir3,
+                                            border=0,
+                                            highlightthickness=0,
+                                            borderwidth=0,
                                             )
         self.DESV_btn3Expandir.grid(row=0, column=1, padx=5, pady=5, sticky='nse', columnspan=3)
         self.DESVfr3_srcEditar = st.ScrolledText(self.DESV_frame3)
         self.DESVfr3_srcEditar.config(width=10,
                                             state='disabled',
                                             wrap='word',
-                                            font=('Source Sans Pro', 13), 
+                                            font=self.text_font, 
                                             selectbackground='#297F87',
                                             selectforeground='#F6D167',
                                             highlightbackground='gray88',
@@ -759,22 +782,21 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_lblRefrescar = ttk.Label(self.DESV_frame3, text='REFRESCAR')
         self.DESVfr3_lblRefrescar.grid(row=2, column=0, padx=5, pady=5, sticky='w')
         self.DESV_btn4Expandir = tk.Button(self.DESV_frame3,
-                                            background='#297F87',
+                                            background='#7FC8A9',
                                             activebackground='#F6D167',
                                             image=self.Expandir_icon,
                                             state='disabled',
                                             command=self.expandir4,
                                             borderwidth=0,
                                             border=0,
-                                            highlightthickness=1,
-                                            highlightbackground='black'
+                                            highlightthickness=0,
                                             )
         self.DESV_btn4Expandir.grid(row=2, column=1, padx=5, pady=5, sticky='nse', columnspan=3)
         self.DESVfr3_srcRefrescar = st.ScrolledText(self.DESV_frame3)
         self.DESVfr3_srcRefrescar.config(width=10,
                                             state='disabled',
                                             wrap='word',
-                                            font=('Source Sans Pro', 13), 
+                                            font=self.text_font, 
                                             selectbackground='#297F87',
                                             selectforeground='#F6D167',
                                             highlightbackground='gray88',
@@ -816,15 +838,14 @@ class Desviacion(ttk.Frame):
                                             command=self.expandir5,
                                             borderwidth=0,
                                             border=0,
-                                            highlightthickness=1,
-                                            highlightbackground='black'
+                                            highlightthickness=0,
                                             )
         self.DESV_btn5Expandir.grid(row=4, column=3, padx=5, pady=5, sticky='ne')
         self.DESVfr3_srcEvidencia = st.ScrolledText(self.DESV_frame3)
         self.DESVfr3_srcEvidencia.config(width=10,
                                             state='disabled',
                                             wrap='word',
-                                            font=('Source Sans Pro', 13), 
+                                            font=self.text_font, 
                                             selectbackground='#297F87',
                                             selectforeground='#F6D167',
                                             highlightbackground='gray88',
@@ -849,6 +870,7 @@ class Desviacion(ttk.Frame):
 class ButtonNotebook(ttk.Notebook):
     _initialized = False
     def __init__(self, parent, *args, **kwargs):
+        self.parent = parent
         if not self._initialized:
             self._initialize()
             self._inititialized = True
@@ -947,14 +969,15 @@ class Aplicacion():
         self.estilos()
     ## --- MENU CONTEXTUAL --- ##
     def menu_clickDerecho(self):
+        self.text_font = tkFont.Font(family='Consolas', size=13)   
         self.menu_Contextual = Menu(self.root, tearoff=0)
         self.menu_Contextual.add_command(label="  Copiar", 
                                 #image=self.copy2_icon,
                                 compound=LEFT,
                                 background='#ccffff', foreground='black',
                                 activebackground='#004c99',activeforeground='white',
-                                font=('Source Sans Pro', 13),
-                                command= self.copiar_textSeleccionado_srcWidgets,
+                                font=self.text_font,
+                                command= self.copiar_texto_seleccionado,
                                 state='disabled',
                                 )
         self.menu_Contextual.add_command(label="  Seleccionar todo", 
@@ -962,8 +985,8 @@ class Aplicacion():
                                 compound=LEFT,
                                 background='#ccffff', foreground='black',
                                 activebackground='#004c99',activeforeground='white',
-                                font=('Source Sans Pro', 13),
-                                command=self.seleccionar_ALLtext_srcWidgets,
+                                font=self.text_font,
+                                command=self.seleccionar_todo,
                                 state='disabled',
                                 )
         self.menu_Contextual.add_separator(background='#ccffff')
@@ -972,24 +995,26 @@ class Aplicacion():
                                 compound=LEFT,
                                 background='#ccffff', foreground='black',
                                 activebackground='#004c99',activeforeground='white',
-                                font=('Source Sans Pro', 13),
-                                command=self.cerrar_vtnDesviacion
+                                font=self.text_font,
+                                command=self.cerrar_vtn_desviacion
                                 )
     def display_menu_clickDerecho(self, event):
         self.menu_Contextual.tk_popup(event.x_root, event.y_root)
-    def copiar_textSeleccionado_srcWidgets(self):
+    def copiar_texto_seleccionado(self):
         global activar_Focus_srcWidget
         global srcWidget_seleccionado
         if activar_Focus_srcWidget:
             seleccion = srcWidget_seleccionado.tag_ranges(tk.SEL)
-            print(seleccion)
             if seleccion:
                 app.root.clipboard_clear()
                 app.root.clipboard_append(srcWidget_seleccionado.get(*seleccion).strip())
-    def seleccionar_ALLtext_srcWidgets(self):
+                srcWidget_seleccionado.tag_remove("sel","1.0","end")
+                return 'break'
+    def seleccionar_todo(self):
         if activar_Focus_srcWidget:
             srcWidget_seleccionado.tag_add("sel","1.0","end")
-    def cerrar_vtnDesviacion(self):
+            return 'break'
+    def cerrar_vtn_desviacion(self):
         try:
             self.cuaderno.hide(idOpenTab)
         except:
