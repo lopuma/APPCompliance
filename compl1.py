@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #--- importamos librerias ----------------------------------#
-from abc import abstractstaticmethod
 from tkinter import font
 from tkinter import scrolledtext as st
 import json
 from getpass import getuser
 import os
-from tkinter.ttk import Notebook, Style
+from tkinter.ttk import Style
 import subprocess
 import time
-
-from PIL.Image import ID
+from ScrollableNotebook import *
 try:
     import tkinter as tk
     from tkinter import ttk
@@ -59,7 +57,6 @@ data = []
 txtWidget_focus = False
 txtWidget = ""
 tittleExpand = ""
-idx = 0
 class Directory(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -308,7 +305,6 @@ class Desviacion(ttk.Frame):
         self.columnconfigure(2, weight=1)
         self.rowconfigure(0, weight=1)
         self.iconos()
-        self.menu_clickDerecho()
         self.widgets_DESVIACION()
         ## --- SELECCIONAR ELEMENTO DEL LISTBOX. --- #
         self.DESVfr1_listbox.bind('<<ListboxSelect>>',self.selecionar_Modulos)
@@ -325,7 +321,7 @@ class Desviacion(ttk.Frame):
         self.DESVfr1_entModulo.bind("<Motion>",lambda e:self.activar_Focus(e))
         app.cuaderno.bind("<Motion>",lambda e:self.activar_Focus(e))
         ## --- MOSTRAR MENU DERECHO  --- ##
-        app.root.bind("<Button-3><ButtonRelease-3>", self.display_menu_clickDerecho)
+        app.root.bind("<Button-3><ButtonRelease-3>", app.display_menu_clickDerecho)
         ## --- ACTIVAR MODO SOLO LECTURA --- ##
         self.DESVfr2_srcComprobacion.bind("<Key>", lambda e: self.widgets_SoloLectura(e))
         self.DESVfr2_srcBackup.bind("<Key>", lambda e: self.widgets_SoloLectura(e))
@@ -350,11 +346,7 @@ class Desviacion(ttk.Frame):
         app.editMenu.bind_all('<Control-f>', lambda e : self.buscar(e))
         self.DESVfr1_listbox.bind_all("<Down>", self.ListDown)
         self.DESVfr1_listbox.bind_all("<Up>", self.ListUp)
-        self.bind("<ButtonPress-1>", self.on_tab_close_press, True)
         ## --- --- ##
-    def on_tab_close_press(self, event):
-        name = self.identify(event.x, event.y)
-        print("named : ", name)
     def iconos(self): #TODO ICONOS DE VENTANA DESVIACION
         self.BuscarModulo_icon = ImageTk.PhotoImage(
                     Image.open(path_icon+r"buscar.png").resize((25, 25)))
@@ -677,54 +669,6 @@ class Desviacion(ttk.Frame):
                 app.root.clipboard_append(self.DESVfr3_srcEvidencia.get(*seleccion).strip())
         else:
             self.DESVfr3_srcEvidencia.tag_remove("sel","1.0","end")
-    def menu_clickDerecho(self):
-        self.text_font = tkFont.Font(family='Consolas', size=13)   
-        self.menu_Contextual = Menu(app.root, tearoff=0)
-        self.menu_Contextual.add_command(label="  Buscar", 
-                                accelerator='Ctrl+F',
-                                background='#ccffff', foreground='black',
-                                activebackground='#004c99',activeforeground='white',
-                                font=self.text_font,
-                                #command=self.buscar,
-                                state='disabled',
-                                )
-        self.menu_Contextual.add_separator(background='#ccffff')
-        self.menu_Contextual.add_command(label="  Seleccionar todo", 
-                                accelerator='Ctrl+A',
-                                background='#ccffff', foreground='black',
-                                activebackground='#004c99',activeforeground='white',
-                                font=self.text_font,
-                                #command=lambda : self.seleccionar_todo(event=None),
-                                state='disabled',
-                                )
-        self.menu_Contextual.add_command(label="  Copiar", 
-                                accelerator='Ctrl+C',
-                                background='#ccffff', foreground='black',
-                                activebackground='#004c99',activeforeground='white',
-                                font=self.text_font,
-                                #command= self.copiar_texto_seleccionado,
-                                state='disabled',
-                                )
-        self.menu_Contextual.add_command(label="  Pegar", 
-                                accelerator='Ctrl+V',
-                                background='#ccffff', foreground='black',
-                                activebackground='#004c99',activeforeground='white',
-                                font=self.text_font,
-                                #command= self.pegar_texto_seleccionado,
-                                state='disabled',
-                                )
-        self.menu_Contextual.add_separator(background='#ccffff')
-        self.menu_Contextual.add_command(label="  Cerrar pestaña", 
-                                    #image=self.cerrar_icon,
-                                    compound=LEFT,
-                                    background='#ccffff', foreground='black',
-                                    activebackground='#004c99',activeforeground='white',
-                                    font=self.text_font,
-                                    command=lambda temp=self: app.cerrar_vtn_desviacion(temp)
-                                    #lambda temp=desviacion: self.select(temp)
-                                    )
-    def display_menu_clickDerecho(self, event):
-        self.menu_Contextual.tk_popup(event.x_root, event.y_root)
     def widgets_DESVIACION(self):
         self.text_font = tkFont.Font(family='Consolas', size=13)
         # --- DEFINIMOS LOS FRAMEs, QUE CONTENDRAN LOS WIDGETS --------------------------#
@@ -964,7 +908,6 @@ class Desviacion(ttk.Frame):
     def cambiar_NamePestaña(self, customer):
         id_tab = app.cuaderno.index(app.cuaderno.select())
         app.cuaderno.tab(id_tab, text='DESVIACIONES : {}'.format(customer))
-        app.tabListMenu.entryconfig(id_tab,label='DESVIACIONES : {}'.format(customer))
 class ButtonNotebook(ttk.Notebook):
     _initialized = False
     def __init__(self, parent, *args, **kwargs):
@@ -977,7 +920,6 @@ class ButtonNotebook(ttk.Notebook):
         self._active = None
         self.bind("<ButtonPress-1>", self.on_tab_close_press, True)
         self.bind("<ButtonRelease-1>", self.on_tab_close_release)
-        #self.bind("<Motion>", lambda e :self.on_tab_close_release(e))
     def on_tab_close_press(self, event):
         name = self.identify(event.x, event.y)
         if name == "tab_btn_close":
@@ -994,7 +936,6 @@ class ButtonNotebook(ttk.Notebook):
                 app.menu_Contextual.entryconfig('  Cerrar pestaña', state='normal')
                 if self._active == index:
                     self.forget(index)
-                    app.tabListMenu.delete(index)
                     self.event_generate("<<NotebookTabClosed>>")
         self.state(["!pressed"])
         self._active = None
@@ -1063,7 +1004,6 @@ class Aplicacion():
         self.cuaderno.add(self.contenedor, text='WorkSpace', underline=0)
         self.cuaderno.pack(expand=1, fill='both')
         self.cuaderno.bind_all("<<NotebookTabChanged>>",lambda e:self.alCambiar_Pestaña(e))
-        #self.menuBar.bind("<1>",self._bottomMenu)
         self.menu_clickDerecho()
         self.iconos()
         self.widgets_APP()
@@ -1107,14 +1047,13 @@ class Aplicacion():
                                 )
         self.menu_Contextual.add_separator(background='#ccffff')
         self.menu_Contextual.add_command(label="  Cerrar pestaña", 
-                                    #image=self.cerrar_icon,
-                                    compound=LEFT,
-                                    background='#ccffff', foreground='black',
-                                    activebackground='#004c99',activeforeground='white',
-                                    font=self.text_font,
-                                    command=lambda temp=0: self.cerrar_vtn_desviacion(temp)
-                                    #lambda temp=desviacion: self.select(temp)
-                                    )
+                                #image=self.cerrar_icon,
+                                compound=LEFT,
+                                background='#ccffff', foreground='black',
+                                activebackground='#004c99',activeforeground='white',
+                                font=self.text_font,
+                                command=self.cerrar_vtn_desviacion
+                                )
     def display_menu_clickDerecho(self, event):
         self.menu_Contextual.tk_popup(event.x_root, event.y_root)
     def buscar(self, *args):
@@ -1147,10 +1086,11 @@ class Aplicacion():
             print(f"wiget con focu {txtWidget}")
             txtWidget.tag_add("sel","1.0","end")
             return 'break'
-    def cerrar_vtn_desviacion(self, tab_id):
-        self.cuaderno.hide(idOpenTab)
-        print("SELECT cerrar : ", self.cuaderno.index(tab_id))
-        self.tabListMenu.delete(idOpenTab)
+    def cerrar_vtn_desviacion(self):
+        try:
+            self.cuaderno.hide(idOpenTab)
+        except:
+            pass
     ## ----------------------- ##
     def alCambiar_Pestaña(self, event):
         global idOpenTab
@@ -1309,18 +1249,11 @@ class Aplicacion():
             Image.open(path_icon+r"ayuda.png").resize((30, 30)))
         self.AcercaDe_icon = ImageTk.PhotoImage(
             Image.open(path_icon+r"acercaDe.png").resize((30, 30)))
-    def select(self,tab_id):
-        self.cuaderno.select(tab_id)
-        print(tab_id)
     def abrir_issuesDesviacion(self):
         global desviacion
         desviacion = Desviacion(self.root)
         self.cuaderno.add(desviacion, text='Issues DESVIACIONES')
         self.cuaderno.select(desviacion)
-        self.tabListMenu.add_command(label=self.cuaderno.tab(desviacion, option="text")
-                                    ,command= lambda temp=desviacion: self.select(temp)
-                                    )
-        self.root.update()
         desviacion.DESVfr1_entModulo.focus()
     def abrir_issues(self):
         id = self.IssuesVar.get()
@@ -1357,16 +1290,8 @@ class Aplicacion():
         # --- INICIAMOS SUB MENU -------------------------- #
         self.clientMenu = Menu(self.fileMenu, tearoff=0)
         self.issuesMenu = Menu(self.fileMenu, tearoff=0)
-        self.tabListMenu = Menu(self.fileMenu, tearoff=0)
         # -------------------------------------------------- #
 
-        self.tabListMenu.config(background='#003638',
-                            foreground='#F3F2C9',
-                            font=('Sans serifo',12,font.BOLD),
-                            activebackground='#003638',
-                            activeforeground='#53B8BB',
-                            selectcolor='#CF7500'
-                            )
         self.issuesMenu.config(background='#003638',
                             foreground='#F3F2C9',
                             font=('Sans serifo',12,font.BOLD),
@@ -1391,10 +1316,7 @@ class Aplicacion():
                                     image=self.Client_icon,
                                     compound=LEFT,
                                     menu=self.clientMenu)
-        self.fileMenu.add_cascade(label="  Tab",
-                                    image=self.Client_icon,
-                                    compound=LEFT,
-                                    menu=self.tabListMenu)
+
         self.fileMenu.add_separator()
 
         self.fileMenu.add_command(label="  Salir",
@@ -1416,11 +1338,6 @@ class Aplicacion():
                                             value=i,
                                             command=self.abrir_issues)
 
-        #for tab in self.cuaderno.tabs():
-        tab = self.cuaderno.tabs()
-        self.tabListMenu.add_command(label=self.cuaderno.tab(tab, option="text"),
-                                        #command= lambda temp=tab: self.select(temp),
-                                        )
         self.editMenu = Menu(self.menuBar, tearoff=0)
         self.editMenu.config(background='#003638',
                             foreground='#F3F2C9',
