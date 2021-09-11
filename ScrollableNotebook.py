@@ -2,11 +2,12 @@
 
 # Copyright (c) Muhammet Emin TURGUT 2020
 # For license see LICENSE
+from os import sendfile
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
 import tkinter.font as tkFont
-
+id_tab = 0
 class ScrollableNotebook(ttk.Frame):
     _initialized = False
     def __init__(self,parent,wheelscroll=False,tabmenu=False,*args,**kwargs):
@@ -60,10 +61,9 @@ class ScrollableNotebook(ttk.Frame):
         if name == "tab_btn_close":
             index = self.index("@%d,%d" % (event.x, event.y))
             if index != 0:
-                #app.menu_Contextual.entryconfig('  Cerrar pestaña', state='normal')
                 if self._active == index:
+                    print('id al cerrar : <<{}>>'.format(index))
                     self.forget(index)
-                    #app.tabListMenu.delete(index)
                     self.event_generate("<<NotebookTabClosed>>")
         self.state(["!pressed"])
         self._active = None
@@ -149,6 +149,9 @@ class ScrollableNotebook(ttk.Frame):
         try:
             self.notebookContent.select(self.notebookTab.index("current"))
             tab_id = self.notebookTab.index("current")
+            print('id al cambiar : --> ',self.notebookTab.index(self.notebookTab.select()))
+            global id_tab
+            id_tab = self.notebookTab.index(self.notebookTab.select())
             return tab_id
         except: pass
 
@@ -173,8 +176,8 @@ class ScrollableNotebook(ttk.Frame):
         else:
             self.notebookContent.add(frame, text="")
         self.notebookTab.add(ttk.Frame(self.notebookTab),**kwargs)
-        self.notebookTab.select(tab_id=self.notebookTab.index("current"))
-    
+        self.notebookTab.select()
+
     def forget(self,tab_id):
         #self.notebookContent.forget(self.__ContentTabID(tab_id))
         self.notebookTab.forget(tab_id)
@@ -182,7 +185,6 @@ class ScrollableNotebook(ttk.Frame):
     def hide(self,tab_id):
         #self.notebookContent.hide(self.__ContentTabID(tab_id))
         self.notebookTab.hide(tab_id)
-        self.notebookTab.forget(tab_id)
 
     def identify(self,x, y):
         return self.notebookTab.identify(x,y)
@@ -192,7 +194,7 @@ class ScrollableNotebook(ttk.Frame):
 
     def __ContentTabID(self,tab_id):
         pass
-        return self.notebookContent.tabs()[self.notebookTab.tabs().index(tab_id)]
+        #return self.notebookContent.tabs()[self.notebookTab.tabs().index(tab_id)]
 
     def insert(self,pos,frame, **kwargs):
         self.notebookContent.insert(pos,frame, **kwargs)
@@ -200,7 +202,6 @@ class ScrollableNotebook(ttk.Frame):
 
     def select(self,tab_id):
         self.notebookTab.select(tab_id)
-        return tab_id
 
     def tab(self,tab_id, option=None, **kwargs):
         kwargs_Content = kwargs.copy()
