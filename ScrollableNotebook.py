@@ -148,11 +148,11 @@ class ScrollableNotebook(ttk.Frame):
     def _tabChanger(self,event):
         try:
             self.notebookContent.select(self.notebookTab.index("current"))
-            tab_id = self.notebookTab.index("current")
-            print('id al cambiar : --> ',self.notebookTab.index(self.notebookTab.select()))
-            global id_tab
-            id_tab = self.notebookTab.index(self.notebookTab.select())
-            return tab_id
+            # tab_id = self.notebookTab.index("current")
+            # print('id al cambiar : --> ',self.notebookTab.index(self.notebookTab.select()))
+            # global id_tab
+            # id_tab = self.notebookTab.index(self.notebookTab.select())
+            # return tab_id
         except: pass
 
     def _rightSlide(self,event):
@@ -176,7 +176,6 @@ class ScrollableNotebook(ttk.Frame):
         else:
             self.notebookContent.add(frame, text="")
         self.notebookTab.add(ttk.Frame(self.notebookTab),**kwargs)
-        self.notebookTab.select()
 
     def forget(self,tab_id):
         #self.notebookContent.forget(self.__ContentTabID(tab_id))
@@ -193,20 +192,21 @@ class ScrollableNotebook(ttk.Frame):
         return self.notebookTab.index(tab_id)
 
     def __ContentTabID(self,tab_id):
-        pass
-        #return self.notebookContent.tabs()[self.notebookTab.tabs().index(tab_id)]
+        return self.notebookContent.tabs()[self.notebookTab.tabs().index(tab_id)]
 
     def insert(self,pos,frame, **kwargs):
         self.notebookContent.insert(pos,frame, **kwargs)
         self.notebookTab.insert(pos,frame,**kwargs)
 
     def select(self,tab_id):
+        ##        self.notebookContent.select(self.__ContentTabID(tab_id))
         self.notebookTab.select(tab_id)
 
     def tab(self,tab_id, option=None, **kwargs):
         kwargs_Content = kwargs.copy()
+        print(kwargs_Content)
         kwargs_Content["text"] = "" # important
-        #self.notebookContent.tab(self.__ContentTabID(tab_id), option=None, **kwargs_Content)
+        self.notebookContent.tab(self.__ContentTabID(tab_id), option=None, **kwargs_Content)
         return self.notebookTab.tab(tab_id, option=None, **kwargs)
 
     def tabs(self):

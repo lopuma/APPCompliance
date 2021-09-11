@@ -901,7 +901,7 @@ class Desviacion(ttk.Notebook):
         pass
     ## ----------------------------------------------------------- ##
     def cambiar_NamePestaña(self, customer):
-        app.cuaderno.tab(idOpenTab, text='DESVIACIONES : {}'.format(customer))
+        app.cuaderno.tab(idOpenTab, option=None, text='DESVIACIONES : {}'.format(customer))
 class Aplicacion():
     def __init__(self):
         self.root= tk.Tk()
