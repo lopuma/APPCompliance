@@ -47,6 +47,91 @@ data = []
 txtWidget_focus = False
 txtWidget = ""
 tittleExpand = ""
+class Expandir(tk.Frame):
+    def __init__(self, parent, *args, **kwargs):
+        self.parent = parent
+        super().__init__(*args, **kwargs)
+        self.vtn_expandir = Toplevel(self)
+        self.vtn_expandir.config(background='#F1ECC3')
+        self.vtn_expandir.geometry("1005x600+345+65")
+        #self.vtn_expandir.resizable(0,0)
+        self.vtn_expandir.title("DESVIACIONES : {}".format(asigne_Ciente))
+        self.vtn_expandir.columnconfigure(0, weight=1)
+        self.vtn_expandir.rowconfigure(1, weight=1)
+        self.text_font = tkFont.Font(family='Consolas', size=13)
+        self.menu_clickDerecho()
+        self.widgets_EXPANDIR()
+        self.EXP_srcExpandir.bind("<Button-3><ButtonRelease-3>", self.display_menu_clickDerecho)
+        self.EXP_srcExpandir.bind("<Motion>", lambda e:desviacion.activar_Focus(e))
+        self.EXP_srcExpandir.bind("<Key>", lambda e: desviacion.widgets_SoloLectura(e))
+    ## --- MENU CONTEXTUAL --------------------------- ##
+    def cerrar_vtn_expandir(self):
+        if txtWidget_focus:
+            self.vtn_expandir.destroy()
+    def menu_clickDerecho(self):
+        self.menu_Contextual = Menu(self.vtn_expandir, tearoff=0)
+        self.menu_Contextual.add_command(label="  Copiar", 
+                                #image=self.copy2_icon,
+                                compound=LEFT,
+                                background='#ccffff', foreground='black',
+                                activebackground='#004c99',activeforeground='white',
+                                font=self.text_font,
+                                command= app.copiar_texto_seleccionado,
+                                )
+        self.menu_Contextual.add_command(label="  Seleccionar todo", 
+                                #image=self.copy2_icon,
+                                compound=LEFT,
+                                background='#ccffff', foreground='black',
+                                activebackground='#004c99',activeforeground='white',
+                                font=self.text_font,
+                                command=lambda : app.seleccionar_todo(event=None),
+                                )
+        self.menu_Contextual.add_separator(background='#ccffff')
+        self.menu_Contextual.add_command(label="  Cerrar pestaña", 
+                                #image=self.cerrar_icon,
+                                compound=LEFT,
+                                background='#ccffff', foreground='black',
+                                activebackground='#004c99',activeforeground='white',
+                                font=self.text_font,
+                                command=self.cerrar_vtn_expandir
+                                )
+    def display_menu_clickDerecho(self, event):
+        self.menu_Contextual.tk_popup(event.x_root, event.y_root)
+    ## ----------------------------------------------- ##
+    def widgets_EXPANDIR(self):
+        self.EXP_lblWidget = ttk.Label(self.vtn_expandir, 
+                                        text=tittleExpand,
+                                        foreground='blue',
+                                        font=('Source Sans Pro', 16, font.BOLD),
+                                        )
+        self.EXP_lblWidget.grid(row=0, column=0, padx=5, pady=5,sticky='w')
+        self.EXP_btnCopyALL = ttk.Button(self.vtn_expandir,
+                                            image=desviacion.CopyALL1_icon,
+                                            #command=self.seleccionar_todo,
+                                            style='DESV.TButton',
+                                            )
+        self.EXP_btnCopyALL.grid(row=0, column=1, padx=20, pady=5, sticky='ne')
+        self.EXP_btnScreamEvidencia = ttk.Button(self.vtn_expandir,
+                                            image=desviacion.Captura1_icon,
+                                            command=desviacion.ScreamEvidencia,
+                                            style='DESV.TButton',
+                                            )
+        self.EXP_btnScreamEvidencia.grid(row=0, column=2, pady=5, sticky='ne')
+        self.EXP_btnReducir = ttk.Button(self.vtn_expandir,
+                                            image=desviacion.Reducir_icon,
+                                            command=self.cerrar_vtn_expandir,
+                                            style='DESV.TButton',
+                                            )
+        self.EXP_btnReducir.grid(row=0, column=3, padx=20, pady=5, sticky='ne')
+        self.EXP_srcExpandir = st.ScrolledText(self.vtn_expandir,
+                                            wrap='word',
+                                            font=('Consolas', 15), 
+                                            selectbackground='lightblue',
+                                            highlightbackground='gray88',
+                                            highlightthickness=2,
+                                            highlightcolor='#297F87',)
+        self.EXP_srcExpandir.grid(row=1, column=0, padx=5, pady=5, sticky='nsew', columnspan=4)
+
 class Desviacion(ttk.Notebook):
     def __init__(self, parent, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -667,35 +752,13 @@ class Aplicacion():
         self.contenedor= ttk.Frame(self.cuaderno )
         self.contenedor.columnconfigure(1, weight=1)
         self.contenedor.rowconfigure(1, weight=1)
-
-
-        # frame2=Frame(self.cuaderno )
-        # frame3=Frame(self.cuaderno )
-        # frame4=Frame(self.cuaderno )
-
-
-
         self.cuaderno .add(self.contenedor,text='WorkSpace', underline=0)
-        
-        
-        # self.cuaderno .add(frame2,text="I am Tab Two")
-        # self.cuaderno .add(frame3,text="I am Tab Three")
-        # self.cuaderno .add(frame4,text="I Forgot How to Count")
-        
         self.cuaderno .pack(fill="both",expand=True)
         self.cuaderno.bind_all("<<NotebookTabChanged>>",lambda e:self.alCambiar_Pestaña(e))
         self.estilos()
         self.iconos()
         self.menu_clickDerecho()
         self.widgets_APP()
-        #####################################################
-        #text=Text(self.contenedor)
-        #text.pack()
-        # Label(frame2,text="I am Frame 2").pack()
-        # Label(frame3,text="I am Frame 3").pack()
-        # Label(frame4,text="You know i'm Frame 4").pack()
-        # #text.insert(INSERT,"Hello World!")
-        #####################################################
     def iconos(self):
         self.Desviaciones_icon = ImageTk.PhotoImage(
             Image.open(path_icon+r"openDesviaciones.png").resize((80, 80)))
@@ -881,11 +944,10 @@ class Aplicacion():
     def alCambiar_Pestaña(self, event):
             global idOpenTab
             global asigne_Ciente
-            print('si cambia ', idOpenTab)
             idOpenTab = event.widget.index(tk.CURRENT)
             tab = event.widget.tab(idOpenTab)['text']
             if idOpenTab != 0:
-                self.menu_Contextual.entryconfig('  Cerrar pestaña', state='normal')
+                self.menu_Contextual.entryconfig('  Cerrar pestaña', state='disabled')
                 self.menu_Contextual.entryconfig('  Copiar', state='disabled')
                 self.menu_Contextual.entryconfig('  Pegar', state='disabled')
                 self.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
@@ -941,11 +1003,11 @@ class Aplicacion():
     def abrir_issuesDesviacion(self):
         #frame1=Frame(self.cuaderno)
         #self.cuaderno.add(frame1,text="I am Tab One")
-            # global desviacion
+        global desviacion
         id_tab = self.cuaderno._tabChanger(event=None)
         desviacion = Desviacion(self.cuaderno)
         self.cuaderno.add(desviacion, text='Issues DESVIACIONES')
-        #self.cuaderno.select(id_tab)
+        desviacion.limpiar_Widgets()
         desviacion.DESVfr1_entModulo.focus()
     def widgets_APP(self):
             self.menuBar = tk.Menu(self.root, relief=FLAT, border=0)
@@ -1101,6 +1163,7 @@ class Aplicacion():
                                         sticky='sew')
     def mainloop(self):
         self.root.mainloop()
+
 if __name__ == "__main__":
     app = Aplicacion()
     app.mainloop()

@@ -5,6 +5,7 @@
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
+import tkinter.font as tkFont
 
 class ScrollableNotebook(ttk.Frame):
     _initialized = False
@@ -26,9 +27,14 @@ class ScrollableNotebook(ttk.Frame):
         self.menuSpace=30
         if tabmenu==True:
             self.menuSpace=50
-            bottomTab = ttk.Label(slideFrame, text=" \u2630 ")
+            bottomTab = ttk.Label(slideFrame, 
+                                text=" \u2630 ", 
+                                background='red',
+                                width=4,
+                                anchor='center'
+                                )
             bottomTab.bind("<1>",self._bottomMenu)
-            bottomTab.pack(side=LEFT)
+            bottomTab.pack(side=RIGHT, ipady=10)
         leftArrow = ttk.Label(slideFrame, text=" \u276E")
         leftArrow.bind("<1>",self._leftSlide)
         leftArrow.pack(side=LEFT)
@@ -103,6 +109,9 @@ class ScrollableNotebook(ttk.Frame):
                 ]
             })
         ])
+        self.style.configure('ScrollableNotebook',
+                            background='#082032'
+        )
         self.style.configure("ScrollableNotebook.Tab",
             background='#FDD2BF',
             foreground='#012443',
@@ -121,9 +130,16 @@ class ScrollableNotebook(ttk.Frame):
             self._rightSlide(event)
 
     def _bottomMenu(self,event):
+        self.text_font = tkFont.Font(family='Consolas', size=13)
         tabListMenu = Menu(self, tearoff = 0)
         for tab in self.notebookTab.tabs():
-            tabListMenu.add_command(label=self.notebookTab.tab(tab, option="text"),command= lambda temp=tab: self.select(temp))
+            tabListMenu.add_command(label=self.notebookTab.tab(tab, option="text"),
+                                    command= lambda temp=tab: self.select(temp),
+                                    background='#ccffff', 
+                                    foreground='black',
+                                    font=self.text_font,
+                                    activebackground='#004c99',
+                                    activeforeground='white')
         try: 
             tabListMenu.tk_popup(event.x_root, event.y_root) 
         finally: 
@@ -147,7 +163,7 @@ class ScrollableNotebook(ttk.Frame):
             self.xLocation+=20
             self.notebookTab.place(x=self.xLocation,y=0)
 
-    def _resetSlide(self,event=None):
+    def _resetSlide(self,event):
         self.notebookTab.place(x=0,y=0)
         self.xLocation = 0
 
@@ -166,6 +182,7 @@ class ScrollableNotebook(ttk.Frame):
     def hide(self,tab_id):
         #self.notebookContent.hide(self.__ContentTabID(tab_id))
         self.notebookTab.hide(tab_id)
+        self.notebookTab.forget(tab_id)
 
     def identify(self,x, y):
         return self.notebookTab.identify(x,y)

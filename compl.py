@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #--- importamos librerias ----------------------------------#
-from abc import abstractstaticmethod
 from tkinter import font
 from tkinter import scrolledtext as st
 import json
