@@ -50,7 +50,7 @@ data = []
 txtWidget_focus = False
 txtWidget = ""
 tittleExpand = ""
-class Directory(tk.Frame):
+class Directory(ttk.Frame):
     def __init__(self, parent, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.widgetsFiles()
@@ -206,7 +206,8 @@ class Directory(tk.Frame):
         self.cbxUser.grid(column=1, row=2, pady=10, padx=10, sticky='nsew')
         self.tree.bind("<ButtonRelease-1>", self.selecionar_elemntFile)
         self.cargar_files()
-class Expandir(tk.Frame):
+
+class Expandir(ttk.Frame):
     def __init__(self, parent, *args, **kwargs):
         self.parent = parent
         super().__init__(*args, **kwargs)
@@ -290,9 +291,10 @@ class Expandir(tk.Frame):
                                             highlightthickness=2,
                                             highlightcolor='#297F87',)
         self.EXP_srcExpandir.grid(row=1, column=0, padx=5, pady=5, sticky='nsew', columnspan=4)
-class Desviacion(ttk.Notebook):
+
+class Desviacion(ttk.Frame):
     def __init__(self, parent, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        ttk.Frame.__init__(self, parent,*args)
         self.parent = parent
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=1)
@@ -902,14 +904,15 @@ class Desviacion(ttk.Notebook):
     ## ----------------------------------------------------------- ##
     def cambiar_NamePestaña(self, customer):
         app.cuaderno.tab(idOpenTab, option=None, text='DESVIACIONES : {}'.format(customer))
+
 class Aplicacion():
     def __init__(self):
-        self.root= tk.Tk()
+        self.root= Tk()
         self.root.title("CONTINOUS COMPLIANCE")
         self.root.geometry("1028x768") 
         self.root.tk.call('wm', 'iconphoto', self.root._w, tk.PhotoImage(file=path_icon+'compliance.png'))       
-        self.cuaderno = ScrollableNotebook(self.root, tabmenu=True)
-        self.contenedor= ttk.Frame(self.cuaderno )
+        self.cuaderno = ScrollableNotebook(self.root,wheelscroll=True,tabmenu=True)
+        self.contenedor= ttk.Frame(self.cuaderno)
         self.contenedor.columnconfigure(1, weight=1)
         self.contenedor.rowconfigure(1, weight=1)
         self.cuaderno .add(self.contenedor,text='WorkSpace', underline=0)
@@ -1066,14 +1069,7 @@ class Aplicacion():
     def display_menu_clickDerecho(self, event):
         self.menu_Contextual.tk_popup(event.x_root, event.y_root)
     def buscar(self, *args):
-        print(args)
-        global txtWidget
-        print(txtWidget)
-        #desviacion.DESVfr1_entModulo.focus()
-        # if "desviacion" in globals():
-        #     txtWidget.focus()
-        # else:
-        #     pass
+        desviacion.buscar(event=None)
     def pegar_texto_seleccionado(self):
         #desviacion.DESVfr1_entModulo.focus()
         global txtWidget
@@ -1090,16 +1086,15 @@ class Aplicacion():
                 txtWidget.tag_remove("sel","1.0","end")
                 return 'break'
     def seleccionar_todo(self, event):
-        print(f"focu en {txtWidget_focus}")
         if txtWidget_focus:
-            print(f"wiget con focu {txtWidget}")
             txtWidget.tag_add("sel","1.0","end")
             return 'break'
     def cerrar_vtn_desviacion(self):
-        id_tab = self.cuaderno._tabChanger(event=None)
-        print(id_tab)
-        self.cuaderno.forget(id_tab)
-        #self.cuaderno.hide(id_tab)
+        if idOpenTab == 0:
+            self.menu_Contextual.entryconfig('  Cerrar pestaña', state='disabled')
+        else:
+            self.cuaderno.forget(idOpenTab)
+            self.cuaderno.notebookContent.forget(idOpenTab)
     ## ----------------------- ##
     def alCambiar_Pestaña(self, event):
             global idOpenTab
@@ -1107,14 +1102,13 @@ class Aplicacion():
             idOpenTab = event.widget.index(tk.CURRENT)
             tab = event.widget.tab(idOpenTab)['text']
             if idOpenTab != 0:
-                self.menu_Contextual.entryconfig('  Cerrar pestaña', state='disabled')
                 self.menu_Contextual.entryconfig('  Copiar', state='disabled')
                 self.menu_Contextual.entryconfig('  Pegar', state='disabled')
                 self.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
+            elif idOpenTab == 0:
+                self.menu_Contextual.entryconfig('  Cerrar pestaña', state='disabled')
             ## -----------ASIGNAMOS A UNA VARIABLE CADA CLIENTE----------------------------
-            print('named tab : ', tab)
             if tab == 'WorkSpace':
-                print('si es')
                 asigne_Ciente = ""
                 self.fileMenu.entryconfig('  Clientes', state='disabled')
                 self.menu_Contextual.entryconfig('  Buscar', state='disabled')
@@ -1164,8 +1158,10 @@ class Aplicacion():
                         listClave.append(md['clave'])
     def abrir_issuesDesviacion(self):
         global desviacion
+        #self.cuaderno = ScrollableNotebook(self.root,wheelscroll=True,tabmenu=True)
         desviacion = Desviacion(self.cuaderno)
         self.cuaderno.add(desviacion, text='Issues DESVIACIONES')
+        #self.cuaderno.select(desviacion)
         desviacion.limpiar_Widgets()
     def abrir_issuesExtracion(self):
         global directory
