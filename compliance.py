@@ -2,6 +2,8 @@ import tkinter as tk
 import tkinter.font as tkFont
 import json
 import os
+import subprocess
+import time
 from tkinter import *
 from tkinter import ttk
 from ScrollableNotebook  import *
@@ -11,8 +13,6 @@ from tkinter import messagebox as mb
 from tkinter import font
 from PIL import Image, ImageTk
 from tkinter.ttk import Style
-import subprocess
-import time
 #-----------------------------------------------------------#
 user = getuser()
 path = os.path.expanduser("~/")
@@ -206,7 +206,6 @@ class Directory(ttk.Frame):
         self.cbxUser.grid(column=1, row=2, pady=10, padx=10, sticky='nsew')
         self.tree.bind("<ButtonRelease-1>", self.selecionar_elemntFile)
         self.cargar_files()
-
 class Expandir(ttk.Frame):
     def __init__(self, parent, *args, **kwargs):
         self.parent = parent
@@ -291,7 +290,13 @@ class Expandir(ttk.Frame):
                                             highlightthickness=2,
                                             highlightcolor='#297F87',)
         self.EXP_srcExpandir.grid(row=1, column=0, padx=5, pady=5, sticky='nsew', columnspan=4)
-
+class Extracion(ttk.Frame):
+    def __init__(self, parent, *args, **kwargs):
+        ttk.Frame.__init__(self, parent,*args)
+        text = StringVar()
+        button = Button(self, textvariable=text)
+        button.pack(expand=True, fill=BOTH)
+        text.set('0')
 class Desviacion(ttk.Frame):
     def __init__(self, parent, *args, **kwargs):
         ttk.Frame.__init__(self, parent,*args)
@@ -579,12 +584,14 @@ class Desviacion(ttk.Frame):
     def ListDown(self, event):
         widget_Focus = event.widget
         listBox = self.DESVfr1_listbox
-        print(widget_Focus)
-        print(listBox)
-        if widget_Focus == listBox:
-            self.DESVfr1_listbox.yview_scroll(1,"units")
-            selecion = self.DESVfr1_listbox.curselection()
+        print('<<1>>',widget_Focus)
+        print('<<2>>',listBox)
+        if widget_Focus:
+            print('si esta activo LIS')
+            event.widget.yview_scroll(1,"units")
+            selecion = event.widget.curselection()
             modulo_selecionado = event.widget.get(selecion)
+            print('<<3>>',modulo_selecionado)
             with open(path_modulo.format(asigne_Ciente)) as g:
                 data = json.load(g)
                 for md in data:
@@ -593,8 +600,7 @@ class Desviacion(ttk.Frame):
                         self.limpiar_Widgets()
                         ## ------------------------------------------------- ##
                         self.asignarValor_aWidgets(md)
-        else:
-            pass
+        #
     def ListUp(self, event):
         widget_Focus = event.widget
         listBox = self.DESVfr1_listbox
@@ -904,7 +910,6 @@ class Desviacion(ttk.Frame):
     ## ----------------------------------------------------------- ##
     def cambiar_NamePestaña(self, customer):
         app.cuaderno.tab(idOpenTab, option=None, text='DESVIACIONES : {}'.format(customer))
-
 class Aplicacion():
     def __init__(self):
         self.root= Tk()
@@ -915,8 +920,8 @@ class Aplicacion():
         self.contenedor= ttk.Frame(self.cuaderno)
         self.contenedor.columnconfigure(1, weight=1)
         self.contenedor.rowconfigure(1, weight=1)
-        self.cuaderno .add(self.contenedor,text='WorkSpace', underline=0)
-        self.cuaderno .pack(fill="both",expand=True)
+        self.cuaderno.add(self.contenedor,text='WorkSpace', underline=0)
+        self.cuaderno.pack(fill="both",expand=True)
         self.cuaderno.bind_all("<<NotebookTabChanged>>",lambda e:self.alCambiar_Pestaña(e))
         self.estilos()
         self.iconos()
@@ -1099,7 +1104,7 @@ class Aplicacion():
     def alCambiar_Pestaña(self, event):
             global idOpenTab
             global asigne_Ciente
-            idOpenTab = event.widget.index(tk.CURRENT)
+            idOpenTab = event.widget.index('current')
             tab = event.widget.tab(idOpenTab)['text']
             if idOpenTab != 0:
                 self.menu_Contextual.entryconfig('  Copiar', state='disabled')
@@ -1158,14 +1163,15 @@ class Aplicacion():
                         listClave.append(md['clave'])
     def abrir_issuesDesviacion(self):
         global desviacion
-        #self.cuaderno = ScrollableNotebook(self.root,wheelscroll=True,tabmenu=True)
+        global idOpenTab
         desviacion = Desviacion(self.cuaderno)
+        #self.cuaderno.add(desviacion, text='Issues DESVIACIONES')
         self.cuaderno.add(desviacion, text='Issues DESVIACIONES')
-        #self.cuaderno.select(desviacion)
-        desviacion.limpiar_Widgets()
+        #self.cuaderno.select('.!scrollablenotebook.!notebook2.!frame2')
     def abrir_issuesExtracion(self):
-        global directory
-        directory = Directory(self)
+        global extracion
+        extracion = Extracion(self.cuaderno)
+        self.cuaderno.add(extracion, text='Issues EXTRACIONES')
     def widgets_APP(self):
             self.menuBar = tk.Menu(self.root, relief=FLAT, border=0)
             self.root.config(menu=self.menuBar)

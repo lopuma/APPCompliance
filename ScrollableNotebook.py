@@ -2,14 +2,20 @@
 
 # Copyright (c) Muhammet Emin TURGUT 2020
 # For license see LICENSE
-from os import sendfile
+from os import path, sendfile
+import posix
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
 import tkinter.font as tkFont
+from threading import Thread
+import time
 #from compliance import Aplicacion
+release = True
+limit = 100
 class ScrollableNotebook(ttk.Frame):
     _initialized = False
+    
     def __init__(self,parent,wheelscroll=False,tabmenu=False,*args,**kwargs):
         ttk.Frame.__init__(self, parent, *args)
         if not self._initialized:
@@ -22,7 +28,8 @@ class ScrollableNotebook(ttk.Frame):
         self.notebookContent.pack(fill="both", expand=True)
         self.notebookTab = ttk.Notebook(self,**kwargs)
         self.notebookTab.bind("<<NotebookTabChanged>>",self._tabChanger)
-        if wheelscroll==True: self.notebookTab.bind("<MouseWheel>", self._wheelscroll)
+        if wheelscroll==True: 
+            self.notebookTab.bind("<MouseWheel>", self._wheelscroll)
         slideFrame = ttk.Frame(self)
         slideFrame.place(relx=1.0, x=0, y=1, anchor=NE)
         self.menuSpace=30
@@ -36,16 +43,25 @@ class ScrollableNotebook(ttk.Frame):
                                 )
             bottomTab.bind("<1>",self._bottomMenu)
             bottomTab.pack(side=RIGHT, ipady=10)
+
         leftArrow = ttk.Label(slideFrame, text=" \u276E")
-        leftArrow.bind("<1>",self._leftSlide)
+        leftArrow.bind("<Button-1>",lambda e: Thread(target=self._leftSlide, daemon=True).start())
+        leftArrow.bind("<ButtonRelease-1>", self._release_callback)
         leftArrow.pack(side=LEFT)
         rightArrow = ttk.Label(slideFrame, text=" \u276F")
-        rightArrow.bind("<1>",self._rightSlide)
+        #rightArrow.bind("<1>",self._rightSlide)
+        rightArrow.bind("<Button-1>",lambda e: Thread(target=self._rightSlide, daemon=True).start())
+        rightArrow.bind("<ButtonRelease-1>", self._release_callback)
         rightArrow.pack(side=LEFT)
+
         self.notebookContent.bind("<Configure>", self._resetSlide)
         self.notebookTab.bind("<ButtonPress-1>", self.on_tab_close_press, True)
         self.notebookTab.bind("<ButtonRelease-1>", self.on_tab_close_release)
-        
+    
+    def _release_callback(self, e):
+        global release
+        release = True
+
     def on_tab_close_press(self, event):
         name = self.identify(event.x, event.y)
         if name == "tab_btn_close":
@@ -145,24 +161,35 @@ class ScrollableNotebook(ttk.Frame):
             tabListMenu.grab_release()
 
     def _tabChanger(self,event):
+        global id_tab
         try:
             self.notebookContent.select(self.notebookTab.index("current"))
+            id_tab = self.notebookTab.index("current")
+            print(id_tab)
         except: pass
 
-    def _rightSlide(self,event):
-        if self.notebookTab.winfo_width()>self.notebookContent.winfo_width()-self.menuSpace:
-            if (self.notebookContent.winfo_width()-(self.notebookTab.winfo_width()+self.notebookTab.winfo_x()))<=self.menuSpace+5:
-                self.xLocation-=20
-                self.notebookTab.place(x=self.xLocation,y=0)
+    def _rightSlide(self):
+        global release
+        release = False
+        while not release:
+            time.sleep(0.05)
+            if self.notebookTab.winfo_width()>self.notebookContent.winfo_width()-self.menuSpace:
+                if (self.notebookContent.winfo_width()-(self.notebookTab.winfo_width()+self.notebookTab.winfo_x()))<=self.menuSpace+5:
+                    self.xLocation-=20
+                    self.notebookTab.place(x=self.xLocation,y=0)
     
-    def _leftSlide(self,event):
-        if not self.notebookTab.winfo_x()== 0:
-            self.xLocation+=20
-            self.notebookTab.place(x=self.xLocation,y=0)
+    def _leftSlide(self):
+        global release
+        release = False
+        while not release:
+            time.sleep(0.05)
+            if not self.notebookTab.winfo_x()== 0:
+                self.xLocation+=20
+                self.notebookTab.place(x=self.xLocation,y=0)
 
-    def _resetSlide(self,event):
+    def _resetSlide(self, event):
         self.notebookTab.place(x=0,y=0)
-        self.xLocation = 0
+        #self.xLocation = 0
 
     def add(self,frame,**kwargs):
         if len(self.notebookTab.winfo_children())!=0:
@@ -170,6 +197,7 @@ class ScrollableNotebook(ttk.Frame):
         else:
             self.notebookContent.add(frame, text="",state="hidden")
         self.notebookTab.add(ttk.Frame(self.notebookTab),**kwargs)
+        #self.notebookTab.add(frame,**kwargs)
 
     def forget(self,tab_id):
         #self.notebookContent.forget(self.__ContentTabID(tab_id))
@@ -184,21 +212,27 @@ class ScrollableNotebook(ttk.Frame):
 
     def index(self,tab_id):
         return self.notebookTab.index(tab_id)
+        #return self.notebookTab.index(self.notebookTab.select('current'))
 
     def __ContentTabID(self,tab_id):
         return self.notebookContent.tabs()[self.notebookTab.tabs().index(tab_id)]
 
     def insert(self,pos,frame, **kwargs):
-        self.notebookContent.insert(pos,frame, **kwargs)
+        print('POSICION', pos)
+        #self.notebookContent.insert(pos,frame, **kwargs)
         self.notebookTab.insert(pos,frame,**kwargs)
 
     def select(self,tab_id):
-        ##        self.notebookContent.select(self.__ContentTabID(tab_id))
         self.notebookTab.select(tab_id)
+        selected_tab = self.notebookTab.select()
+        posi = self.notebookTab.index(selected_tab)
+        print('posi _ ',posi)
+        self.notebookTab.place(x=posi,y=0)
+        if tab_id == '.!scrollablenotebook.!notebook2.!frame':
+            self._resetSlide(event=None)
 
     def tab(self,tab_id, option=None, **kwargs):
         kwargs_Content = kwargs.copy()
-        print('tab <--> : ',kwargs_Content)
         kwargs_Content["text"] = "" # important
         #self.notebookContent.tab(self.__ContentTabID(tab_id), option=None, **kwargs_Content)
         return self.notebookTab.tab(tab_id, option=None, **kwargs)
