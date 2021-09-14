@@ -1,3 +1,7 @@
 /home/esy9d7l1/compliance/env/*
 env/
 __pycache__/
+dist/
+compliance.spec
+build/
+

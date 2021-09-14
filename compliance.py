@@ -369,6 +369,7 @@ class Desviacion(ttk.Frame):
         event.widget['wraplength'] = event.width
     ## --- ACTIVAR MODO SOLO LECTURA ----------------------------- ##
     def widgets_SoloLectura(self, event):
+        print(event.state)
         if(20==event.state and event.keysym=='c' or event.keysym=='Down' or event.keysym=='Up' or 20==event.state and event.keysym=='f' or 20==event.state and event.keysym=='a'):
             return
         else:
@@ -910,21 +911,23 @@ class Desviacion(ttk.Frame):
     ## ----------------------------------------------------------- ##
     def cambiar_NamePestaña(self, customer):
         app.cuaderno.tab(idOpenTab, option=None, text='DESVIACIONES : {}'.format(customer))
+        app.cuaderno.notebookContent.tab(idOpenTab, option=None, text='DESVIACIONES : {}'.format(customer))
 class Aplicacion():
     def __init__(self):
         self.root= Tk()
         self.root.title("CONTINOUS COMPLIANCE")
         self.root.geometry("1028x768") 
         self.root.tk.call('wm', 'iconphoto', self.root._w, tk.PhotoImage(file=path_icon+'compliance.png'))       
+        self.iconos()
         self.cuaderno = ScrollableNotebook(self.root,wheelscroll=True,tabmenu=True)
         self.contenedor= ttk.Frame(self.cuaderno)
         self.contenedor.columnconfigure(1, weight=1)
         self.contenedor.rowconfigure(1, weight=1)
-        self.cuaderno.add(self.contenedor,text='WorkSpace', underline=0)
+        self.cuaderno.add(self.contenedor,text='WorkSpace  ', underline=0, image=self.WorkSpace_icon, compound='left')
         self.cuaderno.pack(fill="both",expand=True)
         self.cuaderno.bind_all("<<NotebookTabChanged>>",lambda e:self.alCambiar_Pestaña(e))
+        self.cuaderno.enable_traversal()
         self.estilos()
-        self.iconos()
         self.menu_clickDerecho()
         self.widgets_APP()
     def iconos(self):
@@ -950,6 +953,8 @@ class Aplicacion():
             Image.open(path_icon+r"ayuda.png").resize((30, 30)))
         self.AcercaDe_icon = ImageTk.PhotoImage(
             Image.open(path_icon+r"acercaDe.png").resize((30, 30)))
+        self.WorkSpace_icon = ImageTk.PhotoImage(
+            Image.open(path_icon+r"workspace.png").resize((20, 20)))
     def estilos(self):
         self.style = Style()
         self.style.configure('.',
@@ -1102,70 +1107,73 @@ class Aplicacion():
             self.cuaderno.notebookContent.forget(idOpenTab)
     ## ----------------------- ##
     def alCambiar_Pestaña(self, event):
-            global idOpenTab
-            global asigne_Ciente
-            idOpenTab = event.widget.index('current')
-            tab = event.widget.tab(idOpenTab)['text']
-            if idOpenTab != 0:
-                self.menu_Contextual.entryconfig('  Copiar', state='disabled')
-                self.menu_Contextual.entryconfig('  Pegar', state='disabled')
-                self.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
-            elif idOpenTab == 0:
-                self.menu_Contextual.entryconfig('  Cerrar pestaña', state='disabled')
-            ## -----------ASIGNAMOS A UNA VARIABLE CADA CLIENTE----------------------------
-            if tab == 'WorkSpace':
-                asigne_Ciente = ""
-                self.fileMenu.entryconfig('  Clientes', state='disabled')
-                self.menu_Contextual.entryconfig('  Buscar', state='disabled')
-                self.menu_Contextual.entryconfig('  Copiar', state='disabled')
-                self.menu_Contextual.entryconfig('  Pegar', state='disabled')
-                self.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
-                self.menu_Contextual.entryconfig('  Cerrar pestaña', state='disabled')
-            elif tab == 'DESVIACIONES : AFB':
-                asigne_Ciente = 'AFB'
-            elif tab == 'DESVIACIONES : ASISA':
-                asigne_Ciente = 'ASISA'
-            elif tab == 'DESVIACIONES : CESCE':
-                asigne_Ciente = 'CESCE'
-            elif tab == 'DESVIACIONES : CTTI':
-                asigne_Ciente = 'CTTI'
-            elif tab == 'DESVIACIONES : ENEL':
-                asigne_Ciente = 'ENEL'
-            elif tab == 'DESVIACIONES : EUROFRED':
-                asigne_Ciente = 'EUROFRED'
-            elif tab == 'DESVIACIONES : FT':
-                asigne_Ciente = 'FT'
-            elif tab == 'DESVIACIONES : INFRA':
-                asigne_Ciente = 'INFRA'
-            elif tab == 'DESVIACIONES : IDISO':
-                asigne_Ciente = 'IDISO'
-            elif tab == 'DESVIACIONES : LBK':
-                asigne_Ciente = 'LBK'
-            elif tab == 'DESVIACIONES : PLANETA':
-                asigne_Ciente = 'PLANETA'
-            elif tab == 'DESVIACIONES : SERVIHABITAT':
-                asigne_Ciente = 'SERVIHABITAT'
-            else:
-                self.fileMenu.entryconfig('  Clientes', state='normal')
-                self.menu_Contextual.entryconfig('  Copiar', state='disabled')
-                self.menu_Contextual.entryconfig('  Pegar', state='disabled')
-                self.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
-                self.menu_Contextual.entryconfig('  Cerrar pestaña', state='normal')
-            if 'asigne_Ciente' in globals() and len(asigne_Ciente) != 0:
-                with open(path_modulo.format(asigne_Ciente)) as g:
-                    global listClave
-                    global listModulo
-                    data = json.load(g)
-                    listModulo = []
-                    listClave = []
-                    for md in data:
-                        listModulo.append(md['modulo'])
-                        listClave.append(md['clave'])
+        # posx = event.x
+        # posy = event.y
+        # print('pos x ', posx)
+        # print('pos y ', posy)
+        global idOpenTab
+        global asigne_Ciente
+        idOpenTab = event.widget.index('current')
+        tab = event.widget.tab(idOpenTab)['text']
+        if idOpenTab != 0:
+            self.menu_Contextual.entryconfig('  Copiar', state='disabled')
+            self.menu_Contextual.entryconfig('  Pegar', state='disabled')
+            self.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
+        elif idOpenTab == 0:
+            self.menu_Contextual.entryconfig('  Cerrar pestaña', state='disabled')
+        ## -----------ASIGNAMOS A UNA VARIABLE CADA CLIENTE----------------------------
+        if tab == 'WorkSpace  ':
+            asigne_Ciente = ""
+            self.fileMenu.entryconfig('  Clientes', state='disabled')
+            self.menu_Contextual.entryconfig('  Buscar', state='disabled')
+            self.menu_Contextual.entryconfig('  Copiar', state='disabled')
+            self.menu_Contextual.entryconfig('  Pegar', state='disabled')
+            self.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
+            self.menu_Contextual.entryconfig('  Cerrar pestaña', state='disabled')
+        elif tab == 'DESVIACIONES : AFB':
+            asigne_Ciente = 'AFB'
+        elif tab == 'DESVIACIONES : ASISA':
+            asigne_Ciente = 'ASISA'
+        elif tab == 'DESVIACIONES : CESCE':
+            asigne_Ciente = 'CESCE'
+        elif tab == 'DESVIACIONES : CTTI':
+            asigne_Ciente = 'CTTI'
+        elif tab == 'DESVIACIONES : ENEL':
+            asigne_Ciente = 'ENEL'
+        elif tab == 'DESVIACIONES : EUROFRED':
+            asigne_Ciente = 'EUROFRED'
+        elif tab == 'DESVIACIONES : FT':
+            asigne_Ciente = 'FT'
+        elif tab == 'DESVIACIONES : INFRA':
+            asigne_Ciente = 'INFRA'
+        elif tab == 'DESVIACIONES : IDISO':
+            asigne_Ciente = 'IDISO'
+        elif tab == 'DESVIACIONES : LBK':
+            asigne_Ciente = 'LBK'
+        elif tab == 'DESVIACIONES : PLANETA':
+            asigne_Ciente = 'PLANETA'
+        elif tab == 'DESVIACIONES : SERVIHABITAT':
+            asigne_Ciente = 'SERVIHABITAT'
+        else:
+            self.fileMenu.entryconfig('  Clientes', state='normal')
+            self.menu_Contextual.entryconfig('  Copiar', state='disabled')
+            self.menu_Contextual.entryconfig('  Pegar', state='disabled')
+            self.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
+            self.menu_Contextual.entryconfig('  Cerrar pestaña', state='normal')
+        if 'asigne_Ciente' in globals() and len(asigne_Ciente) != 0:
+            with open(path_modulo.format(asigne_Ciente)) as g:
+                global listClave
+                global listModulo
+                data = json.load(g)
+                listModulo = []
+                listClave = []
+                for md in data:
+                    listModulo.append(md['modulo'])
+                    listClave.append(md['clave'])
     def abrir_issuesDesviacion(self):
         global desviacion
         global idOpenTab
         desviacion = Desviacion(self.cuaderno)
-        #self.cuaderno.add(desviacion, text='Issues DESVIACIONES')
         self.cuaderno.add(desviacion, text='Issues DESVIACIONES')
         #self.cuaderno.select('.!scrollablenotebook.!notebook2.!frame2')
     def abrir_issuesExtracion(self):
@@ -1188,7 +1196,6 @@ class Aplicacion():
                                 activebackground='#003638',
                                 activeforeground='#53B8BB',
                                 )
-
             # --- INICIAMOS SUB MENU -------------------------- #
             self.clientMenu = Menu(self.fileMenu, tearoff=0)
             self.issuesMenu = Menu(self.fileMenu, tearoff=0)
