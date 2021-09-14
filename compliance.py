@@ -516,6 +516,12 @@ class Desviacion(ttk.Frame):
     def buscar_Modulos(self, event=None):
         try:
             valor_aBuscar = event
+            print('valor a buscar --> ', valor_aBuscar)
+            print('========== LISTAS ==========')
+            print(listClave)
+            print('\n\n')
+            print(listModulo)
+            print('============================')
             clave_Buscado = [n for n in listClave if valor_aBuscar.upper().strip() in n]
             modulo_Buscado = [n for n in listModulo if valor_aBuscar.strip() in n]
             if len(clave_Buscado) <= 1:
@@ -526,6 +532,10 @@ class Desviacion(ttk.Frame):
                 modulo_Buscado = str(modulo_Buscado).replace("[","").replace("]","").replace("'","")
             else:
                 modulo_Buscado = ""
+            print('--------------------------------------')
+            print('clave buscado --> ', clave_Buscado)
+            print('modulo buscado --> ', modulo_Buscado)
+            print('--------------------------------------')
             # ## --------- OBTENER MODULO POR CLAVE O MODULO -------------- ## //TODO "definir si buscar por clave o modulo"
             if len(clave_Buscado) == 0 and len(modulo_Buscado) == 0:
                 self.limpiar_Widgets()
@@ -547,6 +557,7 @@ class Desviacion(ttk.Frame):
                     modulo_ListBox = self.DESVfr1_listbox.get(0, tk.END)
                     indice = modulo_ListBox.index(modulo_Encontrado)
                     self.DESVfr1_listbox.selection_set(indice)
+                    print('MODULO ENCONTRADO : << {} >> '.format(modulo_Encontrado))
                     # self.DESVfr1_btnBuscar.grid_forget()
                     # self.DESVfr1_btnLimpiar.grid(row=1, column=0, pady=5, padx=5, sticky='nse',columnspan=2)
             else:
@@ -564,6 +575,7 @@ class Desviacion(ttk.Frame):
                     modulo_ListBox = self.DESVfr1_listbox.get(0, tk.END)
                     indice = modulo_ListBox.index(modulo_Encontrado)
                     self.DESVfr1_listbox.selection_set(indice)
+                    print('MODULO ENCONTRADO : << {} >> '.format(modulo_Encontrado))
             self.DESVfr1_btnBuscar.grid_forget()
             self.DESVfr1_btnLimpiar.grid(row=1, column=0, pady=5, padx=5, sticky='nse',columnspan=2)    
         except:
