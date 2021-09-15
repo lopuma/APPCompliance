@@ -13,6 +13,8 @@ from tkinter import messagebox as mb
 from tkinter import font
 from PIL import Image, ImageTk
 from tkinter.ttk import Style
+from threading import Thread
+
 #-----------------------------------------------------------#
 user = getuser()
 path = os.path.expanduser("~/")
@@ -1119,11 +1121,8 @@ class Aplicacion():
             self.cuaderno.notebookContent.forget(idOpenTab)
     ## ----------------------- ##
     def alCambiar_Pestaña(self, event):
-        # posx = event.x
-        # posy = event.y
-        # print('pos x ', posx)
-        # print('pos y ', posy)
         global idOpenTab
+        print(idOpenTab)
         global asigne_Ciente
         idOpenTab = event.widget.index('current')
         tab = event.widget.tab(idOpenTab)['text']
@@ -1133,6 +1132,13 @@ class Aplicacion():
             self.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
         elif idOpenTab == 0:
             self.menu_Contextual.entryconfig('  Cerrar pestaña', state='disabled')
+            self.cuaderno._release_callback(e=None)
+        if idOpenTab == 1 or idOpenTab == 2 or idOpenTab == 3 or idOpenTab == 4:
+            self.cuaderno.rightArrow.configure(foreground='#297F87')
+            Thread(target=self.cuaderno._leftSlide, daemon=True).start()
+            self.cuaderno._release_callback(e=None)
+            self.cuaderno.rightArrow.configure(foreground='#297F87')
+
         ## -----------ASIGNAMOS A UNA VARIABLE CADA CLIENTE----------------------------
         if tab == 'WorkSpace  ':
             asigne_Ciente = ""

@@ -39,14 +39,14 @@ class ScrollableNotebook(ttk.Frame):
         if tabmenu==True:
             self.menuSpace=50
             self.bottomTab = ttk.Label(slideFrame, 
-                                text=" \u2630 ", 
-                                width=4,
+                                text="  \u2630  ", 
+                                width=5,
                                 anchor='center',
                                 background='#DF2E2E',
                                 foreground='#F6D167'
                                 )
             self.bottomTab.bind("<1>",self._bottomMenu)
-            self.bottomTab.pack(side=RIGHT, ipady=10)
+            self.bottomTab.pack(side=LEFT, ipady=12)
 
         self.leftArrow = ttk.Label(slideFrame, 
                                 text=" \u276E ",
@@ -62,7 +62,7 @@ class ScrollableNotebook(ttk.Frame):
         #rightArrow.bind("<1>",self._rightSlide)
         self.rightArrow.bind("<Button-1>",lambda e: Thread(target=self._rightSlide, daemon=True).start())
         self.rightArrow.bind("<ButtonRelease-1>", self._release_callback)
-        self.rightArrow.pack(side=LEFT)
+        self.rightArrow.pack(side=RIGHT)
 
         self.notebookContent.bind("<Configure>", self._resetSlide)
         self.notebookTab.bind("<ButtonPress-1>", self.on_tab_close_press, True)
@@ -182,13 +182,10 @@ class ScrollableNotebook(ttk.Frame):
                                 label='  WorkSpace')
         try: 
             tabListMenu.tk_popup(event.x_root, event.y_root)
-            self.bottomTab.configure(background='black',
-                                foreground='#F6D167')
+            # self.bottomTab.configure(background='black',
+            #                     foreground='#F6D167')
         except:
             self.bottomTab.configure(background='#DF2E2E',
-                                foreground='#F6D167')
-        finally:
-            self.bottomTab.configure(background='blue',
                                 foreground='#F6D167')
 
     def _tabChanger(self,event):
@@ -203,21 +200,25 @@ class ScrollableNotebook(ttk.Frame):
         release = False
         self.rightArrow.configure(foreground='#DF2E2E')
         while not release:
-            time.sleep(0.05)
+            time.sleep(0.01)
             if self.notebookTab.winfo_width()>self.notebookContent.winfo_width()-self.menuSpace:
                 if (self.notebookContent.winfo_width()-(self.notebookTab.winfo_width()+self.notebookTab.winfo_x()))<=self.menuSpace+5:
                     self.xLocation-=20
                     self.notebookTab.place(x=self.xLocation,y=0)
+                else:
+                    self._release_callback(e=None)
     
     def _leftSlide(self):
         global release
         release = False
         self.leftArrow.configure(foreground='#DF2E2E')
         while not release:
-            time.sleep(0.05)
+            time.sleep(0.01)
             if not self.notebookTab.winfo_x()== 0:
                 self.xLocation+=20
                 self.notebookTab.place(x=self.xLocation,y=0)
+            else:
+                    self._release_callback(e=None)
 
     def _resetSlide(self, event):
         self.notebookTab.place(x=0,y=0)
@@ -257,10 +258,16 @@ class ScrollableNotebook(ttk.Frame):
 
     def select(self,tab_id):
         self.notebookTab.select(tab_id)
-        #posi = self.notebookTab.winfo_width()
-        #self.notebookTab.place(x=posi,y=0)
+        print(tab_id)
         if tab_id == '.!scrollablenotebook.!notebook2.!frame':
             self._resetSlide(event=None)
+            self._release_callback(e=None)
+        elif tab_id == '.!scrollablenotebook.!notebook2.!frame2' or tab_id == '.!scrollablenotebook.!notebook2.!frame3' or tab_id == '.!scrollablenotebook.!notebook2.!frame4':
+            Thread(target=self._leftSlide, daemon=True).start()
+            self.rightArrow.configure(foreground='#297F87')
+        else:
+            Thread(target=self._rightSlide, daemon=True).start()
+            self.leftArrow.configure(foreground='#297F87')
 
     def tab(self,tab_id, option=None, **kwargs):
         kwargs_Content = kwargs.copy()
