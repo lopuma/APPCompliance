@@ -17,7 +17,8 @@
       "impact": "GENERICO",
       "variable": [
         "directory=\"/opt/IBM/AFB1/\""
-      ]
+      ],
+      "SO": "Linux"
     },
     {
       "directory": "/opt/IBM/AFB2/",
@@ -36,7 +37,8 @@
       "impact": "GENERICO",
       "variable": [
         "directory=\"/opt/IBM/AFB2/\""
-      ]
+      ],
+      "SO": "Linux"
     }
   ],
   "ASISA": [
@@ -57,7 +59,8 @@
       "impact": "GENERICO",
       "variable": [
         "directory=\"/opt/IBM/ASISA1/\""
-      ]
+      ],
+      "SO": "Linux"
     },
     {
       "directory": "/opt/IBM/ASISA2/",
@@ -76,7 +79,8 @@
       "impact": "GENERICO",
       "variable": [
         "directory=\"/opt/IBM/ASISA2/\""
-      ]
+      ],
+      "SO": "Linux"
     }
   ],
   "INFRA": [
@@ -96,7 +100,8 @@
       "impact": "",
       "variable": [
         "directory=\"/home/ess01012/RHEL/\""
-      ]
+      ],
+      "SO": "Linux"
     }
   ],
   "LBK": [
@@ -116,7 +121,8 @@
       "impact": "",
       "variable": [
         "directory=\"/BDistribuido/\""
-      ]
+      ],
+      "SO": "Linux"
     },
     {
       "directory": "/BDistribuidoBatchDESA/",
@@ -134,7 +140,8 @@
       "impact": "",
       "variable": [
         "directory=\"/BDistribuidoBatchDESA/\""
-      ]
+      ],
+      "SO": "Linux"
     },
     {
       "directory": "/BDistribuidoWf/",
@@ -152,7 +159,8 @@
       "impact": "",
       "variable": [
         "directory=\"/BDistribuidoWf/\""
-      ]
+      ],
+      "SO": "Linux"
     },
     {
       "directory": "/BDistribuidoWfPRE/",
@@ -170,7 +178,8 @@
       "impact": "",
       "variable": [
         "directory=\"/BDistribuidoWfPRE/\""
-      ]
+      ],
+      "SO": "Linux"
     },
     {
       "directory": "/appsrv/",
@@ -188,7 +197,8 @@
       "impact": "GENERICO",
       "variable": [
         ""
-      ]
+      ],
+      "SO": "Linux"
     },
     {
       "directory": "/appsrv/LBK_ARQ_SPA_5_SERVER_COUCH/",
@@ -206,7 +216,8 @@
       "impact": "GENERICO",
       "variable": [
         ""
-      ]
+      ],
+      "SO": "Linux"
     }
   ]
 }

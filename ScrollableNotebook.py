@@ -11,8 +11,7 @@ from tkinter import *
 from tkinter import ttk
 from threading import Thread
 from PIL import Image, ImageTk
-from tkinter.ttk import Style
-
+from compliance import Directory
 release = True
 path = os.path.expanduser("~/")
 path_icon = path+"compliance/image/"
@@ -69,7 +68,7 @@ class ScrollableNotebook(ttk.Frame):
         self.notebookTab.bind("<ButtonRelease-1>", self.on_tab_close_release)
         self.notebookContent.bind("<ButtonPress-1>", self.on_tab_close_press, True)
         self.notebookContent.bind("<ButtonRelease-1>", self.on_tab_close_release)
-
+    
     def _release_callback(self, e):
         global release
         release = True
@@ -91,9 +90,6 @@ class ScrollableNotebook(ttk.Frame):
             index = self.index("@%d,%d" % (event.x, event.y))
             if index != 0:
                 if self._active == index:
-                    named_tab = self.tab(index)['text']
-                    if str(named_tab) == 'DESVIACIONES : LBK':
-                        print('si') 
                     self.forget(index)
                     self.notebookContent.forget(index)
                     self.event_generate("<<NotebookTabClosed>>")

@@ -54,9 +54,21 @@ txtWidget = ""
 tittleExpand = ""
 top_active_LBK = False
 class Directory(ttk.Frame):
-    def __init__(self, parent,customer, *args, **kwargs):
+    def __init__(self, parent, customer, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
+        self.parent = parent
         self.customer = customer
+        print(self.parent)
+        self.vtn_directory = Toplevel(self)
+        self.vtn_directory.config(background='#F9F3DF')
+        self.vtn_directory.geometry("1000x650+345+65")
+        #self.vtn_directory.resizable(0,0)
+        self.vtn_directory.title('DIRECTORY for client {}'.format(self.customer))
+        #self.vtn_directory.transient(self)
+        #self.vtn_directory.grab_set()
+        self.vtn_directory.columnconfigure(0, weight=1)
+        #self.vtn_directory.rowconfigure(1, weight=1)
+        self.vtn_directory.rowconfigure(2, weight=5)
         self.text_font = tkFont.Font(family='Consolas', size=13) 
         self.iconos()
         self.widgets_DIRECTORY()
@@ -68,16 +80,16 @@ class Directory(ttk.Frame):
         self.srcVariable.bind("<Key>", lambda e: desviacion.widgets_SoloLectura(e))
         self.cbxUser.bind("<Key>", lambda e: desviacion.widgets_SoloLectura(e))
         self.textBuscar.bind("<Return>", lambda event=None: self.buscar(self.textBuscar.get()))
-        nn_tab = self.vtn_directory.winfo_toplevel().title()
-        print('nn ', nn_tab)
         #self.vtn_directory.bind("<Motion>", lambda e:desviacion.activar_Focus(e))
     def iconos(self):
         self.buscar_icon = ImageTk.PhotoImage(
-                    Image.open(path_icon+r"buscar.png").resize((20, 20)))
+                    Image.open(path_icon+r"buscar.png").resize((25, 25)))
         self.cerrar_icon = ImageTk.PhotoImage(
-                    Image.open(path_icon+r"reduce.png").resize((20, 20)))
+                    Image.open(path_icon+r"reduce.png").resize((25, 25)))
         self.copiar_icon = ImageTk.PhotoImage(
                     Image.open(path_icon+r"copiarALL.png").resize((20, 20)))
+    def cerrar_vtn(self):
+        self.vtn_directory.destroy()
     def buscar(self, event=None):
         valor_aBuscar = event
         valor_Buscado = [n for n in self.directory if valor_aBuscar.strip() in n]
@@ -107,6 +119,7 @@ class Directory(ttk.Frame):
                                 else:
                                     self.tree.insert(parent='', index='end', iid=count, text='', value=(md['directory'],md['owner'],md['tipo'],md['ownerGroup'],md['code']), tags=('oddrow'))
                                 count += 1
+                        self.limpiar_widgets()
     def cargar_directory(self):
         self.directory = []
         #limpiando el arbol de vistas
@@ -140,27 +153,20 @@ class Directory(ttk.Frame):
                         self.srcRisk.insert(END,md['risk'])
                         self.srcImpact.insert(END,md['impact'])
                         self.cbxUser['values']=md["user"]
-                        self.srcVariable.insert(END,md['variable'])
+                        variables = str(md['variable'])
+                        variables = variables.replace("[","").replace("]","").replace("'","").replace(",",";")
+                        self.srcVariable.insert(END,variables)
+                        self.lbl_SO['text'] = md['SO']
         self.textBuscar.focus()
         self.cbxUser.set('CONTACTOS')
     def limpiar_widgets(self):
+        self.lbl_SO['text'] = "SISTEMA OPERATIVO"
         self.listServer.delete(0,END)
         self.srcRisk.delete('1.0',tk.END)
         self.srcImpact.delete('1.0',tk.END)
         self.cbxUser.delete(0,END)
         self.srcVariable.delete('1.0',tk.END)
     def widgets_DIRECTORY(self):
-        self.vtn_directory = Toplevel(self)
-        self.vtn_directory.config(background='#F9F3DF')
-        self.vtn_directory.geometry("1000x650+345+65")
-        #self.vtn_directory.resizable(0,0)
-        self.vtn_directory.title('DIRECTORY for client {}'.format(self.customer))
-        self.vtn_directory.transient(self)
-        #self.vtn_directory.grab_set()
-        self.vtn_directory.columnconfigure(0, weight=1)
-        #self.vtn_directory.rowconfigure(1, weight=1)
-        self.vtn_directory.rowconfigure(2, weight=5)
-
         self.textBuscar = tk.Entry(self.vtn_directory,
                                         justify='left',
                                         width=40,
@@ -171,9 +177,9 @@ class Directory(ttk.Frame):
         )
         self.textBuscar.grid(row=0, column=0, padx=10, pady=5, sticky='nsew')
 
-        self.btnBuscar = ttk.Button(self.vtn_directory, 
+        self.btnBuscar = ttk.Button(self.vtn_directory,
                                 text='Buscar',
-                                style='TOP.TButton',
+                                style='TOP1.TButton',
                                 image=self.buscar_icon,
                                 command= lambda: self.buscar(self.textBuscar.get())
         )
@@ -181,8 +187,9 @@ class Directory(ttk.Frame):
 
         self.btnCerrar = ttk.Button(self.vtn_directory, 
                                 text='Cerrar',
-                                style='TOP.TButton',
+                                style='TOP1.TButton',
                                 image=self.cerrar_icon,
+                                command=self.cerrar_vtn
         )
         self.btnCerrar.grid(row=0, column=2, padx=10, pady=5, sticky=E)
         ## ====================================================================================
@@ -307,13 +314,22 @@ class Directory(ttk.Frame):
                                     selectforeground='#CDFFEB', 
                                     selectbackground='#476072')
         self.srcImpact.grid(row=1, column=4, pady=5, padx=5, sticky='new', columnspan=2)
+        ## --- SO
+        self.lbl_SO = ttk.Label(self.labelframe2,
+                        text='SISTEMAS OPERATIVO',
+                        font=("Consolas",15, font.BOLD),
+                        style='TOP.TLabelframe.Label',
+                        justify='center',
+        )
+        self.lbl_SO.grid(row=3, column=2, pady=5, padx=10, sticky='w')
+        
         ## --- USER
         self.cbxUser = ttk.Combobox(self.labelframe2, foreground='blue')
         self.cbxUser.config(font=self.text_font, 
                         justify='center',
         )
         self.cbxUser.set('CONTACTO')
-        self.cbxUser.grid(row=3, column=2, padx=5, pady=5, ipady=7, sticky='ew', rowspan=2)
+        self.cbxUser.grid(row=2, column=2, padx=5, pady=5, ipady=7, sticky='ew')
 
         ## --- VARIABLE
         self.lbl4 = ttk.Label(self.labelframe2,
@@ -948,7 +964,8 @@ class Desviacion(ttk.Frame):
                                             image=self.Expandir_icon,
                                             state='disabled',
                                             command=self.abrir_DIRECTORY,
-                                            )
+                                            style='TOPS.TButton'
+        )
         self.DESV_btnDirectory.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
         self.DESV_btn1Expandir = ttk.Button(self.DESV_frame2,
                                             image=self.Expandir_icon,
@@ -1154,7 +1171,31 @@ class Aplicacion():
                             background = [('active',"#D7E9F7")],
                             padding=[('active',7),('pressed',10)],
                             relief=[('active','ridge'),('pressed','groove')],
-                            borderwidth=[('active',2)],
+                            borderwidth=[('active',1)],
+        )
+        self.style.configure('TOP1.TButton',
+                            background = "#F4D19B",
+                            relief='sunke',
+                            borderwidth=1,
+                            padding=10,
+        )
+        self.style.map('TOP1.TButton',
+                            background = [('active',"#D7E9F7")],
+                            padding=[('active',7),('pressed',10)],
+                            relief=[('active','ridge'),('pressed','groove')],
+                            borderwidth=[('active',1)],
+        )
+        self.style.configure('TOPS.TButton',
+                            background = "#7EB5A6",
+                            relief='sunke',
+                            borderwidth=1,
+                            padding=7,
+        )
+        self.style.map('TOPS.TButton',
+                            background = [('active',"#C36839")],
+                            padding=[('active',7),('pressed',10)],
+                            relief=[('active','ridge'),('pressed','groove')],
+                            borderwidth=[('active',1)],
         )
         self.style.configure('TOP.TLabel',
                             background = "#F9F3DF",
@@ -1183,11 +1224,11 @@ class Aplicacion():
                             background = "#D4ECDD",
                             relief='sunke',
                             borderwidth=1,
-                            padding=5,
+                            padding=7,
                             )
         self.style.map('TButton',
                             background = [('active',"#F6D167")],
-                            padding=[('active',5),('pressed',5)],
+                            padding=[('active',7),('pressed',5)],
                             relief=[('active','ridge'),('pressed','groove')],
                             borderwidth=[('active',1)],
                             )
@@ -1348,7 +1389,6 @@ class Aplicacion():
             asigne_Ciente = 'IDISO'
         elif tab == 'DESVIACIONES : LBK':
             asigne_Ciente = 'LBK'
-            top_active_LBK = True
         elif tab == 'DESVIACIONES : PLANETA':
             asigne_Ciente = 'PLANETA'
         elif tab == 'DESVIACIONES : SERVIHABITAT':
