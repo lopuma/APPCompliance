@@ -9,5 +9,115 @@
     "refrescar": "",
     "evidencia": "clear\ndate\nhostname\nls -la /var/log/wtmp\ncat /lib/tmpfiles.d/var.conf | grep -w wtmp",
     "SO": "Linux"
-}
+  },
+  {
+    "modulo": "Identify and Authenticate Users/PermitRootLogin Restriction",
+    "clave": "PERMITROOTLOGIN",
+    "descripcion": "SSH Config File: /etc/ssh/sshd_config; Invalid setting (value:yes) in parameter 'PermitRootLogin': must be set to 'no'.",
+    "comprobacion": "",
+    "copia": "",
+    "editar": "",
+    "refrescar": "",
+    "evidencia": "",
+    "SO": "Linux"
+  },
+  {
+    "modulo": "Identify and Authenticate Users/Public Key Authentication",
+    "clave": "PUBLICKEY",
+    "descripcion": "SSH authorized_keys file: $authorized_keys; Invalid public host key length: 1024   Key type: ssh-rsa.",
+    "comprobacion": "authorized_keys=\"\"\n\nls -la $authorized_keys\n\n## Comprobar, el tipo de cuenta para el owner o el tipo de cuenta de los usuarios del grupo.",
+    "copia": "",
+    "editar": "",
+    "refrescar": "",
+    "evidencia": "",
+    "SO": "Linux"
+  },
+  {
+    "modulo": "Password Requirements/Acceptance of the null password with nullok parameter",
+    "clave": "NULLOK",
+    "descripcion": "PAM service: /etc/pam.d/system-auth\nPAM service: /etc/pam.d/password-auth\n\nuse pam_unix.so auth module with \"nullok\" parameter. This parameter is forbidden as it allows acceptance of the null password.",
+    "comprobacion": "",
+    "copia": "",
+    "editar": "",
+    "refrescar": "",
+    "evidencia": "",
+    "SO": "Linux"
+  },
+  {
+    "modulo": "Password Requirements/Password MAX Age /etc/shadow",
+    "clave": "MAXAGE",
+    "descripcion": "Account $account has invalid Password Max Age setting of 99999  should be set to Customer Required Setting: 90. More secure value can be set.",
+    "comprobacion": "account=\"\"\n\n## Se debe comprobar que tipo de cuenta es /C/F/S",
+    "copia": "",
+    "editar": "",
+    "refrescar": "",
+    "evidencia": "",
+    "SO": "Linux"
+  },
+  {
+    "modulo": "Password Requirements/Password History",
+    "clave": "REMEMBER",
+    "descripcion": "PAM service file: /etc/pam.d/password-auth\nPAM service file: /etc/pam.d/system-auth\n\nMust have \"password sufficient pam_unix.so\" stanza with \"remember=8\" parameter. \"sufficient\" can be replaced with \"required\".",
+    "comprobacion": "##Hace referencia al 'remember' en RHEL7 y RHEL8.\n\n##Saber que versión de RHEL es:\ncat /etc/*release\n\n#-***# Saber que PAM_TALLY USA #****-#\nls -ltr /lib64/security/pam_tally*\n\n#-*** Saber que PAM_FAILLOCK USA ****-#\nls -la /usr/sbin/faillock\n\n##-------------------------------------------------------------------------------\n##--- RHEL 7 & RHEL 8 ('system-auth','password-auth')\n##-------------------------------------------------------------------------------\n\n##Los ficheros del PAM, deben tener en el modulo 'password    sufficient    pam_unix.so', el parámetro 'remember=8'\n\ncat /etc/pam.d/system-auth | grep remember\ncat /etc/pam.d/password-auth | grep remember\n",
+    "copia": "##Obtener usuario logueado:\nuser=$(logname)\n\n##-------------------------------------------------------------------------------\n##Backup con HOME en MAYÚSCULAS\n##-------------------------------------------------------------------------------\n\ncp -p /etc/pam.d/system-auth /home/${user^^}/system-auth_`date +%d%m%y`\n\ncp -p /etc/pam.d/password-auth /home/${user^^}/password-auth_`date +%d%m%y`\n\n##-------------------------------------------------------------------------------\n##Backup con HOME en minúsculas\n##-------------------------------------------------------------------------------\n\ncp -p /etc/pam.d/system-auth /home/${user,,}/system-auth_`date +%d%m%y`\n\ncp -p /etc/pam.d/password-auth /home/${user,,}/password-auth_`date +%d%m%y`\n",
+    "editar": "##-------------------------------------------------------------------------------\n##--- RHEL 7 & RHEL 8 ('system-auth','password-auth')\n##-------------------------------------------------------------------------------\n\n##Añadir en el modulo 'password    sufficient    pam_unix.so', el parámetro 'remember=8'.\n##Se debe añadir en la segunda linea del modulo.\n##('se aconseja remplazar toda la linea, del modulo 'password    sufficient    pam_unix.so').\n\nvi /etc/pam.d/system-auth\n\npassword    sufficient    pam_unix.so remember=8 use_authtok sha512 shadow try_first_pass\n\n##Lo mismo con 'password-auth'\nvi /etc/pam.d/password-auth\n",
+    "refrescar": "",
+    "evidencia": "##-------------------------------------------------------------------------------\n##--- RHEL 7 & RHEL 8 ('system-auth','password-auth')\n##-------------------------------------------------------------------------------\nclear\ndate;hostname\ncat /etc/*release | grep -i release\ncat /etc/pam.d/system-auth | egrep \"remember\" \ncat /etc/pam.d/password-auth | egrep \"remember\"\n",
+    "SO": "Linux"
+  },
+  {
+    "modulo": "Network Settings/Ensure nfs-utils is not enabled and active",
+    "clave": "NFS",
+    "descripcion": "Ensure nfs is not active. Command: systemctl is-active nfs\nEnsure nfs is not enabled. Command: systemctl is-enabled nfs",
+    "comprobacion": "##No es un servicio requerido, por lo que se puede deshabilitar.\n##Antes de nada comprobar que no tenga: shares/filesystem compartiendo.\n##Debe salir vacio:\n\ncat /etc/exports\n\n##En el caso de tener shares/filesystem, contactar con el SOPORTE TECNICO.\n\nsystemctl status nfs\n\n##Debe salir disable en todo :\n(/usr/lib/systemd/system/nfs-server.service; disabled; vendor preset: disabled)",
+    "copia": "",
+    "editar": "systemctl stop nfs.service\nsystemctl disable nfs.service",
+    "refrescar": "",
+    "evidencia": "clear\ndate\nhostname\nsystemctl status nfs.service",
+    "SO": "Linux"
+  },
+  {
+    "modulo": "Network Settings/Network file system settings in /etc/exports",
+    "clave": "",
+    "descripcion": "If nfs is enabled  /etc/exports file should not have line with \"no_root_squash\"",
+    "comprobacion": "",
+    "copia": "",
+    "editar": "",
+    "refrescar": "",
+    "evidencia": "",
+    "SO": "Linux"
+  },
+  {
+    "modulo": "Network Settings/TCP Configuration Files Restrictions",
+    "clave": "SYSCTL",
+    "descripcion": "Incorrect /etc/sysctl.conf or proc files setting for\n\nnet.ipv4.conf.all.accept_source_route: 1 should be 0\nnet.ipv4.conf.all.secure_redirects: 1 should be 0\nnet.ipv4.conf.default.secure_redirects: 1 should be 0\nnet.ipv4.conf.all.log_martians: 0 should be 1\nnet.ipv4.ip_forward: 1 should be 0\nnet.ipv4.conf.default.log_martians: 0 should be 1\nnet.ipv4.conf.all.rp_filter: 0 should be 1\nnet.ipv6.conf.all.accept_ra: 1 should be 0\nnet.ipv6.conf.default.accept_ra: 1 should be 0\nnet.ipv6.conf.all.accept_redirects: 1 should be 0\nnet.ipv6.conf.default.accept_redirects: 1 should be 0",
+    "comprobacion": "",
+    "copia": "",
+    "editar": "##Para hacer el cambio:\n\n/sbin/sysctl -w net.ipv4.conf.all.secure_redirects=0\n/sbin/sysctl -w net.ipv4.conf.default.secure_redirects=0\n/sbin/sysctl -w net.ipv4.conf.all.log_martians=1\n/sbin/sysctl -w net.ipv4.conf.default.log_martians=1\n/sbin/sysctl -w net.ipv4.conf.all.rp_filter=1\n/sbin/sysctl -w net.ipv4.conf.default.rp_filter=1\n/sbin/sysctl -w net.ipv6.conf.all.accept_ra=0\n/sbin/sysctl -w net.ipv6.conf.default.accept_ra=0\n/sbin/sysctl -w net.ipv6.conf.all.accept_redirects=0\n/sbin/sysctl -w net.ipv6.conf.default.accept_redirects=0\n/sbin/sysctl -w net.ipv4.ip_forward=0\n/sbin/sysctl -w net.ipv4.conf.default.accept_source_route=0\n/sbin/sysctl -w net.ipv4.conf.all.accept_source_route=0",
+    "refrescar": "\n\nsysctl -p",
+    "evidencia": "clear\ndate\nhostname\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.all.accept_source_route\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.all.secure_redirects\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.default.secure_redirects\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.all.log_martians\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.default.log_martians\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.all.rp_filter\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.default.rp_filter\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.default.accept_source_route\"\n/sbin/sysctl -a |grep -i \"net.ipv6.conf.all.accept_ra\"\n/sbin/sysctl -a |grep -i \"net.ipv6.conf.default.accept_ra\"\n/sbin/sysctl -a |grep -i \"net.ipv6.conf.all.accept_redirects\"\n/sbin/sysctl -a |grep -i \"net.ipv6.conf.default.accept_redirects\"\n/sbin/sysctl -a |grep -i \"net.ipv4.ip_forward\"",
+    "SO": "Linux"
+  },
+  {
+    "modulo": "Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories",
+    "clave" : "STICKY",
+    "descripcion": "Sticky bit is not set on world-writable directory: $directory",
+    "comprobacion": "##Hay que tener en cuenta el tipo de owner al que pertenece, cada directorio RAIZ.\n\n##Ya sea de tipo '/C/F/S'\nSi es /C/, se pasa a excepcion con RISK e IMPACT\n##por favor revisar la seccion de RISK e IMPACT\n\n##Si es de tipo /F/S, se debe preguntar al owner, si podemos modificar los permisos(REVISAR DIRECTORY).",
+    "copia": "",
+    "editar": "##Se puede quitar de forma 'recursiva' o por 'individual'\n##$directory : es la variable del directorio raiz a cambiar permisos.\n\n##-------------------------------------------------------------------------------\n##Asi quitamos de permisos de W a Other, en los directorios('recursivo'):\n##-------------------------------------------------------------------------------\n\nfind $directory -type d -perm -o=w -exec chmod o-w {} +\n\n##-------------------------------------------------------------------------------\n##Asi quitamos de permisos de W a Other, en los ficheros('recursivo'):\n##-------------------------------------------------------------------------------\n\nfind $directory -type f -perm -o=w -exec chmod o-w {} +\n\n\n##-------------------------------------------------------------------------------\n##Asi quitamos permisos, de W a other de forma('individual'):\n##-------------------------------------------------------------------------------\n\nchmod o-w $directory",
+    "refrescar": "",
+    "evidencia": "##-------------------------------------------------------------------------------\n##De forma ('recursiva'):\n##-------------------------------------------------------------------------------\n\nclear\ndate\nhostname\nfind $directory -type d -perm -o=wx | wc -l\nfind $directory -type f -perm -o=wx | wc -l\nls -ld $directory\n\n##-------------------------------------------------------------------------------\n##De forma('individual'):\n##-------------------------------------------------------------------------------\n\nls -ld $directory",
+    "SO": "Linux"
+  },
+  {
+    "modulo": "",
+    "clave": "",
+    "descripcion": "",
+    "comprobacion": "",
+    "copia": "",
+    "editar": "",
+    "refrescar": "",
+    "evidencia": "",
+    "SO": "Linux"
+  }
 ]

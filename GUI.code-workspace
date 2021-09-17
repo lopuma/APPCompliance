@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../Alvaro/Desarrollo"
+		},
+		{
+			"path": "../Alvaro/ISSUES/CIRAST/DOC_para_ISSUE_DESVIATION"
+		}
+	],
+	"settings": {
+		"git.ignoreLimitWarning": true,
+		"bookmarks.label.suggestion": "useWhenSelected",
+		"bookmarks.multicursor.toggleMode": "eachLineIndependently"
+	}
+}

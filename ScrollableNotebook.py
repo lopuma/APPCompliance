@@ -91,6 +91,9 @@ class ScrollableNotebook(ttk.Frame):
             index = self.index("@%d,%d" % (event.x, event.y))
             if index != 0:
                 if self._active == index:
+                    named_tab = self.tab(index)['text']
+                    if str(named_tab) == 'DESVIACIONES : LBK':
+                        print('si') 
                     self.forget(index)
                     self.notebookContent.forget(index)
                     self.event_generate("<<NotebookTabClosed>>")

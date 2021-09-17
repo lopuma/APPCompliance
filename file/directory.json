@@ -97,24 +97,6 @@
       "variable": [
         "directory=\"/home/ess01012/RHEL/\""
       ]
-    },
-    {
-      "directory": "",
-      "owner": "",
-      "tipo": "",
-      "ownerGroup": "",
-      "user": [
-        ""
-      ],
-      "code": "1-OK",
-      "servers": [
-        "ALL servers"
-      ],
-      "risk": "",
-      "impact": "",
-      "variable": [
-        "directory=\"\""
-      ]
     }
   ],
   "LBK": [
@@ -211,24 +193,6 @@
     {
       "directory": "/appsrv/LBK_ARQ_SPA_5_SERVER_COUCH/",
       "owner": "nodejs",
-      "tipo": "/C/",
-      "ownerGroup": "Group Customer",
-      "user": [
-        ""
-      ],
-      "code": "2-DOC",
-      "servers": [
-        "ALL servers"
-      ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
-      "variable": [
-        ""
-      ]
-    },
-    {
-      "directory": "",
-      "owner": "---",
       "tipo": "/C/",
       "ownerGroup": "Group Customer",
       "user": [

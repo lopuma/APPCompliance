@@ -16,7 +16,7 @@
         "descripcion": "Missing or Incorrect Business Use Notice. It should be set in /etc/motd",
         "comprobacion": "##Debe tener el BUN actual.",
         "copia": "",
-        "editar": "vi /etc/motd\n\n##añadir / remplazar :\n\n******************************************************************************************************************************\n*                                                                                                                            *\n*  Liberbank systems must only be used for conducting Liberbank business or for purposes authorized by Liberbank management. *\n*                                                                                                                            *\n******************************************************************************************************************************\n\n+------------------------------------------------------------------------------+\n| Liberbank systems must only be used for conducting Liberbank business or for |\n| purposes authorized by Liberbank management                                  |\n| Use is subject to audit at any time by IBM management.                       |\n+------------------------------------------------------------------------------+",
+        "editar": "vi /etc/motd\n\n##añadir / remplazar :\n\n+------------------------------------------------------------------------------+\n| Liberbank systems must only be used for conducting Liberbank business or for |\n| purposes authorized by Liberbank management                                  |\n| Use is subject to audit at any time by IBM management.                       |\n+------------------------------------------------------------------------------+",
         "refrescar": "",
         "evidencia": "clear\ndate\nhostname\ncat /etc/motd",
         "SO": "Linux"
@@ -24,7 +24,7 @@
     {
         "modulo": "Network Settings/Ensure nfs-utils is not enabled and active",
         "clave" : "NFS",
-        "descripcion": "Ensure nfs is not enabled. Command: systemctl is-enabled nfs",
+        "descripcion": "Ensure nfs is not active. Command: systemctl is-active nfs\nEnsure nfs is not enabled. Command: systemctl is-enabled nfs",
         "comprobacion": "##No es un servicio requerido, por lo que se puede deshabilitar.\n##Antes de nada comprobar que no tenga: shares/filesystem compartiendo.\n##Debe salir vacio:\n\ncat /etc/exports\n\n##En el caso de tener shares/filesystem, contactar con el SOPORTE TECNICO.\n\nsystemctl status nfs\n\n##Debe salir disable en todo :\n(/usr/lib/systemd/system/nfs-server.service; disabled; vendor preset: disabled)",
         "copia": "",
         "editar": "systemctl stop nfs.service\nsystemctl disable nfs.service",
