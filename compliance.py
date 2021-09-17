@@ -68,7 +68,7 @@ class Directory(ttk.Frame):
         self.srcVariable.bind("<Key>", lambda e: desviacion.widgets_SoloLectura(e))
         self.cbxUser.bind("<Key>", lambda e: desviacion.widgets_SoloLectura(e))
         self.textBuscar.bind("<Return>", lambda event=None: self.buscar(self.textBuscar.get()))
-        nn_tab = self.vtn_directory.winfo_toplevel()
+        nn_tab = self.vtn_directory.winfo_toplevel().title()
         print('nn ', nn_tab)
         #self.vtn_directory.bind("<Motion>", lambda e:desviacion.activar_Focus(e))
     def iconos(self):
