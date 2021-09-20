@@ -11,7 +11,6 @@ from tkinter import *
 from tkinter import ttk
 from threading import Thread
 from PIL import Image, ImageTk
-from compliance import Directory
 release = True
 path = os.path.expanduser("~/")
 path_icon = path+"compliance/image/"
@@ -100,17 +99,17 @@ class ScrollableNotebook(ttk.Frame):
         self.style = ttk.Style()
         self.images = (
             tk.PhotoImage("im1", data='''
-                          R0lGODlhCAAIAMIEAAAAAP/SAP/bNNnZ2f///////////////yH5
-                          BAEKAAIALAAAAAAIAAgAAAMUCCAsCmO5OBVl8OKhoV3e9jQOkAAAOw==
-                           '''),
+                        R0lGODlhCAAIAMIEAAAAAP/SAP/bNNnZ2f///////////////yH5
+                        BAEKAAIALAAAAAAIAAgAAAMUCCAsCmO5OBVl8OKhoV3e9jQOkAAAOw==
+                        '''),
             tk.PhotoImage("im2", data='''
-                          R0lGODlhCAAIAMIEAAAAAP/SAP/bNNnZ2f///////////////yH5
-                          BAEKAAMALAAAAAAIAAgAAAMPCDA8+gw+GGlVbWKqmwMJADs=
-                          ''' ),
+                        R0lGODlhCAAIAMIEAAAAAP/SAP/bNNnZ2f///////////////yH5
+                        BAEKAAMALAAAAAAIAAgAAAMPCDA8+gw+GGlVbWKqmwMJADs=
+                        ''' ),
             tk.PhotoImage("im3", data='''
-                          R0lGODlhCAAIAMIEAAAAAP/SAP/bNNnZ2f///////////////yH5B
-                          AEKAAMALAAAAAAIAAgAAAMPGDE8+gw+GGlVbWKqmwsJADs=
-                          ''')
+                        R0lGODlhCAAIAMIEAAAAAP/SAP/bNNnZ2f///////////////yH5B
+                        AEKAAMALAAAAAAIAAgAAAMPGDE8+gw+GGlVbWKqmwsJADs=
+                        ''')
         )
         self.style.element_create("tab_btn_close", "image", "im1",
                             ("active", "pressed", "!disabled", "im2"),
@@ -138,12 +137,13 @@ class ScrollableNotebook(ttk.Frame):
             })
         ])
         self.style.configure('ScrollableNotebook',
-                            background='#082032'
+                            background='#082032',
         )
         self.style.configure("ScrollableNotebook.Tab",
             background='#FDD2BF',
             foreground='#012443',
             padding=[20, 10],
+            font=('Courier', 17, font.BOLD)
         )         
         self.style.map('ScrollableNotebook.Tab', background = [("selected", "#B61919"),
                                                     ("active", "#FF6B6B")],

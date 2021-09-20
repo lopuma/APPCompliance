@@ -13,8 +13,8 @@
       "servers": [
         "ALL servers"
       ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
+      "risk": "GENERICO2AFB",
+      "impact": "GENERICOAFB",
       "variable": [
         "directory=\"/opt/IBM/AFB1/\""
       ],
@@ -193,8 +193,8 @@
       "servers": [
         "ALL servers"
       ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
+      "risk": "GENERICO1LBK",
+      "impact": "GENERICOLBK",
       "variable": [
         ""
       ],
