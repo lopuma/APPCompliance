@@ -81,23 +81,23 @@
   ],
   "INFRA": [
     {
-      "service": "/opt/IBM/LBK1/",
-      "owner": "ownerLBK1",
-      "tipo": "tipoLBK1",
-      "ownerGroup": "groupLBK1",
+      "service": "LDAP",
+      "owner": "Sistemas",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
       "user": [
-        "User1",
-        "User2"
+        "Sistemas"
       ],
-      "code": "1-OK",
+      "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ES06QIH02IR01RM"
       ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
+      "risk": "If we disable this SLAPD service, CACF automation framework won't be able to transfer files to endpoints since BDS service depends on this SLAPD service. CACF  is required to handle automation actions like compliance, inventory and patching among others. It's a mandatory requirement to check and apply compliance settings. If we disable it, we will not be able to follow security guidelines and wil impact in customer agreements.",
+      "impact": "SLAPD is a service that exposes user information. Any device connected to the same network would be able to acces userid information. In order to avoid it, we've configured the service to listen only in localhost interface.",
       "variable": [
-        "service=\"/opt/IBM/LBK1/\""
-      ]
+        "service=\"\""
+      ],
+      "SO" : "Linux"
     },
     {
       "service": "/opt/IBM/LBK2/",

@@ -1,0 +1,42 @@
+{
+    "INFRA": [
+        {
+            "authorized": "/home/ncosftp/.ssh/authorized_keys",
+            "owner": "ncosftp",
+            "tipo": "/F/",
+            "ownerGroup": "Monitorización",
+            "user": [
+                "MARIA CRUZ TERCIADO TERCIADO"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ES06FNI03CS01XG"
+            ],
+            "risk": "We don't run any risk with leaving it like this. It is impossible to copy the file id_rsa, take it to another machine and connect without password because on the target machine (ES01PNI03CS01XG) the authorized_keys is configured to only support connections without password from the source (ES06FNI03CS01XG)",
+            "impact": "If you set up id_rsa with passphrase the script that controls the HA of the JDBC GW would stop working, you could not control which machine is running and you could not copy the cache files. This could lead to BBDD corruption failures in DB2.",
+            "variable": [
+                ""
+            ],
+            "SO": "Aix"
+        },
+        {
+            "directory": "/home/ncosys/.ssh/authorized_keys",
+            "owner": "ncosys",
+            "tipo": "/F/",
+            "ownerGroup": "Monitorización",
+            "user": [
+                "MARIA CRUZ TERCIADO TERCIADO"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL servers"
+            ],
+            "risk": "GENERICO",
+            "impact": "GENERICO",
+            "variable": [
+                ""
+            ],
+            "SO": "Aix"
+        }
+    ]
+}

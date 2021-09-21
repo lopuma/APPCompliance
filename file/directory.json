@@ -102,6 +102,25 @@
         "directory=\"/home/ess01012/RHEL/\""
       ],
       "SO": "Linux"
+    },
+    {
+      "directory": "/tmp/javasharedresources/",
+      "owner": "was",
+      "tipo": "/S/",
+      "ownerGroup": "EBH",
+      "user": [
+        "Group EBH"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/tmp/javasharedresources/\""
+      ],
+      "SO": "Linux"
     }
   ],
   "LBK": [

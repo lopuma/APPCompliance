@@ -14,7 +14,7 @@ from tkinter import font
 from PIL import Image, ImageTk
 from tkinter.ttk import Style
 from threading import Thread
-from Extracion import *
+from Extracion import * 
 #-----------------------------------------------------------#
 user = getuser()
 path = os.path.expanduser("~/")
@@ -58,16 +58,37 @@ class Directory(ttk.Frame):
         super().__init__(parent, *args, **kwargs)
         self.parent = parent
         self.customer = customer
-        print(self.parent)
-        self.vtn_directory = Toplevel(self)
+        self.vtn_directory = tk.Toplevel(self)
         self.vtn_directory.config(background='#F9F3DF')
-        self.vtn_directory.geometry("1000x650+345+65")
-        #self.vtn_directory.resizable(0,0)
+        window_width=1028
+        window_height=650
+        screen_width = app.root.winfo_x()
+        screen_height= app.root.winfo_y()
+        print("//////////////////////////////////////////////////")
+        print('FULL ancho : ',screen_width)
+        print('FULL alto: ',screen_height)
+        print('divido ancho : ',int(screen_width/2))
+        print('divido alto : ',int(screen_height/2))
+
+        print('M VNT FULL alto ', window_height)
+        print('M VNT FULL ancho ', window_width)
+        print('M VNT DIVIDO alto ', window_height/2)
+        print('M VNT DIVIDO ancho ', window_width/2)
+
+        print("//////////////////////////////////////////////////")
+        position_top = int(screen_height+70)
+        position_right = int(screen_width+150)
+        print("=========================")
+        print('DR ',position_right)
+        print('DT ',position_top)
+        print("=========================")
+        self.vtn_directory.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
+        #self.vtn_directory.geometry("1000x650"+345+65")
+        self.vtn_directory.resizable(0,0)
         self.vtn_directory.title('DIRECTORY for client {}'.format(self.customer))
         #self.vtn_directory.transient(self)
         #self.vtn_directory.grab_set()
         self.vtn_directory.columnconfigure(0, weight=1)
-        #self.vtn_directory.rowconfigure(1, weight=1)
         self.vtn_directory.rowconfigure(2, weight=5)
         self.text_font = tkFont.Font(family='Consolas', size=13) 
         self.iconos()
@@ -348,9 +369,12 @@ class Directory(ttk.Frame):
             justify='left',
             width=40,
             font=self.text_font,
-            borderwidth=2,
+            border=0,
+            borderwidth=0,
             highlightthickness=3,
-            highlightcolor='#316B83'
+            highlightcolor='#316B83',
+            selectforeground='#CDFFEB', 
+            selectbackground='#476072'
         )
         self.textBuscar.grid(row=0, column=0, padx=10, pady=5, sticky='nsew')
 
@@ -573,9 +597,18 @@ class Expandir(ttk.Frame):
     def __init__(self, parent, *args, **kwargs):
         self.parent = parent
         super().__init__(*args, **kwargs)
-        self.vtn_expandir = Toplevel(self)
+        self.vtn_expandir = tk.Toplevel(self)
         self.vtn_expandir.config(background='#F1ECC3')
-        self.vtn_expandir.geometry("1005x600+345+65")
+        window_width=1005
+        window_height=650
+        screen_width = app.root.winfo_x()
+        screen_height= app.root.winfo_y()
+        #position_top = int(screen_height/2 - window_height/2)
+        #position_right = int(screen_width/2 - window_width/2)
+        position_top = int(screen_height+70)
+        position_right = int(screen_width+150)
+        self.vtn_expandir.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
+        #self.vtn_expandir.geometry("1005x600")
         self.vtn_expandir.transient(self.parent)
         #self.vtn_expandir.resizable(0,0)
         self.vtn_expandir.title("DESVIACIONES : {}".format(asigne_Ciente))
@@ -708,6 +741,7 @@ class Desviacion(ttk.Frame):
         ## --- BUSCAR --- ##
         self.DESVfr1_entModulo.bind("<Return>", lambda event=None: self.buscar_Modulos(self.DESVfr1_entModulo.get()))
         self.DESVfr1_entModulo.bind("<KeyPress>", lambda e: self.limpiar_busqueda(e))
+        self.DESVfr1_entModulo.bind("<Button-1>", lambda e: self.limpiar_busqueda(e))
         self.DESVfr1_listbox.bind('<Control-f>', lambda e : self.buscar(e))
         self.DESVfr2_srcComprobacion.bind('<Control-f>', lambda e : self.buscar(e))
         self.DESVfr2_srcBackup.bind('<Control-f>', lambda e : self.buscar(e))
@@ -873,7 +907,7 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_srcEditar.delete('1.0',END)
         self.DESVfr3_srcRefrescar.delete('1.0',END)
         self.DESVfr3_srcEvidencia.delete('1.0',END)
-        self.limpiar_busqueda2()
+        #self.limpiar_busqueda2()
     def selecionar_Modulos(self, event):
         modulo_selecionado = event.widget.get(ANCHOR)
         with open(path_modulo.format(asigne_Ciente)) as g:
@@ -889,12 +923,6 @@ class Desviacion(ttk.Frame):
     def buscar_Modulos(self, event=None):
         try:
             valor_aBuscar = event
-            print('valor a buscar --> ', valor_aBuscar)
-            print('========== LISTAS ==========')
-            print(listClave)
-            print('\n\n')
-            print(listModulo)
-            print('============================')
             clave_Buscado = [n for n in listClave if valor_aBuscar.upper().strip() in n]
             modulo_Buscado = [n for n in listModulo if valor_aBuscar.strip().replace("\\","/") in n]
             if len(clave_Buscado) <= 1:
@@ -905,10 +933,6 @@ class Desviacion(ttk.Frame):
                 modulo_Buscado = str(modulo_Buscado).replace("[","").replace("]","").replace("'","")
             else:
                 modulo_Buscado = ""
-            print('--------------------------------------')
-            print('clave buscado --> ', clave_Buscado)
-            print('modulo buscado --> ', modulo_Buscado)
-            print('--------------------------------------')
             # ## --------- OBTENER MODULO POR CLAVE O MODULO -------------- ## //TODO "definir si buscar por clave o modulo"
             if len(clave_Buscado) == 0 and len(modulo_Buscado) == 0:
                 self.limpiar_Widgets()
@@ -956,17 +980,23 @@ class Desviacion(ttk.Frame):
             mb.showerror("ERROR","Esta vacio o no existe el modulo.\nPrueba a buscar por CLAVE o el MODULO completo")
             self.limpiar_Widgets()
             self.DESVfr1_entModulo.focus()    
-    def limpiar_busqueda(self, event=None):
-        long_entry = self.DESVfr1_entModulo.get()
-        if len(long_entry) <= 1:
+    def limpiar_busqueda(self, event):
+        text_widget = event.widget
+        long_entry = self.text.get()
+        if len(long_entry) == 16 and long_entry == "Buscar modulo...":
+            text_widget.config(foreground="black", font=("Consolas", 14))
+            self.text.set("")
+            text_widget.icursor(0)
+        elif len(long_entry) <= 1:
             self.DESVfr1_btnLimpiar.grid_forget()
             self.DESVfr1_btnBuscar.grid(row=1, column=0, pady=5, padx=5, sticky='nse',columnspan=2)
-            self.DESVfr1_entModulo.focus()
     def limpiar_busqueda2(self):
-        self.DESVfr1_entModulo.delete(0,"end")
+        self.text.set("Buscar modulo...")
+        self.DESVfr1_entModulo.config(foreground="gray75", font=("Consolas", 12))
+        self.DESVfr1_entModulo.focus()
+        self.DESVfr1_entModulo.icursor(0)
         self.DESVfr1_btnLimpiar.grid_forget()
         self.DESVfr1_btnBuscar.grid(row=1, column=0, pady=5, padx=5, sticky='nse',columnspan=2)
-        self.DESVfr1_entModulo.focus()
     def ListDown(self, event):
         widget_Focus = event.widget
         listBox = self.DESVfr1_listbox
@@ -989,8 +1019,7 @@ class Desviacion(ttk.Frame):
         #
     def ListUp(self, event):
         widget_Focus = event.widget
-        listBox = self.DESVfr1_listbox
-        if widget_Focus == listBox:
+        if widget_Focus:
             self.DESVfr1_listbox.yview_scroll(-1,"units")
             selecion = self.DESVfr1_listbox.curselection()
             modulo_selecionado = event.widget.get(selecion)
@@ -1041,13 +1070,16 @@ class Desviacion(ttk.Frame):
                 listModulo.append(md['modulo'])
                 listClave.append(md['clave'])
         listModulo.sort()
+        self.text.set("Buscar modulo...")
+        self.DESVfr1_entModulo.icursor(0)
+        self.DESVfr1_entModulo.config(foreground="gray75", font=("Consolas", 12))
         self.DESVfr1_listbox.insert(END,*listModulo)
         self.cambiar_NamePestaña(customer)
     def ScreamEvidencia(self):
         app.root.withdraw()
         code = subprocess.call(["./scream.sh"])
-        time.sleep(5)
-        mb.showinfo("INFO","Informacion")
+        time.sleep(3)
+        #mb.showinfo("INFO","Informacion")
         app.root.deiconify()
     def copiarALL(self):
         self.DESVfr3_srcEvidencia.focus()
@@ -1114,11 +1146,21 @@ class Desviacion(ttk.Frame):
         self.DESVfr1_optMn.grid(row=0, column=0, padx=5, pady=5, sticky='new', columnspan=2)
         # -----------------------------------------------------------------------------#
         ## --- widgets para buscar
-        self.DESVfr1_entModulo = ttk.Entry(self.DESV_frame1, width=30)
-        self.DESVfr1_entModulo.config(foreground="black",
-                                    font=self.text_font,
-                                    state='disabled')
-        self.DESVfr1_entModulo.grid(row=1, column=0, pady=5, padx=5, ipady=5, sticky='nsew',columnspan=2)
+        self.text = tk.StringVar(self)
+
+        self.DESVfr1_entModulo = ttk.Entry(
+            self.DESV_frame1,
+            textvariable=self.text,
+            width=32
+        )
+        self.text.set("Buscar modulo...")
+        self.DESVfr1_entModulo.config(
+            foreground="gray75",
+            font=self.text_font,
+            state='disabled'
+        )
+        self.DESVfr1_entModulo.grid(row=1, column=0, pady=5, padx=5, ipady=5, sticky='nsw',columnspan=2)
+        
         self.DESVfr1_btnBuscar = ttk.Button(self.DESV_frame1, 
                                                     image=self.BuscarModulo_icon,
                                                     state='disabled',
@@ -1137,21 +1179,23 @@ class Desviacion(ttk.Frame):
         self.DESVlist_yScroll.grid(row=2, column=1, pady=5, sticky='nse')
         self.DESVlist_xScroll = tk.Scrollbar(self.DESV_frame1, orient=tk.HORIZONTAL)
         self.DESVlist_xScroll.grid(row=3, column=0, padx=5, sticky='ew', columnspan=2)
-        self.DESVfr1_listbox = tk.Listbox(self.DESV_frame1,
-                                            state='disabled',
-                                            xscrollcommand=self.DESVlist_xScroll.set, 
-                                            yscrollcommand=self.DESVlist_yScroll.set,
-                                            font=self.text_font,
-                                            foreground='blue',
-                                            selectbackground='#297F87',
-                                            selectforeground='#F6D167',
-                                            disabledforeground='black',
-                                            exportselection=False,
-                                            highlightbackground='gray88',
-                                            highlightthickness=2,
-                                            highlightcolor='#297F87',
-                                            )
-        self.DESVfr1_listbox.grid(row=2, column=0, pady=5, padx=5, sticky='nsew')
+        self.DESVfr1_listbox = tk.Listbox(
+            self.DESV_frame1,
+            width=35,
+            state='disabled',
+            xscrollcommand=self.DESVlist_xScroll.set, 
+            yscrollcommand=self.DESVlist_yScroll.set,
+            font=self.text_font,
+            foreground='blue',
+            selectbackground='#297F87',
+            selectforeground='#F6D167',
+            disabledforeground='black',
+            exportselection=False,
+            highlightbackground='gray88',
+            highlightthickness=2,
+            highlightcolor='#297F87',
+        )
+        self.DESVfr1_listbox.grid(row=2, column=0, pady=(5,0), padx=(5,0), sticky='nsew')
         self.DESVlist_xScroll['command'] = self.DESVfr1_listbox.xview
         self.DESVlist_yScroll['command'] = self.DESVfr1_listbox.yview
         ## ======================== FRAME 2 ========================================= ##
@@ -1310,9 +1354,15 @@ class Desviacion(ttk.Frame):
         app.cuaderno.notebookContent.tab(idOpenTab, option=None, text='DESVIACIONES : {}'.format(customer))
 class Aplicacion():
     def __init__(self):
-        self.root= Tk()
+        self.root= tk.Tk()
         self.root.title("CONTINOUS COMPLIANCE")
-        self.root.geometry("1028x768")
+        window_width,window_height=1028,768
+        screen_width = self.root.winfo_screenwidth()
+        screen_height= self.root.winfo_screenheight()
+        position_top = int(screen_height/2 - window_height/2)
+        position_right = int(screen_width/2 - window_width/2)
+        self.root.geometry(f'{window_width}x{window_height}+{position_top}+{position_right}')
+        #self.root.geometry("1028x768")
         self.root.configure(background='black') 
         self.root.tk.call('wm', 'iconphoto', self.root._w, tk.PhotoImage(file=path_icon+'compliance.png'))       
         self.iconos()
@@ -1484,6 +1534,10 @@ class Aplicacion():
                             foreground = "#CDFFEB",
                             font=('Source Sans Pro',20,font.BOLD))
         self.style.configure('TLabel',
+                            background = "#f1ecc3",
+                            foreground = "gray17",
+                            font=('Helvetica',12, font.BOLD))
+        self.style.configure('TEntry',
                             background = "#f1ecc3",
                             foreground = "gray17",
                             font=('Helvetica',12, font.BOLD))
