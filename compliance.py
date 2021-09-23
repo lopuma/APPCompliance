@@ -53,6 +53,7 @@ txtWidget_focus = False
 txtWidget = ""
 tittleExpand = ""
 top_active_LBK = False
+sis_oper = ""
 class Directory(ttk.Frame):
     def __init__(self, parent, customer, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
@@ -120,7 +121,7 @@ class Directory(ttk.Frame):
         self.cerrar_icon = ImageTk.PhotoImage(
                     Image.open(path_icon+r"reduce.png").resize((25, 25)))
         self.copiar_icon = ImageTk.PhotoImage(
-                    Image.open(path_icon+r"copiarALL.png").resize((20, 20)))
+                    Image.open(path_icon+r"copiarALL_evd.png").resize((20, 20)))
     def cerrar_vtn(self):
         self.vtn_directory.destroy()
     def buscar(self, event=None):
@@ -594,9 +595,12 @@ class Directory(ttk.Frame):
         )
         self.srcVariable.grid(row=3, column=3, pady=5, padx=5, sticky='new', columnspan=3)
 class Expandir(ttk.Frame):
-    def __init__(self, parent, *args, **kwargs):
-        self.parent = parent
+    def __init__(self, parent, customer, titulo, so, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.parent = parent
+        self.customer = customer
+        self.titulo = titulo
+        self.so = so
         self.vtn_expandir = tk.Toplevel(self)
         self.vtn_expandir.config(background='#F1ECC3')
         window_width=1005
@@ -609,9 +613,9 @@ class Expandir(ttk.Frame):
         position_right = int(screen_width+150)
         self.vtn_expandir.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
         #self.vtn_expandir.geometry("1005x600")
-        self.vtn_expandir.transient(self.parent)
+        #self.vtn_expandir.transient(self.parent)
         #self.vtn_expandir.resizable(0,0)
-        self.vtn_expandir.title("DESVIACIONES : {}".format(asigne_Ciente))
+        self.vtn_expandir.title("DESVIACIONES : {} - {}".format(self.customer,self.so))
         self.vtn_expandir.columnconfigure(0, weight=1)
         self.vtn_expandir.rowconfigure(1, weight=1)
         self.text_font = tkFont.Font(family='Consolas', size=13)
@@ -655,37 +659,45 @@ class Expandir(ttk.Frame):
         self.menu_Contextual.tk_popup(event.x_root, event.y_root)
     ## ----------------------------------------------- ##
     def widgets_EXPANDIR(self):
-        self.EXP_lblWidget = ttk.Label(self.vtn_expandir, 
-                                        text=tittleExpand,
-                                        foreground='blue',
-                                        font=('Source Sans Pro', 16, font.BOLD),
-                                        )
+        self.EXP_lblWidget = ttk.Label(
+            self.vtn_expandir, 
+            text=self.titulo,
+            foreground='blue',
+            font=('Source Sans Pro', 16, font.BOLD),
+        )
         self.EXP_lblWidget.grid(row=0, column=0, padx=5, pady=5,sticky='w')
-        self.EXP_btnCopyALL = ttk.Button(self.vtn_expandir,
-                                            image=desviacion.CopyALL1_icon,
-                                            #command=self.seleccionar_todo,
-                                            style='DESV.TButton',
-                                            )
+        self.EXP_btnCopyALL = ttk.Button(
+            self.vtn_expandir,
+            image=desviacion.CopyALL1_icon,
+            #command=self.seleccionar_todo,
+            style='DESV.TButton',
+            state="disabled"
+        )
         self.EXP_btnCopyALL.grid(row=0, column=1, padx=20, pady=5, sticky='ne')
-        self.EXP_btnScreamEvidencia = ttk.Button(self.vtn_expandir,
-                                            image=desviacion.Captura1_icon,
-                                            command=desviacion.ScreamEvidencia,
-                                            style='DESV.TButton',
-                                            )
+        self.EXP_btnScreamEvidencia = ttk.Button(
+            self.vtn_expandir,
+            image=desviacion.Captura1_icon,
+            command=desviacion.ScreamEvidencia,
+            style='DESV.TButton',
+            state="disabled",
+        )
         self.EXP_btnScreamEvidencia.grid(row=0, column=2, pady=5, sticky='ne')
-        self.EXP_btnReducir = ttk.Button(self.vtn_expandir,
-                                            image=desviacion.Reducir_icon,
-                                            command=self.cerrar_vtn_expandir,
-                                            style='DESV.TButton',
-                                            )
+        self.EXP_btnReducir = ttk.Button(
+            self.vtn_expandir,
+            image=desviacion.Reducir_icon,
+            command=self.cerrar_vtn_expandir,
+            style='DESV.TButton',
+        )
         self.EXP_btnReducir.grid(row=0, column=3, padx=20, pady=5, sticky='ne')
-        self.EXP_srcExpandir = st.ScrolledText(self.vtn_expandir,
-                                            wrap='word',
-                                            font=('Consolas', 15), 
-                                            selectbackground='lightblue',
-                                            highlightbackground='gray88',
-                                            highlightthickness=2,
-                                            highlightcolor='#297F87',)
+        self.EXP_srcExpandir = st.ScrolledText(
+            self.vtn_expandir,
+            wrap='word',
+            font=('Consolas', 15), 
+            selectbackground='lightblue',
+            highlightbackground='gray88',
+            highlightthickness=2,
+            highlightcolor='#297F87',
+        )
         self.EXP_srcExpandir.grid(row=1, column=0, padx=5, pady=5, sticky='nsew', columnspan=4)
 class Extracion(ttk.Frame):
     def __init__(self, parent, *args, **kwargs):
@@ -705,13 +717,14 @@ class Desviacion(ttk.Frame):
     def __init__(self, parent, *args, **kwargs):
         ttk.Frame.__init__(self, parent,*args)
         self.parent = parent
+        self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=1)
         self.rowconfigure(0, weight=1)
         self.iconos()
         self.widgets_DESVIACION()
         ## --- SELECCIONAR ELEMENTO DEL LISTBOX. --- #
-        self.DESVfr1_listbox.bind('<<ListboxSelect>>',self.selecionar_Modulos)
+        self.DESVfr1_listbox.bind('<<ListboxSelect>>',self.seleccionar_Modulo)
         ## --- ADJUTAR EL TEXT DE LOS LABEL --- #
         self.DESVfr2_lblModulo.bind("<Configure>", self.label_resize)
         self.DESVfr2_lblDescripcion.bind("<Configure>", self.label_resize)
@@ -751,6 +764,13 @@ class Desviacion(ttk.Frame):
         app.editMenu.bind_all('<Control-f>', lambda e : self.buscar(e))
         self.DESVfr1_listbox.bind_all("<Down>", self.ListDown)
         self.DESVfr1_listbox.bind_all("<Up>", self.ListUp)
+        self.DESVfr1_entModulo.bind('<Control-v>', lambda e : self.sel_text(e))
+        self.DESVfr1_entModulo.bind_all('<Button-2>', lambda x:self.no_copy(x))
+        self.DESVfr2_srcComprobacion.bind_all("<Button-2>", lambda x:self.no_copy(x))
+        self.DESVfr2_srcBackup.bind_all("<Button-2>", lambda x:self.no_copy(x))
+        self.DESVfr3_srcEditar.bind_all("<Button-2>", lambda x:self.no_copy(x))
+        self.DESVfr3_srcRefrescar.bind_all("<Button-2>", lambda x:self.no_copy(x))
+        self.DESVfr3_srcEvidencia.bind_all("<Button-2>", lambda x:self.no_copy(x))
         ## --- --- ##
     def iconos(self): #TODO ICONOS DE VENTANA DESVIACION
         self.BuscarModulo_icon = ImageTk.PhotoImage(
@@ -779,6 +799,11 @@ class Desviacion(ttk.Frame):
             return
         else:
             return "break"
+    def no_copy(self, event):
+        print('no copi')
+        app.root.clipboard_clear()
+        app.root.clipboard_append("")
+        #return "break"
     ## --- ACTIVAR WIDGET ---------------------------------------- ##
     def activar_Focus(self, event):
         global txtWidget
@@ -848,48 +873,25 @@ class Desviacion(ttk.Frame):
             self.DESVfr3_srcEditar.tag_remove("sel","1.0","end")
             self.DESVfr3_srcRefrescar.tag_remove("sel","1.0","end")
     ## ------ VENTANAS TOP EXPANDIR ------------------------------ ##
-    def expandir1(self):
-        global tittleExpand
-        tittleExpand = "COMPROBACION"
-        self.DESVfr2_srcComprobacion.focus()
-        expandir = Expandir(self)
-        if self.DESVfr2_srcComprobacion:
-            text_aExpandir = self.DESVfr2_srcComprobacion.get('1.0', tk.END)
+    def expandir(self, event, var): #TODO comprobando expandir
+        global sis_oper
+        global asigne_Ciente
+        #global tittleExpand
+        tittleExpand = var
+        event.focus()
+        expandir = Expandir(self,asigne_Ciente,tittleExpand, sis_oper)
+        if event:
+            text_aExpandir = event.get('1.0', tk.END)
             expandir.EXP_srcExpandir.insert('1.0',text_aExpandir)
-    def expandir2(self):
-        global tittleExpand
-        tittleExpand = "BACKUP"
-        self.DESVfr2_srcBackup.focus()        
-        expandir = Expandir(self)
-        if self.DESVfr2_srcBackup:
-            text_aExpandir = self.DESVfr2_srcBackup.get('1.0', tk.END)
-            expandir.EXP_srcExpandir.insert('1.0',text_aExpandir)
-    def expandir3(self):
-        global tittleExpand
-        tittleExpand = "EDITAR"
-        self.DESVfr3_srcEditar.focus()        
-        expandir = Expandir(self)
-        if self.DESVfr3_srcEditar:
-            text_aExpandir = self.DESVfr3_srcEditar.get('1.0', tk.END)
-            expandir.EXP_srcExpandir.insert('1.0',text_aExpandir)
-    def expandir4(self):
-        global tittleExpand
-        tittleExpand = "REFRESCAR"
-        self.DESVfr3_srcRefrescar.focus()        
-        expandir = Expandir(self)
-        if self.DESVfr3_srcRefrescar:
-            text_aExpandir = self.DESVfr3_srcRefrescar.get('1.0', tk.END)
-            expandir.EXP_srcExpandir.insert('1.0',text_aExpandir)
-    def expandir5(self):
-        global tittleExpand
-        tittleExpand = "EVIDENCIA"
-        self.DESVfr3_srcEvidencia.focus()        
-        expandir = Expandir(self)
-        if self.DESVfr3_srcEvidencia:
-            text_aExpandir = self.DESVfr3_srcEvidencia.get('1.0', tk.END)
-            expandir.EXP_srcExpandir.insert('1.0',text_aExpandir)
+        if tittleExpand == "EVIDENCIA":
+            expandir.EXP_btnScreamEvidencia.configure(state="normal")
+            expandir.EXP_btnCopyALL.configure(state="normal")
+        elif tittleExpand == "REFRESCAR":
+            expandir.EXP_btnCopyALL.configure(state="normal")            
     ## --- FUNCIONES AL SELECIONAR MODULO, O BUSCAR MODULO ------- ##
     def asignarValor_aWidgets(self, md):
+        global sis_oper
+        sis_oper = md['SO']
         self.DESV_frame2['text'] = md['SO']
         self.DESVfr2_lblModulo['text'] = md['modulo']
         self.DESVfr2_lblDescripcion['text'] = md['descripcion']
@@ -899,7 +901,7 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_srcRefrescar.insert(END,md['refrescar'])
         self.DESVfr3_srcEvidencia.insert(END,md['evidencia'])
     def limpiar_Widgets(self):
-        self.DESV_frame2['text'] = 'SISTEMA OPERATIVO SI'
+        self.DESV_frame2['text'] = 'SISTEMA OPERATIVO'
         self.DESVfr2_lblModulo['text'] = 'MODULO'
         self.DESVfr2_lblDescripcion['text'] = ''
         self.DESVfr2_srcComprobacion.delete('1.0',END)
@@ -908,7 +910,7 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_srcRefrescar.delete('1.0',END)
         self.DESVfr3_srcEvidencia.delete('1.0',END)
         #self.limpiar_busqueda2()
-    def selecionar_Modulos(self, event):
+    def seleccionar_Modulo(self, event):
         modulo_selecionado = event.widget.get(ANCHOR)
         with open(path_modulo.format(asigne_Ciente)) as g:
             data = json.load(g)
@@ -918,6 +920,12 @@ class Desviacion(ttk.Frame):
                     self.limpiar_Widgets()
                     ## ------------------------------------------------- ##
                     self.asignarValor_aWidgets(md)
+            self.mostrar_buttons_modulo(modulo_selecionado)
+    def mostrar_buttons_modulo(self, modulo_selecionado):
+        if str(modulo_selecionado) == "Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories":
+            self.DESV_btnDirectory.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
+        else:
+            self.DESV_btnDirectory.grid_forget()
     def buscar(self, event):
         self.DESVfr1_entModulo.focus()
     def buscar_Modulos(self, event=None):
@@ -950,6 +958,7 @@ class Desviacion(ttk.Frame):
                             self.limpiar_Widgets()
                             ## ------------------------------------------------- ##
                             self.asignarValor_aWidgets(md)
+                    self.mostrar_buttons_clave(clave_Buscado)
                     self.DESVfr1_listbox.selection_clear(0, tk.END)        
                     modulo_ListBox = self.DESVfr1_listbox.get(0, tk.END)
                     indice = modulo_ListBox.index(modulo_Encontrado)
@@ -968,18 +977,24 @@ class Desviacion(ttk.Frame):
                             self.limpiar_Widgets()
                             ## ------------------------------------------------- ##
                             self.asignarValor_aWidgets(md)
+                    self.mostrar_buttons_modulo(modulo_Buscado)
                     self.DESVfr1_listbox.selection_clear(0, tk.END)
                     modulo_ListBox = self.DESVfr1_listbox.get(0, tk.END)
                     indice = modulo_ListBox.index(modulo_Encontrado)
                     self.DESVfr1_listbox.selection_set(indice)
                     print('MODULO ENCONTRADO : << {} >> '.format(modulo_Encontrado))
             self.DESVfr1_btnBuscar.grid_forget()
-            self.DESVfr1_btnLimpiar.grid(row=1, column=0, pady=5, padx=5, sticky='nse',columnspan=2)    
+            self.DESVfr1_btnLimpiar.grid(row=1, column=1, pady=5, padx=5, sticky='nsw')    
         except:
             self.DESVfr1_listbox.select_clear(ANCHOR)
             mb.showerror("ERROR","Esta vacio o no existe el modulo.\nPrueba a buscar por CLAVE o el MODULO completo")
             self.limpiar_Widgets()
-            self.DESVfr1_entModulo.focus()    
+            self.DESVfr1_entModulo.focus() 
+    def mostrar_buttons_clave(self, clave_Buscado):
+        if clave_Buscado == "STICKY":
+            self.DESV_btnDirectory.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
+        else:
+            self.DESV_btnDirectory.grid_forget()   
     def limpiar_busqueda(self, event):
         text_widget = event.widget
         long_entry = self.text.get()
@@ -989,14 +1004,22 @@ class Desviacion(ttk.Frame):
             text_widget.icursor(0)
         elif len(long_entry) <= 1:
             self.DESVfr1_btnLimpiar.grid_forget()
-            self.DESVfr1_btnBuscar.grid(row=1, column=0, pady=5, padx=5, sticky='nse',columnspan=2)
+            self.DESVfr1_btnBuscar.grid(row=1, column=1, pady=5, padx=5, sticky='nsw')
+    def sel_text(self, event):
+        if event.widget.select_present():
+            self.text.set("")
+            # fists = event.widget.index(tk.SEL_FIRST)
+            # last = event.widget.index(tk.SEL_LAST)
+            # print(event.widget.get()[fists:last])
+        else:
+            print("no hay selecion")
     def limpiar_busqueda2(self):
         self.text.set("Buscar modulo...")
         self.DESVfr1_entModulo.config(foreground="gray75", font=("Consolas", 12))
         self.DESVfr1_entModulo.focus()
         self.DESVfr1_entModulo.icursor(0)
         self.DESVfr1_btnLimpiar.grid_forget()
-        self.DESVfr1_btnBuscar.grid(row=1, column=0, pady=5, padx=5, sticky='nse',columnspan=2)
+        self.DESVfr1_btnBuscar.grid(row=1, column=1, pady=5, padx=5, sticky='nsw')
     def ListDown(self, event):
         widget_Focus = event.widget
         listBox = self.DESVfr1_listbox
@@ -1050,6 +1073,7 @@ class Desviacion(ttk.Frame):
         self.DESV_btn5Expandir.config(state='normal')
         self.DESV_btnScreamEvidencia.config(state='normal')
         self.DESV_btnCopyALL.config(state='normal')
+        self.DESV_btn1CopyALL.config(state='normal')
         self.DESV_btnDirectory.config(state='normal')
     def cargar_Modulos(self, *args):
         self.enabled_Widgets()
@@ -1081,16 +1105,16 @@ class Desviacion(ttk.Frame):
         time.sleep(3)
         #mb.showinfo("INFO","Informacion")
         app.root.deiconify()
-    def copiarALL(self):
-        self.DESVfr3_srcEvidencia.focus()
-        if self.DESVfr3_srcEvidencia:
-            self.DESVfr3_srcEvidencia.tag_add("sel","1.0","end")
-            seleccion = self.DESVfr3_srcEvidencia.tag_ranges(tk.SEL)
+    def copiarALL(self, event):
+        event.focus()
+        if event:
+            event.tag_add("sel","1.0","end")
+            seleccion = event.tag_ranges(tk.SEL)
             if seleccion:
                 app.root.clipboard_clear()
-                app.root.clipboard_append(self.DESVfr3_srcEvidencia.get(*seleccion).strip())
+                app.root.clipboard_append(event.get(*seleccion).strip())
         else:
-            self.DESVfr3_srcEvidencia.tag_remove("sel","1.0","end")
+            event.tag_remove("sel","1.0","end")
     def widgets_DESVIACION(self):
         self.text_font = tkFont.Font(family='Consolas', size=13)
         # --- DEFINIMOS LOS LABEL FRAMEs, QUE CONTENDRAN LOS WIDGETS --------------------------#
@@ -1098,22 +1122,25 @@ class Desviacion(ttk.Frame):
                                         text="CLIENTE / MODULO", 
                                         border=1, 
                                         relief='sunken')
+        self.DESV_frame1.grid_propagate(False)
         self.DESV_frame1.grid(column=0, row=0, padx=10, pady=10, sticky='nsew')
         self.DESV_frame2=ttk.LabelFrame(self, 
                                         text="SISTEMA OPERATIVO", 
                                         border=1, 
                                         relief='sunken')
+        self.DESV_frame2.grid_propagate(False)
         self.DESV_frame2.grid(column=1, row=0, padx=10, pady=10, sticky='nsew')
         self.DESV_frame3=ttk.LabelFrame(self, 
                                         text="EDITAR / EVIDENCIA", 
                                         border=1, 
                                         relief='sunken')
+        self.DESV_frame3.grid_propagate(False)
         self.DESV_frame3.grid(column=2, row=0, padx=10, pady=10, sticky='nsew')
         # -----------------------------------------------------------------------------#
         self.DESV_frame1.columnconfigure(0, weight=1)
         self.DESV_frame2.columnconfigure(0, weight=1)
         self.DESV_frame3.columnconfigure(0, weight=1)
-        self.DESV_frame1.rowconfigure(2, weight=5)
+        self.DESV_frame1.rowconfigure(2, weight=1)
         self.DESV_frame2.rowconfigure(3, weight=1)
         self.DESV_frame2.rowconfigure(5, weight=1)
         self.DESV_frame3.rowconfigure(1, weight=1)
@@ -1125,63 +1152,70 @@ class Desviacion(ttk.Frame):
         # -----------------------------------------------------------------------------#
         ## ======================== FRAME 1 ========================================= ##
         # ---------------- OptionMenu, lista de clientes ---------------------------- ##
-        self.DESVfr1_optMn = tk.OptionMenu(self.DESV_frame1, 
-                                            self.clientesVar, 
-                                            *list_client, 
-                                            command=self.cargar_Modulos,
-                                            )
-        self.DESVfr1_optMn.config(background = "#5F939A",
-                                    foreground = "#F2EDD7",
-                                    font=('Source Sans Pro',15,font.BOLD),
-                                    activebackground="#3A6351",
-                                    activeforeground="#F6D167",
-                                    relief="groove",
-                                    borderwidth=2
-                                    )
-        self.DESVfr1_optMn["menu"].config(background='#3A6351',
-                                            selectcolor='red',
-                                            activebackground='#5F939A',
-                                            foreground="#F2EDD7",
-                                            font=('Source Sans Pro', 13, font.BOLD))
+        self.DESVfr1_optMn = tk.OptionMenu(
+            self.DESV_frame1, 
+            self.clientesVar, 
+            *list_client, 
+            command=self.cargar_Modulos,
+        )
+        self.DESVfr1_optMn.config(
+            background = "#5F939A",
+            foreground = "#F2EDD7",
+            font=('Source Sans Pro',15,font.BOLD),
+            activebackground="#3A6351",
+            activeforeground="#F6D167",
+            relief="groove",
+            borderwidth=2,
+            width=20
+        )
+        self.DESVfr1_optMn["menu"].config(
+            background='#3A6351',
+            selectcolor='red',
+            activebackground='#5F939A',
+            foreground="#F2EDD7",
+            font=('Consolas', 13, font.BOLD),
+        )
         self.DESVfr1_optMn.grid(row=0, column=0, padx=5, pady=5, sticky='new', columnspan=2)
         # -----------------------------------------------------------------------------#
-        ## --- widgets para buscar
+        ## --- WIDGETS PARA BUSCAR
         self.text = tk.StringVar(self)
-
-        self.DESVfr1_entModulo = ttk.Entry(
+        self.DESVfr1_entModulo = tk.Entry(
             self.DESV_frame1,
             textvariable=self.text,
-            width=32
+            #width=32
         )
         self.text.set("Buscar modulo...")
         self.DESVfr1_entModulo.config(
             foreground="gray75",
             font=self.text_font,
-            state='disabled'
+            state='disabled',
+            border=0,
+            borderwidth=0,
+            highlightthickness=2,
+            highlightcolor='#316B83',
+            selectforeground='#CDFFEB', 
+            selectbackground='#476072'
         )
-        self.DESVfr1_entModulo.grid(row=1, column=0, pady=5, padx=5, ipady=5, sticky='nsw',columnspan=2)
-        
-        self.DESVfr1_btnBuscar = ttk.Button(self.DESV_frame1, 
-                                                    image=self.BuscarModulo_icon,
-                                                    state='disabled',
-                                                    command=lambda: self.buscar_Modulos(self.DESVfr1_entModulo.get()),
-                                                    style='DESV.TButton'
-                                                    )
-        self.DESVfr1_btnBuscar.grid(row=1, column=0, pady=5, padx=5, sticky='nse',columnspan=2)
-        self.DESVfr1_btnLimpiar = ttk.Button(self.DESV_frame1, 
-                                                    image=self.LimpiarModulo_icon,
-                                                    command=self.limpiar_busqueda2,
-                                                    style='DESV.TButton'
-                                                    )
-        #self.DESVfr1_btnLimpiar.grid(row=1, column=0, pady=5, padx=5, sticky='nse',columnspan=2)
+        self.DESVfr1_entModulo.grid(row=1, column=0, pady=5, padx=(5,0), sticky='nsew')
+        self.DESVfr1_btnBuscar = ttk.Button(
+            self.DESV_frame1, 
+            image=self.BuscarModulo_icon,
+            state='disabled',
+            command=lambda: self.buscar_Modulos(self.DESVfr1_entModulo.get()),
+            style='DESV.TButton'
+        )
+        self.DESVfr1_btnBuscar.grid(row=1, column=1, pady=5, padx=5, sticky='nsw')
+        self.DESVfr1_btnLimpiar = ttk.Button(
+            self.DESV_frame1, 
+            image=self.LimpiarModulo_icon,
+            command=self.limpiar_busqueda2,
+            style='DESV.TButton'
+        )
         # -----------------------------------------------------------------------------#
         self.DESVlist_yScroll = tk.Scrollbar(self.DESV_frame1, orient=tk.VERTICAL)
-        self.DESVlist_yScroll.grid(row=2, column=1, pady=5, sticky='nse')
         self.DESVlist_xScroll = tk.Scrollbar(self.DESV_frame1, orient=tk.HORIZONTAL)
-        self.DESVlist_xScroll.grid(row=3, column=0, padx=5, sticky='ew', columnspan=2)
         self.DESVfr1_listbox = tk.Listbox(
             self.DESV_frame1,
-            width=35,
             state='disabled',
             xscrollcommand=self.DESVlist_xScroll.set, 
             yscrollcommand=self.DESVlist_yScroll.set,
@@ -1195,147 +1229,207 @@ class Desviacion(ttk.Frame):
             highlightthickness=2,
             highlightcolor='#297F87',
         )
-        self.DESVfr1_listbox.grid(row=2, column=0, pady=(5,0), padx=(5,0), sticky='nsew')
+        self.DESVfr1_listbox.grid(row=2, column=0, pady=(5,15), padx=(5,15), sticky='nsew', columnspan=2)
+        self.DESVlist_yScroll.grid(row=2, column=0, pady=(5,15), sticky='nse', columnspan=2)
+        self.DESVlist_xScroll.grid(row=2, column=0, padx=5, sticky='sew', columnspan=2)
         self.DESVlist_xScroll['command'] = self.DESVfr1_listbox.xview
         self.DESVlist_yScroll['command'] = self.DESVfr1_listbox.yview
         ## ======================== FRAME 2 ========================================= ##
-        ## --- Modulo
-        self.DESVfr2_lblModulo = ttk.Label(self.DESV_frame2,
-                                            text='MODULO', 
-                                            width=10)
+        ## --- MODULO
+        self.DESVfr2_lblModulo = ttk.Label(
+            self.DESV_frame2,
+            text='MODULO', 
+            #width=10,
+        )
         self.DESVfr2_lblModulo.grid(row=0, column=0, padx=5, pady=5, sticky='new', columnspan=3)
         ## --- Descripcion
-        self.DESVfr2_lblDescripcion = ttk.Label(self.DESV_frame2,
-                                                    text='',
-                                                    font=('Source Sans Pro', 12),
-                                                    width=10, 
-                                                    background='#f1ecc3',
-                                                    foreground='gray55') 
+        self.DESVfr2_lblDescripcion = ttk.Label(
+            self.DESV_frame2,
+            text='',
+            font=('Consolas', 12),
+            width=10, 
+            background='#f1ecc3',
+            foreground='gray55'
+        ) 
         self.DESVfr2_lblDescripcion.grid(row=1, column=0, padx=5, pady=5, sticky='new', columnspan=3)
         ## --- Comprobacion
-        self.DESVfr2_lblComprobacion = ttk.Label(self.DESV_frame2, text='COMPROBACIÓN', width=15) 
+        self.DESVfr2_lblComprobacion = ttk.Label(
+            self.DESV_frame2, 
+            text='COMPROBACIÓN'
+        ) 
         self.DESVfr2_lblComprobacion.grid(row=2, column=0, padx=5, pady=5, sticky='w' )
-        self.DESV_btnDirectory = ttk.Button(self.DESV_frame2,
-                                            text='Directory',
-                                            compound='left',
-                                            image=self.Expandir_icon,
-                                            state='disabled',
-                                            command=self.abrir_DIRECTORY,
-                                            style='TOPS.TButton'
+        self.DESV_btnDirectory = ttk.Button(
+            self.DESV_frame2,
+            text='Directory',
+            compound='left',
+            image=self.Expandir_icon,
+            state='disabled',
+            command=self.abrir_DIRECTORY,
+            style='TOPS.TButton'
         )
-        self.DESV_btnDirectory.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
-        self.DESV_btn1Expandir = ttk.Button(self.DESV_frame2,
-                                            image=self.Expandir_icon,
-                                            state='disabled',
-                                            command=self.expandir1,
-                                            )
-        self.DESV_btn1Expandir.grid(row=2, column=2, padx=5, pady=5, sticky='ne')
+        #self.DESV_btnDirectory.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
         self.DESVfr2_srcComprobacion = st.ScrolledText(self.DESV_frame2)
-        self.DESVfr2_srcComprobacion.config(width=10,
-                                            state='disabled',
-                                            wrap='word',
-                                            font=('Consolas', 13), 
-                                            selectbackground='lightblue',
-                                            insertbackground='#297F87',
-                                            highlightbackground='gray88',
-                                            highlightthickness=2,
-                                            highlightcolor='#297F87',
-                                            )
+        self.DESVfr2_srcComprobacion.config(
+            #width=10,
+            state='disabled',
+            wrap='word',
+            font=self.text_font, 
+            selectbackground='lightblue',
+            insertbackground='#297F87',
+            highlightbackground='gray88',
+            highlightthickness=2,
+            highlightcolor='#297F87',
+            #height=4,
+        )
         self.DESVfr2_srcComprobacion.grid(row=3, column=0, padx=5, pady=5, sticky='new', columnspan=3)
-        ## --- Backup
-        self.DESVfr2_lblBackup = ttk.Label(self.DESV_frame2, text='BACKUP', width=10) 
+        self.varComprobacion = "COMPROBACION"
+        self.DESV_btn1Expandir = ttk.Button(
+            self.DESV_frame2,
+            image=self.Expandir_icon,
+            state='disabled',
+            command=lambda x=self.DESVfr2_srcComprobacion:self.expandir(x, self.varComprobacion),
+        )
+        self.DESV_btn1Expandir.grid(row=2, column=2, padx=(5,20), pady=5, sticky='ne')
+        ## --- BACKUP
+        self.DESVfr2_lblBackup = ttk.Label(
+            self.DESV_frame2, 
+            text='BACKUP', 
+            #width=10
+        ) 
         self.DESVfr2_lblBackup.grid(row=4, column=0, padx=5, pady=5, sticky='w')
-        self.DESV_btn2Expandir = ttk.Button(self.DESV_frame2,
-                                            image=self.Expandir_icon,
-                                            state='disabled',
-                                            command=self.expandir2,
-                                            )
-        self.DESV_btn2Expandir.grid(row=4, column=1, padx=5, pady=5, sticky='nse', columnspan=2)
+        
         self.DESVfr2_srcBackup = st.ScrolledText(self.DESV_frame2)
-        self.DESVfr2_srcBackup.config(width=10,
-                                            state='disabled',
-                                            wrap='word',
-                                            font=self.text_font, 
-                                            selectbackground='lightblue',
-                                            insertbackground='#297F87',
-                                            highlightbackground='gray88',
-                                            highlightthickness=2,
-                                            highlightcolor='#297F87',)
+        self.DESVfr2_srcBackup.config(
+            #width=10,
+            #height=4,
+            state='disabled',
+            wrap='word',
+            font=self.text_font, 
+            selectbackground='lightblue',
+            insertbackground='#297F87',
+            highlightbackground='gray88',
+            highlightthickness=2,
+            highlightcolor='#297F87',
+        )
         self.DESVfr2_srcBackup.grid(row=5, column=0, padx=5, pady=5, sticky='new', columnspan=3)
+        
+        self.varBackup = "BACKUP"
+        self.DESV_btn2Expandir = ttk.Button(
+            self.DESV_frame2,
+            image=self.Expandir_icon,
+            state='disabled',
+            command=lambda x=self.DESVfr2_srcBackup:self.expandir(x, self.varBackup),
+        )
+        self.DESV_btn2Expandir.grid(row=4, column=1, padx=(5,20), pady=5, sticky='nse', columnspan=2)
         ## ======================== FRAME 3 ========================================= ##
-        ## --- Editar
-        self.DESVfr3_lblEditar = ttk.Label(self.DESV_frame3, text='EDITAR ✍')
+        ## --- EDITAR
+        self.DESVfr3_lblEditar = ttk.Label(
+            self.DESV_frame3, 
+            text='EDITAR ✍'
+        )
         self.DESVfr3_lblEditar.grid(row=0, column=0, padx=5, pady=5, sticky='w')
-        self.DESV_btn3Expandir = ttk.Button(self.DESV_frame3,
-                                            image=self.Expandir_icon,
-                                            state='disabled',
-                                            command=self.expandir3,
-                                            )
-        self.DESV_btn3Expandir.grid(row=0, column=1, padx=5, pady=5, sticky='nse', columnspan=3)
+        
         self.DESVfr3_srcEditar = st.ScrolledText(self.DESV_frame3)
-        self.DESVfr3_srcEditar.config(width=10,
-                                            state='disabled',
-                                            wrap='word',
-                                            font=self.text_font, 
-                                            selectbackground='lightblue',
-                                            insertbackground='#297F87',
-                                            highlightbackground='gray88',
-                                            highlightthickness=2,
-                                            highlightcolor='#297F87',
-                                            )
+        self.DESVfr3_srcEditar.config(
+            #width=10,
+            state='disabled',
+            wrap='word',
+            font=self.text_font, 
+            selectbackground='lightblue',
+            insertbackground='#297F87',
+            highlightbackground='gray88',
+            highlightthickness=2,
+            highlightcolor='#297F87',
+        )
         self.DESVfr3_srcEditar.grid(row=1, column=0, padx=5, pady=5, sticky='new', columnspan=4)
-        ## --- Refrescar
-        self.DESVfr3_lblRefrescar = ttk.Label(self.DESV_frame3, text='REFRESCAR')
-        self.DESVfr3_lblRefrescar.grid(row=2, column=0, padx=5, pady=5, sticky='w')
-        self.DESV_btn4Expandir = ttk.Button(self.DESV_frame3,
-                                            image=self.Expandir_icon,
-                                            state='disabled',
-                                            command=self.expandir4,
-                                            )
-        self.DESV_btn4Expandir.grid(row=2, column=1, padx=5, pady=5, sticky='nse', columnspan=3)
+        
+        self.varEditar = "EDITAR"
+        self.DESV_btn3Expandir = ttk.Button(
+            self.DESV_frame3,
+            image=self.Expandir_icon,
+            state='disabled',
+            command=lambda x=self.DESVfr3_srcEditar:self.expandir(x, self.varEditar),
+        )
+        self.DESV_btn3Expandir.grid(row=0, column=1, padx=(5,20), pady=5, sticky='nse', columnspan=3)
+        ## --- REFEESCAR
+        self.DESVfr3_lblRefrescar = ttk.Label(
+            self.DESV_frame3, 
+            text='REFRESCAR'
+        )
+        self.DESVfr3_lblRefrescar.grid(row=2, column=0, padx=5, pady=5, sticky='w', columnspan=2)
         self.DESVfr3_srcRefrescar = st.ScrolledText(self.DESV_frame3)
-        self.DESVfr3_srcRefrescar.config(width=10,
-                                            state='disabled',
-                                            wrap='word',
-                                            font=self.text_font, 
-                                            selectbackground='lightblue',
-                                            insertbackground='#297F87',
-                                            highlightbackground='gray88',
-                                            highlightthickness=2,
-                                            highlightcolor='#297F87',)
+        self.DESVfr3_srcRefrescar.config(
+            #width=10,
+            state='disabled',
+            wrap='word',
+            font=self.text_font, 
+            selectbackground='lightblue',
+            insertbackground='#297F87',
+            highlightbackground='gray88',
+            highlightthickness=2,
+            highlightcolor='#297F87',
+        )
         self.DESVfr3_srcRefrescar.grid(row=3, column=0, padx=5, pady=5, sticky='new', columnspan=4)
-        ## --- Evidencia
-        self.DESVfr3_lblEvidencia = ttk.Label(self.DESV_frame3, text='EVIDENCIA')
+        
+        self.DESV_btn1CopyALL = ttk.Button(
+            self.DESV_frame3,
+            image=self.CopyALL_icon,
+            state='disabled',
+            command= lambda e=self.DESVfr3_srcRefrescar:self.copiarALL(e),
+        )
+        self.DESV_btn1CopyALL.grid(row=2, column=2, padx=5, pady=5, sticky='e')
+        
+        self.varRefrescar = "REFRESCAR"
+        self.DESV_btn4Expandir = ttk.Button(
+            self.DESV_frame3,
+            image=self.Expandir_icon,
+            state='disabled',
+            command=lambda x=self.DESVfr3_srcRefrescar:self.expandir(x, self.varRefrescar),
+        )
+        self.DESV_btn4Expandir.grid(row=2, column=3, padx=(5,20), pady=5, sticky='e')
+        
+        ## --- EVIDENCIA
+        self.DESVfr3_lblEvidencia = ttk.Label(
+            self.DESV_frame3, 
+            text='EVIDENCIA'
+        )
         self.DESVfr3_lblEvidencia.grid(row=4, column=0, padx=5, pady=5, sticky='w')
-        self.DESV_btnCopyALL = ttk.Button(self.DESV_frame3,
-                                            image=self.CopyALL_icon,
-                                            state='disabled',
-                                            command=self.copiarALL,
-                                            )
-        self.DESV_btnCopyALL.grid(row=4, column=1, padx=(20,5), pady=5, sticky='ne')
-        self.DESV_btnScreamEvidencia = ttk.Button(self.DESV_frame3,
-                                            image=self.Captura_icon,
-                                            state='disabled',
-                                            command=self.ScreamEvidencia,
-                                            )
-        self.DESV_btnScreamEvidencia.grid(row=4, column=2, padx=5, pady=5, sticky='ne')
-        self.DESV_btn5Expandir = ttk.Button(self.DESV_frame3,
-                                            image=self.Expandir_icon,
-                                            state='disabled',
-                                            command=self.expandir5,
-                                            )
-        self.DESV_btn5Expandir.grid(row=4, column=3, padx=5, pady=5, sticky='ne')
         self.DESVfr3_srcEvidencia = st.ScrolledText(self.DESV_frame3)
-        self.DESVfr3_srcEvidencia.config(width=10,
-                                            state='disabled',
-                                            wrap='word',
-                                            font=self.text_font, 
-                                            selectbackground='lightblue',
-                                            insertbackground='#297F87',
-                                            highlightbackground='gray88',
-                                            highlightthickness=2,
-                                            highlightcolor='#297F87',)
+        self.DESVfr3_srcEvidencia.config(
+            #width=10,
+            state='disabled',
+            wrap='word',
+            font=self.text_font, 
+            selectbackground='lightblue',
+            insertbackground='#297F87',
+            highlightbackground='gray88',
+            highlightthickness=2,
+            highlightcolor='#297F87',
+        )
         self.DESVfr3_srcEvidencia.grid(row=5, column=0, padx=5, pady=5, sticky='new', columnspan=4)
+        self.DESV_btnCopyALL = ttk.Button(
+            self.DESV_frame3,
+            image=self.CopyALL_icon,
+            state='disabled',
+            command=lambda e=self.DESVfr3_srcEvidencia:self.copiarALL(e),
+        )
+        self.DESV_btnCopyALL.grid(row=4, column=1, padx=(20,5), pady=5, sticky='ne')
+        self.DESV_btnScreamEvidencia = ttk.Button(
+            self.DESV_frame3,
+            image=self.Captura_icon,
+            state='disabled',
+            command=self.ScreamEvidencia,
+        )
+        self.DESV_btnScreamEvidencia.grid(row=4, column=2, padx=5, pady=5, sticky='ne')
+        
+        self.varEvidencia = "EVIDENCIA"
+        self.DESV_btn5Expandir = ttk.Button(
+            self.DESV_frame3,
+            image=self.Expandir_icon,
+            state='disabled',
+            command=lambda x=self.DESVfr3_srcEvidencia:self.expandir(x, self.varEvidencia),
+        )
+        self.DESV_btn5Expandir.grid(row=4, column=3, padx=(5,20), pady=5, sticky='ne')
         ## ------------------------------------------------------------------------------ ##
     ## --- FUNCIONES PARA ABRIR VENTANAS EMERGENTE --------------- ##
     def abrir_DIRECTORY(self):
@@ -1370,7 +1464,7 @@ class Aplicacion():
         self.contenedor= ttk.Frame(self.cuaderno)
         self.contenedor.columnconfigure(1, weight=1)
         self.contenedor.rowconfigure(1, weight=1)
-        self.cuaderno.add(self.contenedor,text='WorkSpace  ', underline=0, image=self.WorkSpace_icon, compound='left')
+        self.cuaderno.add(self.contenedor, text='WorkSpace  ', underline=0, image=self.WorkSpace_icon, compound='left')
         self.cuaderno.pack(fill="both",expand=True)
         self.cuaderno.bind_all("<<NotebookTabChanged>>",lambda e:self.alCambiar_Pestaña(e))
         self.cuaderno.enable_traversal()

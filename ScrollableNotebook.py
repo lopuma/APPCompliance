@@ -14,6 +14,7 @@ from PIL import Image, ImageTk
 release = True
 path = os.path.expanduser("~/")
 path_icon = path+"compliance/image/"
+count = 0
 class ScrollableNotebook(ttk.Frame):
     _initialized = False
     def __init__(self,parent,wheelscroll=False,tabmenu=False,*args,**kwargs):
@@ -31,6 +32,8 @@ class ScrollableNotebook(ttk.Frame):
         self.notebookTab.bind("<<NotebookTabChanged>>",lambda e:self._tabChanger(e))
         if wheelscroll==True: 
             self.notebookTab.bind("<MouseWheel>", self._wheelscroll)
+            self.notebookTab.bind("<Button-4>", self._wheelscroll)
+            self.notebookTab.bind("<Button-5>", self._wheelscroll)
         slideFrame = ttk.Frame(self)
         slideFrame.place(relx=1.0, x=0, y=1, anchor=NE)
         self.menuSpace=30
@@ -156,12 +159,22 @@ class ScrollableNotebook(ttk.Frame):
         self.style.map('TLabel',
                             background = [("selected", "#B61919")]
         )
-
     def _wheelscroll(self, event):
-        if event.delta > 0:
-            self._leftSlide(event)
-        else:
-            self._rightSlide(event)
+        # if event.delta > 0:
+        #     Thread(target=self._leftSlide, daemon=True).start()
+        # else:
+        #     Thread(target=self._rightSlide, daemon=True).start()
+        global count
+        # respond to Linux or Windows wheel event
+        if event.num == 5 or event.delta == -120:
+            count -= 1
+            Thread(target=self._leftSlide, daemon=True).start()
+            #self._rightSlide()
+        if event.num == 4 or event.delta == 120:
+            count += 1
+            Thread(target=self._rightSlide, daemon=True).start()
+            #self._leftSlide()
+        print(count)
 
     def _bottomMenu(self,event):
         self.text_font = tkFont.Font(family='Consolas', size=13)
@@ -208,6 +221,7 @@ class ScrollableNotebook(ttk.Frame):
                     self._release_callback(e=None)
     
     def _leftSlide(self):
+        print('sube')
         global release
         release = False
         self.leftArrow.configure(foreground='#DF2E2E')
