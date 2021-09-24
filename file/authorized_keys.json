@@ -17,10 +17,10 @@
             "variable": [
                 ""
             ],
-            "SO": "Aix"
+            "SO": "AIX"
         },
         {
-            "directory": "/home/ncosys/.ssh/authorized_keys",
+            "authorized": "/home/ncosys/.ssh/authorized_keys",
             "owner": "ncosys",
             "tipo": "/F/",
             "ownerGroup": "Monitorización",
@@ -36,7 +36,47 @@
             "variable": [
                 ""
             ],
-            "SO": "Aix"
+            "SO": "AIX"
+        },
+        {
+            "authorized": "/home/icouxat2/.ssh/authorized_keys",
+            "owner": "icouxat2",
+            "tipo": "/F/",
+            "ownerGroup": "Sistemas",
+            "user": [
+                "Grupo de SO"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL servers"
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/icouxat2/.ssh/authorized_keys\"",
+                "from=\"129.39.41.5,129.39.41.6\""
+            ],
+            "SO": "LINUX"
+        },
+        {
+            "authorized": "/home/icouxat1/.ssh/authorized_keys",
+            "owner": "icouxat1",
+            "tipo": "/F/",
+            "ownerGroup": "Sistemas",
+            "user": [
+                "Grupo de SO"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL servers"
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/icouxat1/.ssh/authorized_keys\"",
+                "from=\"129.39.41.5,129.39.41.6\""
+            ],
+            "SO": "LINUX"
         }
     ]
 }

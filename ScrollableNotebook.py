@@ -101,22 +101,20 @@ class ScrollableNotebook(ttk.Frame):
     def _initialize(self):
         self.style = ttk.Style()
         self.images = (
-            tk.PhotoImage("im1", data='''
-                        R0lGODlhCAAIAMIEAAAAAP/SAP/bNNnZ2f///////////////yH5
-                        BAEKAAIALAAAAAAIAAgAAAMUCCAsCmO5OBVl8OKhoV3e9jQOkAAAOw==
-                        '''),
-            tk.PhotoImage("im2", data='''
-                        R0lGODlhCAAIAMIEAAAAAP/SAP/bNNnZ2f///////////////yH5
-                        BAEKAAMALAAAAAAIAAgAAAMPCDA8+gw+GGlVbWKqmwMJADs=
-                        ''' ),
-            tk.PhotoImage("im3", data='''
-                        R0lGODlhCAAIAMIEAAAAAP/SAP/bNNnZ2f///////////////yH5B
-                        AEKAAMALAAAAAAIAAgAAAMPGDE8+gw+GGlVbWKqmwsJADs=
-                        ''')
+            tk.PhotoImage("img1", data='''
+            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
+        ''' ),
+            tk.PhotoImage("img2", data="""
+            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
+        """),
+            tk.PhotoImage("img3", data="""
+            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
+        """)
         )
-        self.style.element_create("tab_btn_close", "image", "im1",
-                            ("active", "pressed", "!disabled", "im2"),
-                            ("active", "!disabled", "im3"), border=8, sticky='')
+        self.style.element_create("tab_btn_close", "image", "img1",
+                            ("active", "pressed", "!disabled", "img2"), 
+                            ("active", "!disabled", "img3"), border=15, sticky=''
+        )
         self.style.layout("ScrollableNotebook", [("ScrollableNotebook.client", {"sticky": "nswe"})])
         self.style.layout("ScrollableNotebook.Tab", [
             ("ScrollableNotebook.tab", {
@@ -130,8 +128,8 @@ class ScrollableNotebook(ttk.Frame):
                                 "side": "top", 
                                 "sticky": "nswe",
                                 "children": [
-                                    ("ScrollableNotebook.label", {"side": "left", "sticky": ''}),
-                                    ("ScrollableNotebook.tab_btn_close", {"side": "left", "sticky": ''}),
+                                    ("ScrollableNotebook.label", {"side": "left", "sticky": 'se'}),
+                                    ("ScrollableNotebook.tab_btn_close", {"side": "left", "sticky": 'nw'}),
                                 ]
                             })
                         ]
@@ -145,7 +143,9 @@ class ScrollableNotebook(ttk.Frame):
         self.style.configure("ScrollableNotebook.Tab",
             background='#FDD2BF',
             foreground='#012443',
-            padding=[20, 10],
+            padding=[5, 8],
+            anchor="center",
+            justify="center",
             font=('Courier', 17, font.BOLD)
         )         
         self.style.map('ScrollableNotebook.Tab', background = [("selected", "#B61919"),
@@ -165,15 +165,15 @@ class ScrollableNotebook(ttk.Frame):
         # else:
         #     Thread(target=self._rightSlide, daemon=True).start()
         global count
-        # respond to Linux or Windows wheel event
-        if event.num == 5 or event.delta == -120:
-            count -= 1
-            Thread(target=self._leftSlide, daemon=True).start()
-            #self._rightSlide()
-        if event.num == 4 or event.delta == 120:
-            count += 1
-            Thread(target=self._rightSlide, daemon=True).start()
-            #self._leftSlide()
+        # # respond to Linux or Windows wheel event
+        # if event.num == 5 or event.delta == -120:
+        #     count -= 1
+        #     Thread(target=self._leftSlide, daemon=True).start()
+        #     #self._rightSlide()
+        # if event.num == 4 or event.delta == 120:
+        #     count += 1
+        #     Thread(target=self._rightSlide, daemon=True).start()
+        #     #self._leftSlide()
         print(count)
 
     def _bottomMenu(self,event):
