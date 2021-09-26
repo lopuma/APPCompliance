@@ -57,6 +57,7 @@ txtWidget = ""
 tittleExpand = ""
 top_active_LBK = False
 sis_oper = ""
+counter = 0
 class Directory(ttk.Frame):
     def __init__(self, parent, customer, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
@@ -102,6 +103,10 @@ class Directory(ttk.Frame):
         self.srcRisk.bind("<Motion>", lambda x :self.act_elemt_src(x))
         self.srcVariable.bind("<Motion>", lambda x :self.act_elemt_src(x))
         self.listServer.bind("<Motion>", lambda x :self.act_elemt_list(x))
+        self.textBuscar.bind("<FocusIn>", lambda e: self.clear_bsq(e))
+        self.textBuscar.bind("<FocusOut>", lambda e: self.clear_bsq(e))    
+        self.textBuscar.bind("<KeyPress>", lambda e: self.clear_bsq_buttom(e))    
+        self.textBuscar.bind("<Control-v>", lambda e: self.sel_text(e))
     def iconos(self):
         self.buscar_icon = ImageTk.PhotoImage(
                     Image.open(path_icon+r"buscar.png").resize((25, 25)))
@@ -109,8 +114,39 @@ class Directory(ttk.Frame):
                     Image.open(path_icon+r"reduce.png").resize((25, 25)))
         self.copiar_icon = ImageTk.PhotoImage(
                     Image.open(path_icon+r"copiarALL_evd.png").resize((20, 20)))
+        self.limpiar_icon = ImageTk.PhotoImage(
+                    Image.open(path_icon+r"limpiar.png").resize((25, 25)))
     def cerrar_vtn(self):
         self.vtn_directory.destroy()
+    ## BUSCAR DIRECTORY / FILE
+    def clear_bsq_buttom(self, event):
+        text_widget = event.widget
+        entry = self.var_ent_buscar.get()
+        long_entry = len(entry)
+        if long_entry <=1:
+            self.btnLimpiar.grid_forget()
+            self.btnBuscar.grid(row=0, column=1, sticky=W)
+            self.cargar_directory()
+            self.limpiar_widgets()
+    def clear_bsq(self, event):
+        text_widget = event.widget
+        entry = self.var_ent_buscar.get()
+        if entry == "Buscar Directory / File ...":
+            text_widget.config(foreground="black", font=("Consolas", 14))
+            self.var_ent_buscar.set("")
+            text_widget.icursor(0)
+        elif entry == "":
+            text_widget.config(foreground="gray75", font=("Consolas", 12))
+            self.var_ent_buscar.set("Buscar Directory / File ...")
+            text_widget.icursor(0)
+    def limpiar_bsq(self):
+        self.var_ent_buscar.set("Buscar Directory / File ...")
+        self.textBuscar.focus()
+        self.textBuscar.icursor(0)
+        self.btnLimpiar.grid_forget()
+        self.btnBuscar.grid(row=0, column=1, sticky=W)
+        self.cargar_directory()
+        self.limpiar_widgets()
     def buscar(self, event=None):
         valor_aBuscar = event
         valor_Buscado = [n for n in self.directory if valor_aBuscar.strip() in n]
@@ -120,6 +156,9 @@ class Directory(ttk.Frame):
             )            
             self.cargar_directory()
             self.limpiar_widgets()
+            self.btnLimpiar.forget()
+            self.btnBuscar.grid(row=0, column=1, sticky=W)
+            self.textBuscar.focus()
         else:
             if len(valor_Buscado) == 0:
                 mb.showerror(
@@ -127,6 +166,7 @@ class Directory(ttk.Frame):
                 )                 
                 self.cargar_directory()
                 self.limpiar_widgets()
+                self.textBuscar.focus()
             else:
                 self.limpiar_tree()
                 with open(path_Directory) as g:
@@ -141,6 +181,8 @@ class Directory(ttk.Frame):
                                     self.tree.insert(parent='', index='end', iid=count, text='', value=(md['directory'],md['owner'],md['tipo'],md['ownerGroup'],md['code']), tags=('oddrow'))
                                 count += 1
                         self.limpiar_widgets()
+            self.btnBuscar.forget()
+            self.btnLimpiar.grid(row=0, column=1, sticky=W)
     def cargar_directory(self):
         self.directory = []
         #limpiando el arbol de vistas
@@ -178,7 +220,6 @@ class Directory(ttk.Frame):
                         variables = variables.replace("[","").replace("]","").replace("'","").replace(",",";")
                         self.srcVariable.insert(END,variables)
                         self.lbl_SO['text'] = md['SO']
-        self.textBuscar.focus()
         self.cbxUser.set('CONTACTOS')
     def limpiar_widgets(self):
         self.lbl_SO['text'] = "SISTEMA OPERATIVO"
@@ -230,9 +271,16 @@ class Directory(ttk.Frame):
             app.root.clipboard_append(self.srcEvent.get(*seleccion).strip())
             self.srcEvent.tag_remove("sel","1.0","end")
             return 'break'
+    def sel_text(self, event):
+        if event.widget.select_present():
+            self.var_ent_buscar.set("")
     def pegar(self):
+        if self.srcEvent.select_present():
+            self.var_ent_buscar.set("")
+            self.btnLimpiar.grid_forget()
+            self.btnBuscar.grid(row=0, column=1, sticky=W)
         self.srcEvent.event_generate("<<Paste>>")
-        return 'break'
+        # return 'break'
     def menu_clickDerecho(self):
         self.text_font = tkFont.Font(family='Consolas', size=13)   
         self.menu_Contextual = Menu(self, tearoff=0)
@@ -252,13 +300,14 @@ class Directory(ttk.Frame):
                                 command=self.copiar,
                                 state='normal',
                                 )
-        self.menu_Contextual.add_command(label="  Pegar", 
-                                accelerator='Ctrl+V',
-                                background='#ccffff', foreground='black',
-                                activebackground='#004c99',activeforeground='white',
-                                font=self.text_font,
-                                command= self.pegar,
-                                )
+        self.menu_Contextual.add_command(
+            label="  Pegar", 
+            accelerator='Ctrl+V',
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            command=self.pegar,
+        )
         self.menu_Contextual.add_separator(background='#ccffff')
         self.menu_Contextual.add_command(
             label="  Seleccionar todo", 
@@ -291,15 +340,20 @@ class Directory(ttk.Frame):
         self.menu_Contextual.tk_popup(event.x_root, event.y_root)
         self.srcEvent = event.widget
         self.srcEvent.focus()
-        txt_select = event.widget.tag_ranges(tk.SEL)
-        if txt_select:
-            self.menu_Contextual.entryconfig("  Copiar", state="normal")
+        print(self.srcEvent)
+        print(self.textBuscar)
+        if str(self.srcEvent) == str(self.textBuscar):
+            pass
         else:
-            self.menu_Contextual.entryconfig("  Copiar", state="disabled")
+            txt_select = event.widget.tag_ranges(tk.SEL)
+            if txt_select:
+                self.menu_Contextual.entryconfig("  Copiar", state="normal")
+            else:
+                self.menu_Contextual.entryconfig("  Copiar", state="disabled")
     def menuList_clickDerecho(self):
         self.text_font = tkFont.Font(family='Consolas', size=13)   
         self.menuLis_Contextual = Menu(self, tearoff=0)
-        self.menuLis_Contextual.add_command(label="  Buscar", 
+        self.menuLis_Contextual.add_command(label="  Buscar",
                                 accelerator='Ctrl+F',
                                 background='#ccffff', foreground='black',
                                 activebackground='#004c99',activeforeground='white',
@@ -307,22 +361,24 @@ class Directory(ttk.Frame):
                                 command=self.act_buscar,
                                 )
         self.menuLis_Contextual.add_separator(background='#ccffff')
-        self.menuLis_Contextual.add_command(label="  Copiar", 
-                                accelerator='Ctrl+C',
-                                background='#ccffff', foreground='black',
-                                activebackground='#004c99',activeforeground='white',
-                                font=self.text_font,
-                                command=self.copiar,
-                                state='normal',
-                                )
-        self.menuLis_Contextual.add_command(label="  Pegar", 
-                                accelerator='Ctrl+V',
-                                background='#ccffff', foreground='black',
-                                activebackground='#004c99',activeforeground='white',
-                                font=self.text_font,
-                                command= self.pegar,
-                                state='disabled',
-                                )
+        self.menuLis_Contextual.add_command(
+            label="  Copiar", 
+            accelerator='Ctrl+C',
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            command=self.copiar,
+            state='normal',
+        )
+        self.menuLis_Contextual.add_command(
+            label="  Pegar", 
+            accelerator='Ctrl+V',
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            command= self.pegar,
+            state='disabled',
+        )
         self.menuLis_Contextual.add_separator(background='#ccffff')
         self.menuLis_Contextual.add_command(
             label="  Seleccionar todo", 
@@ -357,11 +413,14 @@ class Directory(ttk.Frame):
         self.srcEvent.focus()
     ## =============================================
     def widgets_DIRECTORY(self):
+        self.var_ent_buscar = tk.StringVar(self)
         self.textBuscar = tk.Entry(
             self.vtn_directory,
+            textvariable=self.var_ent_buscar,
             justify='left',
             width=40,
-            font=self.text_font,
+            foreground="gray75",
+            font=("Consolas", 12),
             border=0,
             borderwidth=0,
             highlightthickness=3,
@@ -369,6 +428,7 @@ class Directory(ttk.Frame):
             selectforeground='#CDFFEB', 
             selectbackground='#476072'
         )
+        self.var_ent_buscar.set("Buscar Directory / File ...")
         self.textBuscar.grid(row=0, column=0, padx=10, pady=5, sticky='nsew')
 
         self.btnBuscar = ttk.Button(
@@ -379,6 +439,15 @@ class Directory(ttk.Frame):
             command= lambda: self.buscar(self.textBuscar.get())
         )
         self.btnBuscar.grid(row=0, column=1, sticky=W)
+
+        self.btnLimpiar = ttk.Button(
+            self.vtn_directory,
+            text='Limpiar',
+            style='TOP1.TButton',
+            image=self.limpiar_icon,
+            command= self.limpiar_bsq,            
+        )
+        #self.btnLimpiar.grid(row=0, column=1, sticky=W)
 
         self.btnCerrar = ttk.Button(
             self.vtn_directory, 
@@ -762,8 +831,8 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_srcEvidencia.bind('<Control-a>', lambda e: app.seleccionar_todo(e))
         ## --- BUSCAR --- ##
         self.DESVfr1_entModulo.bind("<Return>", lambda event=None: self.buscar_Modulos(self.DESVfr1_entModulo.get()))
-        self.DESVfr1_entModulo.bind("<KeyPress>", lambda e: self.limpiar_busqueda(e))
-        self.DESVfr1_entModulo.bind("<Button-1>", lambda e: self.limpiar_busqueda(e))
+        self.DESVfr1_entModulo.bind("<FocusIn>", lambda e: self.clear_busqueda(e))
+        self.DESVfr1_entModulo.bind("<FocusOut>", lambda e: self.clear_busqueda(e))
         self.DESVfr1_listbox.bind('<Control-f>', lambda e : self.buscar(e))
         self.DESVfr2_srcComprobacion.bind('<Control-f>', lambda e : self.buscar(e))
         self.DESVfr2_srcBackup.bind('<Control-f>', lambda e : self.buscar(e))
@@ -774,7 +843,6 @@ class Desviacion(ttk.Frame):
         self.DESVfr1_listbox.bind_all("<Down>", self.ListDown)
         self.DESVfr1_listbox.bind_all("<Up>", self.ListUp)
         self.DESVfr1_entModulo.bind('<Control-v>', lambda e : self.sel_text(e))
-        self.DESVfr1_entModulo.bind('<Button-3>', lambda e : self.sel_text(e))
         self.DESVfr1_entModulo.bind_all('<Button-2>', lambda x:self.no_copy(x))
         self.DESVfr2_srcComprobacion.bind_all("<Button-2>", lambda x:self.no_copy(x))
         self.DESVfr2_srcBackup.bind_all("<Button-2>", lambda x:self.no_copy(x))
@@ -862,7 +930,6 @@ class Desviacion(ttk.Frame):
             self.DESVfr2_srcBackup.tag_remove("sel","1.0","end")
             self.DESVfr3_srcEditar.tag_remove("sel","1.0","end")
             self.DESVfr3_srcRefrescar.tag_remove("sel","1.0","end")
-
     def disabled_copy(self, txt_select):
         if txt_select:
             app.menu_Contextual.entryconfig('  Copiar', state='normal')
@@ -962,9 +1029,6 @@ class Desviacion(ttk.Frame):
                     modulo_ListBox = self.DESVfr1_listbox.get(0, tk.END)
                     indice = modulo_ListBox.index(modulo_Encontrado)
                     self.DESVfr1_listbox.selection_set(indice)
-                    print('MODULO ENCONTRADO : << {} >> '.format(modulo_Encontrado))
-                    # self.DESVfr1_btnBuscar.grid_forget()
-                    # self.DESVfr1_btnLimpiar.grid(row=1, column=0, pady=5, padx=5, sticky='nse',columnspan=2)
             else:
                 data = []
                 with open(path_modulo.format(asigne_Ciente)) as g:
@@ -981,7 +1045,6 @@ class Desviacion(ttk.Frame):
                     modulo_ListBox = self.DESVfr1_listbox.get(0, tk.END)
                     indice = modulo_ListBox.index(modulo_Encontrado)
                     self.DESVfr1_listbox.selection_set(indice)
-                    print('MODULO ENCONTRADO : << {} >> '.format(modulo_Encontrado))
             self.DESVfr1_btnBuscar.grid_forget()
             self.DESVfr1_btnLimpiar.grid(row=1, column=1, pady=5, padx=5, sticky='nsw')    
         except:
@@ -994,29 +1057,32 @@ class Desviacion(ttk.Frame):
             self.DESV_btnDirectory.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
         else:
             self.DESV_btnDirectory.grid_forget()   
-    def limpiar_busqueda(self, event):
+    def clear_busqueda(self, event):
         text_widget = event.widget
-        long_entry = self.text.get()
-        if len(long_entry) == 16 and long_entry == "Buscar modulo...":
+        entry = self.var_entry_bsc.get()
+        if entry == "Buscar modulo...":
             text_widget.config(foreground="black", font=("Consolas", 14))
-            self.text.set("")
+            self.var_entry_bsc.set("")
             text_widget.icursor(0)
-        elif len(long_entry) <= 1:
-            self.DESVfr1_btnLimpiar.grid_forget()
-            self.DESVfr1_btnBuscar.grid(row=1, column=1, pady=5, padx=5, sticky='nsw')
+        elif entry == "":
+            text_widget.config(foreground="gray75", font=("Consolas", 12))
+            self.var_entry_bsc.set("Buscar modulo...")
+            text_widget.icursor(0)
+        # if len(entry) == 16 and entry == "Buscar modulo...":
+        #     text_widget.config(foreground="black", font=("Consolas", 14))
+        #     self.text.set("")
+        #     text_widget.icursor(0)
+        # elif len(entry) <= 1:
+        #     self.DESVfr1_btnLimpiar.grid_forget()
+        #     self.DESVfr1_btnBuscar.grid(row=1, column=1, pady=5, padx=5, sticky='nsw')
     def sel_text(self, event):
         if event.widget.select_present():
-            self.text.set("")
-            print("se seleciona el text")
-        else:
-            event.widget.config(foreground="black", font=("Consolas", 14))
-            self.text.set("")
-            event.widget.icursor(0)
-    def limpiar_busqueda2(self):
-        self.text.set("Buscar modulo...")
-        self.DESVfr1_entModulo.config(foreground="gray75", font=("Consolas", 12))
-        self.DESVfr1_entModulo.focus()
-        self.DESVfr1_entModulo.icursor(0)
+            self.var_entry_bsc.set("")
+    def limpiar_busqueda(self):
+        widget_event = self.DESVfr1_entModulo
+        self.var_entry_bsc.set("Buscar modulo...")
+        widget_event.focus()
+        widget_event.icursor(0)
         self.DESVfr1_btnLimpiar.grid_forget()
         self.DESVfr1_btnBuscar.grid(row=1, column=1, pady=5, padx=5, sticky='nsw')
     def ListDown(self, event):
@@ -1090,7 +1156,6 @@ class Desviacion(ttk.Frame):
                 listModulo.append(md['modulo'])
                 listClave.append(md['clave'])
         listModulo.sort()
-        self.text.set("Buscar modulo...")
         self.DESVfr1_entModulo.icursor(0)
         self.DESVfr1_entModulo.config(foreground="gray75", font=("Consolas", 12))
         self.DESVfr1_listbox.insert(END,*listModulo)
@@ -1174,13 +1239,13 @@ class Desviacion(ttk.Frame):
         self.DESVfr1_optMn.grid(row=0, column=0, padx=5, pady=5, sticky='new', columnspan=2)
         # -----------------------------------------------------------------------------#
         ## --- WIDGETS PARA BUSCAR
-        self.text = tk.StringVar(self)
+        self.var_entry_bsc = tk.StringVar(self)
         self.DESVfr1_entModulo = tk.Entry(
             self.DESV_frame1,
-            textvariable=self.text,
+            textvariable=self.var_entry_bsc,
             #width=32
         )
-        self.text.set("Buscar modulo...")
+        self.var_entry_bsc.set("Buscar modulo...")
         self.DESVfr1_entModulo.config(
             foreground="gray75",
             font=self.text_font,
@@ -1204,7 +1269,7 @@ class Desviacion(ttk.Frame):
         self.DESVfr1_btnLimpiar = ttk.Button(
             self.DESV_frame1, 
             image=self.LimpiarModulo_icon,
-            command=self.limpiar_busqueda2,
+            command=self.limpiar_busqueda,
             style='DESV.TButton'
         )
         # -----------------------------------------------------------------------------#
@@ -1681,11 +1746,8 @@ class Aplicacion():
         txtWidget = event.widget
         self.srcEvent = event.widget
         self.srcEvent.focus()
-        print("1 ",txtWidget)
-        print("2 ",self.srcEvent)
         if str(self.srcEvent) != ".!scrollablenotebook.!notebook2":
             if txtWidget == desviacion.DESVfr1_entModulo:
-                
                 self.menu_Contextual.entryconfig('  Buscar', state='normal')
                 self.menu_Contextual.entryconfig('  Pegar', state='normal')
                 self.menu_Contextual.entryconfig('  Copiar', state='disabled')
@@ -1716,8 +1778,11 @@ class Aplicacion():
         desviacion.buscar(event=None)
     def pegar_texto_seleccionado(self):
         global txtWidget
+        if txtWidget.select_present():
+            desviacion.var_entry_bsc.set("")
+            desviacion.DESVfr1_btnLimpiar.grid_forget()
+            desviacion.DESVfr1_btnBuscar.grid(row=1, column=1, pady=5, padx=5, sticky='nsw')
         txtWidget.event_generate("<<Paste>>")
-        return 'break'
     def copiar_texto_seleccionado(self):
         global txtWidget_focus
         global txtWidget
