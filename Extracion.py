@@ -7,6 +7,9 @@ from tkinter import Button, ttk
 from tkinter.constants import W
 from PIL import Image, ImageTk
 from tkinter import scrolledtext as st
+from os import listdir, path, sep
+from os.path import isdir, join, abspath
+
 
 
 class Extracione(tk.Frame):
@@ -26,7 +29,7 @@ class Extracione(tk.Frame):
         # self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=5)
         self.rowconfigure(0, weight=1)
-        self.lb.bind('<<ListboxSelect>>', self.seleccionar_plantilla)
+        #self.lb.bind('<<ListboxSelect>>', self.seleccionar_plantilla)
 
     def seleccionar_plantilla(self, event):
         print("abrir")
@@ -44,6 +47,7 @@ class Extracione(tk.Frame):
         #     self.asignarValor_aWidgets(md)
 
     def menu(self):
+        
         self.frame1 = tk.Frame(
             self,
             background="gold",
@@ -67,7 +71,7 @@ class Extracione(tk.Frame):
                               )
 
         # self.btn_nav.grid(row=0, column=0, sticky="nw")
-        # self.frame1.columnconfigure(1, weight=1)
+        #self.frame1.columnconfigure(1, weight=1)
         self.btn_close = tk.Button(
             self.frame1,
             background="#39A2DB",
@@ -81,15 +85,20 @@ class Extracione(tk.Frame):
         # self.btn.pack(side="top", fill=tk.X)
         self.btn_close.grid(row=0, column=0, sticky="e")
         # self.btn_nav.grid_forget()
-        self.lb = tk.Listbox(self.frame1)
-        self.lb['bg'] = "white"
-        self.lb['fg'] = "blue"
-        self.lb['font'] = "Consolas", 13
-        self.lb.grid(row=1, column=0, sticky="nsew")
-        # self.lb.pack(side="left", fill=tk.BOTH, expand=1)
-        self.lb.insert(tk.END, "Plantilla 1")
-        # for file in glob.glob("extracion/*"):
-        # 	self.lb.insert(tk.END, file)
+        self.appi = Application(self.frame1, background="red")
+        self.appi.rowconfigure(1, weight=1)
+        self.appi.columnconfigure(0, weight=1)
+        #+-------------------------------------------+
+        # self.lb = tk.Listbox(self.frame1)
+        # self.lb['bg'] = "white"
+        # self.lb['fg'] = "blue"
+        # self.lb['font'] = "Consolas", 13
+        self.appi.grid(row=1, column=0, sticky="nsew")
+        # # self.lb.pack(side="left", fill=tk.BOTH, expand=1)
+        # self.lb.insert(tk.END, "Plantilla 1")
+        # # for file in glob.glob("extracion/*"):
+        # # 	self.lb.insert(tk.END, file)
+        #+-------------------------------------------+
 
     def text(self):
         self.frame2 = tk.Frame(self)
@@ -135,3 +144,103 @@ class Extracione(tk.Frame):
             self.hidden = 0
             self.btn_nav.grid_forget()
             print("Hidden", self.hidden)
+
+class Application(tk.Frame):
+    
+    def __init__(self, parent, *args, **kwargs):
+        tk.Frame.__init__(self, parent, *args)
+        #self = self
+        #self.title("Explorador de archivos y carpetas")
+        self.treeview = ttk.Treeview(self)
+        #self.treeview.rowconfigure(1, weight=1)
+        #self.treeview.columnconfigure(0, weight=1)
+        self.treeview.grid(row=1, column=0, sticky="nsew")
+        
+        # Asociar el evento de expansión de un elemento con la
+        # función correspondiente.
+        self.treeview.tag_bind(
+            "fstag", "<<TreeviewOpen>>", self.item_opened
+        )
+        self.treeview.bind(
+            "<<TreeviewSelect>>", lambda e :self.select_extraction(e)
+        )
+        
+        # Expandir automáticamente.
+        # for w in (self, self):
+       
+        #self.grid(row=1, column=0, sticky="nsew")
+        
+        # Este diccionario conecta los IDs de los ítems de Tk con
+        # su correspondiente archivo o carpeta.
+        self.fsobjects = {}
+        
+        self.file_image = tk.PhotoImage(file="/home/esy9d7l1/compliance/image/files.png")
+        self.folder_image = tk.PhotoImage(file="/home/esy9d7l1/compliance/image/folder.png")
+        
+        # Cargar el directorio raíz.
+        self.load_tree(abspath("/home/esy9d7l1/compliance/extracion"))
+    def listdir(self, path):
+        try:
+            return listdir(path)
+        except PermissionError:
+            print("No tienes suficientes permisos para acceder a",
+                  path)
+            return []
+    
+    def get_icon(self, path):
+        """
+        Retorna la imagen correspondiente según se especifique
+        un archivo o un directorio.
+        """
+        return self.folder_image if isdir(path) else self.file_image
+    
+    def insert_item(self, name, path, parent=""):
+        """
+        Añade un archivo o carpeta a la lista y retorna el identificador
+        del ítem.
+        """
+        iid = self.treeview.insert(
+            parent, tk.END, text=name, tags=("fstag",),
+            image=self.get_icon(path))
+        self.fsobjects[iid] = path
+        return iid
+    
+    def load_tree(self, path, parent=""):
+        """
+        Carga el contenido del directorio especificado y lo añade
+        a la lista como ítemes hijos del ítem "parent".
+        """
+        for fsobj in self.listdir(path):
+            fullpath = join(path, fsobj)
+            child = self.insert_item(fsobj, fullpath, parent)
+            if isdir(fullpath):
+                for sub_fsobj in self.listdir(fullpath):
+                    self.insert_item(sub_fsobj, join(fullpath, sub_fsobj),
+                                     child)
+        
+    def load_subitems(self, iid):
+        """
+        Cargar el contenido de todas las carpetas hijas del directorio
+        que se corresponde con el ítem especificado.
+        """
+        for child_iid in self.treeview.get_children(iid):
+            if isdir(self.fsobjects[child_iid]):
+                self.load_tree(self.fsobjects[child_iid],
+                               parent=child_iid)
+    
+    def item_opened(self, event):
+        """
+        Evento invocado cuando el contenido de una carpeta es abierto.
+        """
+        iid = self.treeview.selection()[0]
+        self.load_subitems(iid)
+    
+    def select_extraction(self, event):
+        tree_event = event.widget
+        item_id = tree_event.selection()[0]
+        ## ---Obtener el index
+        index = tree_event.index(item_id)
+        ## -----------------------------------
+        dir_selecionado = tree_event.item(item_id, option="text")
+        print(dir_selecionado)
+

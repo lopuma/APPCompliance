@@ -107,6 +107,9 @@ class Directory(ttk.Frame):
         self.textBuscar.bind("<FocusOut>", lambda e: self.clear_bsq(e))    
         self.textBuscar.bind("<KeyPress>", lambda e: self.clear_bsq_buttom(e))    
         self.textBuscar.bind("<Control-v>", lambda e: self.sel_text(e))
+        ## --- Selecionar elemento hacia abajo
+        self.tree.bind("<Down>", lambda e:self.TreeDown(e))
+        self.tree.bind("<Up>", lambda e:self.TreeUp(e))
     def iconos(self):
         self.buscar_icon = ImageTk.PhotoImage(
                     Image.open(path_icon+r"buscar.png").resize((25, 25)))
@@ -202,13 +205,22 @@ class Directory(ttk.Frame):
         for elemnt in records:
             self.tree.delete(elemnt)
     def selecionar_elemntFile(self, event):
-        sel_valor = self.tree.focus()
-        valor = self.tree.item(sel_valor, 'values')
-        valFile = valor[0]
+        tree_event = event.widget
+        try:
+            item_id = tree_event.selection()[0]
+            #item_id = tree_event.focus()
+            index = tree_event.index(item_id)
+            if tree_event.exists(index):
+                dir_selecionado = tree_event.item(index, 'values')
+                dir = dir_selecionado[0]
+                self.cargar_elemt_seleccionado(dir)
+        except:
+            pass
+    def cargar_elemt_seleccionado(self, dir):
         with open(path_Directory) as g:
                 data = json.load(g)
                 for md in data[self.customer]:
-                    if valFile == md['directory']:
+                    if dir == md['directory']:
                         #limpiar------------------------------------                      
                         self.limpiar_widgets()
                         #-------------------------------------------
@@ -411,6 +423,23 @@ class Directory(ttk.Frame):
         self.menuLis_Contextual.tk_popup(event.x_root, event.y_root)
         self.srcEvent = event.widget
         self.srcEvent.focus()
+    def TreeDown(self, event):
+        tree_event = event.widget
+        item_id = tree_event.selection()[0]
+        #item_id = tree_event.focus()
+        index = tree_event.index(item_id)+1
+        if tree_event.exists(index):
+            dir_selecionado = tree_event.item(index, 'values')
+            dir = dir_selecionado[0]
+            self.cargar_elemt_seleccionado(dir)
+    def TreeUp(self, event):
+        tree_event = event.widget
+        item_id = tree_event.selection()[0]
+        index = tree_event.index(item_id)-1
+        if tree_event.exists(index):
+            dir_selecionado = tree_event.item(index, 'values')
+            dir = dir_selecionado[0]
+            self.cargar_elemt_seleccionado(dir)
     ## =============================================
     def widgets_DIRECTORY(self):
         self.var_ent_buscar = tk.StringVar(self)
@@ -833,23 +862,16 @@ class Desviacion(ttk.Frame):
         self.DESVfr1_entModulo.bind("<Return>", lambda event=None: self.buscar_Modulos(self.DESVfr1_entModulo.get()))
         self.DESVfr1_entModulo.bind("<FocusIn>", lambda e: self.clear_busqueda(e))
         self.DESVfr1_entModulo.bind("<FocusOut>", lambda e: self.clear_busqueda(e))
-        self.DESVfr1_listbox.bind('<Control-f>', lambda e : self.buscar(e))
+        self.DESVfr1_entModulo.bind("<KeyPress>", lambda e: self.clear_bsq_buttom(e))
         self.DESVfr2_srcComprobacion.bind('<Control-f>', lambda e : self.buscar(e))
         self.DESVfr2_srcBackup.bind('<Control-f>', lambda e : self.buscar(e))
         self.DESVfr3_srcEditar.bind('<Control-f>', lambda e : self.buscar(e))
         self.DESVfr3_srcRefrescar.bind('<Control-f>', lambda e : self.buscar(e))
         self.DESVfr3_srcEvidencia.bind('<Control-f>', lambda e : self.buscar(e))
         app.editMenu.bind_all('<Control-f>', lambda e : self.buscar(e))
-        self.DESVfr1_listbox.bind_all("<Down>", self.ListDown)
-        self.DESVfr1_listbox.bind_all("<Up>", self.ListUp)
+        self.DESVfr1_listbox.bind("<Down>", self.ListDown)
+        self.DESVfr1_listbox.bind("<Up>", self.ListUp)
         self.DESVfr1_entModulo.bind('<Control-v>', lambda e : self.sel_text(e))
-        self.DESVfr1_entModulo.bind_all('<Button-2>', lambda x:self.no_copy(x))
-        self.DESVfr2_srcComprobacion.bind_all("<Button-2>", lambda x:self.no_copy(x))
-        self.DESVfr2_srcBackup.bind_all("<Button-2>", lambda x:self.no_copy(x))
-        self.DESVfr3_srcEditar.bind_all("<Button-2>", lambda x:self.no_copy(x))
-        self.DESVfr3_srcRefrescar.bind_all("<Button-2>", lambda x:self.no_copy(x))
-        self.DESVfr3_srcEvidencia.bind_all("<Button-2>", lambda x:self.no_copy(x))
-
         ## --- --- ##
     def iconos(self): #TODO ICONOS DE VENTANA DESVIACION
         self.BuscarModulo_icon = ImageTk.PhotoImage(
@@ -878,11 +900,6 @@ class Desviacion(ttk.Frame):
             return
         else:
             return "break"
-    def no_copy(self, event):
-        print('no copi')
-        app.root.clipboard_clear()
-        app.root.clipboard_append("")
-        #return "break"
     ## --- ACTIVAR WIDGET ---------------------------------------- ##
     def activar_Focus(self, event):
         global txtWidget
@@ -991,9 +1008,6 @@ class Desviacion(ttk.Frame):
             self.DESV_btnDirectory.grid_forget()
     def buscar(self, event):
         self.DESVfr1_entModulo.focus()
-        self.DESVfr1_entModulo.config(foreground="black", font=("Consolas", 14))
-        self.text.set("")
-        self.DESVfr1_entModulo.icursor(0)
     def buscar_Modulos(self, event=None):
         try:
             valor_aBuscar = event
@@ -1064,20 +1078,23 @@ class Desviacion(ttk.Frame):
             text_widget.config(foreground="black", font=("Consolas", 14))
             self.var_entry_bsc.set("")
             text_widget.icursor(0)
+            self.DESVfr1_btnLimpiar.grid_forget()
+            self.DESVfr1_btnBuscar.grid(row=1, column=1, pady=5, padx=5, sticky='nsw')
         elif entry == "":
             text_widget.config(foreground="gray75", font=("Consolas", 12))
             self.var_entry_bsc.set("Buscar modulo...")
             text_widget.icursor(0)
-        # if len(entry) == 16 and entry == "Buscar modulo...":
-        #     text_widget.config(foreground="black", font=("Consolas", 14))
-        #     self.text.set("")
-        #     text_widget.icursor(0)
-        # elif len(entry) <= 1:
-        #     self.DESVfr1_btnLimpiar.grid_forget()
-        #     self.DESVfr1_btnBuscar.grid(row=1, column=1, pady=5, padx=5, sticky='nsw')
+            self.DESVfr1_btnLimpiar.grid_forget()
+            self.DESVfr1_btnBuscar.grid(row=1, column=1, pady=5, padx=5, sticky='nsw')
     def sel_text(self, event):
         if event.widget.select_present():
             self.var_entry_bsc.set("")
+    def clear_bsq_buttom(self, event):
+        entry = self.var_entry_bsc.get()
+        long_entry = len(entry)
+        if long_entry <=1:
+            self.DESVfr1_btnLimpiar.grid_forget()
+            self.DESVfr1_btnBuscar.grid(row=1, column=1, pady=5, padx=5, sticky='nsw')
     def limpiar_busqueda(self):
         widget_event = self.DESVfr1_entModulo
         self.var_entry_bsc.set("Buscar modulo...")
@@ -1156,8 +1173,7 @@ class Desviacion(ttk.Frame):
                 listModulo.append(md['modulo'])
                 listClave.append(md['clave'])
         listModulo.sort()
-        self.DESVfr1_entModulo.icursor(0)
-        self.DESVfr1_entModulo.config(foreground="gray75", font=("Consolas", 12))
+        self.var_entry_bsc.set("Buscar modulo...")
         self.DESVfr1_listbox.insert(END,*listModulo)
         self.cambiar_NamePestaña(customer)
     def ScreamEvidencia(self):

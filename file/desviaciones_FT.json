@@ -3,9 +3,9 @@
         "modulo": "Protecting Resources-OSRs/Log File Restrictions",
         "clave": "WTMP",
         "descripcion": "Invalid Permissions or Ownership for log file: /var/log/wtmp;   -rw-rw-r--.;  owner:  root;   group:  utmp. For more information see rule description.",
-        "comprobacion": "##Se le debe quitar W al grupo.",
+        "comprobacion": "## Se le debe quitar W al grupo.",
         "copia": "",
-        "editar": "##Quitar permisos:\n\nchmod g-w /var/log/wtmp\n\n##-------------------------------------------------------------------------------\n##Dejar esta linea para REHL 7:\n##-------------------------------------------------------------------------------\n\n##Editar:\nvi /lib/tmpfiles.d/var.conf\n\n##Debe quedar la linea asi:\nf /var/log/wtmp 0644 root utmp -\n\n##-------------------------------------------------------------------------------\n##Dejar esta linea para REHL 6\n##-------------------------------------------------------------------------------\n\n##Editar:\nvi /etc/rc.sysinit\n\n##Dejar la linea asi:\nchmod 0644 /var/run/utmp /var/log/wtmp",
+        "editar": "+-------------------------------------------------------------------------------+\n## Quitar permisos\n+-------------------------------------------------------------------------------+\n\nchmod g-w /var/log/wtmp\n\n+-------------------------------------------------------------------------------+\n## Dejar esta linea para REHL 7:\n+-------------------------------------------------------------------------------+\n\n## Editar:\n\nvi /lib/tmpfiles.d/var.conf\n\n## Debe quedar la linea asi:\n\nf /var/log/wtmp 0644 root utmp -\n\n+-------------------------------------------------------------------------------+\n## Dejar esta linea para REHL 6\n+-------------------------------------------------------------------------------+\n\n## Editar:\n\nvi /etc/rc.sysinit\n\n## Dejar la linea asi:\n\nchmod 0644 /var/run/utmp /var/log/wtmp",
         "refrescar": "",
         "evidencia": "clear\ndate\nhostname\nls -la /var/log/wtmp\ncat /lib/tmpfiles.d/var.conf | grep -w wtmp",
         "SO": "Linux"
