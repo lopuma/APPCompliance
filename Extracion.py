@@ -1,17 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
 import tkinter as tk
-import glob
 from tkinter import Button, ttk
 from tkinter.constants import W
 from PIL import Image, ImageTk
 from tkinter import scrolledtext as st
 from os import listdir, path, sep
 from os.path import isdir, join, abspath
-
-
-
+from tkinter import font
+from tkinter.ttk import Style
 class Extracione(tk.Frame):
 
     def __init__(self, parent, *args, **kwargs):
@@ -85,15 +82,16 @@ class Extracione(tk.Frame):
         # self.btn.pack(side="top", fill=tk.X)
         self.btn_close.grid(row=0, column=0, sticky="e")
         # self.btn_nav.grid_forget()
-        self.appi = Application(self.frame1, background="red")
-        self.appi.rowconfigure(1, weight=1)
-        self.appi.columnconfigure(0, weight=1)
+        self.tree = Treeview(self.frame1)
+        
+        self.tree.rowconfigure(1, weight=1)
+        self.tree.columnconfigure(0, weight=1)
         #+-------------------------------------------+
         # self.lb = tk.Listbox(self.frame1)
         # self.lb['bg'] = "white"
         # self.lb['fg'] = "blue"
         # self.lb['font'] = "Consolas", 13
-        self.appi.grid(row=1, column=0, sticky="nsew")
+        self.tree.grid(row=1, column=0, sticky="nsew")
         # # self.lb.pack(side="left", fill=tk.BOTH, expand=1)
         # self.lb.insert(tk.END, "Plantilla 1")
         # # for file in glob.glob("extracion/*"):
@@ -144,16 +142,20 @@ class Extracione(tk.Frame):
             self.hidden = 0
             self.btn_nav.grid_forget()
             print("Hidden", self.hidden)
-
-class Application(tk.Frame):
+class Treeview(tk.Frame):
     
     def __init__(self, parent, *args, **kwargs):
         tk.Frame.__init__(self, parent, *args)
+        self.text_font = font.Font(family='Consolas', size=16)
         #self = self
         #self.title("Explorador de archivos y carpetas")
+        self.estilos()
         self.treeview = ttk.Treeview(self)
         #self.treeview.rowconfigure(1, weight=1)
         #self.treeview.columnconfigure(0, weight=1)
+        #self.treeview.tag_configure('oddrow', background="#CEE5D0", font=self.text_font)
+        #self.treeview.tag_configure('evenrow', background="#F3F0D7", font=self.text_font)
+        self.treeview.heading("#0", text="EXTRACIONES", anchor="center")
         self.treeview.grid(row=1, column=0, sticky="nsew")
         
         # Asociar el evento de expansión de un elemento con la
@@ -179,6 +181,23 @@ class Application(tk.Frame):
         
         # Cargar el directorio raíz.
         self.load_tree(abspath("/home/esy9d7l1/compliance/extracion"))
+    
+    def estilos(self):
+        self.style = Style()
+        self.style.configure(
+            'Treeview',
+            fieldbackground= '#CEE5D0',
+            background='#CEE5D0',
+            selectbackground="#FF7878",
+            selectforeground="#E0C097",
+            font=('Calibra',14)
+        )
+        # self.style.map('Treeview',
+        #     background=[
+        #         ("active","red")
+        #     ]
+        # )
+    
     def listdir(self, path):
         try:
             return listdir(path)

@@ -55,6 +55,17 @@
         "SO": "Linux"
     },
     {
+        "modulo": "IZ.C.1.1.14 Filesystem Configuration",
+        "clave": "IZ.C.1.1.14",
+        "descripcion": "Ensure nodev option set on /home partition if it exist",
+        "comprobacion": "## Si existe una partición de `/home`, ejecute el siguiente comando \n## Y verifique que la opción `nodev` esté establecida en `/home`\n\nmount | grep /home\n\n## En /dev/xvdf1 on /home type ext4 (rw,nodev,relatime,data=ordered)",
+        "copia": "## Obtener usuario logueado:\n\nuser=$(logname)\n\n+-------------------------------------------------------------------------------+\n## Backup con HOME en MAYÚSCULAS\n+-------------------------------------------------------------------------------+\n\ncp -p /etc/fstab /home/${user^^}/nodevhome_`date +%d%m%y`\n\n+-------------------------------------------------------------------------------+\n## Backup con HOME en minúsculas\n+-------------------------------------------------------------------------------+\n\ncp -p /etc/fstab /home/${user,,}/nodevhome_`date +%d%m%y`\n",
+        "editar": "+-------------------------------------------------------------------------------+\n## Edite `/etc/fstab` \n## Para añadir `nodev ` al cuarto campo (opciones de montaje) para la partición \"/home\":\n+-------------------------------------------------------------------------------+\n\nvi /etc/fstab\n\n## Debe tener la siguiente linea\n\n/dev/mapper/rhel-lv_home /home    ext4    defaults,nodev  1 2\n\n+-------------------------------------------------------------------------------+\n## Ejecute el siguiente mandato para volver a montar `/home`:\n+-------------------------------------------------------------------------------+\n\nmount -o remount,nodev /home",
+        "refrescar": "mount -o remount,nodev /home",
+        "evidencia": "clear\ndate\nhostname\nmount | grep /home",
+        "SO": "Linux"
+    },
+    {
         "modulo": "Filesystem Configuration/noexec option set on /dev/shm partition",
         "clave": "NOEXECSHM",
         "descripcion": "Ensure noexec option set on /dev/shm partition if it exist",
@@ -93,7 +104,7 @@
         "descripcion": "Filesystem type \"udf\" is enabled. It should be disabled if not needed",
         "comprobacion": "+-------------------------------------------------------------------------------+\n## Ejecute los siguientes mandatos y verifique que la salida sea la indicada:\n+-------------------------------------------------------------------------------+\n\nmodprobe -n -v udf \n\n+-------------------------------------------------------------------------------+\n## SALIDA : 'install /bin/true'\n##('esta linea deshabilita el sistema de archivos udf')\n+-------------------------------------------------------------------------------+\n\nlsmod | grep udf\n\n+-------------------------------------------------------------------------------+\n## SALIDA ('No debe devolver nada')\n+-------------------------------------------------------------------------------+",
         "copia": "",
-        "editar": "+-------------------------------------------------------------------------------+\n## Crear archivo de configuración:\n+-------------------------------------------------------------------------------+\n\ntouch /etc/modprobe.d/CIS.conf\nchmod 644 /etc/modprobe.d/CIS.conf\n\n+-------------------------------------------------------------------------------+\n## Edite el fichero de configuración.\n+-------------------------------------------------------------------------------+\n\nvi /etc/modprobe.d/CIS.conf\n\n+-------------------------------------------------------------------------------+\n## Y añada la siguiente linea:\n+-------------------------------------------------------------------------------+\n\ninstall udf /bin/true",
+        "editar": "+------NODEVHOME-------------------------------------------------------------------------+\n## Crear archivo de configuración:\n+-------------------------------------------------------------------------------+\n\ntouch /etc/modprobe.d/CIS.conf\nchmod 644 /etc/modprobe.d/CIS.conf\n\n+-------------------------------------------------------------------------------+\n## Edite el fichero de configuración.\n+-------------------------------------------------------------------------------+\n\nvi /etc/modprobe.d/CIS.conf\n\n+-------------------------------------------------------------------------------+\n## Y añada la siguiente linea:\n+-------------------------------------------------------------------------------+\n\ninstall udf /bin/true",
         "refrescar": "",
         "evidencia": "clear\ndate\nhostname\nmodprobe -n -v udf\nlsmod | grep udf",
         "SO": "Linux"
@@ -251,5 +262,16 @@
         "refrescar": "",
         "evidencia": "",
         "SO": "Linux / Aix"
+    },
+    {
+        "modulo": "Protecting Resources-OSRs/OSR /TMP Files Restrictions",
+        "clave": "OSRTMP",
+        "descripcion": "Invalid permissions for $filetmp  Octal permissions: 0777  Text Permissions: -rwxrwxrwx-;  May not have execute permissions on any files and no write for others.",
+        "comprobacion": "+-------------------------------------------------------------------------------+\n## Se puede quitar escritura a other en /tmp\n+-------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------+\n## Buscar y listar ficheros con grupo oinstall, y con permisos de lectura en other\n## - Guardar el directorio, de los ficheros a modificar permisos.\n+-------------------------------------------------------------------------------+\n\n## Ejemplo\n\nfiletmp=\"/tmp\"\n\n## FORMA INDIVIDUAL\n+-------------------------------------------------------------------------------+\n## Comprobar / Listar cuantos ficheros existen con permisos de escritura en other\n+-------------------------------------------------------------------------------+\nls -la $filetmp/* | grep \"^-.......wx\"\n\n\n## FORMA RECURSIVA\n+-------------------------------------------------------------------------------+\n## Comprobar cuantos ficheros existen con permisos de escritura en other\n+-------------------------------------------------------------------------------+\n\nfind $filetmp -type f -perm -o=wx | wc -l\n\n+-------------------------------------------------------------------------------+\n## Listar los ficheros con permisos de escritura en other\n+-------------------------------------------------------------------------------+\n\nfind $filetmp -type f -perm -o=wx | xargs -l ls -la",
+        "copia": "",
+        "editar": "+-------------------------------------------------------------------------------+\n## De forma INDIVIDUAL\n+-------------------------------------------------------------------------------+\nchmod o-w $filetmp/FICHERO\n\n+-------------------------------------------------------------------------------+\n## De forma RECURSIVA\n+-------------------------------------------------------------------------------+\nfind  $filetmp -type f -perm -o=wx -exec chmod o-w {} +",
+        "refrescar": "",
+        "evidencia": "clear\ndate\nhostname\nfind $filetmp -type f -perm -o=wx | wc -l",
+        "SO": "Aix"
     }
 ]

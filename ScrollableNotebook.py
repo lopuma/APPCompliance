@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 # Copyright (c) Muhammet Emin TURGUT 2020
 # For license see LICENSE
 import tkinter as tk

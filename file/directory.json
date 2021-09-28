@@ -1,7 +1,7 @@
 {
   "AFB": [
     {
-      "directory": "/opt/IBM/AFB1/",
+      "object": "/opt/IBM/AFB1/",
       "owner": "ownerAFB1",
       "tipo": "tipoAFB1",
       "ownerGroup": "groupAFB1",
@@ -21,7 +21,7 @@
       "SO": "Linux"
     },
     {
-      "directory": "/opt/IBM/AFB2/",
+      "object": "/opt/IBM/AFB2/",
       "owner": "ownerAFB2",
       "tipo": "tipoAFB2",
       "ownerGroup": "groupAFB2",
@@ -43,7 +43,7 @@
   ],
   "ASISA": [
     {
-      "directory": "/opt/IBM/ASISA1/",
+      "object": "/opt/IBM/ASISA1/",
       "owner": "ownerASISA1",
       "tipo": "tipoASISA1",
       "ownerGroup": "groupASISA1",
@@ -63,7 +63,7 @@
       "SO": "Linux"
     },
     {
-      "directory": "/opt/IBM/ASISA2/",
+      "object": "/opt/IBM/ASISA2/",
       "owner": "ownerASISA2",
       "tipo": "tipoASISA2",
       "ownerGroup": "groupASISA2",
@@ -85,7 +85,7 @@
   ],
   "INFRA": [
     {
-      "directory": "/home/ess01012/RHEL/",
+      "object": "/home/ess01012/RHEL/",
       "owner": "ess01012",
       "tipo": "/E/",
       "ownerGroup": "PHC",
@@ -104,7 +104,7 @@
       "SO": "Linux"
     },
     {
-      "directory": "/tmp/javasharedresources/",
+      "object": "/tmp/javasharedresources/",
       "owner": "was",
       "tipo": "/S/",
       "ownerGroup": "EBH",
@@ -125,7 +125,7 @@
   ],
   "LBK": [
     {
-      "directory": "/BDistribuido/",
+      "object": "/BDistribuido/",
       "owner": "root",
       "tipo": "/F/",
       "ownerGroup": "Sistemas",
@@ -144,7 +144,7 @@
       "SO": "Linux"
     },
     {
-      "directory": "/BDistribuidoBatchDESA/",
+      "object": "/BDistribuidoBatchDESA/",
       "owner": "root",
       "tipo": "/F/",
       "ownerGroup": "Sistemas",
@@ -163,7 +163,7 @@
       "SO": "Linux"
     },
     {
-      "directory": "/BDistribuidoWf/",
+      "object": "/BDistribuidoWf/",
       "owner": "root",
       "tipo": "/F/",
       "ownerGroup": "Sistemas",
@@ -182,7 +182,7 @@
       "SO": "Linux"
     },
     {
-      "directory": "/BDistribuidoWfPRE/",
+      "object": "/BDistribuidoWfPRE/",
       "owner": "root",
       "tipo": "/F/",
       "ownerGroup": "Sistemas",
@@ -201,7 +201,7 @@
       "SO": "Linux"
     },
     {
-      "directory": "/appsrv/",
+      "object": "/appsrv/",
       "owner": "nodejs",
       "tipo": "/C/",
       "ownerGroup": "Group Customer",
@@ -220,7 +220,7 @@
       "SO": "Linux"
     },
     {
-      "directory": "/appsrv/LBK_ARQ_SPA_5_SERVER_COUCH/",
+      "object": "/appsrv/LBK_ARQ_SPA_5_SERVER_COUCH/",
       "owner": "nodejs",
       "tipo": "/C/",
       "ownerGroup": "Group Customer",
@@ -235,6 +235,27 @@
       "impact": "GENERICO",
       "variable": [
         ""
+      ],
+      "SO": "Linux"
+    }
+  ],
+  "FT": [
+    {
+      "object": "/tmp/gts-ansible/uidext_endpoint_6760218",
+      "owner": "aotipat1",
+      "tipo": "/S/",
+      "ownerGroup": "*EAUXOS/",
+      "user": [
+        ""
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/tmp/gts-ansible/uidext_endpoint_6760218\""
       ],
       "SO": "Linux"
     }

@@ -1,0 +1,12 @@
+    #MODULO
+    {
+        "modulo": "",
+        "clave": "",
+        "descripcion": "",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    }

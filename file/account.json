@@ -1,7 +1,7 @@
 {
   "AFB": [
     {
-      "account": "/opt/IBM/AFB1/",
+      "object": "/opt/IBM/AFB1/",
       "owner": "ownerAFB1",
       "tipo": "tipoAFB1",
       "ownerGroup": "groupAFB1",
@@ -20,7 +20,7 @@
       ]
     },
     {
-      "account": "/opt/IBM/AFB2/",
+      "object": "/opt/IBM/AFB2/",
       "owner": "ownerAFB2",
       "tipo": "tipoAFB2",
       "ownerGroup": "groupAFB2",
@@ -41,7 +41,7 @@
   ],
   "ASISA": [
     {
-      "account": "/opt/IBM/ASISA1/",
+      "object": "/opt/IBM/ASISA1/",
       "owner": "ownerASISA1",
       "tipo": "tipoASISA1",
       "ownerGroup": "groupASISA1",
@@ -60,7 +60,7 @@
       ]
     },
     {
-      "account": "/opt/IBM/ASISA2/",
+      "object": "/opt/IBM/ASISA2/",
       "owner": "ownerASISA2",
       "tipo": "tipoASISA2",
       "ownerGroup": "groupASISA2",
@@ -81,7 +81,7 @@
   ],
   "LBK": [
     {
-      "account": "indus",
+      "object": "indus",
       "owner": "Customer",
       "tipo": "/C/",
       "ownerGroup": "Group client",
@@ -99,7 +99,7 @@
       ]
     },
     {
-      "account": "nodejs",
+      "object": "nodejs",
       "owner": "Customer",
       "tipo": "/C/",
       "ownerGroup": "Group Customer",
@@ -117,7 +117,7 @@
       ]
     },
     {
-      "account": "nodejsarq",
+      "object": "nodejsarq",
       "owner": "Customer",
       "tipo": "/C/",
       "ownerGroup": "Group client",

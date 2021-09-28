@@ -1,23 +1,22 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
 import tkinter as tk
-import tkinter.font as tkFont
 import json
 import os
 import subprocess
 import time
 from tkinter import *
 from tkinter import ttk
-from ScrollableNotebook  import *
 from getpass import getuser
 from tkinter import scrolledtext as st
 from tkinter import messagebox as mb
-from tkinter import font
+from tkinter import font as font
 from PIL import Image, ImageTk
 from tkinter.ttk import Style
 from threading import Thread
+from ScrollableNotebook  import *
 from Extracion import * 
+from Ventanas import *
 #-----------------------------------------------------------#
 user = getuser()
 path = os.path.expanduser("~/")
@@ -58,629 +57,6 @@ tittleExpand = ""
 top_active_LBK = False
 sis_oper = ""
 counter = 0
-class Directory(ttk.Frame):
-    def __init__(self, parent, customer, *args, **kwargs):
-        super().__init__(parent, *args, **kwargs)
-        self.parent = parent
-        self.customer = customer
-        self.vtn_directory = tk.Toplevel(self)
-        self.vtn_directory.config(background='#F9F3DF')
-        window_width=1028
-        window_height=650
-        screen_width = app.root.winfo_x()
-        screen_height= app.root.winfo_y()
-        position_top = int(screen_height+70)
-        position_right = int(screen_width+150)
-        self.vtn_directory.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
-        #self.vtn_directory.geometry("1000x650"+345+65")
-        self.vtn_directory.resizable(0,0)
-        self.vtn_directory.title('DIRECTORY for client {}'.format(self.customer))
-        #self.vtn_directory.transient(self)
-        #self.vtn_directory.grab_set()
-        self.vtn_directory.columnconfigure(0, weight=1)
-        self.vtn_directory.rowconfigure(2, weight=5)
-        self.text_font = tkFont.Font(family='Consolas', size=13) 
-        self.iconos()
-        self.menu_clickDerecho()
-        self.menuList_clickDerecho()
-        self.widgets_DIRECTORY()
-        self.cargar_directory()
-        self.tree.bind("<ButtonRelease-1>", self.selecionar_elemntFile)
-        self.tree.bind("<Key>", lambda e: desviacion.widgets_SoloLectura(e))
-        self.srcRisk.bind("<Key>", lambda e: desviacion.widgets_SoloLectura(e))
-        self.srcImpact.bind("<Key>", lambda e: desviacion.widgets_SoloLectura(e))
-        self.srcVariable.bind("<Key>", lambda e: desviacion.widgets_SoloLectura(e))
-        self.cbxUser.bind("<Key>", lambda e: desviacion.widgets_SoloLectura(e))
-        self.textBuscar.bind("<Return>", lambda event=None: self.buscar(self.textBuscar.get()))
-        #self.vtn_directory.bind("<Motion>", lambda e:desviacion.activar_Focus(e))
-        self.srcImpact.bind("<Button-3>", self.display_menu_clickDerecho)
-        self.srcRisk.bind("<Button-3>", self.display_menu_clickDerecho)
-        self.srcVariable.bind("<Button-3>", self.display_menu_clickDerecho)
-        self.textBuscar.bind("<Button-3>", self.display_menu_clickDerecho)
-        self.listServer.bind("<Button-3>", self.display_menuLis_clickDerecho)
-        self.textBuscar.bind("<Motion>", lambda x :self.act_elemt_text(x))
-        self.srcImpact.bind("<Motion>", lambda x :self.act_elemt_src(x))
-        self.srcRisk.bind("<Motion>", lambda x :self.act_elemt_src(x))
-        self.srcVariable.bind("<Motion>", lambda x :self.act_elemt_src(x))
-        self.listServer.bind("<Motion>", lambda x :self.act_elemt_list(x))
-        self.textBuscar.bind("<FocusIn>", lambda e: self.clear_bsq(e))
-        self.textBuscar.bind("<FocusOut>", lambda e: self.clear_bsq(e))    
-        self.textBuscar.bind("<KeyPress>", lambda e: self.clear_bsq_buttom(e))    
-        self.textBuscar.bind("<Control-v>", lambda e: self.sel_text(e))
-        ## --- Selecionar elemento hacia abajo
-        self.tree.bind("<Down>", lambda e:self.TreeDown(e))
-        self.tree.bind("<Up>", lambda e:self.TreeUp(e))
-    def iconos(self):
-        self.buscar_icon = ImageTk.PhotoImage(
-                    Image.open(path_icon+r"buscar.png").resize((25, 25)))
-        self.cerrar_icon = ImageTk.PhotoImage(
-                    Image.open(path_icon+r"reduce.png").resize((25, 25)))
-        self.copiar_icon = ImageTk.PhotoImage(
-                    Image.open(path_icon+r"copiarALL_evd.png").resize((20, 20)))
-        self.limpiar_icon = ImageTk.PhotoImage(
-                    Image.open(path_icon+r"limpiar.png").resize((25, 25)))
-    def cerrar_vtn(self):
-        self.vtn_directory.destroy()
-    ## BUSCAR DIRECTORY / FILE
-    def clear_bsq_buttom(self, event):
-        text_widget = event.widget
-        entry = self.var_ent_buscar.get()
-        long_entry = len(entry)
-        if long_entry <=1:
-            self.btnLimpiar.grid_forget()
-            self.btnBuscar.grid(row=0, column=1, sticky=W)
-            self.cargar_directory()
-            self.limpiar_widgets()
-    def clear_bsq(self, event):
-        text_widget = event.widget
-        entry = self.var_ent_buscar.get()
-        if entry == "Buscar Directory / File ...":
-            text_widget.config(foreground="black", font=("Consolas", 14))
-            self.var_ent_buscar.set("")
-            text_widget.icursor(0)
-        elif entry == "":
-            text_widget.config(foreground="gray75", font=("Consolas", 12))
-            self.var_ent_buscar.set("Buscar Directory / File ...")
-            text_widget.icursor(0)
-    def limpiar_bsq(self):
-        self.var_ent_buscar.set("Buscar Directory / File ...")
-        self.textBuscar.focus()
-        self.textBuscar.icursor(0)
-        self.btnLimpiar.grid_forget()
-        self.btnBuscar.grid(row=0, column=1, sticky=W)
-        self.cargar_directory()
-        self.limpiar_widgets()
-    def buscar(self, event=None):
-        valor_aBuscar = event
-        valor_Buscado = [n for n in self.directory if valor_aBuscar.strip() in n]
-        if valor_aBuscar == "":
-            mb.showerror(
-            "ERROR", "Esta vacio o no existe el directorio/file.\nPrueba a buscar de nuevo...", parent=self.vtn_directory
-            )            
-            self.cargar_directory()
-            self.limpiar_widgets()
-            self.btnLimpiar.forget()
-            self.btnBuscar.grid(row=0, column=1, sticky=W)
-            self.textBuscar.focus()
-        else:
-            if len(valor_Buscado) == 0:
-                mb.showerror(
-                "ERROR", "Esta vacio o no existe el directorio/file.\nPrueba a buscar de nuevo...", parent=self.vtn_directory
-                )                 
-                self.cargar_directory()
-                self.limpiar_widgets()
-                self.textBuscar.focus()
-            else:
-                self.limpiar_tree()
-                with open(path_Directory) as g:
-                    data = json.load(g)
-                    count = 0
-                    for md in data[self.customer]:
-                        for vb in valor_Buscado:
-                            if vb == md['directory']:
-                                if count % 2 == 0:
-                                    self.tree.insert(parent='', index='end', iid=count, text='', value=(md['directory'],md['owner'],md['tipo'],md['ownerGroup'],md['code']), tags=('evenrow'))
-                                else:
-                                    self.tree.insert(parent='', index='end', iid=count, text='', value=(md['directory'],md['owner'],md['tipo'],md['ownerGroup'],md['code']), tags=('oddrow'))
-                                count += 1
-                        self.limpiar_widgets()
-            self.btnBuscar.forget()
-            self.btnLimpiar.grid(row=0, column=1, sticky=W)
-    def cargar_directory(self):
-        self.directory = []
-        #limpiando el arbol de vistas
-        self.limpiar_tree()
-        with open(path_Directory) as g:
-                data = json.load(g)
-                count = 0
-                for md in data[self.customer]:
-                    self.directory.append(md['directory'])
-                    if count % 2 == 0:
-                        self.tree.insert(parent='', index='end', iid=count, text='', value=(md['directory'],md['owner'],md['tipo'],md['ownerGroup'],md['code']), tags=('evenrow'))
-                    else:
-                        self.tree.insert(parent='', index='end', iid=count, text='', value=(md['directory'],md['owner'],md['tipo'],md['ownerGroup'],md['code']), tags=('oddrow'))
-                    count += 1
-    def limpiar_tree(self):
-        records = self.tree.get_children()
-        for elemnt in records:
-            self.tree.delete(elemnt)
-    def selecionar_elemntFile(self, event):
-        tree_event = event.widget
-        try:
-            item_id = tree_event.selection()[0]
-            #item_id = tree_event.focus()
-            index = tree_event.index(item_id)
-            if tree_event.exists(index):
-                dir_selecionado = tree_event.item(index, 'values')
-                dir = dir_selecionado[0]
-                self.cargar_elemt_seleccionado(dir)
-        except:
-            pass
-    def cargar_elemt_seleccionado(self, dir):
-        with open(path_Directory) as g:
-                data = json.load(g)
-                for md in data[self.customer]:
-                    if dir == md['directory']:
-                        #limpiar------------------------------------                      
-                        self.limpiar_widgets()
-                        #-------------------------------------------
-                        self.listServer.insert(END,*md['servers'])
-                        self.srcRisk.insert(END,md['risk'])
-                        self.srcImpact.insert(END,md['impact'])
-                        self.cbxUser['values'] = md["user"]
-                        variables = str(md['variable'])
-                        variables = variables.replace("[","").replace("]","").replace("'","").replace(",",";")
-                        self.srcVariable.insert(END,variables)
-                        self.lbl_SO['text'] = md['SO']
-        self.cbxUser.set('CONTACTOS')
-    def limpiar_widgets(self):
-        self.lbl_SO['text'] = "SISTEMA OPERATIVO"
-        self.listServer.delete(0,END)
-        self.srcRisk.delete('1.0',tk.END)
-        self.srcImpact.delete('1.0',tk.END)
-        self.cbxUser.option_clear()
-        self.srcVariable.delete('1.0',tk.END)
-    ## --- MENU CONTEXTUAL
-    def act_elemt_text(self, event):
-        event.widget.focus()
-        if event.widget:
-            self.menu_Contextual.entryconfig("  Buscar", state="disabled")
-            self.menu_Contextual.entryconfig("  Pegar", state="normal")
-            self.menu_Contextual.entryconfig("  Copiar", state="disabled")
-            self.menu_Contextual.entryconfig("  Seleccionar todo", state="disabled")
-            self.menu_Contextual.entryconfig("  Limpiar", state="normal")
-            """ data = {
-                'label':'Limpiand',
-                'accelerator' : 'Ctrl+X',
-                'background':'#ccffff', 
-                'foreground':'black',
-                'activebackground':'#004c99',
-                'activeforeground':'white',
-                'font':'self.text_font',
-                'command':'self.seleccionar_todo',
-                'state':'normal'
-            }
-            self.menu_Contextual.insert_command(8, **data) """
-    def act_elemt_list(self, event):
-        event.widget.focus()
-    def act_elemt_src(self, event):
-        event.widget.focus()
-        if event.widget:
-            self.menu_Contextual.entryconfig("  Buscar", state="normal")
-            self.menu_Contextual.entryconfig("  Pegar", state="disabled")
-            self.menu_Contextual.entryconfig("  Copiar", state="normal")
-            self.menu_Contextual.entryconfig("  Seleccionar todo", state="normal")
-            self.menu_Contextual.entryconfig("  Limpiar", state="disabled")
-    def act_buscar(self):
-        self.textBuscar.focus()
-    def seleccionar_todo(self):
-        self.srcEvent.tag_add("sel","1.0","end")
-        return 'break'
-    def copiar(self):
-        seleccion = self.srcEvent.tag_ranges(tk.SEL)
-        if seleccion:
-            app.root.clipboard_clear()
-            app.root.clipboard_append(self.srcEvent.get(*seleccion).strip())
-            self.srcEvent.tag_remove("sel","1.0","end")
-            return 'break'
-    def sel_text(self, event):
-        if event.widget.select_present():
-            self.var_ent_buscar.set("")
-    def pegar(self):
-        if self.srcEvent.select_present():
-            self.var_ent_buscar.set("")
-            self.btnLimpiar.grid_forget()
-            self.btnBuscar.grid(row=0, column=1, sticky=W)
-        self.srcEvent.event_generate("<<Paste>>")
-        # return 'break'
-    def menu_clickDerecho(self):
-        self.text_font = tkFont.Font(family='Consolas', size=13)   
-        self.menu_Contextual = Menu(self, tearoff=0)
-        self.menu_Contextual.add_command(label="  Buscar", 
-                                accelerator='Ctrl+F',
-                                background='#ccffff', foreground='black',
-                                activebackground='#004c99',activeforeground='white',
-                                font=self.text_font,
-                                command=self.act_buscar,
-                                )
-        self.menu_Contextual.add_separator(background='#ccffff')
-        self.menu_Contextual.add_command(label="  Copiar", 
-                                accelerator='Ctrl+C',
-                                background='#ccffff', foreground='black',
-                                activebackground='#004c99',activeforeground='white',
-                                font=self.text_font,
-                                command=self.copiar,
-                                state='normal',
-                                )
-        self.menu_Contextual.add_command(
-            label="  Pegar", 
-            accelerator='Ctrl+V',
-            background='#ccffff', foreground='black',
-            activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
-            command=self.pegar,
-        )
-        self.menu_Contextual.add_separator(background='#ccffff')
-        self.menu_Contextual.add_command(
-            label="  Seleccionar todo", 
-            accelerator='Ctrl+A',
-            background='#ccffff', foreground='black',
-            activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
-            command=self.seleccionar_todo,
-            state='normal',
-        )
-        self.menu_Contextual.add_command(
-            label="  Limpiar", 
-            accelerator='Ctrl+X',
-            background='#ccffff', foreground='black',
-            activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
-            command=self.seleccionar_todo,
-            state='normal',
-        )
-        self.menu_Contextual.add_separator(background='#ccffff')
-        self.menu_Contextual.add_command(label="  Cerrar pestaña", 
-                                #image=self.cerrar_icon,
-                                compound=LEFT,
-                                background='#ccffff', foreground='black',
-                                activebackground='#004c99',activeforeground='white',
-                                font=self.text_font,
-                                command=self.cerrar_vtn
-                                )
-    def display_menu_clickDerecho(self, event):
-        self.menu_Contextual.tk_popup(event.x_root, event.y_root)
-        self.srcEvent = event.widget
-        self.srcEvent.focus()
-        print(self.srcEvent)
-        print(self.textBuscar)
-        if str(self.srcEvent) == str(self.textBuscar):
-            pass
-        else:
-            txt_select = event.widget.tag_ranges(tk.SEL)
-            if txt_select:
-                self.menu_Contextual.entryconfig("  Copiar", state="normal")
-            else:
-                self.menu_Contextual.entryconfig("  Copiar", state="disabled")
-    def menuList_clickDerecho(self):
-        self.text_font = tkFont.Font(family='Consolas', size=13)   
-        self.menuLis_Contextual = Menu(self, tearoff=0)
-        self.menuLis_Contextual.add_command(label="  Buscar",
-                                accelerator='Ctrl+F',
-                                background='#ccffff', foreground='black',
-                                activebackground='#004c99',activeforeground='white',
-                                font=self.text_font,
-                                command=self.act_buscar,
-                                )
-        self.menuLis_Contextual.add_separator(background='#ccffff')
-        self.menuLis_Contextual.add_command(
-            label="  Copiar", 
-            accelerator='Ctrl+C',
-            background='#ccffff', foreground='black',
-            activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
-            command=self.copiar,
-            state='normal',
-        )
-        self.menuLis_Contextual.add_command(
-            label="  Pegar", 
-            accelerator='Ctrl+V',
-            background='#ccffff', foreground='black',
-            activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
-            command= self.pegar,
-            state='disabled',
-        )
-        self.menuLis_Contextual.add_separator(background='#ccffff')
-        self.menuLis_Contextual.add_command(
-            label="  Seleccionar todo", 
-            accelerator='Ctrl+A',
-            background='#ccffff', foreground='black',
-            activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
-            command=self.seleccionar_todo,
-            state='normal',
-        )
-        self.menuLis_Contextual.add_command(
-            label="  Limpiar", 
-            accelerator='Ctrl+X',
-            background='#ccffff', foreground='black',
-            activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
-            command=self.seleccionar_todo,
-            state='disabled',
-        )
-        self.menuLis_Contextual.add_separator(background='#ccffff')
-        self.menuLis_Contextual.add_command(label="  Cerrar pestaña", 
-                                #image=self.cerrar_icon,
-                                compound=LEFT,
-                                background='#ccffff', foreground='black',
-                                activebackground='#004c99',activeforeground='white',
-                                font=self.text_font,
-                                command=self.cerrar_vtn
-                                )
-    def display_menuLis_clickDerecho(self, event):
-        self.menuLis_Contextual.tk_popup(event.x_root, event.y_root)
-        self.srcEvent = event.widget
-        self.srcEvent.focus()
-    def TreeDown(self, event):
-        tree_event = event.widget
-        item_id = tree_event.selection()[0]
-        #item_id = tree_event.focus()
-        index = tree_event.index(item_id)+1
-        if tree_event.exists(index):
-            dir_selecionado = tree_event.item(index, 'values')
-            dir = dir_selecionado[0]
-            self.cargar_elemt_seleccionado(dir)
-    def TreeUp(self, event):
-        tree_event = event.widget
-        item_id = tree_event.selection()[0]
-        index = tree_event.index(item_id)-1
-        if tree_event.exists(index):
-            dir_selecionado = tree_event.item(index, 'values')
-            dir = dir_selecionado[0]
-            self.cargar_elemt_seleccionado(dir)
-    ## =============================================
-    def widgets_DIRECTORY(self):
-        self.var_ent_buscar = tk.StringVar(self)
-        self.textBuscar = tk.Entry(
-            self.vtn_directory,
-            textvariable=self.var_ent_buscar,
-            justify='left',
-            width=40,
-            foreground="gray75",
-            font=("Consolas", 12),
-            border=0,
-            borderwidth=0,
-            highlightthickness=3,
-            highlightcolor='#316B83',
-            selectforeground='#CDFFEB', 
-            selectbackground='#476072'
-        )
-        self.var_ent_buscar.set("Buscar Directory / File ...")
-        self.textBuscar.grid(row=0, column=0, padx=10, pady=5, sticky='nsew')
-
-        self.btnBuscar = ttk.Button(
-            self.vtn_directory,
-            text='Buscar',
-            style='TOP1.TButton',
-            image=self.buscar_icon,
-            command= lambda: self.buscar(self.textBuscar.get())
-        )
-        self.btnBuscar.grid(row=0, column=1, sticky=W)
-
-        self.btnLimpiar = ttk.Button(
-            self.vtn_directory,
-            text='Limpiar',
-            style='TOP1.TButton',
-            image=self.limpiar_icon,
-            command= self.limpiar_bsq,            
-        )
-        #self.btnLimpiar.grid(row=0, column=1, sticky=W)
-
-        self.btnCerrar = ttk.Button(
-            self.vtn_directory, 
-            text='Cerrar',
-            style='TOP1.TButton',
-            image=self.cerrar_icon,
-            command=self.cerrar_vtn
-        )
-        self.btnCerrar.grid(row=0, column=2, padx=10, pady=5, sticky=E)
-        
-        ## ====================================================================================
-        ## --- CREAMOS EL PRIMER LABEL FRAME
-        self.labelframe1=ttk.LabelFrame(
-            self.vtn_directory, 
-            text="DATOS",
-            style='TOP.TLabelframe'
-        )
-        self.labelframe1.grid(column=0, row=1, padx=10, pady=5, columnspan=3, sticky='nsew')
-        self.labelframe1.columnconfigure(0, weight=1)
-        
-        ## --- creamos el scrollbar
-        self.tree_scrollbar=tk.Scrollbar(self.labelframe1, orient=tk.VERTICAL)
-        self.tree_scrollbar.grid(column=1, row=0, sticky=N+S,padx=(0,5), pady=10)
-        
-        ## ---creamos el treeview
-        self.tree = ttk.Treeview(
-            self.labelframe1, 
-            yscrollcommand=self.tree_scrollbar.set,
-            height=10,
-        )
-        ## ---configuramos el scroll al trieview
-        self.tree_scrollbar.config(command=self.tree.yview)
-        ## ---creamos las columnas
-        self.tree['columns'] = ("FILE","ACCOUNT","GECOS","OWNERGROUP","CODE")
-        ## --- formato a las columnas
-        self.tree.column("#0", width=0, stretch=NO)
-        self.tree.column("FILE", anchor=W, width=300)
-        self.tree.column("ACCOUNT", anchor=CENTER, width=100)
-        self.tree.column("GECOS", anchor=CENTER, width=100)
-        self.tree.column("OWNERGROUP", anchor=CENTER, width=150)
-        self.tree.column("CODE", anchor=CENTER, width=100)
-        ## --- indicar cabecera
-        self.tree.heading("#0", text="", anchor=W)
-        self.tree.heading("#1", text="FILE", anchor=W)
-        self.tree.heading("#2", text="ACCOUNT", anchor=CENTER)
-        self.tree.heading("#3", text="GECOS", anchor=CENTER)
-        self.tree.heading("#4", text="OWNER GROUP", anchor=CENTER)
-        self.tree.heading("#5", text="CODE", anchor=CENTER)
-        self.tree.tag_configure('oddrow', background="#CEE5D0", font=self.text_font)
-        self.tree.tag_configure('evenrow', background="#F3F0D7", font=self.text_font)
-        self.tree.grid(column=0, row=0, pady=10, padx=(5,0), sticky=E+W)
-
-        ## ====================================================================================
-        ## --- CREAMOS EL SEGUNDO LABEL FRAME
-        self.labelframe2=ttk.LabelFrame(
-            self.vtn_directory, 
-            text="OTROS DATOS",
-            style='TOP.TLabelframe'
-        )
-        self.labelframe2.grid(column=0, row=2, padx=10, pady=5, columnspan=3, sticky='nsew')
-        self.labelframe2.rowconfigure(1, weight=1)
-        self.labelframe2.rowconfigure(3, weight=1)
-        self.labelframe2.columnconfigure(2, weight=1)
-        self.labelframe2.columnconfigure(4, weight=1)
-
-        ## --- SERVERs
-        self.lbl1 = ttk.Label(
-            self.labelframe2,
-            text='SERVER',
-            style='TOP.TLabel',
-        )
-        self.lbl1.grid(row=0, column=0, pady=5, padx=5, columnspan=2)
-        
-        self.listServer = tk.Listbox(self.labelframe2, height=3)
-        self.fr2_scroll1 = tk.Scrollbar(self.labelframe2, orient=tk.VERTICAL)
-        self.listServer.config(
-            foreground='#334257',
-            selectforeground='black', 
-            selectbackground='lightblue', 
-            font=self.text_font,
-            highlightcolor='#297F87',
-            borderwidth=0, 
-            highlightthickness=3,
-            height=8,
-            width=15,
-            yscrollcommand=self.fr2_scroll1.set
-        )
-        self.fr2_scroll1.config(command=self.listServer.yview)
-        self.listServer.grid(column=0, row=1, padx=(5,0), pady=5, sticky="nsw", rowspan=3)
-        self.fr2_scroll1.grid(column=1, row=1, sticky='ns', pady=5, rowspan=3)
-        
-        ## --- RISK
-        self.lbl2 = ttk.Label(
-            self.labelframe2, 
-            text='RISK',
-            style='TOP.TLabel',
-        )
-        self.lbl2.grid(row=0, column=2, pady=5, padx=5, sticky='W')
-        
-        self.btnCpRisk = ttk.Button(
-            self.labelframe2, 
-            text='Copiar',
-            style='TOP.TButton',
-            image=self.copiar_icon,
-        )
-        self.btnCpRisk.grid(row=0, column=3, padx=20, pady=5, sticky=E)
-        
-        self.srcRisk = st.ScrolledText(
-            self.labelframe2,
-        )
-        self.srcRisk.config(
-            font=self.text_font, 
-            height=6,
-            wrap=tk.WORD,
-            highlightcolor='#297F87',
-            borderwidth=0, 
-            highlightthickness=3,
-            insertbackground='#297F87',
-            selectbackground='lightblue',
-        )
-        self.srcRisk.grid(row=1, column=2, pady=5, padx=5, sticky='new', columnspan=2)
-        
-        ## --- IMPACT
-        self.lbl3 = ttk.Label(
-            self.labelframe2,
-            text='IMPACT',
-            style='TOP.TLabel',
-        )
-        self.lbl3.grid(row=0, column=4, pady=5, padx=5, sticky='W')
-        
-        self.btnCpImp = ttk.Button(
-            self.labelframe2,
-            text='Copiar',
-            style='TOP.TButton',                
-            image=self.copiar_icon,
-        )
-        self.btnCpImp.grid(row=0, column=5, padx=20, pady=5, sticky=E)   
-        
-        self.srcImpact = st.ScrolledText(
-            self.labelframe2,
-        )
-        self.srcImpact.config(
-            font=self.text_font, 
-            height=6,
-            wrap=tk.WORD,
-            highlightcolor='#297F87',
-            borderwidth=0, 
-            highlightthickness=3,
-            insertbackground='#297F87',
-            selectbackground='lightblue',
-        )
-        self.srcImpact.grid(row=1, column=4, pady=5, padx=5, sticky='new', columnspan=2)
-        
-        ## --- SO
-        self.lbl_SO = ttk.Label(
-            self.labelframe2,
-            text='SISTEMAS OPERATIVO',
-            font=("Consolas",15, font.BOLD),
-            style='TOP.TLabelframe.Label',
-            justify='center',
-        )
-        self.lbl_SO.grid(row=2, column=2, pady=5, padx=10, sticky='w')
-        
-        ## --- USER
-        self.cbxUser = ttk.Combobox(
-            self.labelframe2,
-        )
-        self.cbxUser.config(
-            font=("Consolas",14,font.BOLD), 
-            justify='center',
-        )
-        self.cbxUser.set('CONTACTOS')
-        self.cbxUser.grid(row=3, column=2, padx=5, pady=5, ipady=7, sticky='nsew')
-
-        ## --- VARIABLE
-        self.lbl4 = ttk.Label(
-            self.labelframe2,
-            text='VARIABLE',
-            style='TOP.TLabel',
-        )
-        self.lbl4.grid(row=2, column=3, pady=5, padx=5, sticky='W')
-        
-        self.btnCpVariable = ttk.Button(
-            self.labelframe2, 
-            text='Copiar',
-            style='TOP.TButton',                
-            image=self.copiar_icon,
-        )
-        self.btnCpVariable.grid(row=2, column=5, padx=20, pady=5, sticky=E)
-
-        self.srcVariable = st.ScrolledText(
-            self.labelframe2,
-        )
-        self.srcVariable.config(
-            font=self.text_font, 
-            height=4,
-            wrap=tk.WORD,
-            highlightcolor='#297F87',
-            borderwidth=0, 
-            highlightthickness=2,
-            insertbackground='#297F87',
-            selectbackground='lightblue',
-        )
-        self.srcVariable.grid(row=3, column=3, pady=5, padx=5, sticky='new', columnspan=3)
 class Expandir(ttk.Frame):
     def __init__(self, parent, customer, titulo, so, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -705,7 +81,7 @@ class Expandir(ttk.Frame):
         self.vtn_expandir.title("DESVIACIONES : {} - {}".format(self.customer,self.so))
         self.vtn_expandir.columnconfigure(0, weight=1)
         self.vtn_expandir.rowconfigure(1, weight=1)
-        self.text_font = tkFont.Font(family='Consolas', size=13)
+        self.text_font = font.Font(family='Consolas', size=13)
         self.menu_clickDerecho()
         self.widgets_EXPANDIR()
         self.EXP_srcExpandir.bind("<Button-3><ButtonRelease-3>", self.display_menu_clickDerecho)
@@ -799,20 +175,6 @@ class Expandir(ttk.Frame):
             selectbackground='lightblue',
         )
         self.EXP_srcExpandir.grid(row=1, column=0, padx=5, pady=5, sticky='nsew', columnspan=4)
-class Extracion(ttk.Frame):
-    def __init__(self, parent, *args, **kwargs):
-        ttk.Frame.__init__(self, parent,*args)
-        text = StringVar()
-        button = Button(
-            self, 
-            textvariable=text,
-            font=('Courier',14),
-            bg="#00a8e8",
-            fg="white"
-        ).pack(
-            expand=True, 
-            fill=BOTH)
-        text.set('Click Me!')
 class Desviacion(ttk.Frame):
     def __init__(self, parent, *args, **kwargs):
         ttk.Frame.__init__(self, parent,*args)
@@ -1001,11 +363,23 @@ class Desviacion(ttk.Frame):
                     ## ------------------------------------------------- ##
                     self.asignarValor_aWidgets(md)
             self.mostrar_buttons_modulo(modulo_selecionado)
-    def mostrar_buttons_modulo(self, modulo_selecionado):
+    def mostrar_buttons_modulo(self, modulo_selecionado): #TODO añadir demas botones
         if str(modulo_selecionado) == "Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories":
             self.DESV_btnDirectory.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
+            self.DESV_btnAuthorized.grid_forget()
+            self.DESV_btnCommand.grid_forget()
+        elif str(modulo_selecionado) == "Password Requirements/Private Key File Restriction":
+            self.DESV_btnDirectory.grid_forget()
+            self.DESV_btnCommand.grid_forget()
+            self.DESV_btnAuthorized.grid(row=2, column=1, padx=5, pady=5, sticky='ne')    
+        elif str(modulo_selecionado) == "Network Settings/Ensure LDAP Server is not enabled":
+            self.DESV_btnDirectory.grid_forget()
+            self.DESV_btnAuthorized.grid_forget()
+            self.DESV_btnCommand.grid(row=2, column=1, padx=5, pady=5, sticky='ne')    
         else:
             self.DESV_btnDirectory.grid_forget()
+            self.DESV_btnAuthorized.grid_forget()
+            self.DESV_btnCommand.grid_forget()
     def buscar(self, event):
         self.DESVfr1_entModulo.focus()
     def buscar_Modulos(self, event=None):
@@ -1089,6 +463,8 @@ class Desviacion(ttk.Frame):
     def sel_text(self, event):
         if event.widget.select_present():
             self.var_entry_bsc.set("")
+            self.DESVfr1_btnLimpiar.grid_forget()
+            self.DESVfr1_btnBuscar.grid(row=1, column=1, pady=5, padx=5, sticky='nsw')
     def clear_bsq_buttom(self, event):
         entry = self.var_entry_bsc.get()
         long_entry = len(entry)
@@ -1193,7 +569,7 @@ class Desviacion(ttk.Frame):
         else:
             event.tag_remove("sel","1.0","end")
     def widgets_DESVIACION(self):
-        self.text_font = tkFont.Font(family='Consolas', size=13)
+        self.text_font = font.Font(family='Consolas', size=13)
         # --- DEFINIMOS LOS LABEL FRAMEs, QUE CONTENDRAN LOS WIDGETS --------------------------#
         self.DESV_frame1=ttk.LabelFrame(self, 
                                         text="CLIENTE / MODULO", 
@@ -1345,6 +721,24 @@ class Desviacion(ttk.Frame):
             style='TOPS.TButton'
         )
         #self.DESV_btnDirectory.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
+        self.DESV_btnCommand = ttk.Button(
+            self.DESV_frame2,
+            text='Command',
+            compound='left',
+            image=self.Expandir_icon,
+            state='enabled',
+            command=self.abrir_COMMAND,
+            style='TOPS.TButton'
+        )
+        self.DESV_btnAuthorized = ttk.Button(
+            self.DESV_frame2,
+            text='Authorized',
+            compound='left',
+            image=self.Expandir_icon,
+            state='enabled',
+            command=self.abrir_AUTHORIZED,
+            style='TOPS.TButton'
+        )
         self.DESVfr2_srcComprobacion = st.ScrolledText(self.DESV_frame2)
         self.DESVfr2_srcComprobacion.config(
             font=self.text_font,
@@ -1507,11 +901,23 @@ class Desviacion(ttk.Frame):
     def abrir_DIRECTORY(self):
         global asigne_Ciente
         global directory
-        directory = Directory(self,asigne_Ciente)
+        path = "compliance/file/directory.json"
+        directory = Ventana(self,asigne_Ciente, app,desviacion,path)
     def abrir_COMMAND(self):
-        pass
+        global asigne_Ciente
+        global command
+        path = "compliance/file/command.json"
+        command = Ventana(self,asigne_Ciente, app,desviacion,path)
+    def abrir_AUTHORIZED(self):
+        global asigne_Ciente
+        global authorized
+        path = "compliance/file/authorized_keys.json"
+        authorized = Ventana(self,asigne_Ciente, app,desviacion,path)
     def abrir_ACCOUNT(self):
-        pass
+        global asigne_Ciente
+        global account
+        path = "compliance/file/account.json"
+        account = Ventana(self,asigne_Ciente, app,desviacion,path)
     def abrir_SERVICE(self):
         pass
     ## ----------------------------------------------------------- ##
@@ -1699,7 +1105,7 @@ class Aplicacion():
         self.style.configure('APP.TLabel',
                             background = "#082032",
                             foreground = "#CDFFEB",
-                            font=('Source Sans Pro',20,font.BOLD))
+                            font=('Comfortaa',30,font.BOLD))
         self.style.configure('TLabel',
                             background = "#f1ecc3",
                             foreground = "gray17",
@@ -1710,7 +1116,7 @@ class Aplicacion():
                             font=('Helvetica',12, font.BOLD))
     ## --- MENU CONTEXTUAL --- ##
     def menu_clickDerecho(self):
-        self.text_font = tkFont.Font(family='Consolas', size=13)   
+        self.text_font = font.Font(family='Consolas', size=13)   
         self.menu_Contextual = Menu(self.root, tearoff=0)
         self.menu_Contextual.add_command(label="  Buscar", 
                                 accelerator='Ctrl+F',
