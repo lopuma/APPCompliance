@@ -16,7 +16,7 @@ from PIL import Image, ImageTk
 from tkinter.ttk import Style
 from threading import Thread
 from ScrollableNotebook  import *
-from Extracion import * 
+from Extraciones import Extracion
 from Ventanas import *
 #-----------------------------------------------------------#
 user = getuser()
@@ -1334,12 +1334,10 @@ class Aplicacion():
         desviacion = Desviacion(self.cuaderno)
         self.cuaderno.add(desviacion, text='Issues DESVIACIONES ')
     def abrir_issuesExtracion(self):
-        global extracion
-        # extracion = Extracion(self.cuaderno)
-        extracion = Extracione(self.cuaderno)
-        self.cuaderno.add(extracion, text='Issues EXTRACIONES')
+        self.extracion = Extracion(self.cuaderno)
+        self.cuaderno.add(self.extracion, text='Issues EXTRACIONES')
     def ocultar(self):
-        extracion.hide()
+        self.extracion.hide()
     def widgets_APP(self):
             self.menuBar = tk.Menu(self.root, relief=FLAT, border=0)
             self.root.config(menu=self.menuBar)

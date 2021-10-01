@@ -1,48 +1,36 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import os
 import tkinter as tk
-from tkinter import Button, ttk
-from tkinter.constants import INSERT, PROJECTING, W
-from PIL import Image, ImageTk
-from tkinter import scrolledtext as st
 from os import listdir, path, sep
 from os.path import isdir, join, abspath
+from getpass import getuser
+from tkinter import *
+from tkinter import Button, ttk
+from tkinter import scrolledtext as st
+from tkinter import messagebox as mb
 from tkinter import font
+from PIL import Image, ImageTk
 from tkinter.ttk import Style
-class Extracione(tk.Frame):
+user = getuser()
+mypath = os.path.expanduser("~/")
+path_icon = mypath+"compliance/image/"
+
+class Extracion(ttk.Frame):
     def __init__(self, parent, *args, **kwargs):
-        tk.Frame.__init__(self, parent, *args)
-        self = self
-        self.configure(background="gold")
+        ttk.Frame.__init__(self, parent, *args)
         self.navIcon = ImageTk.PhotoImage(Image.open(
             "/home/esy9d7l1/compliance/image/menu.png").resize((25, 25)))
         self.closeIcon = ImageTk.PhotoImage(Image.open(
             "/home/esy9d7l1/compliance/image/close.png").resize((25, 25)))
         self.menu()
         self.text()
-        self.bind("<Control-l>", lambda x: self.hide())
+        #self.bind("<Control-l>", lambda x: self.hide())
         self.hidden = 0
-        # self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=5)
         self.rowconfigure(0, weight=1)
-        #self.lb.bind('<<ListboxSelect>>', self.seleccionar_plantilla)
-
-    def seleccionar_plantilla(self, event):
-        nombre = "SSH_Linux_INFRA_ITSS_PREG:202"
-        self.txt.insert(INSERT, "END")
-        with open("/home/esy9d7l1/compliance/extracion/INFRA/Linux/{}".format(nombre), "r", encoding="utf-8") as g:
-            data = g.read()
-            self.txt.delete('1.0',tk.END)
-            for md in data:
-                self.txt.insert(INSERT, "END")
-
-        # if modulo_selecionado in md['modulo']:
-        #     ## --- LIMPIAR ------------------------------------- ##
-        #     self.limpiar_Widgets()
-        #     ## ------------------------------------------------- ##
-        #     self.asignarValor_aWidgets(md)
 
     def menu(self):
+        self.text_font = font.Font(family='Consolas', size=16, weight="bold")
         self.frame1 = tk.Frame(
             self,
             background="gold",
@@ -73,78 +61,17 @@ class Extracione(tk.Frame):
             command=self.hide_btn_nav,
         )
         self.btn_close.grid(row=0, column=0, sticky="e")
-
-        self.tree = Treeview(self.frame1)
-        self.tree.rowconfigure(1, weight=1)
-        self.tree.columnconfigure(0, weight=1)
-        self.tree.grid(row=1, column=0, sticky="nsew")
-
-    def text(self):
-        self.frame2 = tk.Frame(self)
-        self.frame2.grid(row=0, column=1, sticky="nsew")
-        self.frame2.columnconfigure(0, weight=1)
-        self.frame2.rowconfigure(0, weight=1)
-        self.txt = st.ScrolledText(
-            self.frame2,
-            font=("Consolas", 14),
-        )
-        # self.txt.config(state='disabled')
-        self.txt['bg'] = 'white'
-        self.txt.grid(row=0, column=0, sticky="nsew")
-
-    def hide(self):
-        if self.hidden == 0:
-            self.frame1.destroy()
-            self.hidden = 1
-            self.btn_nav.grid(row=0, column=0, sticky="nw")
-        else:
-            # self.frame2.destroy()
-            self.menu()
-            # self.text()
-            self.hidden = 0
-            self.btn_nav.grid_forget()
-
-    def hide_btn_nav(self):
-        if self.hidden == 0:
-            self.frame1.destroy()
-            self.hidden = 1
-            self.btn_nav.grid(row=0, column=0, sticky="nw")
-
-    def show_btn_nav(self):
-        if self.hidden == 1:
-            #self.frame2.destroy()
-            self.menu()
-            #self.text()
-            self.hidden = 0
-            self.btn_nav.grid_forget()
-class Treeview(tk.Frame):
-    
-    def __init__(self, parent, *args, **kwargs):
-        tk.Frame.__init__(self, parent, *args)
-        self.text_font = font.Font(family='Consolas', size=16, weight="bold")
-        #self = self
-        self.estilos()
         self.treeview = ttk.Treeview(
-            self,
+            self.frame1,
             style="myTREE.Treeview",
         )
         self.treeview.tag_configure(
             "folder",
-            #background="#ff0000", 
-            #foreground="white",
             font=self.text_font,
-
         )
-
-        #self.treeview.rowconfigure(1, weight=1)
-        #self.treeview.columnconfigure(0, weight=1)
-        #self.treeview.tag_configure('oddrow', background="#CEE5D0", font=self.text_font)
-        #self.treeview.tag_configure('evenrow', background="#F3F0D7", font=self.text_font)
         self.treeview.heading("#0", text="EXTRACIONES", anchor="center")
         self.treeview.grid(row=1, column=0, sticky="nsew")
-        
-        # Asociar el evento de expansión de un elemento con la
-        # función correspondiente.
+
         self.treeview.tag_bind(
             "fstag", "<<TreeviewOpen>>", self.item_opened
         )
@@ -154,14 +81,6 @@ class Treeview(tk.Frame):
         self.treeview.bind(
             "<<TreeviewSelect>>", lambda e :self.select_extraction(e)
         )
-        
-        # Expandir automáticamente.
-        # for w in (self, self):
-    
-        #self.grid(row=1, column=0, sticky="nsew")
-        
-        # Este diccionario conecta los IDs de los ítems de Tk con
-        # su correspondiente archivo o carpeta.
         self.fsobjects = {}
         
         self.file_image = tk.PhotoImage(file="/home/esy9d7l1/compliance/image/files.png")
@@ -169,7 +88,16 @@ class Treeview(tk.Frame):
         
         # Cargar el directorio raíz.
         self.load_tree(abspath("/home/esy9d7l1/compliance/extracion/"))
-    
+
+    def seleccionar_plantilla(self, plantilla):
+        self.plantilla = plantilla
+        print(self.plantilla)
+        with open(plantilla) as g:
+            data = g.read()
+            self.txt.delete('1.0',tk.END)
+            for md in data:
+                self.txt.insert(tk.END, md)
+
     def estilos(self):
         self.style = Style()
         self.style.configure(
@@ -234,6 +162,7 @@ class Treeview(tk.Frame):
             if isdir(self.fsobjects[child_iid]):
                 self.load_tree(self.fsobjects[child_iid],
                             parent=child_iid)
+    
     def item_opened(self, event):
         """
         Evento invocado cuando el contenido de una carpeta es abierto.
@@ -247,7 +176,6 @@ class Treeview(tk.Frame):
         """
         iid = self.treeview.selection()[0]
         records = self.treeview.get_children(iid)
-        print(records)
         self.treeview.delete(*self.treeview.get_children())
         self.load_tree(abspath("/home/esy9d7l1/compliance/extracion/"))
 
@@ -263,18 +191,62 @@ class Treeview(tk.Frame):
         #self.load_subitems(iid)
 
     def select_extraction(self, event):
-        tree_event = event.widget
-        item_id = tree_event.selection()[0]
-        ## ---Obtener el index
-        index = tree_event.index(item_id)
-        ## -----------------------------------
-        dir_selecionado = tree_event.item(item_id, option="text")
-        exText = Extracione(self)
-        exText.seleccionar_plantilla(event=None)
-        # nombre = "SSH_Linux_INFRA_ITSS_PREG:202"
-        # with open("/home/esy9d7l1/compliance/extracion/INFRA/Linux/{}".format(nombre), "r", encoding="utf-8") as g:
-        #     data = g.read()
-        #     exText.txt.delete('1.0',tk.END)
-        #     for md in data:
-        #         exText.txt.insert(tk.END, md)
+        iid = self.treeview.selection()[0]
+        plantilla = self.treeview.item(iid, option="text")
+        initial_dir = '/home/esy9d7l1/compliance/extracion'
+        path = ''
+        for root, _, files in os.walk(initial_dir):
+            if plantilla in files:
+                path = os.path.join(root, plantilla)
+                break
+        print(len(path))
+        print(path)
+        self.seleccionar_plantilla(path)
 
+    def text(self):
+        self.frame2 = tk.Frame(self)
+        self.frame2.grid(row=0, column=1, sticky="nsew")
+        self.frame2.columnconfigure(0, weight=1)
+        self.frame2.rowconfigure(0, weight=1)
+        self.txt = st.ScrolledText(
+            self.frame2,
+            font=("Consolas", 14),
+        )
+        self.txt.config(
+            wrap=tk.WORD,
+            highlightcolor='#297F87',
+            borderwidth=0, 
+            highlightthickness=2,
+            insertbackground='#297F87',
+            selectbackground='lightblue',
+            state='normal'
+        )
+        self.txt.grid(row=0, column=0, sticky="nsew")
+
+    def hide(self):
+        if self.hidden == 0:
+            self.frame1.destroy()
+            self.hidden = 1
+            self.btn_nav.grid(row=0, column=0, sticky="nw")
+        else:
+            self.menu()
+            self.hidden = 0
+            self.btn_nav.grid_forget()
+
+    def hide_btn_nav(self):
+        if self.hidden == 0:
+            self.frame1.destroy()
+            self.hidden = 1
+            self.btn_nav.grid(row=0, column=0, sticky="nw")
+            #self.seleccionar_plantilla(plantilla="SSH_Linux_FT_CSD(Split)_PREG:267")
+
+    def show_btn_nav(self):
+        if self.hidden == 1:
+            self.menu()
+            self.hidden = 0
+            self.btn_nav.grid_forget()
+
+        # self.tree = Treeview(self.frame1)
+        # self.tree.rowconfigure(1, weight=1)
+        # self.tree.columnconfigure(0, weight=1)
+        # self.tree.grid(row=1, column=0, sticky="nsew")
