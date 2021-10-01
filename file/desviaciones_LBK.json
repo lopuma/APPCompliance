@@ -97,5 +97,27 @@
         "refrescar": "",
         "evidencia": "clear\ndate\nhostname\ncat /etc/ntp.conf | grep -i restrict",
         "SO": "Linux"
+    },
+    {
+        "modulo": "Password Requirements/Password MAX Age /etc/shadow",
+        "clave": "MAXAGE",
+        "descripcion": "",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Network Settings/TCP Configuration Files Restrictions",
+        "clave": "SYSCTL",
+        "descripcion": "Incorrect /etc/sysctl.conf",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "+-------------------------------------------------------------------------------+\n## Para hacer el cambio:\n+-------------------------------------------------------------------------------+\n\n/sbin/sysctl -w net.ipv4.conf.all.secure_redirects=0\n/sbin/sysctl -w net.ipv4.conf.default.secure_redirects=0\n/sbin/sysctl -w net.ipv4.conf.all.log_martians=1\n/sbin/sysctl -w net.ipv4.conf.default.log_martians=1\n/sbin/sysctl -w net.ipv4.conf.all.rp_filter=1\n/sbin/sysctl -w net.ipv4.conf.default.rp_filter=1\n/sbin/sysctl -w net.ipv6.conf.all.accept_ra=0\n/sbin/sysctl -w net.ipv6.conf.default.accept_ra=0\n/sbin/sysctl -w net.ipv6.conf.all.accept_redirects=0\n/sbin/sysctl -w net.ipv6.conf.default.accept_redirects=0\n/sbin/sysctl -w net.ipv4.ip_forward=0\n/sbin/sysctl -w net.ipv4.conf.default.accept_source_route=0\n/sbin/sysctl -w net.ipv4.conf.all.accept_source_route=0",
+        "refrescar": "sysctl -p",
+        "evidencia": "clear\ndate\nhostname\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.all.accept_source_route\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.all.secure_redirects\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.default.secure_redirects\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.all.log_martians\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.default.log_martians\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.all.rp_filter\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.default.rp_filter\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.default.accept_source_route\"\n/sbin/sysctl -a |grep -i \"net.ipv6.conf.all.accept_ra\"\n/sbin/sysctl -a |grep -i \"net.ipv6.conf.default.accept_ra\"\n/sbin/sysctl -a |grep -i \"net.ipv6.conf.all.accept_redirects\"\n/sbin/sysctl -a |grep -i \"net.ipv6.conf.default.accept_redirects\"\n/sbin/sysctl -a |grep -i \"net.ipv4.ip_forward\"",
+        "SO": "Linux"
     }
 ]

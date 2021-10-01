@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+from posixpath import lexists
 import tkinter as tk
 import json
 import os
@@ -20,10 +21,6 @@ from Ventanas import *
 #-----------------------------------------------------------#
 user = getuser()
 path = os.path.expanduser("~/")
-path_Directory = path+"compliance/file/directory.json"
-path_Account = path+"compliance/file/account.json"
-path_Command = path+"compliance/file/command.json"
-path_Service = path+"compliance/file/service.json"
 path_icon = path+"compliance/image/"
 clt = ''
 path_modulo = path+"compliance/file/desviaciones_{}.json"
@@ -53,10 +50,8 @@ listClave = []
 data = []
 txtWidget_focus = False
 txtWidget = ""
-tittleExpand = ""
 top_active_LBK = False
 sis_oper = ""
-counter = 0
 class Expandir(ttk.Frame):
     def __init__(self, parent, customer, titulo, so, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -76,7 +71,7 @@ class Expandir(ttk.Frame):
         position_right = int(screen_width+150)
         self.vtn_expandir.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
         #self.vtn_expandir.geometry("1005x600")
-        #self.vtn_expandir.transient(self.parent)
+        self.vtn_expandir.transient(self.parent)
         #self.vtn_expandir.resizable(0,0)
         self.vtn_expandir.title("DESVIACIONES : {} - {}".format(self.customer,self.so))
         self.vtn_expandir.columnconfigure(0, weight=1)
@@ -131,6 +126,16 @@ class Expandir(ttk.Frame):
         else:
             self.menu_Contextual.entryconfig("  Copiar", state="disabled")
     ## ----------------------------------------------- ##
+    def copiarALL(self, event):
+        event.focus()
+        if event:
+            event.tag_add("sel","1.0","end")
+            seleccion = event.tag_ranges(tk.SEL)
+            if seleccion:
+                app.root.clipboard_clear()
+                app.root.clipboard_append(event.get(*seleccion).strip())
+        else:
+            event.tag_remove("sel","1.0","end")
     def widgets_EXPANDIR(self):
         self.EXP_lblWidget = ttk.Label(
             self.vtn_expandir, 
@@ -139,10 +144,22 @@ class Expandir(ttk.Frame):
             font=('Source Sans Pro', 16, font.BOLD),
         )
         self.EXP_lblWidget.grid(row=0, column=0, padx=5, pady=5,sticky='w')
+        self.EXP_srcExpandir = st.ScrolledText(
+            self.vtn_expandir,
+        )
+        self.EXP_srcExpandir.config(
+            font=('Consolas', 15), 
+            wrap=tk.WORD,
+            highlightcolor='#297F87',
+            borderwidth=0, 
+            highlightthickness=3,
+            insertbackground='#297F87',
+            selectbackground='lightblue',
+        )
         self.EXP_btnCopyALL = ttk.Button(
             self.vtn_expandir,
             image=desviacion.CopyALL1_icon,
-            #command=self.seleccionar_todo,
+            command=lambda e=self.EXP_srcExpandir : self.copiarALL(e),
             style='DESV.TButton',
             state="disabled"
         )
@@ -162,18 +179,6 @@ class Expandir(ttk.Frame):
             style='DESV.TButton',
         )
         self.EXP_btnReducir.grid(row=0, column=3, padx=20, pady=5, sticky='ne')
-        self.EXP_srcExpandir = st.ScrolledText(
-            self.vtn_expandir,
-        )
-        self.EXP_srcExpandir.config(
-            font=('Consolas', 15), 
-            wrap=tk.WORD,
-            highlightcolor='#297F87',
-            borderwidth=0, 
-            highlightthickness=3,
-            insertbackground='#297F87',
-            selectbackground='lightblue',
-        )
         self.EXP_srcExpandir.grid(row=1, column=0, padx=5, pady=5, sticky='nsew', columnspan=4)
 class Desviacion(ttk.Frame):
     def __init__(self, parent, *args, **kwargs):
@@ -186,7 +191,7 @@ class Desviacion(ttk.Frame):
         self.iconos()
         self.widgets_DESVIACION()
         ## --- SELECCIONAR ELEMENTO DEL LISTBOX. --- #
-        self.DESVfr1_listbox.bind('<<ListboxSelect>>',self.seleccionar_Modulo)
+        self.DESVfr1_listbox.bind("<<ListboxSelect>>",lambda e :self.seleccionar_Modulo(e))
         ## --- ADJUTAR EL TEXT DE LOS LABEL --- #
         self.DESVfr2_lblModulo.bind("<Configure>", self.label_resize)
         self.DESVfr2_lblDescripcion.bind("<Configure>", self.label_resize)
@@ -231,8 +236,8 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_srcRefrescar.bind('<Control-f>', lambda e : self.buscar(e))
         self.DESVfr3_srcEvidencia.bind('<Control-f>', lambda e : self.buscar(e))
         app.editMenu.bind_all('<Control-f>', lambda e : self.buscar(e))
-        self.DESVfr1_listbox.bind("<Down>", self.ListDown)
-        self.DESVfr1_listbox.bind("<Up>", self.ListUp)
+        self.DESVfr1_listbox.bind("<Down>",lambda e : self.ListDown(e))
+        self.DESVfr1_listbox.bind("<Up>",lambda e : self.ListUp(e))
         self.DESVfr1_entModulo.bind('<Control-v>', lambda e : self.sel_text(e))
         ## --- --- ##
     def iconos(self): #TODO ICONOS DE VENTANA DESVIACION
@@ -284,10 +289,6 @@ class Desviacion(ttk.Frame):
         elif txtWidget == self.DESVfr2_srcBackup:
             txtWidget.focus()
             txtWidget_focus = True
-            # self.DESVfr2_srcComprobacion.tag_remove("sel","1.0","end")
-            # self.DESVfr3_srcEditar.tag_remove("sel","1.0","end")
-            # self.DESVfr3_srcRefrescar.tag_remove("sel","1.0","end")
-            # self.DESVfr3_srcEvidencia.tag_remove("sel","1.0","end")
         elif txtWidget == self.DESVfr3_srcEditar:
             txtWidget.focus()
             txtWidget_focus = True
@@ -318,10 +319,9 @@ class Desviacion(ttk.Frame):
     def expandir(self, event, var): #TODO comprobando expandir
         global sis_oper
         global asigne_Ciente
-        #global tittleExpand
+        global expandir
         tittleExpand = var
         event.focus()
-        print(event)
         expandir = Expandir(self,asigne_Ciente,tittleExpand, sis_oper)
         if event:
             text_aExpandir = event.get('1.0', tk.END)
@@ -353,7 +353,11 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_srcRefrescar.delete('1.0',END)
         self.DESVfr3_srcEvidencia.delete('1.0',END)
     def seleccionar_Modulo(self, event):
-        modulo_selecionado = event.widget.get(ANCHOR)
+        list_event = event.widget
+        index = list_event.curselection()
+        value = list_event.get(index[0])
+        self.cargar_elemt_selected(value)
+    def cargar_elemt_selected(self, modulo_selecionado): #TODO CARGAR MODULO
         with open(path_modulo.format(asigne_Ciente)) as g:
             data = json.load(g)
             for md in data:
@@ -368,18 +372,27 @@ class Desviacion(ttk.Frame):
             self.DESV_btnDirectory.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
             self.DESV_btnAuthorized.grid_forget()
             self.DESV_btnCommand.grid_forget()
+            self.DESV_btnAccount.grid_forget()
         elif str(modulo_selecionado) == "Password Requirements/Private Key File Restriction":
             self.DESV_btnDirectory.grid_forget()
             self.DESV_btnCommand.grid_forget()
+            self.DESV_btnAccount.grid_forget()
             self.DESV_btnAuthorized.grid(row=2, column=1, padx=5, pady=5, sticky='ne')    
         elif str(modulo_selecionado) == "Network Settings/Ensure LDAP Server is not enabled":
             self.DESV_btnDirectory.grid_forget()
             self.DESV_btnAuthorized.grid_forget()
+            self.DESV_btnAccount.grid_forget()
             self.DESV_btnCommand.grid(row=2, column=1, padx=5, pady=5, sticky='ne')    
+        elif str(modulo_selecionado) == "Password Requirements/Password MAX Age /etc/shadow":
+            self.DESV_btnDirectory.grid_forget()
+            self.DESV_btnAuthorized.grid_forget()
+            self.DESV_btnCommand.grid_forget()
+            self.DESV_btnAccount.grid(row=2, column=1, padx=5, pady=5, sticky='ne')    
         else:
             self.DESV_btnDirectory.grid_forget()
             self.DESV_btnAuthorized.grid_forget()
             self.DESV_btnCommand.grid_forget()
+            self.DESV_btnAccount.grid_forget()
     def buscar(self, event):
         self.DESVfr1_entModulo.focus()
     def buscar_Modulos(self, event=None):
@@ -479,38 +492,45 @@ class Desviacion(ttk.Frame):
         self.DESVfr1_btnLimpiar.grid_forget()
         self.DESVfr1_btnBuscar.grid(row=1, column=1, pady=5, padx=5, sticky='nsw')
     def ListDown(self, event):
-        widget_Focus = event.widget
-        listBox = self.DESVfr1_listbox
-        if widget_Focus:
-            event.widget.yview_scroll(1,"units")
-            selecion = event.widget.curselection()
-            modulo_selecionado = event.widget.get(selecion)
-            with open(path_modulo.format(asigne_Ciente)) as g:
-                data = json.load(g)
-                for md in data:
-                    if modulo_selecionado in md['modulo']:
-                        ## --- LIMPIAR ------------------------------------- ##                      
-                        self.limpiar_Widgets()
-                        ## ------------------------------------------------- ##
-                        self.asignarValor_aWidgets(md)
-                self.mostrar_buttons_modulo(modulo_selecionado)
+        list_event = event.widget
+        list_event.yview_scroll(1,"units")
+        selecion = list_event.curselection()[0]+1
+        modulo_selecionado = list_event.get(selecion)
+        self.cargar_elemt_selected(modulo_selecionado)
+        # modulo_selecionado = event.widget.get(selecion)
+        # with open(path_modulo.format(asigne_Ciente)) as g:
+        #     data = json.load(g)
+        #     for md in data:
+        #         if modulo_selecionado in md['modulo']:
+        #             ## --- LIMPIAR ------------------------------------- ##                      
+        #             self.limpiar_Widgets()
+        #             ## ------------------------------------------------- ##
+        #             self.asignarValor_aWidgets(md)
+        #     self.mostrar_buttons_modulo(modulo_selecionado)
     def ListUp(self, event):
-        widget_Focus = event.widget
-        if widget_Focus:
-            self.DESVfr1_listbox.yview_scroll(-1,"units")
-            selecion = self.DESVfr1_listbox.curselection()
-            modulo_selecionado = event.widget.get(selecion)
-            with open(path_modulo.format(asigne_Ciente)) as g:
-                data = json.load(g)
-                for md in data:
-                    if modulo_selecionado in md['modulo']:
-                        ## --- LIMPIAR ------------------------------------- ##                      
-                        self.limpiar_Widgets()
-                        ## ------------------------------------------------- ##
-                        self.asignarValor_aWidgets(md)
-            self.mostrar_buttons_modulo(modulo_selecionado)
-        else:
-            pass
+        list_event = event.widget
+        list_event.yview_scroll(-1,"units")
+        selecion = list_event.curselection()[0]-1
+        modulo_selecionado = list_event.get(selecion)
+        self.cargar_elemt_selected(modulo_selecionado)
+        # widget_Focus = event.widget
+        # if widget_Focus:
+        #     self.DESVfr1_listbox.yview_scroll(-1,"units")
+        #     selecion = self.DESVfr1_listbox.curselection()
+        # data = []
+        # #     modulo_selecionado = event.widget.get(selecion)
+        # with open(path_modulo.format(asigne_Ciente)) as g:
+        #     data = json.load(g)
+        #     for md in data:
+        #         if modulo_selecionado in md['modulo']:
+        #             print(md["clave"])
+        #             #self.DESVfr2_srcBackup.delete("1.0",END)
+        #             ## --- LIMPIAR ------------------------------------- ##                      
+        #             self.limpiar_Widgets()
+        #     #         print("limpia")
+        #             ## ------------------------------------------------- ##
+        #             self.asignarValor_aWidgets(md)
+        # #self.mostrar_buttons_modulo(modulo_selecionado)
     def enabled_Widgets(self):
         self.DESVfr1_listbox.config(state="normal")
         self.DESVfr1_entModulo.config(state="normal")
@@ -553,8 +573,10 @@ class Desviacion(ttk.Frame):
         self.DESVfr1_listbox.insert(END,*listModulo)
         self.cambiar_NamePestaña(customer)
     def ScreamEvidencia(self):
+        global expandir
         app.root.withdraw()
-        code = subprocess.call(["./scream.sh"])
+        #expandir.transient(app)
+        subprocess.call(["./scream.sh"])
         time.sleep(3)
         #mb.showinfo("INFO","Informacion")
         app.root.deiconify()
@@ -720,7 +742,6 @@ class Desviacion(ttk.Frame):
             command=self.abrir_DIRECTORY,
             style='TOPS.TButton'
         )
-        #self.DESV_btnDirectory.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
         self.DESV_btnCommand = ttk.Button(
             self.DESV_frame2,
             text='Command',
@@ -737,6 +758,15 @@ class Desviacion(ttk.Frame):
             image=self.Expandir_icon,
             state='enabled',
             command=self.abrir_AUTHORIZED,
+            style='TOPS.TButton'
+        )
+        self.DESV_btnAccount = ttk.Button(
+            self.DESV_frame2,
+            text='Account',
+            compound='left',
+            image=self.Expandir_icon,
+            state='enabled',
+            command=self.abrir_ACCOUNT,
             style='TOPS.TButton'
         )
         self.DESVfr2_srcComprobacion = st.ScrolledText(self.DESV_frame2)

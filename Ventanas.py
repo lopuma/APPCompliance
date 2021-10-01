@@ -12,8 +12,6 @@ from PIL import Image, ImageTk
 user = getuser()
 mypath = os.path.expanduser("~/")
 path_icon = mypath+"compliance/image/"
-clt = ''
-path_modulo = mypath+"compliance/file/desviaciones_{}.json"
 class Ventana(ttk.Frame):
     def __init__(self, parent, customer, app, desviacion, path, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
@@ -22,6 +20,7 @@ class Ventana(ttk.Frame):
         self.app = app
         self.desviacion = desviacion
         self.path_ventanas = mypath+path
+        self.tt_vtn = "VENTANA"
         print(self.path_ventanas)
         self.vtn_ventanas = tk.Toplevel(self)
         self.vtn_ventanas.config(background='#F9F3DF')
@@ -32,18 +31,17 @@ class Ventana(ttk.Frame):
         position_top = int(screen_height+70)
         position_right = int(screen_width+150)
         self.vtn_ventanas.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
-        #self.vtn_ventanas.geometry("1000x650"+345+65")
         self.vtn_ventanas.resizable(0,0)
-        self.vtn_ventanas.title('ventanas for client {}'.format(self.customer))
+        self.vtn_ventanas.title('{} for client {}'.format(self.tt_vtn,self.customer))
         #self.vtn_ventanas.transient(self)
         #self.vtn_ventanas.grab_set()
         self.vtn_ventanas.columnconfigure(0, weight=1)
         self.vtn_ventanas.rowconfigure(2, weight=5)
         self.text_font = font.Font(family='Consolas', size=13) 
         self.iconos()
+        self.widgets_ventanas()
         self.menu_clickDerecho()
         self.menuList_clickDerecho()
-        self.widgets_ventanas()
         self.cargar_ventanas()
         self.tree.bind("<ButtonRelease-1>", self.selecionar_elemntFile)
         self.tree.bind("<Key>", lambda e: self.desviacion.widgets_SoloLectura(e))
@@ -322,67 +320,93 @@ class Ventana(ttk.Frame):
                 self.menu_Contextual.entryconfig("  Copiar", state="normal")
             else:
                 self.menu_Contextual.entryconfig("  Copiar", state="disabled")
+    def copiar_optionLis(self, event):
+        listbox = event
+        index = listbox.curselection()
+        listCopiada = []
+        for i in index:
+            print(i)
+            value = listbox.get(i)
+            listCopiada.append(value)
+        if listCopiada:
+            self.app.root.clipboard_clear()
+            self.app.root.clipboard_append(listCopiada)
+    def selALL_optionLis(self, event):
+        listbox = event
+        listbox.selection_set(0, tk.END)
     def menuList_clickDerecho(self):
         self.text_font = font.Font(family='Consolas', size=13)   
         self.menuLis_Contextual = Menu(self, tearoff=0)
-        self.menuLis_Contextual.add_command(label="  Buscar",
-                                accelerator='Ctrl+F',
-                                background='#ccffff', foreground='black',
-                                activebackground='#004c99',activeforeground='white',
-                                font=self.text_font,
-                                command=self.act_buscar,
-                                )
+        ## buscar
+        self.menuLis_Contextual.add_command(
+            label="  Buscar",
+            accelerator='Ctrl+F',
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            command=self.act_buscar,
+        )
         self.menuLis_Contextual.add_separator(background='#ccffff')
+        ## Copiar
         self.menuLis_Contextual.add_command(
             label="  Copiar", 
             accelerator='Ctrl+C',
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
             font=self.text_font,
-            command=self.copiar,
-            state='normal',
+            command=lambda e=self.listServer:self.copiar_optionLis(e),
+            state='disabled',
         )
+        ## Pegar
         self.menuLis_Contextual.add_command(
             label="  Pegar", 
             accelerator='Ctrl+V',
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
             font=self.text_font,
-            command= self.pegar,
             state='disabled',
         )
         self.menuLis_Contextual.add_separator(background='#ccffff')
+        ## Selecionar todo
         self.menuLis_Contextual.add_command(
             label="  Seleccionar todo", 
             accelerator='Ctrl+A',
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
             font=self.text_font,
-            command=self.seleccionar_todo,
+            command=lambda e=self.listServer:self.selALL_optionLis(e),
             state='normal',
         )
+        ## Limpiar
         self.menuLis_Contextual.add_command(
             label="  Limpiar", 
             accelerator='Ctrl+X',
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
             font=self.text_font,
-            command=self.seleccionar_todo,
             state='disabled',
         )
         self.menuLis_Contextual.add_separator(background='#ccffff')
-        self.menuLis_Contextual.add_command(label="  Cerrar pestaña", 
-                                #image=self.cerrar_icon,
-                                compound=LEFT,
-                                background='#ccffff', foreground='black',
-                                activebackground='#004c99',activeforeground='white',
-                                font=self.text_font,
-                                command=self.cerrar_vtn
-                                )
+        ## Cerrar pestñaa
+        self.menuLis_Contextual.add_command(
+            label="  Cerrar pestaña", 
+            #image=self.cerrar_icon,
+            compound=LEFT,
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            command=self.cerrar_vtn
+        )
     def display_menuLis_clickDerecho(self, event):
         self.menuLis_Contextual.tk_popup(event.x_root, event.y_root)
         self.srcEvent = event.widget
         self.srcEvent.focus()
+        index = self.srcEvent.curselection()
+        try:
+            self.srcEvent.selection_includes(index)
+            self.menuLis_Contextual.entryconfig("  Copiar", state="normal")
+        except:
+            self.menuLis_Contextual.entryconfig("  Copiar", state="disabled")
     def TreeDown(self, event):
         tree_event = event.widget
         item_id = tree_event.selection()[0]
@@ -401,6 +425,16 @@ class Ventana(ttk.Frame):
             dir = dir_selecionado[0]
             self.cargar_elemt_seleccionado(dir)
     ## =============================================
+    def copiarALL(self, event):
+        event.focus()
+        if event:
+            event.tag_add("sel","1.0","end")
+            seleccion = event.tag_ranges(tk.SEL)
+            if seleccion:
+                self.app.root.clipboard_clear()
+                self.app.root.clipboard_append(event.get(*seleccion).strip())
+        else:
+            event.tag_remove("sel","1.0","end")
     def widgets_ventanas(self):
         self.var_ent_buscar = tk.StringVar(self)
         self.textBuscar = tk.Entry(
@@ -510,9 +544,13 @@ class Ventana(ttk.Frame):
         )
         self.lbl1.grid(row=0, column=0, pady=5, padx=5, columnspan=2)
         
-        self.listServer = tk.Listbox(self.labelframe2, height=3)
+        self.listServer = tk.Listbox(
+            self.labelframe2, 
+            height=3
+        )
         self.fr2_scroll1 = tk.Scrollbar(self.labelframe2, orient=tk.VERTICAL)
         self.listServer.config(
+            selectmode=tk.EXTENDED,
             foreground='#334257',
             selectforeground='black', 
             selectbackground='lightblue', 
@@ -536,14 +574,6 @@ class Ventana(ttk.Frame):
         )
         self.lbl2.grid(row=0, column=2, pady=5, padx=5, sticky='W')
         
-        self.btnCpRisk = ttk.Button(
-            self.labelframe2, 
-            text='Copiar',
-            style='TOP.TButton',
-            image=self.copiar_icon,
-        )
-        self.btnCpRisk.grid(row=0, column=3, padx=20, pady=5, sticky=E)
-        
         self.srcRisk = st.ScrolledText(
             self.labelframe2,
         )
@@ -557,6 +587,16 @@ class Ventana(ttk.Frame):
             insertbackground='#297F87',
             selectbackground='lightblue',
         )
+
+        self.btnCpRisk = ttk.Button(
+            self.labelframe2, 
+            text='Copiar',
+            style='TOP.TButton',
+            image=self.copiar_icon,
+            command=lambda e=self.srcRisk:self.copiarALL(e),
+        )
+        self.btnCpRisk.grid(row=0, column=3, padx=20, pady=5, sticky=E)
+        
         self.srcRisk.grid(row=1, column=2, pady=5, padx=5, sticky='new', columnspan=2)
         
         ## --- IMPACT
@@ -566,14 +606,6 @@ class Ventana(ttk.Frame):
             style='TOP.TLabel',
         )
         self.lbl3.grid(row=0, column=4, pady=5, padx=5, sticky='W')
-        
-        self.btnCpImp = ttk.Button(
-            self.labelframe2,
-            text='Copiar',
-            style='TOP.TButton',                
-            image=self.copiar_icon,
-        )
-        self.btnCpImp.grid(row=0, column=5, padx=20, pady=5, sticky=E)   
         
         self.srcImpact = st.ScrolledText(
             self.labelframe2,
@@ -588,6 +620,16 @@ class Ventana(ttk.Frame):
             insertbackground='#297F87',
             selectbackground='lightblue',
         )
+
+        self.btnCpImp = ttk.Button(
+            self.labelframe2,
+            text='Copiar',
+            style='TOP.TButton',                
+            image=self.copiar_icon,
+            command=lambda e=self.srcImpact:self.copiarALL(e),
+        )
+        self.btnCpImp.grid(row=0, column=5, padx=20, pady=5, sticky=E)   
+        
         self.srcImpact.grid(row=1, column=4, pady=5, padx=5, sticky='new', columnspan=2)
         
         ## --- SO
@@ -618,14 +660,6 @@ class Ventana(ttk.Frame):
             style='TOP.TLabel',
         )
         self.lbl4.grid(row=2, column=3, pady=5, padx=5, sticky='W')
-        
-        self.btnCpVariable = ttk.Button(
-            self.labelframe2, 
-            text='Copiar',
-            style='TOP.TButton',                
-            image=self.copiar_icon,
-        )
-        self.btnCpVariable.grid(row=2, column=5, padx=20, pady=5, sticky=E)
 
         self.srcVariable = st.ScrolledText(
             self.labelframe2,
@@ -640,4 +674,14 @@ class Ventana(ttk.Frame):
             insertbackground='#297F87',
             selectbackground='lightblue',
         )
+
+        self.btnCpVariable = ttk.Button(
+            self.labelframe2, 
+            text='Copiar',
+            style='TOP.TButton',                
+            image=self.copiar_icon,
+            command=lambda e=self.srcVariable:self.copiarALL(e),
+        )
+        self.btnCpVariable.grid(row=2, column=5, padx=20, pady=5, sticky=E)
+
         self.srcVariable.grid(row=3, column=3, pady=5, padx=5, sticky='new', columnspan=3)

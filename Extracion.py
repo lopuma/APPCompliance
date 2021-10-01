@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import tkinter as tk
 from tkinter import Button, ttk
-from tkinter.constants import W
+from tkinter.constants import INSERT, PROJECTING, W
 from PIL import Image, ImageTk
 from tkinter import scrolledtext as st
 from os import listdir, path, sep
@@ -10,7 +10,6 @@ from os.path import isdir, join, abspath
 from tkinter import font
 from tkinter.ttk import Style
 class Extracione(tk.Frame):
-
     def __init__(self, parent, *args, **kwargs):
         tk.Frame.__init__(self, parent, *args)
         self = self
@@ -29,13 +28,13 @@ class Extracione(tk.Frame):
         #self.lb.bind('<<ListboxSelect>>', self.seleccionar_plantilla)
 
     def seleccionar_plantilla(self, event):
-        print("abrir")
-        nombre = "SSH_Aix_FT_CSD_PREG:267"
-        with open("/home/esy9d7l1/compliance/extracion/{}".format(nombre), "r", encoding="utf-8") as g:
+        nombre = "SSH_Linux_INFRA_ITSS_PREG:202"
+        self.txt.insert(INSERT, "END")
+        with open("/home/esy9d7l1/compliance/extracion/INFRA/Linux/{}".format(nombre), "r", encoding="utf-8") as g:
             data = g.read()
             self.txt.delete('1.0',tk.END)
             for md in data:
-                self.txt.insert(tk.END, md)
+                self.txt.insert(INSERT, "END")
 
         # if modulo_selecionado in md['modulo']:
         #     ## --- LIMPIAR ------------------------------------- ##
@@ -44,31 +43,25 @@ class Extracione(tk.Frame):
         #     self.asignarValor_aWidgets(md)
 
     def menu(self):
-        
         self.frame1 = tk.Frame(
             self,
             background="gold",
             width=300
         )
-
-        # self.frame1.pack(side="left", fill=tk.BOTH, expand=1)
         self.frame1.grid_propagate(False)
         self.frame1.grid(row=0, column=0, sticky="nsew")
         self.frame1.columnconfigure(0, weight=1)
         self.frame1.rowconfigure(1, weight=1)
-        # self.frame1.rowconfigure(0, weight=1)
-        self.btn_nav = Button(self,
-                              background="#39A2DB",
-                              border=0,
-                              borderwidth=0,
-                              highlightthickness=0,
-                              relief='flat',
-                              image=self.navIcon,
-                              command=self.show_btn_nav,
-                              )
-
-        # self.btn_nav.grid(row=0, column=0, sticky="nw")
-        #self.frame1.columnconfigure(1, weight=1)
+        self.btn_nav = Button(
+            self,
+            background="#39A2DB",
+            border=0,
+            borderwidth=0,
+            highlightthickness=0,
+            relief='flat',
+            image=self.navIcon,
+            command=self.show_btn_nav,
+        )
         self.btn_close = tk.Button(
             self.frame1,
             background="#39A2DB",
@@ -79,28 +72,15 @@ class Extracione(tk.Frame):
             image=self.closeIcon,
             command=self.hide_btn_nav,
         )
-        # self.btn.pack(side="top", fill=tk.X)
         self.btn_close.grid(row=0, column=0, sticky="e")
-        # self.btn_nav.grid_forget()
+
         self.tree = Treeview(self.frame1)
-        
         self.tree.rowconfigure(1, weight=1)
         self.tree.columnconfigure(0, weight=1)
-        #+-------------------------------------------+
-        # self.lb = tk.Listbox(self.frame1)
-        # self.lb['bg'] = "white"
-        # self.lb['fg'] = "blue"
-        # self.lb['font'] = "Consolas", 13
         self.tree.grid(row=1, column=0, sticky="nsew")
-        # # self.lb.pack(side="left", fill=tk.BOTH, expand=1)
-        # self.lb.insert(tk.END, "Plantilla 1")
-        # # for file in glob.glob("extracion/*"):
-        # # 	self.lb.insert(tk.END, file)
-        #+-------------------------------------------+
 
     def text(self):
         self.frame2 = tk.Frame(self)
-        # self.frame2.pack(side="left", fill=tk.BOTH, expand=1)
         self.frame2.grid(row=0, column=1, sticky="nsew")
         self.frame2.columnconfigure(0, weight=1)
         self.frame2.rowconfigure(0, weight=1)
@@ -110,7 +90,6 @@ class Extracione(tk.Frame):
         )
         # self.txt.config(state='disabled')
         self.txt['bg'] = 'white'
-        # self.txt.pack(fill=tk.BOTH, expand=1)
         self.txt.grid(row=0, column=0, sticky="nsew")
 
     def hide(self):
@@ -118,21 +97,18 @@ class Extracione(tk.Frame):
             self.frame1.destroy()
             self.hidden = 1
             self.btn_nav.grid(row=0, column=0, sticky="nw")
-            print("Hidden", self.hidden)
         else:
             # self.frame2.destroy()
             self.menu()
             # self.text()
             self.hidden = 0
             self.btn_nav.grid_forget()
-            print("Hidden", self.hidden)
 
     def hide_btn_nav(self):
         if self.hidden == 0:
             self.frame1.destroy()
             self.hidden = 1
             self.btn_nav.grid(row=0, column=0, sticky="nw")
-            print("Hidden", self.hidden)
 
     def show_btn_nav(self):
         if self.hidden == 1:
@@ -141,16 +117,25 @@ class Extracione(tk.Frame):
             #self.text()
             self.hidden = 0
             self.btn_nav.grid_forget()
-            print("Hidden", self.hidden)
 class Treeview(tk.Frame):
     
     def __init__(self, parent, *args, **kwargs):
         tk.Frame.__init__(self, parent, *args)
-        self.text_font = font.Font(family='Consolas', size=16)
+        self.text_font = font.Font(family='Consolas', size=16, weight="bold")
         #self = self
-        #self.title("Explorador de archivos y carpetas")
         self.estilos()
-        self.treeview = ttk.Treeview(self)
+        self.treeview = ttk.Treeview(
+            self,
+            style="myTREE.Treeview",
+        )
+        self.treeview.tag_configure(
+            "folder",
+            #background="#ff0000", 
+            #foreground="white",
+            font=self.text_font,
+
+        )
+
         #self.treeview.rowconfigure(1, weight=1)
         #self.treeview.columnconfigure(0, weight=1)
         #self.treeview.tag_configure('oddrow', background="#CEE5D0", font=self.text_font)
@@ -163,13 +148,16 @@ class Treeview(tk.Frame):
         self.treeview.tag_bind(
             "fstag", "<<TreeviewOpen>>", self.item_opened
         )
+        self.treeview.tag_bind(
+            "fstag", "<<TreeviewClose>>", self.item_closed
+        )
         self.treeview.bind(
             "<<TreeviewSelect>>", lambda e :self.select_extraction(e)
         )
         
         # Expandir automáticamente.
         # for w in (self, self):
-       
+    
         #self.grid(row=1, column=0, sticky="nsew")
         
         # Este diccionario conecta los IDs de los ítems de Tk con
@@ -180,17 +168,17 @@ class Treeview(tk.Frame):
         self.folder_image = tk.PhotoImage(file="/home/esy9d7l1/compliance/image/folder.png")
         
         # Cargar el directorio raíz.
-        self.load_tree(abspath("/home/esy9d7l1/compliance/extracion"))
+        self.load_tree(abspath("/home/esy9d7l1/compliance/extracion/"))
     
     def estilos(self):
         self.style = Style()
         self.style.configure(
-            'Treeview',
+            'myTREE.Treeview',
             fieldbackground= '#CEE5D0',
             background='#CEE5D0',
             selectbackground="#FF7878",
             selectforeground="#E0C097",
-            font=('Calibra',14)
+            padding=0, 
         )
         # self.style.map('Treeview',
         #     background=[
@@ -202,8 +190,7 @@ class Treeview(tk.Frame):
         try:
             return listdir(path)
         except PermissionError:
-            print("No tienes suficientes permisos para acceder a",
-                  path)
+            print("No tienes suficientes permisos para acceder a", path)
             return []
     
     def get_icon(self, path):
@@ -219,7 +206,7 @@ class Treeview(tk.Frame):
         del ítem.
         """
         iid = self.treeview.insert(
-            parent, tk.END, text=name, tags=("fstag",),
+            parent, tk.END, text=name, tags=("fstag",)+(("folder",)if isdir(path) else ()),
             image=self.get_icon(path))
         self.fsobjects[iid] = path
         return iid
@@ -235,18 +222,18 @@ class Treeview(tk.Frame):
             if isdir(fullpath):
                 for sub_fsobj in self.listdir(fullpath):
                     self.insert_item(sub_fsobj, join(fullpath, sub_fsobj),
-                                     child)
+                                    child)
         
     def load_subitems(self, iid):
         """
         Cargar el contenido de todas las carpetas hijas del directorio
         que se corresponde con el ítem especificado.
         """
+
         for child_iid in self.treeview.get_children(iid):
             if isdir(self.fsobjects[child_iid]):
                 self.load_tree(self.fsobjects[child_iid],
-                               parent=child_iid)
-    
+                            parent=child_iid)
     def item_opened(self, event):
         """
         Evento invocado cuando el contenido de una carpeta es abierto.
@@ -254,6 +241,27 @@ class Treeview(tk.Frame):
         iid = self.treeview.selection()[0]
         self.load_subitems(iid)
     
+    def item_closed(self, event):
+        """
+        Evento invocado cuando el contenido de una carpeta es abierto.
+        """
+        iid = self.treeview.selection()[0]
+        records = self.treeview.get_children(iid)
+        print(records)
+        self.treeview.delete(*self.treeview.get_children())
+        self.load_tree(abspath("/home/esy9d7l1/compliance/extracion/"))
+
+        #self.listdir(path)
+        # for elemnts in records:
+        #     self.treeview.delete(elemnts)
+        #     self.load_tree(self.fsobjects[elemnts],
+        #                         parent=elemnts)
+        # for child_iid in self.treeview.get_children(iid):
+        #     if isdir(self.fsobjects[child_iid]):
+        #             self.load_tree(self.fsobjects[child_iid],
+        #                         parent=child_iid)
+        #self.load_subitems(iid)
+
     def select_extraction(self, event):
         tree_event = event.widget
         item_id = tree_event.selection()[0]
@@ -261,5 +269,12 @@ class Treeview(tk.Frame):
         index = tree_event.index(item_id)
         ## -----------------------------------
         dir_selecionado = tree_event.item(item_id, option="text")
-        print(dir_selecionado)
+        exText = Extracione(self)
+        exText.seleccionar_plantilla(event=None)
+        # nombre = "SSH_Linux_INFRA_ITSS_PREG:202"
+        # with open("/home/esy9d7l1/compliance/extracion/INFRA/Linux/{}".format(nombre), "r", encoding="utf-8") as g:
+        #     data = g.read()
+        #     exText.txt.delete('1.0',tk.END)
+        #     for md in data:
+        #         exText.txt.insert(tk.END, md)
 

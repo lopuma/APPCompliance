@@ -11,7 +11,7 @@
       ],
       "code": "1-OK",
       "servers": [
-        "ALL servers"
+        "ALL servers", "ILL SERVER"
       ],
       "risk": "GENERICO2AFB",
       "impact": "GENERICOAFB",
@@ -204,26 +204,7 @@
       "object": "/appsrv/",
       "owner": "nodejs",
       "tipo": "/C/",
-      "ownerGroup": "Group Customer",
-      "user": [
-        ""
-      ],
-      "code": "2-DOC",
-      "servers": [
-        "ALL servers"
-      ],
-      "risk": "GENERICO1LBK",
-      "impact": "GENERICOLBK",
-      "variable": [
-        ""
-      ],
-      "SO": "Linux"
-    },
-    {
-      "object": "/appsrv/LBK_ARQ_SPA_5_SERVER_COUCH/",
-      "owner": "nodejs",
-      "tipo": "/C/",
-      "ownerGroup": "Group Customer",
+      "ownerGroup": "CUSTOMER",
       "user": [
         ""
       ],
@@ -235,6 +216,44 @@
       "impact": "GENERICO",
       "variable": [
         ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/appsrv/LBK_ARQ_SPA_5_SERVER_COUCH/",
+      "owner": "nodejs",
+      "tipo": "/C/",
+      "ownerGroup": "CUSTOMER",
+      "user": [
+        ""
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "GENERICO",
+      "impact": "GENERICO",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/home/ESY9E1L3/RHEL",
+      "owner": "esy9e1l3",
+      "tipo": "/E/",
+      "ownerGroup": "",
+      "user": [
+        ""
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/home/ESY9E1L3/RHEL\""
       ],
       "SO": "Linux"
     }
