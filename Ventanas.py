@@ -11,16 +11,16 @@ from tkinter import font as font
 from PIL import Image, ImageTk
 user = getuser()
 mypath = os.path.expanduser("~/")
-path_icon = mypath+"compliance/image/"
+path_icon = mypath+"Compliance/image/"
 class Ventana(ttk.Frame):
-    def __init__(self, parent, customer, app, desviacion, path, *args, **kwargs):
+    def __init__(self, parent, name_vtn, customer, app, desviacion, path, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
         self.parent = parent
         self.customer = customer
         self.app = app
         self.desviacion = desviacion
         self.path_ventanas = mypath+path
-        self.tt_vtn = "VENTANA"
+        self.tt_vtn = name_vtn
         print(self.path_ventanas)
         self.vtn_ventanas = tk.Toplevel(self)
         self.vtn_ventanas.config(background='#F9F3DF')
@@ -32,7 +32,7 @@ class Ventana(ttk.Frame):
         position_right = int(screen_width+150)
         self.vtn_ventanas.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
         self.vtn_ventanas.resizable(0,0)
-        self.vtn_ventanas.title('{} for client {}'.format(self.tt_vtn,self.customer))
+        self.vtn_ventanas.title('{} for client {}'.format(self.tt_vtn, self.customer))
         #self.vtn_ventanas.transient(self)
         #self.vtn_ventanas.grab_set()
         self.vtn_ventanas.columnconfigure(0, weight=1)
@@ -92,16 +92,16 @@ class Ventana(ttk.Frame):
     def clear_bsq(self, event):
         text_widget = event.widget
         entry = self.var_ent_buscar.get()
-        if entry == "Buscar ventanas / File ...":
+        if entry == "Buscar Directories / File ...":
             text_widget.config(foreground="black", font=("Consolas", 14))
             self.var_ent_buscar.set("")
             text_widget.icursor(0)
         elif entry == "":
             text_widget.config(foreground="gray75", font=("Consolas", 12))
-            self.var_ent_buscar.set("Buscar ventanas / File ...")
+            self.var_ent_buscar.set("Buscar Directories / File ...")
             text_widget.icursor(0)
     def limpiar_bsq(self):
-        self.var_ent_buscar.set("Buscar ventanas / File ...")
+        self.var_ent_buscar.set("Buscar Directories / File ...")
         self.textBuscar.focus()
         self.textBuscar.icursor(0)
         self.btnLimpiar.grid_forget()
@@ -113,7 +113,7 @@ class Ventana(ttk.Frame):
         valor_Buscado = [n for n in self.ventanas if valor_aBuscar.strip() in n]
         if valor_aBuscar == "":
             mb.showerror(
-            "ERROR", "Esta vacio o no existe el directorio/file.\nPrueba a buscar de nuevo...", parent=self.vtn_ventanas
+            "ERROR", "Esta vacio o no existe el directorio/fichero.\nPrueba a buscar de nuevo...", parent=self.vtn_ventanas
             )            
             self.cargar_ventanas()
             self.limpiar_widgets()
@@ -123,7 +123,7 @@ class Ventana(ttk.Frame):
         else:
             if len(valor_Buscado) == 0:
                 mb.showerror(
-                "ERROR", "Esta vacio o no existe el directorio/file.\nPrueba a buscar de nuevo...", parent=self.vtn_ventanas
+                "ERROR", "Esta vacio o no existe el directorio/fichero.\nPrueba a buscar de nuevo...", parent=self.vtn_ventanas
                 )                 
                 self.cargar_ventanas()
                 self.limpiar_widgets()
@@ -451,7 +451,7 @@ class Ventana(ttk.Frame):
             selectforeground='#CDFFEB', 
             selectbackground='#476072'
         )
-        self.var_ent_buscar.set("Buscar ventanas / File ...")
+        self.var_ent_buscar.set("Buscar Directories / File ...")
         self.textBuscar.grid(row=0, column=0, padx=10, pady=5, sticky='nsew')
 
         self.btnBuscar = ttk.Button(

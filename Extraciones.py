@@ -11,22 +11,29 @@ from tkinter import messagebox as mb
 from tkinter import font
 from PIL import Image, ImageTk
 from tkinter.ttk import Style
+from threading import Thread
+import time
 user = getuser()
 mypath = os.path.expanduser("~/")
-path_icon = mypath+"compliance/image/"
+path_extracion = mypath+"Compliance/extracion/"
+path_icon = mypath+"Compliance/image/"
 
+parar = False
 class Extracion(ttk.Frame):
+    
     def __init__(self, parent, *args, **kwargs):
         ttk.Frame.__init__(self, parent, *args)
         self.navIcon = ImageTk.PhotoImage(Image.open(
-            "/home/esy9d7l1/compliance/image/menu.png").resize((25, 25)))
+            path_icon+r"menu.png").resize((25, 25)))
         self.closeIcon = ImageTk.PhotoImage(Image.open(
-            "/home/esy9d7l1/compliance/image/close.png").resize((25, 25)))
+            path_icon+r"close.png").resize((25, 25)))
+        self.wd = 300
         self.menu()
+        #self.ampliador()
         self.text()
-        #self.bind("<Control-l>", lambda x: self.hide())
         self.hidden = 0
-        self.columnconfigure(1, weight=5)
+        #self.columnconfigure(1, weight=1)
+        self.columnconfigure(2, weight=5)
         self.rowconfigure(0, weight=1)
 
     def menu(self):
@@ -34,7 +41,7 @@ class Extracion(ttk.Frame):
         self.frame1 = tk.Frame(
             self,
             background="gold",
-            width=300
+            width=self.wd
         )
         self.frame1.grid_propagate(False)
         self.frame1.grid(row=0, column=0, sticky="nsew")
@@ -83,12 +90,55 @@ class Extracion(ttk.Frame):
         )
         self.fsobjects = {}
         
-        self.file_image = tk.PhotoImage(file="/home/esy9d7l1/compliance/image/files.png")
-        self.folder_image = tk.PhotoImage(file="/home/esy9d7l1/compliance/image/folder.png")
-        
-        # Cargar el directorio raíz.
-        self.load_tree(abspath("/home/esy9d7l1/compliance/extracion/"))
+        self.file_image = tk.PhotoImage(file=path_icon+r"files.png")
+        self.folder_image = tk.PhotoImage(file=path_icon+r"folder.png")
 
+        self.max = ttk.Button(
+            self.frame1,
+            text="+",
+        )
+        self.max.grid(row=2, column=0, sticky="e")
+
+        self.min = ttk.Button(
+            self.frame1,
+            text="-",
+        )
+        self.min.grid(row=2, column=0, sticky="w")
+                
+        # Cargar el directorio raíz.
+        self.load_tree(abspath(path_extracion))
+        self.max.bind("<Button-1>",lambda e: Thread(target=self.ampliar, daemon=True).start())
+        self.max.bind("<ButtonRelease-1>", self._parar_)
+        self.min.bind("<Button-1>",lambda e: Thread(target=self.reducir, daemon=True).start())
+        self.min.bind("<ButtonRelease-1>", self._parar_)
+
+    def ampliar(self):
+        global parar
+        parar = False
+        while not parar:
+            time.sleep(0.01)
+            if self.wd < 1250:
+                self.wd += 3
+                self.frame1.config(width=self.wd)
+            else:
+                self._parar_(event=None)
+        print(self.wd)
+
+    def _parar_(self, event):
+        global parar
+        parar = True
+    
+    def reducir(self):
+        global parar
+        parar = False
+        while not parar:
+            time.sleep(0.01)
+            if self.wd > 180:
+                self.wd -= 3
+                self.frame1.config(width=self.wd)
+            else:
+                self._parar_(event=None)
+    
     def seleccionar_plantilla(self, plantilla):
         self.plantilla = plantilla
         print(self.plantilla)
@@ -151,7 +201,7 @@ class Extracion(ttk.Frame):
                 for sub_fsobj in self.listdir(fullpath):
                     self.insert_item(sub_fsobj, join(fullpath, sub_fsobj),
                                     child)
-        
+
     def load_subitems(self, iid):
         """
         Cargar el contenido de todas las carpetas hijas del directorio
@@ -177,7 +227,7 @@ class Extracion(ttk.Frame):
         iid = self.treeview.selection()[0]
         records = self.treeview.get_children(iid)
         self.treeview.delete(*self.treeview.get_children())
-        self.load_tree(abspath("/home/esy9d7l1/compliance/extracion/"))
+        self.load_tree(abspath(path_extracion))
 
         #self.listdir(path)
         # for elemnts in records:
@@ -193,19 +243,27 @@ class Extracion(ttk.Frame):
     def select_extraction(self, event):
         iid = self.treeview.selection()[0]
         plantilla = self.treeview.item(iid, option="text")
-        initial_dir = '/home/esy9d7l1/compliance/extracion'
         path = ''
-        for root, _, files in os.walk(initial_dir):
+        for root, _, files in os.walk(path_extracion):
             if plantilla in files:
                 path = os.path.join(root, plantilla)
                 break
-        print(len(path))
-        print(path)
-        self.seleccionar_plantilla(path)
+        if len(path) != 0:
+            self.seleccionar_plantilla(path)
 
+    def ampliador(self):
+        self.frame3 = tk.Frame(
+            self
+        )
+        self.frame3.config(
+            border=0,
+            background="blue",
+            width=1
+        )
+        #self.frame3.grid(row=0, column=1, sticky="nsew")
     def text(self):
         self.frame2 = tk.Frame(self)
-        self.frame2.grid(row=0, column=1, sticky="nsew")
+        self.frame2.grid(row=0, column=2, sticky="nsew")
         self.frame2.columnconfigure(0, weight=1)
         self.frame2.rowconfigure(0, weight=1)
         self.txt = st.ScrolledText(
@@ -224,29 +282,32 @@ class Extracion(ttk.Frame):
         self.txt.grid(row=0, column=0, sticky="nsew")
 
     def hide(self):
+        global parar
         if self.hidden == 0:
             self.frame1.destroy()
             self.hidden = 1
             self.btn_nav.grid(row=0, column=0, sticky="nw")
+            parar = False
         else:
             self.menu()
             self.hidden = 0
             self.btn_nav.grid_forget()
+            parar = False
 
     def hide_btn_nav(self):
+        global parar
         if self.hidden == 0:
             self.frame1.destroy()
             self.hidden = 1
             self.btn_nav.grid(row=0, column=0, sticky="nw")
-            #self.seleccionar_plantilla(plantilla="SSH_Linux_FT_CSD(Split)_PREG:267")
+        parar = False
+        print(self.wd)        
 
     def show_btn_nav(self):
+        global parar
         if self.hidden == 1:
             self.menu()
             self.hidden = 0
             self.btn_nav.grid_forget()
-
-        # self.tree = Treeview(self.frame1)
-        # self.tree.rowconfigure(1, weight=1)
-        # self.tree.columnconfigure(0, weight=1)
-        # self.tree.grid(row=1, column=0, sticky="nsew")
+        parar = False
+        print(self.wd)

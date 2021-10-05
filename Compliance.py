@@ -20,10 +20,10 @@ from Extraciones import Extracion
 from Ventanas import *
 #-----------------------------------------------------------#
 user = getuser()
-path = os.path.expanduser("~/")
-path_icon = path+"compliance/image/"
+mypath = os.path.expanduser("~/")
+path_icon = mypath+"Compliance/image/"
 clt = ''
-path_modulo = path+"compliance/file/desviaciones_{}.json"
+path_modulo = mypath+"Compliance/file/desviaciones_{}.json"
 list_client = [
     "AFB",
     "ASISA",
@@ -931,25 +931,33 @@ class Desviacion(ttk.Frame):
     def abrir_DIRECTORY(self):
         global asigne_Ciente
         global directory
-        path = "compliance/file/directory.json"
-        directory = Ventana(self,asigne_Ciente, app,desviacion,path)
+        name_vtn = "DIRECTORY"
+        path = "Compliance/file/directory.json"
+        directory = Ventana(self,name_vtn, asigne_Ciente, app,desviacion,path)
     def abrir_COMMAND(self):
         global asigne_Ciente
         global command
-        path = "compliance/file/command.json"
-        command = Ventana(self,asigne_Ciente, app,desviacion,path)
+        name_vtn = "COMMAND"
+        path = "Compliance/file/command.json"
+        command = Ventana(self,name_vtn, asigne_Ciente, app,desviacion,path)
     def abrir_AUTHORIZED(self):
         global asigne_Ciente
         global authorized
-        path = "compliance/file/authorized_keys.json"
-        authorized = Ventana(self,asigne_Ciente, app,desviacion,path)
+        name_vtn = "AUTHORIZED"
+        path = "Compliance/file/authorized_keys.json"
+        authorized = Ventana(self,name_vtn, asigne_Ciente, app,desviacion,path)
     def abrir_ACCOUNT(self):
         global asigne_Ciente
         global account
-        path = "compliance/file/account.json"
-        account = Ventana(self,asigne_Ciente, app,desviacion,path)
+        name_vtn = "ACCOUNT"
+        path = "Compliance/file/account.json"
+        account = Ventana(self,name_vtn, asigne_Ciente, app,desviacion,path)
     def abrir_SERVICE(self):
-        pass
+        global asigne_Ciente
+        global service
+        name_vtn = "SERVICE"
+        path = "Compliance/file/service.json"
+        service = Ventana(self,name_vtn, asigne_Ciente, app,desviacion,path)
     ## ----------------------------------------------------------- ##
     def cambiar_NamePestaña(self, customer):
         app.cuaderno.tab(idOpenTab, option=None, text='DESVIACIONES : {} '.format(customer))
@@ -966,7 +974,7 @@ class Aplicacion():
         self.root.geometry(f'{window_width}x{window_height}+{position_top}+{position_right}')
         #self.root.geometry("1028x768")
         self.root.configure(background='black') 
-        self.root.tk.call('wm', 'iconphoto', self.root._w, tk.PhotoImage(file=path_icon+'compliance.png'))       
+        self.root.tk.call('wm', 'iconphoto', self.root._w, tk.PhotoImage(file=path_icon+r'compliance.png'))       
         self.iconos()
         self.cuaderno = ScrollableNotebook(self.root,wheelscroll=False,tabmenu=True)
         self.contenedor= ttk.Frame(self.cuaderno)

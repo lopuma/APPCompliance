@@ -12,7 +12,7 @@ from threading import Thread
 from PIL import Image, ImageTk
 release = True
 path = os.path.expanduser("~/")
-path_icon = path+"compliance/image/"
+path_icon = path+"Compliance/image/"
 count = 0
 class ScrollableNotebook(ttk.Frame):
     _initialized = False
