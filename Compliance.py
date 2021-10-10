@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-from posixpath import lexists
 import tkinter as tk
 import json
 import os
@@ -99,23 +98,25 @@ class Expandir(ttk.Frame):
             state="disabled"
         )
         self.menu_Contextual.add_separator(background='#ccffff')
-        self.menu_Contextual.add_command(label="  Seleccionar todo", 
-                                #image=self.copy2_icon,
-                                compound=LEFT,
-                                background='#ccffff', foreground='black',
-                                activebackground='#004c99',activeforeground='white',
-                                font=self.text_font,
-                                command=lambda : app.seleccionar_todo(event=None),
-                                )
+        self.menu_Contextual.add_command(
+            label="  Seleccionar todo", 
+            #image=self.copy2_icon,
+            compound=LEFT,
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            command=lambda : app.seleccionar_todo(event=None),
+        )
         self.menu_Contextual.add_separator(background='#ccffff')
-        self.menu_Contextual.add_command(label="  Cerrar pestaña", 
-                                #image=self.cerrar_icon,
-                                compound=LEFT,
-                                background='#ccffff', foreground='black',
-                                activebackground='#004c99',activeforeground='white',
-                                font=self.text_font,
-                                command=self.cerrar_vtn_expandir
-                                )
+        self.menu_Contextual.add_command(
+            label="  Cerrar pestaña", 
+            #image=self.cerrar_icon,
+            compound=LEFT,
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            command=self.cerrar_vtn_expandir
+        )
     def display_menu_clickDerecho(self, event):
         self.menu_Contextual.tk_popup(event.x_root, event.y_root)
         self.srcEvent = event.widget
@@ -211,7 +212,7 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_srcEditar.bind("<Button-3><ButtonRelease-3>",app.display_menu_clickDerecho)
         self.DESVfr3_srcRefrescar.bind("<Button-3><ButtonRelease-3>",app.display_menu_clickDerecho)
         self.DESVfr3_srcEvidencia.bind("<Button-3><ButtonRelease-3>",app.display_menu_clickDerecho)
-        self.DESVfr1_listbox.bind("<Button-3><ButtonRelease-3>",app.display_menu_clickDerecho)
+        #self.DESVfr1_listbox.bind("<Button-3><ButtonRelease-3>",app.display_menu_clickDerecho)
         self.DESVfr1_entModulo.bind("<ButtonRelease-3>",app.display_menu_clickDerecho)
         ## --- ACTIVAR MODO SOLO LECTURA --- ##
         self.DESVfr2_srcComprobacion.bind("<Key>", lambda e: self.widgets_SoloLectura(e))
@@ -235,10 +236,17 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_srcEditar.bind('<Control-f>', lambda e : self.buscar(e))
         self.DESVfr3_srcRefrescar.bind('<Control-f>', lambda e : self.buscar(e))
         self.DESVfr3_srcEvidencia.bind('<Control-f>', lambda e : self.buscar(e))
-        app.editMenu.bind_all('<Control-f>', lambda e : self.buscar(e))
+        self.DESVfr1_listbox.bind('<Control-f>', lambda e : self.buscar(e))
+        app.editMenu.bind('<Control-f>', lambda e : self.buscar(e))
         self.DESVfr1_listbox.bind("<Down>",lambda e : self.ListDown(e))
         self.DESVfr1_listbox.bind("<Up>",lambda e : self.ListUp(e))
         self.DESVfr1_entModulo.bind('<Control-v>', lambda e : self.sel_text(e))
+        self.DESVfr2_srcComprobacion.bind('<Control-c>', lambda e : app._copiar_texto_seleccionado(e))
+        self.DESVfr2_srcBackup.bind('<Control-c>', lambda e : app._copiar_texto_seleccionado(e))
+        self.DESVfr3_srcEditar.bind('<Control-c>', lambda e : app._copiar_texto_seleccionado(e))
+        self.DESVfr3_srcRefrescar.bind('<Control-c>', lambda e : app._copiar_texto_seleccionado(e))
+        self.DESVfr3_srcEvidencia.bind('<Control-c>', lambda e : app._copiar_texto_seleccionado(e))
+        self.DESVfr1_entModulo.bind('<Control-x>', lambda e : self._clear_busqueda(e))        
         ## --- --- ##
     def iconos(self): #TODO ICONOS DE VENTANA DESVIACION
         self.BuscarModulo_icon = ImageTk.PhotoImage(
@@ -334,15 +342,23 @@ class Desviacion(ttk.Frame):
     ## --- FUNCIONES AL SELECIONAR MODULO, O BUSCAR MODULO ------- ##
     def asignarValor_aWidgets(self, md):
         global sis_oper
-        sis_oper = md['SO']
-        self.DESV_frame2['text'] = md['SO']
-        self.DESVfr2_lblModulo['text'] = md['modulo']
-        self.DESVfr2_lblDescripcion['text'] = md['descripcion']
-        self.DESVfr2_srcComprobacion.insert(END,md['comprobacion'])
-        self.DESVfr2_srcBackup.insert(END,md['copia'])
-        self.DESVfr3_srcEditar.insert(END,md['editar'])
-        self.DESVfr3_srcRefrescar.insert(END,md['refrescar'])
-        self.DESVfr3_srcEvidencia.insert(END,md['evidencia'])
+        if md['SO'] is not None:
+            sis_oper = md['SO']
+            self.DESV_frame2['text'] = md['SO']
+        if md['modulo'] is not None:
+            self.DESVfr2_lblModulo['text'] = md['modulo']
+        if md['descripcion'] is not None:
+            self.DESVfr2_lblDescripcion['text'] = md['descripcion']
+        if md['comprobacion'] is not None:
+            self.DESVfr2_srcComprobacion.insert(END,md['comprobacion'])
+        if md['copia'] is not None:
+            self.DESVfr2_srcBackup.insert(END,md['copia'])
+        if md['editar'] is not None:
+            self.DESVfr3_srcEditar.insert(END,md['editar'])
+        if md['refrescar'] is not None:
+            self.DESVfr3_srcRefrescar.insert(END,md['refrescar'])
+        if md['evidencia'] is not None:
+            self.DESVfr3_srcEvidencia.insert(END,md['evidencia'])
     def limpiar_Widgets(self):
         self.DESV_frame2['text'] = 'SISTEMA OPERATIVO'
         self.DESVfr2_lblModulo['text'] = 'MODULO'
@@ -368,7 +384,7 @@ class Desviacion(ttk.Frame):
                     self.asignarValor_aWidgets(md)
             self.mostrar_buttons_modulo(modulo_selecionado)
     def mostrar_buttons_modulo(self, modulo_selecionado): #TODO añadir demas botones
-        if str(modulo_selecionado) == "Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories":
+        if str(modulo_selecionado) == "Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /TMP Files Restrictions":
             self.DESV_btnDirectory.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
             self.DESV_btnAuthorized.grid_forget()
             self.DESV_btnCommand.grid_forget()
@@ -454,7 +470,7 @@ class Desviacion(ttk.Frame):
             self.limpiar_Widgets()
             self.DESVfr1_entModulo.focus() 
     def mostrar_buttons_clave(self, clave_Buscado):
-        if clave_Buscado == "STICKY":
+        if clave_Buscado == "STICKY" or clave_Buscado == "OSRTMP":
             self.DESV_btnDirectory.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
         else:
             self.DESV_btnDirectory.grid_forget()   
@@ -473,6 +489,10 @@ class Desviacion(ttk.Frame):
             text_widget.icursor(0)
             self.DESVfr1_btnLimpiar.grid_forget()
             self.DESVfr1_btnBuscar.grid(row=1, column=1, pady=5, padx=5, sticky='nsw')
+    def _clear_busqueda(self, event):
+        self.var_entry_bsc.set("")
+        self.DESVfr1_btnLimpiar.grid_forget()
+        self.DESVfr1_btnBuscar.grid(row=1, column=1, pady=5, padx=5, sticky='nsw')
     def sel_text(self, event):
         if event.widget.select_present():
             self.var_entry_bsc.set("")
@@ -559,6 +579,10 @@ class Desviacion(ttk.Frame):
         ## --- LIMPIAR -----------------------------
         self.DESVfr1_listbox.delete(0,END)
         self.limpiar_Widgets()
+        self.DESV_btnDirectory.grid_forget()
+        self.DESV_btnAuthorized.grid_forget()
+        self.DESV_btnCommand.grid_forget()
+        self.DESV_btnAccount.grid_forget()
         ## ----------------------------------------- ##
         asigne_Ciente = customer       
         with open(path_modulo.format(customer)) as g:
@@ -593,22 +617,28 @@ class Desviacion(ttk.Frame):
     def widgets_DESVIACION(self):
         self.text_font = font.Font(family='Consolas', size=13)
         # --- DEFINIMOS LOS LABEL FRAMEs, QUE CONTENDRAN LOS WIDGETS --------------------------#
-        self.DESV_frame1=ttk.LabelFrame(self, 
-                                        text="CLIENTE / MODULO", 
-                                        border=1, 
-                                        relief='sunken')
+        self.DESV_frame1=ttk.LabelFrame(
+            self, 
+            text="CLIENTE / MODULO", 
+            border=1, 
+            relief='sunken'
+        )
         self.DESV_frame1.grid_propagate(False)
         self.DESV_frame1.grid(column=0, row=0, padx=10, pady=10, sticky='nsew')
-        self.DESV_frame2=ttk.LabelFrame(self, 
-                                        text="SISTEMA OPERATIVO", 
-                                        border=1, 
-                                        relief='sunken')
+        self.DESV_frame2=ttk.LabelFrame(
+            self, 
+            text="SISTEMA OPERATIVO", 
+            border=1, 
+            relief='sunken'
+        )
         self.DESV_frame2.grid_propagate(False)
         self.DESV_frame2.grid(column=1, row=0, padx=10, pady=10, sticky='nsew')
-        self.DESV_frame3=ttk.LabelFrame(self, 
-                                        text="EDITAR / EVIDENCIA", 
-                                        border=1, 
-                                        relief='sunken')
+        self.DESV_frame3=ttk.LabelFrame(
+            self, 
+            text="EDITAR / EVIDENCIA", 
+            border=1, 
+            relief='sunken'
+        )
         self.DESV_frame3.grid_propagate(False)
         self.DESV_frame3.grid(column=2, row=0, padx=10, pady=10, sticky='nsew')
         # -----------------------------------------------------------------------------#
@@ -1156,84 +1186,119 @@ class Aplicacion():
     def menu_clickDerecho(self):
         self.text_font = font.Font(family='Consolas', size=13)   
         self.menu_Contextual = Menu(self.root, tearoff=0)
-        self.menu_Contextual.add_command(label="  Buscar", 
-                                accelerator='Ctrl+F',
-                                background='#ccffff', foreground='black',
-                                activebackground='#004c99',activeforeground='white',
-                                font=self.text_font,
-                                command=self.buscar,
-                                state='disabled',
-                                )
+        self.menu_Contextual.add_command(
+            label="  Buscar", 
+            accelerator='Ctrl+F',
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            command=self.buscar,
+            state='disabled',
+        )
         self.menu_Contextual.add_separator(background='#ccffff')
-        self.menu_Contextual.add_command(label="  Copiar", 
-                                accelerator='Ctrl+C',
-                                background='#ccffff', foreground='black',
-                                activebackground='#004c99',activeforeground='white',
-                                font=self.text_font,
-                                command= self.copiar_texto_seleccionado,
-                                state='disabled',
-                                )
-        self.menu_Contextual.add_command(label="  Pegar", 
-                                accelerator='Ctrl+V',
-                                background='#ccffff', foreground='black',
-                                activebackground='#004c99',activeforeground='white',
-                                font=self.text_font,
-                                command=self.pegar_texto_seleccionado,
-                                state='disabled',
-                                )
+        self.menu_Contextual.add_command(
+            label="  Copiar", 
+            accelerator='Ctrl+C',
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            command= self.copiar_texto_seleccionado,
+            state='disabled',
+        )
+        self.menu_Contextual.add_command(
+            label="  Pegar", 
+            accelerator='Ctrl+V',
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            command=self.pegar_texto_seleccionado,
+            state='disabled',
+        )
         self.menu_Contextual.add_separator(background='#ccffff')
-        self.menu_Contextual.add_command(label="  Seleccionar todo", 
-                                accelerator='Ctrl+A',
-                                background='#ccffff', foreground='black',
-                                activebackground='#004c99',activeforeground='white',
-                                font=self.text_font,
-                                command=lambda : self.seleccionar_todo(event=None),
-                                state='disabled',
-                                )
+        self.menu_Contextual.add_command(
+            label="  Seleccionar todo", 
+            accelerator='Ctrl+A',
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            command=lambda : self.seleccionar_todo(event=None),
+            state='disabled',
+        )
+        self.menu_Contextual.add_command(
+            label="  Limpiar", 
+            accelerator='Ctrl+X',
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            command=lambda :desviacion._clear_busqueda,
+            state='disabled',
+        )
         self.menu_Contextual.add_separator(background='#ccffff')
-        self.menu_Contextual.add_command(label="  Cerrar pestaña", 
-                                #image=self.cerrar_icon,
-                                compound=LEFT,
-                                background='#ccffff', foreground='black',
-                                activebackground='#004c99',activeforeground='white',
-                                font=self.text_font,
-                                command=self.cerrar_vtn_desviacion
-                                )
+        self.menu_Contextual.add_command(
+            label="  Cerrar pestaña", 
+            #image=self.cerrar_icon,
+            compound=LEFT,
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            command=self.cerrar_vtn_desviacion
+        )
     def display_menu_clickDerecho(self, event):
-        global idOpenTab
-        global txtWidget_focus
+        #global idOpenTab
+        #global txtWidget_focus
         self.menu_Contextual.tk_popup(event.x_root, event.y_root)
-        txtWidget = event.widget
-        self.srcEvent = event.widget
-        self.srcEvent.focus()
-        if str(self.srcEvent) != ".!scrollablenotebook.!notebook2":
-            if txtWidget == desviacion.DESVfr1_entModulo:
-                self.menu_Contextual.entryconfig('  Buscar', state='normal')
-                self.menu_Contextual.entryconfig('  Pegar', state='normal')
-                self.menu_Contextual.entryconfig('  Copiar', state='disabled')
-                self.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
-            elif txtWidget == desviacion.DESVfr1_listbox:
-                self.menu_Contextual.entryconfig('  Buscar', state='normal')
-                self.menu_Contextual.entryconfig('  Pegar', state='disabled')
-                self.menu_Contextual.entryconfig('  Copiar', state='disabled')
-                self.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
-            else:
-                txt_select = event.widget.tag_ranges(tk.SEL)
-                desviacion.disabled_copy(txt_select)
-                self.menu_Contextual.entryconfig('  Pegar', state='disabled')
-                self.menu_Contextual.entryconfig('  Buscar', state='normal')
-                self.menu_Contextual.entryconfig('  Seleccionar todo', state='normal')
-                self.menu_Contextual.entryconfig('  Cerrar pestaña', state='normal')
-        else:
-            self.menu_Contextual.entryconfig('  Buscar', state='disabled')
-            self.menu_Contextual.entryconfig('  Copiar', state='disabled')
-            self.menu_Contextual.entryconfig('  Pegar', state='disabled')
-            self.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
-            tab = self.srcEvent.tab(idOpenTab)['text']
-            if str(tab) == "WorkSpace  ":
-                self.menu_Contextual.entryconfig('  Cerrar pestaña', state='disabled')
-            else:
-                self.menu_Contextual.entryconfig('  Cerrar pestaña', state='normal')
+        self.scrEvent = event.widget
+        self.scrEvent.focus()
+        self.entry = desviacion.DESVfr1_entModulo
+        print(str(self.scrEvent))
+        print(str(desviacion.DESVfr1_entModulo))
+        print(str(self.entry))
+        # if str(self.scrEvent) == str(desviacion.DESVfr1_entModulo):
+        #     self.menu_Contextual.entryconfig('  Buscar', state='normal')
+        #     self.menu_Contextual.entryconfig('  Pegar', state='normal')
+        #     self.menu_Contextual.entryconfig('  Copiar', state='disabled')
+        #     self.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
+        #     self.menu_Contextual.entryconfig('  Limpiar', state='normal')
+        # else:
+        #     if str(self.scrEvent) != ".!scrollablenotebook.!notebook2":
+        #         txt_select = event.widget.tag_ranges(tk.SEL)
+        #         desviacion.disabled_copy(txt_select)
+        #         self.menu_Contextual.entryconfig('  Pegar', state='disabled')
+        #         self.menu_Contextual.entryconfig('  Buscar', state='normal')
+        #         self.menu_Contextual.entryconfig('  Seleccionar todo', state='normal')
+        #         self.menu_Contextual.entryconfig('  Cerrar pestaña', state='normal')
+        #         self.menu_Contextual.entryconfig('  Limpiar', state='disabled')
+
+        # if str(self.scrEvent) != ".!scrollablenotebook.!notebook2":
+        #     if txtWidget == desviacion.DESVfr1_entModulo:
+        #         self.menu_Contextual.entryconfig('  Buscar', state='normal')
+        #         self.menu_Contextual.entryconfig('  Pegar', state='normal')
+        #         self.menu_Contextual.entryconfig('  Copiar', state='disabled')
+        #         self.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
+        #         self.menu_Contextual.entryconfig('  Limpiar', state='normal')
+        #     elif txtWidget == desviacion.DESVfr1_listbox:
+        #         self.menu_Contextual.entryconfig('  Buscar', state='normal')
+        #         self.menu_Contextual.entryconfig('  Pegar', state='disabled')
+        #         self.menu_Contextual.entryconfig('  Copiar', state='disabled')
+        #         self.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
+        #     else:
+        #         txt_select = event.widget.tag_ranges(tk.SEL)
+        #         desviacion.disabled_copy(txt_select)
+        #         self.menu_Contextual.entryconfig('  Pegar', state='disabled')
+        #         self.menu_Contextual.entryconfig('  Buscar', state='normal')
+        #         self.menu_Contextual.entryconfig('  Seleccionar todo', state='normal')
+        #         self.menu_Contextual.entryconfig('  Cerrar pestaña', state='normal')
+        #         self.menu_Contextual.entryconfig('  Limpiar', state='disabled')
+        # else:
+        #     self.menu_Contextual.entryconfig('  Buscar', state='disabled')
+        #     self.menu_Contextual.entryconfig('  Copiar', state='disabled')
+        #     self.menu_Contextual.entryconfig('  Pegar', state='disabled')
+        #     self.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
+        #     tab = self.srcEvent.tab(idOpenTab)['text']
+        #     if str(tab) == "WorkSpace  ":
+        #         self.menu_Contextual.entryconfig('  Cerrar pestaña', state='disabled')
+        #     else:
+        #         self.menu_Contextual.entryconfig('  Cerrar pestaña', state='normal')
     def buscar(self, *args):
         desviacion.buscar(event=None)
     def pegar_texto_seleccionado(self):
@@ -1253,6 +1318,14 @@ class Aplicacion():
                 app.root.clipboard_append(txtWidget.get(*seleccion).strip())
                 txtWidget.tag_remove("sel","1.0","end")
                 return 'break'
+    def _copiar_texto_seleccionado(self, event):
+        scrText = event.widget
+        seleccion = scrText.tag_ranges(tk.SEL)
+        if seleccion:
+            self.root.clipboard_clear()
+            self.root.clipboard_append(scrText.get(*seleccion).strip())
+            scrText.tag_remove("sel","1.0","end")
+            return 'break'
     def seleccionar_todo(self, event):
         if txtWidget_focus:
             txtWidget.tag_add("sel","1.0","end")

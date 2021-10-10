@@ -64,10 +64,20 @@ class Ventana(ttk.Frame):
         self.textBuscar.bind("<FocusIn>", lambda e: self.clear_bsq(e))
         self.textBuscar.bind("<FocusOut>", lambda e: self.clear_bsq(e))    
         self.textBuscar.bind("<KeyPress>", lambda e: self.clear_bsq_buttom(e))    
-        self.textBuscar.bind("<Control-v>", lambda e: self.sel_text(e))
+        self.textBuscar.bind("<Control-v>",lambda e:self.sel_text(e))
         ## --- Selecionar elemento hacia abajo
         self.tree.bind("<Down>", lambda e:self.TreeDown(e))
         self.tree.bind("<Up>", lambda e:self.TreeUp(e))
+        self.textBuscar.bind("<Control-x>",self.limpiar_bsq2)
+        self.srcRisk.bind("<Control-a>",lambda e:self._seleccionar_todo(e))
+        self.srcImpact.bind("<Control-a>",lambda e:self._seleccionar_todo(e))
+        self.srcVariable.bind("<Control-a>",lambda e:self._seleccionar_todo(e))
+        self.listServer.bind("<Control-a>",lambda e:self._selALL_optionLis(e))
+        self.srcRisk.bind("<Control-f>",self.act_buscar)
+        self.srcImpact.bind("<Control-f>",self.act_buscar)
+        self.srcVariable.bind("<Control-f>",self.act_buscar)
+        self.listServer.bind("<Control-f>",self.act_buscar)
+        self.tree.bind("<Control-f>",self.act_buscar)
     def iconos(self):
         self.buscar_icon = ImageTk.PhotoImage(
                     Image.open(path_icon+r"buscar.png").resize((25, 25)))
@@ -96,16 +106,31 @@ class Ventana(ttk.Frame):
             text_widget.config(foreground="black", font=("Consolas", 14))
             self.var_ent_buscar.set("")
             text_widget.icursor(0)
+            self.btnLimpiar.grid_forget()
+            self.btnBuscar.grid(row=0, column=1, sticky=W)
         elif entry == "":
             text_widget.config(foreground="gray75", font=("Consolas", 12))
             self.var_ent_buscar.set("Buscar Directories / File ...")
             text_widget.icursor(0)
+            self.btnLimpiar.grid_forget()
+            self.btnBuscar.grid(row=0, column=1, sticky=W)
     def limpiar_bsq(self):
         self.var_ent_buscar.set("Buscar Directories / File ...")
+        #self.var_ent_buscar.set("")
         self.textBuscar.focus()
         self.textBuscar.icursor(0)
         self.btnLimpiar.grid_forget()
         self.btnBuscar.grid(row=0, column=1, sticky=W)
+        self.menu_Contextual.entryconfig("  Limpiar", state="disabled")
+        self.cargar_ventanas()
+        self.limpiar_widgets()
+    def limpiar_bsq2(self, event=None):
+        self.var_ent_buscar.set("")
+        self.textBuscar.focus()
+        self.textBuscar.icursor(0)
+        self.btnLimpiar.grid_forget()
+        self.btnBuscar.grid(row=0, column=1, sticky=W)
+        self.menu_Contextual.entryconfig("  Limpiar", state="disabled")
         self.cargar_ventanas()
         self.limpiar_widgets()
     def buscar(self, event=None):
@@ -117,7 +142,7 @@ class Ventana(ttk.Frame):
             )            
             self.cargar_ventanas()
             self.limpiar_widgets()
-            self.btnLimpiar.forget()
+            self.btnLimpiar.grid_forget()
             self.btnBuscar.grid(row=0, column=1, sticky=W)
             self.textBuscar.focus()
         else:
@@ -127,6 +152,8 @@ class Ventana(ttk.Frame):
                 )                 
                 self.cargar_ventanas()
                 self.limpiar_widgets()
+                self.btnLimpiar.grid_forget()
+                self.btnBuscar.grid(row=0, column=1, sticky=W)
                 self.textBuscar.focus()
             else:
                 self.limpiar_tree()
@@ -144,6 +171,7 @@ class Ventana(ttk.Frame):
                         self.limpiar_widgets()
             self.btnBuscar.forget()
             self.btnLimpiar.grid(row=0, column=1, sticky=W)
+            self.menu_Contextual.entryconfig("  Limpiar", state="normal")
     def cargar_ventanas(self):
         self.ventanas = []
         #limpiando el arbol de vistas
@@ -206,7 +234,7 @@ class Ventana(ttk.Frame):
             self.menu_Contextual.entryconfig("  Pegar", state="normal")
             self.menu_Contextual.entryconfig("  Copiar", state="disabled")
             self.menu_Contextual.entryconfig("  Seleccionar todo", state="disabled")
-            self.menu_Contextual.entryconfig("  Limpiar", state="normal")
+            #self.menu_Contextual.entryconfig("  Limpiar", state="normal")
             """ data = {
                 'label':'Limpiand',
                 'accelerator' : 'Ctrl+X',
@@ -229,10 +257,14 @@ class Ventana(ttk.Frame):
             self.menu_Contextual.entryconfig("  Copiar", state="normal")
             self.menu_Contextual.entryconfig("  Seleccionar todo", state="normal")
             self.menu_Contextual.entryconfig("  Limpiar", state="disabled")
-    def act_buscar(self):
+    def act_buscar(self, event=None):
         self.textBuscar.focus()
     def seleccionar_todo(self):
         self.srcEvent.tag_add("sel","1.0","end")
+        return 'break'
+    def _seleccionar_todo(self, event):
+        srcEvent = event.widget
+        srcEvent.tag_add("sel","1.0","end")
         return 'break'
     def copiar(self):
         seleccion = self.srcEvent.tag_ranges(tk.SEL)
@@ -250,26 +282,28 @@ class Ventana(ttk.Frame):
             self.btnLimpiar.grid_forget()
             self.btnBuscar.grid(row=0, column=1, sticky=W)
         self.srcEvent.event_generate("<<Paste>>")
-        # return 'break'
+        return 'break'
     def menu_clickDerecho(self):
         self.text_font = font.Font(family='Consolas', size=13)   
         self.menu_Contextual = Menu(self, tearoff=0)
-        self.menu_Contextual.add_command(label="  Buscar", 
-                                accelerator='Ctrl+F',
-                                background='#ccffff', foreground='black',
-                                activebackground='#004c99',activeforeground='white',
-                                font=self.text_font,
-                                command=self.act_buscar,
-                                )
+        self.menu_Contextual.add_command(
+            label="  Buscar", 
+            accelerator='Ctrl+F',
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            command=self.act_buscar,
+        )
         self.menu_Contextual.add_separator(background='#ccffff')
-        self.menu_Contextual.add_command(label="  Copiar", 
-                                accelerator='Ctrl+C',
-                                background='#ccffff', foreground='black',
-                                activebackground='#004c99',activeforeground='white',
-                                font=self.text_font,
-                                command=self.copiar,
-                                state='normal',
-                                )
+        self.menu_Contextual.add_command(
+            label="  Copiar", 
+            accelerator='Ctrl+C',
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            command=self.copiar,
+            state='normal',
+        )
         self.menu_Contextual.add_command(
             label="  Pegar", 
             accelerator='Ctrl+V',
@@ -294,8 +328,8 @@ class Ventana(ttk.Frame):
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
             font=self.text_font,
-            command=self.seleccionar_todo,
-            state='normal',
+            command=self.limpiar_bsq2,
+            state='disabled',
         )
         self.menu_Contextual.add_separator(background='#ccffff')
         self.menu_Contextual.add_command(label="  Cerrar pestaña", 
@@ -310,8 +344,6 @@ class Ventana(ttk.Frame):
         self.menu_Contextual.tk_popup(event.x_root, event.y_root)
         self.srcEvent = event.widget
         self.srcEvent.focus()
-        print(self.srcEvent)
-        print(self.textBuscar)
         if str(self.srcEvent) == str(self.textBuscar):
             pass
         else:
@@ -333,6 +365,9 @@ class Ventana(ttk.Frame):
             self.app.root.clipboard_append(listCopiada)
     def selALL_optionLis(self, event):
         listbox = event
+        listbox.selection_set(0, tk.END)
+    def _selALL_optionLis(self, event):
+        listbox = event.widget
         listbox.selection_set(0, tk.END)
     def menuList_clickDerecho(self):
         self.text_font = font.Font(family='Consolas', size=13)   
@@ -459,7 +494,7 @@ class Ventana(ttk.Frame):
             text='Buscar',
             style='TOP1.TButton',
             image=self.buscar_icon,
-            command= lambda: self.buscar(self.textBuscar.get())
+            command=lambda:self.buscar(self.textBuscar.get())
         )
         self.btnBuscar.grid(row=0, column=1, sticky=W)
 

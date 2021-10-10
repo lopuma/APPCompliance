@@ -1,84 +1,126 @@
 {
   "AFB": [
     {
-      "object": "/opt/IBM/AFB1/",
-      "owner": "ownerAFB1",
-      "tipo": "tipoAFB1",
-      "ownerGroup": "groupAFB1",
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
       "user": [
-        "User1",
-        "User2"
+        ""
       ],
-      "code": "1-OK",
+      "code": "",
       "servers": [
-        "ALL servers", "ILL SERVER"
+        ""
       ],
-      "risk": "GENERICO2AFB",
-      "impact": "GENERICOAFB",
+      "risk": "",
+      "impact": "",
       "variable": [
-        "directory=\"/opt/IBM/AFB1/\""
+        "directory=\"\""
       ],
-      "SO": "Linux"
-    },
-    {
-      "object": "/opt/IBM/AFB2/",
-      "owner": "ownerAFB2",
-      "tipo": "tipoAFB2",
-      "ownerGroup": "groupAFB2",
-      "user": [
-        "User1",
-        "User2"
-      ],
-      "code": "1-OK",
-      "servers": [
-        "ALL servers"
-      ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
-      "variable": [
-        "directory=\"/opt/IBM/AFB2/\""
-      ],
-      "SO": "Linux"
+      "SO": ""
     }
   ],
   "ASISA": [
     {
-      "object": "/opt/IBM/ASISA1/",
-      "owner": "ownerASISA1",
-      "tipo": "tipoASISA1",
-      "ownerGroup": "groupASISA1",
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
       "user": [
-        "User1",
-        "User2"
+        ""
       ],
-      "code": "1-OK",
+      "code": "",
       "servers": [
-        "ALL servers"
+        ""
       ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
+      "risk": "",
+      "impact": "",
       "variable": [
-        "directory=\"/opt/IBM/ASISA1/\""
+        "directory=\"\""
       ],
       "SO": "Linux"
-    },
+    }
+  ],
+  "CESCE": [
     {
-      "object": "/opt/IBM/ASISA2/",
-      "owner": "ownerASISA2",
-      "tipo": "tipoASISA2",
-      "ownerGroup": "groupASISA2",
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
       "user": [
-        "User1",
-        "User2"
+        ""
       ],
-      "code": "1-OK",
+      "code": "",
       "servers": [
-        "ALL servers"
+        ""
       ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
+      "risk": "",
+      "impact": "",
       "variable": [
-        "directory=\"/opt/IBM/ASISA2/\""
+        "directory=\"\""
+      ],
+      "SO": "Linux"
+    }
+  ],
+  "CTTI": [
+    {
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
+      "user": [
+        ""
+      ],
+      "code": "",
+      "servers": [
+        ""
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"\""
+      ],
+      "SO": "Linux"
+    }
+  ],
+  "ENEL": [
+    {
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
+      "user": [
+        ""
+      ],
+      "code": "",
+      "servers": [
+        ""
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"\""
+      ],
+      "SO": "Linux"
+    }
+  ],
+  "EUROFRED": [
+    {
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
+      "user": [
+        ""
+      ],
+      "code": "",
+      "servers": [
+        ""
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"\""
       ],
       "SO": "Linux"
     }
@@ -239,12 +281,12 @@
       "SO": "Linux"
     },
     {
-      "object": "/home/ESY9E1L3/RHEL",
+      "object": "/home/ESY9E1L3/RHEL/",
       "owner": "esy9e1l3",
       "tipo": "/E/",
-      "ownerGroup": "",
+      "ownerGroup": "Phc-Unix",
       "user": [
-        ""
+        "AGUSTIN, PRADO FERNANDEZ"
       ],
       "code": "1-OK",
       "servers": [
@@ -253,14 +295,71 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "directory=\"/home/ESY9E1L3/RHEL\""
+        "directory=\"/home/ESY9E1L3/RHEL/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/appsrv/LIBERBANK.PROYECTO/",
+      "owner": "nodejs",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "GENERICO",
+      "impact": "GENERICO",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/appsrv/finametrix/",
+      "owner": "nodejs",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "GENERICO",
+      "impact": "GENERICO",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/tmp/gts-ansible/",
+      "owner": "lbkuxat2",
+      "tipo": "/S/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Grupo de Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/tmp/gts-ansible/\""
       ],
       "SO": "Linux"
     }
   ],
   "FT": [
     {
-      "object": "/tmp/gts-ansible/uidext_endpoint_6760218",
+      "object": "/tmp/gts-ansible/uidext_endpoint_6760218/",
       "owner": "aotipat1",
       "tipo": "/S/",
       "ownerGroup": "*EAUXOS/",
@@ -274,7 +373,70 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "directory=\"/tmp/gts-ansible/uidext_endpoint_6760218\""
+        "directory=\"/tmp/gts-ansible/uidext_endpoint_6760218/\""
+      ],
+      "SO": "Linux"
+    }
+  ],
+  "IDISO": [
+    {
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
+      "user": [
+        ""
+      ],
+      "code": "",
+      "servers": [
+        ""
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"\""
+      ],
+      "SO": "Linux"
+    }
+  ],
+  "PLANETA": [
+    {
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
+      "user": [
+        ""
+      ],
+      "code": "",
+      "servers": [
+        ""
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"\""
+      ],
+      "SO": "Linux"
+    }
+  ],
+  "SERVIHABITAT": [
+    {
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
+      "user": [
+        ""
+      ],
+      "code": "",
+      "servers": [
+        ""
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"\""
       ],
       "SO": "Linux"
     }
