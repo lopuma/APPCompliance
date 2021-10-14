@@ -1,81 +1,43 @@
 {
   "AFB": [
     {
-      "object": "/opt/IBM/AFB1/",
-      "owner": "ownerAFB1",
-      "tipo": "tipoAFB1",
-      "ownerGroup": "groupAFB1",
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
       "user": [
-        "User1",
-        "User2"
+        "",
+        ""
       ],
-      "code": "1-OK",
+      "code": "",
       "servers": [
-        "ALL servers"
+        ""
       ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
+      "risk": "",
+      "impact": "",
       "variable": [
-        "service=\"/opt/IBM/AFB1/\""
-      ]
-    },
-    {
-      "object": "/opt/IBM/AFB2/",
-      "owner": "ownerAFB2",
-      "tipo": "tipoAFB2",
-      "ownerGroup": "groupAFB2",
-      "user": [
-        "User1",
-        "User2"
-      ],
-      "code": "1-OK",
-      "servers": [
-        "ALL servers"
-      ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
-      "variable": [
-        "service=\"/opt/IBM/AFB2/\""
+        "service=\"\""
       ]
     }
   ],
   "ASISA": [
     {
-      "object": "/opt/IBM/ASISA1/",
-      "owner": "ownerASISA1",
-      "tipo": "tipoASISA1",
-      "ownerGroup": "groupASISA1",
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
       "user": [
-        "User1",
-        "User2"
+        "",
+        ""
       ],
-      "code": "1-OK",
+      "code": "",
       "servers": [
-        "ALL servers"
+        ""
       ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
+      "risk": "",
+      "impact": "",
       "variable": [
-        "service=\"/opt/IBM/ASISA1/\""
-      ]
-    },
-    {
-      "object": "/opt/IBM/ASISA2/",
-      "owner": "ownerASISA2",
-      "tipo": "tipoASISA2",
-      "ownerGroup": "groupASISA2",
-      "user": [
-        "User1",
-        "User2"
-      ],
-      "code": "1-OK",
-      "servers": [
-        "ALL servers"
-      ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
-      "variable": [
-        "service=\"/opt/IBM/ASISA2/\""
+        "service=\"\""
       ]
     }
   ],
@@ -95,67 +57,29 @@
       "risk": "If we disable this SLAPD service, CACF automation framework won't be able to transfer files to endpoints since BDS service depends on this SLAPD service. CACF  is required to handle automation actions like compliance, inventory and patching among others. It's a mandatory requirement to check and apply compliance settings. If we disable it, we will not be able to follow security guidelines and wil impact in customer agreements.",
       "impact": "SLAPD is a service that exposes user information. Any device connected to the same network would be able to acces userid information. In order to avoid it, we've configured the service to listen only in localhost interface.",
       "variable": [
-        "service=\"\""
+        ""
       ],
       "SO" : "Linux"
-    },
-    {
-      "object": "/opt/IBM/LBK2/",
-      "owner": "ownerLBK2",
-      "tipo": "tipoLBK2",
-      "ownerGroup": "groupLBK2",
-      "user": [
-        "User1",
-        "User2"
-      ],
-      "code": "1-OK",
-      "servers": [
-        "ALL servers"
-      ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
-      "variable": [
-        "service=\"/opt/IBM/LBK2/\""
-      ]
     }
   ],
   "LBK": [
     {
-      "object": "/opt/IBM/LBK1/",
-      "owner": "ownerLBK1",
-      "tipo": "tipoLBK1",
-      "ownerGroup": "groupLBK1",
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
       "user": [
-        "User1",
-        "User2"
+        "",
+        ""
       ],
-      "code": "1-OK",
+      "code": "",
       "servers": [
-        "ALL servers"
+        ""
       ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
+      "risk": "",
+      "impact": "",
       "variable": [
-        "service=\"/opt/IBM/LBK1/\""
-      ]
-    },
-    {
-      "object": "/opt/IBM/LBK2/",
-      "owner": "ownerLBK2",
-      "tipo": "tipoLBK2",
-      "ownerGroup": "groupLBK2",
-      "user": [
-        "User1",
-        "User2"
-      ],
-      "code": "1-OK",
-      "servers": [
-        "ALL servers"
-      ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
-      "variable": [
-        "service=\"/opt/IBM/LBK2/\""
+        "service=\"\""
       ]
     }
   ]

@@ -345,7 +345,10 @@ class Ventana(ttk.Frame):
         self.srcEvent = event.widget
         self.srcEvent.focus()
         if str(self.srcEvent) == str(self.textBuscar):
-            pass
+            if len(self.textBuscar.get()) > 0:
+                self.menu_Contextual.entryconfig('  Limpiar', state='normal')
+            else:
+                self.menu_Contextual.entryconfig('  Limpiar', state='disabled')
         else:
             txt_select = event.widget.tag_ranges(tk.SEL)
             if txt_select:

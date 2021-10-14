@@ -1,81 +1,43 @@
 {
   "AFB": [
     {
-      "object": "/opt/IBM/AFB1/",
-      "owner": "ownerAFB1",
-      "tipo": "tipoAFB1",
-      "ownerGroup": "groupAFB1",
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
       "user": [
-        "User1",
-        "User2"
+        "",
+        ""
       ],
-      "code": "1-OK",
+      "code": "",
       "servers": [
-        "ALL servers"
+        ""
       ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
+      "risk": "",
+      "impact": "",
       "variable": [
-        "account=\"/opt/IBM/AFB1/\""
-      ]
-    },
-    {
-      "object": "/opt/IBM/AFB2/",
-      "owner": "ownerAFB2",
-      "tipo": "tipoAFB2",
-      "ownerGroup": "groupAFB2",
-      "user": [
-        "User1",
-        "User2"
-      ],
-      "code": "1-OK",
-      "servers": [
-        "ALL servers"
-      ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
-      "variable": [
-        "account=\"/opt/IBM/AFB2/\""
+        "account=\"\""
       ]
     }
   ],
   "ASISA": [
     {
-      "object": "/opt/IBM/ASISA1/",
-      "owner": "ownerASISA1",
-      "tipo": "tipoASISA1",
-      "ownerGroup": "groupASISA1",
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
       "user": [
-        "User1",
-        "User2"
+        "",
+        ""
       ],
-      "code": "1-OK",
+      "code": "",
       "servers": [
-        "ALL servers"
+        ""
       ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
+      "risk": "",
+      "impact": "",
       "variable": [
-        "account=\"/opt/IBM/ASISA1/\""
-      ]
-    },
-    {
-      "object": "/opt/IBM/ASISA2/",
-      "owner": "ownerASISA2",
-      "tipo": "tipoASISA2",
-      "ownerGroup": "groupASISA2",
-      "user": [
-        "User1",
-        "User2"
-      ],
-      "code": "1-OK",
-      "servers": [
-        "ALL servers"
-      ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
-      "variable": [
-        "account=\"/opt/IBM/ASISA2/\""
+        "account=\"\""
       ]
     }
   ],

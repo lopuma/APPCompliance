@@ -1,122 +1,130 @@
 {
   "AFB": [
     {
-      "objeto": "/opt/IBM/AFB1/",
-      "owner": "ownerAFB1",
-      "tipo": "tipoAFB1",
-      "ownerGroup": "groupAFB1",
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
       "user": [
-        "User1",
-        "User2"
+        "",
+        ""
       ],
-      "code": "1-OK",
+      "code": "",
       "servers": [
-        "ALL servers"
+        ""
       ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
+      "risk": "",
+      "impact": "",
       "variable": [
-        "command=\"/opt/IBM/AFB1/\""
-      ]
-    },
-    {
-      "object": "/opt/IBM/AFB2/",
-      "owner": "ownerAFB2",
-      "tipo": "tipoAFB2",
-      "ownerGroup": "groupAFB2",
-      "user": [
-        "User1",
-        "User2"
+        "fd_sudo=\"\""
       ],
-      "code": "1-OK",
-      "servers": [
-        "ALL servers"
-      ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
-      "variable": [
-        "command=\"/opt/IBM/AFB2/\""
-      ]
+      "SO": "Linux"
     }
   ],
   "ASISA": [
     {
-      "object": "/opt/IBM/ASISA1/",
-      "owner": "ownerASISA1",
-      "tipo": "tipoASISA1",
-      "ownerGroup": "groupASISA1",
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
       "user": [
-        "User1",
-        "User2"
+        "",
+        ""
       ],
-      "code": "1-OK",
+      "code": "",
       "servers": [
-        "ALL servers"
+        ""
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fd_sudo=\"\""
+      ],
+      "SO": "Linux"
+    }
+  ],
+  "FT": [
+    {
+      "object": "/ogg_mdg/ggate",
+      "owner": "ogg_mdg",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer",
+        ""
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "All server"
       ],
       "risk": "GENERICO",
       "impact": "GENERICO",
       "variable": [
-        "command=\"/opt/IBM/ASISA1/\""
-      ]
+        ""
+      ],
+      "SO": "Linux"
     },
     {
-      "object": "/opt/IBM/ASISA2/",
-      "owner": "ownerASISA2",
-      "tipo": "tipoASISA2",
-      "ownerGroup": "groupASISA2",
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
       "user": [
-        "User1",
-        "User2"
+        "",
+        ""
       ],
-      "code": "1-OK",
+      "code": "",
       "servers": [
-        "ALL servers"
+        ""
       ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
+      "risk": "",
+      "impact": "",
       "variable": [
-        "command=\"/opt/IBM/ASISA2/\""
-      ]
+        "fd_sudo=\"\""
+      ],
+      "SO": "Linux"
     }
   ],
   "INFRA": [
     {
-      "object": "/opt/IBM/LBK1/",
-      "owner": "ownerLBK1",
-      "tipo": "tipoLBK1",
-      "ownerGroup": "groupLBK1",
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
       "user": [
-        "User1",
-        "User2"
+        "",
+        ""
       ],
-      "code": "1-OK",
+      "code": "",
       "servers": [
-        "ALL servers"
+        ""
       ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
+      "risk": "",
+      "impact": "",
       "variable": [
-        "command=\"/opt/IBM/LBK1/\""
-      ]
+        "fd_sudo=\"\""
+      ],
+      "SO": "Linux"
     },
     {
-      "object": "/opt/IBM/LBK2/",
-      "owner": "ownerLBK2",
-      "tipo": "tipoLBK2",
-      "ownerGroup": "groupLBK2",
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
       "user": [
-        "User1",
-        "User2"
+        "",
+        ""
       ],
-      "code": "1-OK",
+      "code": "",
       "servers": [
-        "ALL servers"
+        ""
       ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
+      "risk": "",
+      "impact": "",
       "variable": [
-        "command=\"/opt/IBM/LBK2/\""
-      ]
+        "fd_sudo=\"\""
+      ],
+      "SO": "Linux"
     }
   ]
 }

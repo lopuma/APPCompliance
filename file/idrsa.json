@@ -1,0 +1,23 @@
+{
+    "INFRA": [
+        {
+            "object": "/home/dnsadmin/.ssh/id_rsa",
+            "owner": "dnsadmin",
+            "tipo": "/F/",
+            "ownerGroup": "Sistemas",
+            "user": [
+                "Grupo de sistemas"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ESMA2DN01SR15NM"
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_id_rsa=\"/home/dnsadmin/.ssh/id_rsa\""
+            ],
+            "SO": "LINUX"
+        }
+    ]
+}
