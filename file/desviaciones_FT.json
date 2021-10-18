@@ -11,17 +11,6 @@
         "SO": "Linux"
     },
     {
-        "modulo": "Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories",
-        "clave": "STICKY",
-        "descripcion": "Sticky bit is not set on world-writable directory: $directory",
-        "comprobacion": "+-------------------------------------------------------------------------------+\n## Hay que tener en cuenta el tipo de owner que pertenece, cada directorio / RAIZ.\n+-------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------+\n## Ya sea de tipo '/C/F/S'\n+-------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------+\n## Si es /C/, se pasa a excepcion con RISK e IMPACT\n## por favor revisar la seccion de RISK e IMPACT\n+-------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------+\n## Si es de tipo /F/S/, se debe preguntar al owner, si podemos modificar los permisos\n## Revisar ('DIRECTORY'), antes de cualquier cambio.\n+-------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------+\n## Guardamos en la variable, el directorio a revisar\n+-------------------------------------------------------------------------------+\n\ndirectory=\"\"",
-        "copia": "",
-        "editar": "+-------------------------------------------------------------------------------+\n## Se puede quitar de forma 'recursiva' o por 'individual'\n## $directory : es la variable del directorio raiz a cambiar permisos.\n+-------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------+\n## Asi quitamos de permisos de W a Other, en los directorios('recursivo'):\n+-------------------------------------------------------------------------------+\n\nfind $directory -type d -perm -o=w -exec chmod o-w {} +\n\n+-------------------------------------------------------------------------------+\n## Asi quitamos de permisos de W a Other, en los ficheros('recursivo'):\n+-------------------------------------------------------------------------------+\n\nfind $directory -type f -perm -o=w -exec chmod o-w {} +\n\n+-------------------------------------------------------------------------------+\n## Asi quitamos permisos, de W a other de forma('individual'):\n+-------------------------------------------------------------------------------+\n\nchmod o-w $directory",
-        "refrescar": "",
-        "evidencia": "+-------------------------------------------------------------------------------+\n## De forma ('recursiva'):\n+-------------------------------------------------------------------------------+\n\nclear\ndate\nhostname\nfind $directory -type d -perm -o=wx | wc -l\nfind $directory -type f -perm -o=wx | wc -l\nls -ld $directory\n\n+-------------------------------------------------------------------------------+\n## De forma('individual'):\n+-------------------------------------------------------------------------------+\n\nclear\ndate\nhostname\nls -ld $directory",
-        "SO": "Linux"
-    },
-    {
         "modulo": "protecting Resources-OSRs/SUDO Command WW Permissions",
         "clave": "COMMAND",
         "descripcion": "Invalid WW permissions for command file/directory: $fd_sudo  Permissions: drwxr-xrwx  Permissions for OTHER must be set to r-x or more stringent.",
@@ -30,6 +19,116 @@
         "editar": "+-------------------------------------------------------------------------------+\n## Quitar permisos de W a other al file/directory de SUDO\n+-------------------------------------------------------------------------------+\n\nchmod o-w $fd_sudo",
         "refrescar": null,
         "evidencia": "clear\ndate\nhostname\nls -ld $fd_sudo",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Business Use Notice/Business Use Notice Required",
+        "clave": "BUN",
+        "descripcion": "Missing or Incorrect Business Use Notice. It should be set in /etc/motd",
+        "comprobacion": "##Debe tener el BUN actual.",
+        "copia": null,
+        "editar": "vi /etc/motd\n\n##añadir / remplazar :\n\n+------------------------------------------------------------------------------+\n| Liberbank systems must only be used for conducting Liberbank business or for |\n| purposes authorized by Liberbank management                                  |\n| Use is subject to audit at any time by IBM management.                       |\n+------------------------------------------------------------------------------+\n\n*    *-------------------------------------------------------------------*    *\n*    * Liberbank systems must only be used for conducting Liberbank      *    *\n*    * business or for purposes authorized by Liberbank management.      *    *\n*    *                                                                   *    *\n*    * It is mandatory to comply with all the requirements               *    *\n*    * listed in the applicable security policy and only process         *    *\n*    * or store the data classes approved for this asset type.           *    *\n*    *                                                                   *    *\n*    * Use is subject to audit at any time by IBM management.            *    *\n*    *                                                                   *    *\n*    *-------------------------------------------------------------------*    *",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nhostname\ncat /etc/motd",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Encryption/Password Encryption Required",
+        "clave": "SHA512",
+        "descripcion": "/etc/pam.d/password-auth.\n/etc/pam.d/system-auth.\nAny file in /etc/pam.d containing \"password sufficient pam_unix.so\" stanza must carry the \"sha512 shadow\" options.\n\nIncorrect or missing pam_unix.so module stanza. For more information see coverage matrix document",
+        "comprobacion": "+-------------------------------------------------------------------------------+\n## Hace referencia al parametro 'sha512 shadow ' en RHEL7 y RHEL8.\n+-------------------------------------------------------------------------------+\n\n## Saber que versión de RHEL es:\ncat /etc/*release\n\n#-*** Saber que PAM_TALLY USA ****-#\nls -ltr /lib64/security/pam_tally*\n\n#-*** Saber que PAM_FAILLOCK USA ****-#\nls -la /usr/sbin/faillock\n\n+-------------------------------------------------------------------------------+\n##--- RHEL 7 & RHEL 8 ('system-auth','password-auth')\n+-------------------------------------------------------------------------------+\n\n## Los ficheros del PAM, deben tener en el modulo 'password    sufficient    pam_unix.so', el parámetro 'sha512 shadow '\n\ncat /etc/pam.d/system-auth | egrep \"sha512|shadow\"\ncat /etc/pam.d/password-auth | egrep \"sha512|shadow\"\n\n+-------------------------------------------------------------------------------+\n## Modulo similiar : 'Password Requirements/Password History'\n+-------------------------------------------------------------------------------+",
+        "copia": "## Obtener usuario logueado:\n\nuser=$(logname)\n\n+-------------------------------------------------------------------------------+\n## Backup con HOME en MAYÚSCULAS\n+-------------------------------------------------------------------------------+\n\ncp -p /etc/pam.d/system-auth /home/${user^^}/system-auth_`date +%d%m%y_%T`\n\ncp -p /etc/pam.d/password-auth /home/${user^^}/password-auth_`date +%d%m%y_%T`\n\n+-------------------------------------------------------------------------------+\n## Backup con HOME en minúsculas\n+-------------------------------------------------------------------------------+\n\ncp -p /etc/pam.d/system-auth /home/${user,,}/system-auth_`date +%d%m%y_%T`\n\ncp -p /etc/pam.d/password-auth /home/${user,,}/password-auth_`date +%d%m%y_%T`\n",
+        "editar": "+-------------------------------------------------------------------------------+\n##--- RHEL 7 & RHEL 8 ('system-auth','password-auth')\n+-------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------+\n## Añadir en el modulo 'password    sufficient    pam_unix.so', el parámetro 'sha512 shadow'.\n## ('se aconseja remplazar toda la linea, del modulo 'password    sufficient    pam_unix.so').\n+-------------------------------------------------------------------------------+\n\nvi /etc/pam.d/system-auth\n\npassword    sufficient    pam_unix.so remember=8 use_authtok sha512 shadow try_first_pass\n\n+-------------------------------------------------------------------------------+\n## Lo mismo con 'password-auth'\n+-------------------------------------------------------------------------------+\n\nvi /etc/pam.d/password-auth\n",
+        "refrescar": null,
+        "evidencia": "+-------------------------------------------------------------------------------+\n##--- RHEL 7 & RHEL 8 ('system-auth','password-auth')\n+-------------------------------------------------------------------------------+\nclear\ndate;hostname\ncat /etc/*release | grep -i release\ncat /etc/pam.d/system-auth | egrep \"sha512|shadow\"\ncat /etc/pam.d/password-auth | egrep \"sha512|shadow\"\n",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Network Settings/TCP Configuration Files Restrictions",
+        "clave": "SYSCTL",
+        "descripcion": "Incorrect /etc/sysctl.conf",
+        "comprobacion": "",
+        "copia": null,
+        "editar": "+-------------------------------------------------------------------------------+\n## Para hacer el cambio:\n+-------------------------------------------------------------------------------+\n\n/sbin/sysctl -w net.ipv4.conf.all.secure_redirects=0\n/sbin/sysctl -w net.ipv4.conf.default.secure_redirects=0\n/sbin/sysctl -w net.ipv4.conf.all.log_martians=1\n/sbin/sysctl -w net.ipv4.conf.default.log_martians=1\n/sbin/sysctl -w net.ipv4.conf.all.rp_filter=1\n/sbin/sysctl -w net.ipv4.conf.default.rp_filter=1\n/sbin/sysctl -w net.ipv6.conf.all.accept_ra=0\n/sbin/sysctl -w net.ipv6.conf.default.accept_ra=0\n/sbin/sysctl -w net.ipv6.conf.all.accept_redirects=0\n/sbin/sysctl -w net.ipv6.conf.default.accept_redirects=0\n/sbin/sysctl -w net.ipv4.ip_forward=0\n/sbin/sysctl -w net.ipv4.conf.default.accept_source_route=0\n/sbin/sysctl -w net.ipv4.conf.all.accept_source_route=0",
+        "refrescar": "sysctl -p",
+        "evidencia": "clear\ndate\nhostname\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.all.accept_source_route\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.all.secure_redirects\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.default.secure_redirects\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.all.log_martians\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.default.log_martians\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.all.rp_filter\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.default.rp_filter\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.default.accept_source_route\"\n/sbin/sysctl -a |grep -i \"net.ipv6.conf.all.accept_ra\"\n/sbin/sysctl -a |grep -i \"net.ipv6.conf.default.accept_ra\"\n/sbin/sysctl -a |grep -i \"net.ipv6.conf.all.accept_redirects\"\n/sbin/sysctl -a |grep -i \"net.ipv6.conf.default.accept_redirects\"\n/sbin/sysctl -a |grep -i \"net.ipv4.ip_forward\"",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Password Requirements/Acceptance of the null password with nullok parameter",
+        "clave": "",
+        "descripcion": "",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Password Requirements/SSH PermitRootLogin Restriction",
+        "clave": "PERMITROOTLOGIN",
+        "descripcion": "",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Password Requirements/Password MAX Age /etc/shadow",
+        "clave": "MAXAGE",
+        "descripcion": null,
+        "comprobacion": null,
+        "copia": null,
+        "editar": null,
+        "refrescar": null,
+        "evidencia": null,
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories",
+        "clave": "STICKY",
+        "descripcion": "Sticky bit is not set on world-writable directory: $directory",
+        "comprobacion": "+-------------------------------------------------------------------------------+\n## Aplica a directorios y sub-directorios\n+-------------------------------------------------------------------------------+\n\n## El desvio trata de aplicar sticky a directorios y sub-directorios, pero en este desvio corregiremos permisos de escritura en OTHER.\n\n+-------------------------------------------------------------------------------+\n## Hay que tener en cuenta el tipo de owner que pertenece, cada directorio BASE.\n+-------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------+\n## Ya sea de tipo '/C/F/S'\n+-------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------+\n## Si es /C/, se pasa a excepcion con RISK e IMPACT\n## por favor revisar la seccion de RISK e IMPACT\n+-------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------+\n## Si es de tipo /F/S/, se debe preguntar al owner, si podemos modificar los permisos\n## Revisar ('PERMISSIONS'), antes de cualquier cambio.\n## Buscar y comprobar de los fichero y directorios a cambiar permisos. \n+-------------------------------------------------------------------------------+\n\necho  \"directorios con permisos w en other : \";find $directory -type d -perm -o=wx | wc -l\n\n## Listar los directorios:\n\nfind $directory -type d -perm -o=wx | xargs -l ls -ld\n\n---\necho \"ficheros con permisos w en other : \";find $directory -type f -perm -o=wx | wc -l\n\n---\nls -ld $directory\n\n+-------------------------------------------------------------------------------+\n## Pregunta RELACIONADAS\n+-------------------------------------------------------------------------------+\n\nProtecting Resources-OSRs/OSR \\TMP Files Restrictions",
+        "copia": null,
+        "editar": "+-------------------------------------------------------------------------------+\n## Se puede quitar de forma 'recursiva' o por 'individual'\n## $directory : es la variable del directorio raiz a cambiar permisos.\n+-------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------+\n## Asi quitamos de permisos de W a Other, en los directorios('recursivo'):\n+-------------------------------------------------------------------------------+\n\nfind $directory -type d -perm -o=wx -exec chmod o-w {} +\n\n+-------------------------------------------------------------------------------+\n## Asi quitamos de permisos de W a Other, en los ficheros('recursivo'):\n+-------------------------------------------------------------------------------+\n\nfind $directory -type f -perm -o=wx -exec chmod o-w {} +\n\n+-------------------------------------------------------------------------------+\n## Asi quitamos permisos, de W a other de forma('individual'):\n+-------------------------------------------------------------------------------+\n\nchmod o-w $directory",
+        "refrescar": null,
+        "evidencia": "+-------------------------------------------------------------------------------+\n## De forma ('recursiva'):\n+-------------------------------------------------------------------------------+\n\nclear\ndate\nhostname\nfind $directory -type d -perm -o=wx | wc -l\nfind $directory -type f -perm -o=wx | wc -l\nls -ld $directory\n\n+-------------------------------------------------------------------------------+\n## De forma('individual'):\n+-------------------------------------------------------------------------------+\n\nclear\ndate\nhostname\nls -ld $directory",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "System Settings/SELinux AppArmor install requirement",
+        "clave": "SELINUX",
+        "descripcion": "SELinux or AppArmor should be installed and enabled",
+        "comprobacion": "\n## 2 - DOC, Revisar RISK e IMPACT",
+        "copia": null,
+        "editar": null,
+        "refrescar": null,
+        "evidencia": null,
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Protecting Resources-OSRs/OSR /VAR Files Restrictions",
+        "clave": "OSRVAR",
+        "descripcion": "Invalid permissions for $fileVAR  Octal permissions: 0777  Text Permissions: -rwxrwxrwx;  May not have execute permissions on any files and no write for others.",
+        "comprobacion": "+-------------------------------------------------------------------------------+\n## Aplica a ficheros del directorio /VAR\n+-------------------------------------------------------------------------------+\n\n## El desvio trata de quitarle escritura a OTHER, a ficheros que cuelgan en el directorio /var y sub-directorios.\n\n+-------------------------------------------------------------------------------+\n## Hay que tener en cuenta el tipo de owner que pertenece, cada fichero o directorio BASE.\n+-------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------+\n## Ya sea de tipo '/C/F/S'\n+-------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------+\n## Si es /C/, se pasa a excepcion con RISK e IMPACT\n## por favor revisar la seccion de RISK e IMPACT\n+-------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------+\n## Si es de tipo /F/S/, se debe preguntar al owner, si podemos modificar los permisos\n## Revisar ('PERMISSIONS'), antes de cualquier cambio.\n+-------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------+\n## Buscar y comprobar los fichero y directorios a cambiar permisos. \n+-------------------------------------------------------------------------------+\n\n## FICHEROS FORMA RECURVISA:\n---\necho \"ficheros con permisos w en other : \";find $fileVAR -type f -perm -o=wx | wc -l\nfind $fileVAR -type f -perm -o=wx | xargs -l ls -l\n\n## DIRECTORIOS FORMA RECURVISA:\n---\necho  \"directorios con permisos w en other : \";find $directory -type d -perm -o=wx | wc -l\nfind $directory -type d -perm -o=wx | xargs -l ls -ld\n\n## FICHEROS / DIRECTORIOS FORMA INDIVIDUAL:\n---\nls -l $fileVAR\nls -ld $directory\n\n+-------------------------------------------------------------------------------+\n## Pregunta RELACIONADAS\n+-------------------------------------------------------------------------------+\n\nProtecting Resources-mixed/Ensure sticky bit is set on all world-writable directories",
+        "copia": null,
+        "editar": "+-------------------------------------------------------------------------------+\n## Se puede quitar de forma 'RECURSIVA' o por 'INDIVIDUAL'\n## $directory : es la variable del directorio BASE a cambiar permisos.\n## $fileVAR : es la variable del fichero a cambiar permisos.\n+-------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------+\n## Asi quitamos de permisos de W a Other, en los directorios('RECURSIVO'):\n+-------------------------------------------------------------------------------+\n\nfind $directory -type d -perm -o=wx -exec chmod o-w {} +\n\n+-------------------------------------------------------------------------------+\n## Asi quitamos de permisos de W a Other, en los ficheros('RECURSIVO'):\n+-------------------------------------------------------------------------------+\n\nfind $fileVAR -type f -perm -o=wx -exec chmod o-w {} +\n\n+-------------------------------------------------------------------------------+\n## Asi quitamos permisos, de W a other de forma('individual'):\n+-------------------------------------------------------------------------------+\n\nchmod o-w $directory\nchmod o-w $fileVAR",
+        "refrescar": null,
+        "evidencia": "+-------------------------------------------------------------------------------+\n## De forma ('RECURSIVA'):\n+-------------------------------------------------------------------------------+\n\nclear\ndate\nhostname\nfind $directory -type d -perm -o=wx | wc -l\nfind $fileVAR -type f -perm -o=wx | wc -l\nls -ld $directory\nls -l $fileVAR\n\n+-------------------------------------------------------------------------------+\n## De forma('individual'):\n+-------------------------------------------------------------------------------+\n\nclear\ndate\nhostname\nls -ld $directory\nls -l $fileVAR",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Protecting Resources-OSRs/OSR /TMP Files Restrictions",
+        "clave": "OSRTMP",
+        "descripcion": "Invalid permissions for $fileTMP  Octal permissions: 0777  Text Permissions: -rwxrwxrwx-;  May not have execute permissions on any files and no write for others.",
+        "comprobacion": "+-------------------------------------------------------------------------------+\n## Aplica a ficheros del directorio /TMP\n+-------------------------------------------------------------------------------+\n\n## El desvio trata de quitarle escritura a OTHER, a ficheros que cuelgan en el directorio /TMP y sub-directorios.\n\n+-------------------------------------------------------------------------------+\n## Hay que tener en cuenta el tipo de owner que pertenece, cada fichero o directorio BASE.\n+-------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------+\n## Ya sea de tipo '/C/F/S'\n+-------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------+\n## Si es /C/, se pasa a excepcion con RISK e IMPACT\n## por favor revisar la seccion de RISK e IMPACT\n+-------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------+\n## Si es de tipo /F/S/, se debe preguntar al owner, si podemos modificar los permisos\n## Revisar ('PERMISSIONS'), antes de cualquier cambio.\n+-------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------+\n## Buscar y comprobar los fichero y directorios a cambiar permisos. \n+-------------------------------------------------------------------------------+\n\n## FICHEROS FORMA RECURVISA:\n---\necho \"ficheros con permisos w en other : \";find $fileTMP -type f -perm -o=wx | wc -l\nfind $fileTMP -type f -perm -o=wx | xargs -l ls -l\n\n## DIRECTORIOS FORMA RECURVISA:\n---\necho  \"directorios con permisos w en other : \";find $directory -type d -perm -o=wx | wc -l\nfind $directory -type d -perm -o=wx | xargs -l ls -ld\n\n## FICHEROS / DIRECTORIOS FORMA INDIVIDUAL:\n---\nls -l $fileTMP\nls -ld $directory\n\n+-------------------------------------------------------------------------------+\n## Pregunta RELACIONADAS\n+-------------------------------------------------------------------------------+\n\nProtecting Resources-mixed/Ensure sticky bit is set on all world-writable directories",
+        "copia": null,
+        "editar": "+-------------------------------------------------------------------------------+\n## Se puede quitar de forma 'RECURSIVA' o por 'INDIVIDUAL'\n## $directory : es la variable del directorio BASE a cambiar permisos.\n## $fileTMP : es la variable del fichero a cambiar permisos.\n+-------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------+\n## Asi quitamos de permisos de W a Other, en los directorios('RECURSIVO'):\n+-------------------------------------------------------------------------------+\n\nfind $directory -type d -perm -o=wx -exec chmod o-w {} +\n\n+-------------------------------------------------------------------------------+\n## Asi quitamos de permisos de W a Other, en los ficheros('RECURSIVO'):\n+-------------------------------------------------------------------------------+\n\nfind $fileTMP -type f -perm -o=wx -exec chmod o-w {} +\n\n+-------------------------------------------------------------------------------+\n## Asi quitamos permisos, de W a other de forma('individual'):\n+-------------------------------------------------------------------------------+\n\nchmod o-w $directory\nchmod o-w $fileTMP",
+        "refrescar": null,
+        "evidencia": "+-------------------------------------------------------------------------------+\n## De forma ('RECURSIVA'):\n+-------------------------------------------------------------------------------+\n\nclear\ndate\nhostname\nfind $directory -type d -perm -o=wx | wc -l\nfind $fileTMP -type f -perm -o=wx | wc -l\nls -ld $directory\nls -l $fileTMP\n\n+-------------------------------------------------------------------------------+\n## De forma('individual'):\n+-------------------------------------------------------------------------------+\n\nclear\ndate\nhostname\nls -ld $directory\nls -l $fileTMP",
         "SO": "Linux"
     }
 ]

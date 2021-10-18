@@ -81,6 +81,7 @@ class Expandir(ttk.Frame):
     def cerrar_vtn_expandir(self):
         if txtWidget_focus:
             self.vtn_expandir.destroy()
+    
     def menu_clickDerecho(self):
         self.menu_Contextual = Menu(self.vtn_expandir, tearoff=0)
         self.menu_Contextual.add_command(
@@ -111,6 +112,7 @@ class Expandir(ttk.Frame):
             font=self.text_font,
             command=self.cerrar_vtn_expandir
         )
+    
     def display_menu_clickDerecho(self, event):
         self.menu_Contextual.tk_popup(event.x_root, event.y_root)
         self.srcEvent = event.widget
@@ -131,6 +133,7 @@ class Expandir(ttk.Frame):
                 app.root.clipboard_append(event.get(*seleccion).strip())
         else:
             event.tag_remove("sel","1.0","end")
+    
     def widgets_EXPANDIR(self):
         self.EXP_lblWidget = ttk.Label(
             self.vtn_expandir, 
@@ -510,7 +513,7 @@ class Desviacion(ttk.Frame):
                     self.asignarValor_aWidgets(md)
             self.mostrar_buttons_modulo(modulo_selecionado)
     def mostrar_buttons_modulo(self, modulo_selecionado): #TODO añadir demas botones
-        if str(modulo_selecionado) == "Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /TMP Files Restrictions":
+        if str(modulo_selecionado) == "Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /TMP Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /VAR Files Restrictions":
             self.DESV_btnDirectory.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
             self.DESV_btnAuthorized.grid_forget()
             self.DESV_btnService.grid_forget()
@@ -524,7 +527,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnCommand.grid_forget()
             self.DESV_btnIdrsa.grid_forget()
             self.DESV_btnAuthorized.grid(row=2, column=1, padx=5, pady=5, sticky='ne')    
-        elif str(modulo_selecionado) == "Network Settings/Ensure LDAP Server is not enabled":
+        elif str(modulo_selecionado) == "Network Settings/Ensure LDAP Server is not enabled" or str(modulo_selecionado) == "Password Requirements/SSH PermitRootLogin Restriction":
             self.DESV_btnDirectory.grid_forget()
             self.DESV_btnAuthorized.grid_forget()
             self.DESV_btnAccount.grid_forget()
@@ -578,6 +581,12 @@ class Desviacion(ttk.Frame):
                 self.DESVfr1_listbox.select_clear(ANCHOR)
                 mb.showerror("ERROR","Esta vacio o no existe el modulo.\nPrueba a buscar por CLAVE o el MODULO completo")
                 self.DESVfr1_entModulo.focus()
+                self.DESV_btnDirectory.grid_forget()
+                self.DESV_btnAuthorized.grid_forget()
+                self.DESV_btnService.grid_forget()
+                self.DESV_btnAccount.grid_forget()
+                self.DESV_btnCommand.grid_forget()
+                self.DESV_btnIdrsa.grid_forget()
             elif len(clave_Buscado) != 0:
                 with open(path_modulo.format(asigne_Ciente)) as g:
                     data = []
@@ -616,7 +625,13 @@ class Desviacion(ttk.Frame):
             self.DESVfr1_listbox.select_clear(ANCHOR)
             mb.showerror("ERROR","Esta vacio o no existe el modulo.\nPrueba a buscar por CLAVE o el MODULO completo")
             self.limpiar_Widgets()
-            self.DESVfr1_entModulo.focus() 
+            self.DESVfr1_entModulo.focus()
+            self.DESV_btnDirectory.grid_forget()
+            self.DESV_btnAuthorized.grid_forget()
+            self.DESV_btnService.grid_forget()
+            self.DESV_btnAccount.grid_forget()
+            self.DESV_btnCommand.grid_forget()
+            self.DESV_btnIdrsa.grid_forget()
     def mostrar_buttons_clave(self, clave_Buscado):
         if clave_Buscado == "STICKY" or clave_Buscado == "OSRTMP":
             self.DESV_btnDirectory.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
@@ -637,6 +652,13 @@ class Desviacion(ttk.Frame):
             self.DESV_btnCommand.grid_forget()
             self.DESV_btnAuthorized.grid_forget()
             self.DESV_btnService.grid_forget()
+            self.DESV_btnAccount.grid_forget()
+            self.DESV_btnDirectory.grid_forget()
+        elif clave_Buscado == "PERMITROOTLOGIN":
+            self.DESV_btnIdrsa.grid_forget()
+            self.DESV_btnCommand.grid_forget()
+            self.DESV_btnAuthorized.grid_forget()
+            self.DESV_btnService.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnDirectory.grid_forget()
         else:
@@ -933,7 +955,7 @@ class Desviacion(ttk.Frame):
         self.DESVfr2_lblComprobacion.grid(row=2, column=0, padx=5, pady=5, sticky='w' )
         self.DESV_btnDirectory = ttk.Button(
             self.DESV_frame2,
-            text='Directory',
+            text='Permissions',
             compound='left',
             image=self.Expandir_icon,
             state='disabled',
@@ -1147,7 +1169,7 @@ class Desviacion(ttk.Frame):
     def abrir_DIRECTORY(self):
         global asigne_Ciente
         global directory
-        name_vtn = "DIRECTORY"
+        name_vtn = "PERMISSIONS"
         path = "Compliance/file/directory.json"
         directory = Ventana(self,name_vtn, asigne_Ciente, app,desviacion,path)
     def abrir_COMMAND(self):
@@ -1207,9 +1229,11 @@ class Aplicacion():
         self.cuaderno.enable_traversal()
         self.cuaderno.notebookTab.bind("<Button-3>", self.display_menu_clickDerecho)
         self.root.bind("<Control-l>", lambda x : self.ocultar())
+        self.root.bind("<Control-f>", lambda x : self.bsc())
         self.estilos()
         self.menu_clickDerecho()
         self.widgets_APP()
+    
     def iconos(self):
         self.Desviaciones_icon = ImageTk.PhotoImage(
             Image.open(path_icon+r"openDesviaciones.png").resize((80, 80)))
@@ -1235,6 +1259,7 @@ class Aplicacion():
             Image.open(path_icon+r"acercaDe.png").resize((30, 30)))
         self.WorkSpace_icon = ImageTk.PhotoImage(
             Image.open(path_icon+r"workspace.png").resize((20, 20)))
+    
     def estilos(self):
         self.style = Style()
         self.style.configure(
@@ -1429,8 +1454,10 @@ class Aplicacion():
             font=self.text_font,
             command=self.cerrar_vtn_desviacion
         )
+    
     def display_menu_clickDerecho(self, event):
         self.menu_Contextual.tk_popup(event.x_root, event.y_root)
+    
     def cerrar_vtn_desviacion(self):
         if idOpenTab == 0:
             self.menu_Contextual.entryconfig('  Cerrar pestaña', state='disabled')
@@ -1469,6 +1496,8 @@ class Aplicacion():
             self.menu_Contextual.entryconfig('  Pegar', state='disabled')
             self.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
             self.menu_Contextual.entryconfig('  Cerrar pestaña', state='disabled')
+            if "extracion" in globals():
+                self.extracion.on_closing_busca_top()
         elif tab == 'DESVIACIONES : AFB ':
             asigne_Ciente = 'AFB'
         elif tab == 'DESVIACIONES : ASISA ':
@@ -1509,16 +1538,23 @@ class Aplicacion():
                 for md in data:
                     listModulo.append(md['modulo'])
                     listClave.append(md['clave'])
+    
     def abrir_issuesDesviacion(self):
         global idOpenTab
         global desviacion
         desviacion = Desviacion(self.cuaderno)
         self.cuaderno.add(desviacion, text='Issues DESVIACIONES ')
+    
     def abrir_issuesExtracion(self):
-        self.extracion = Extracion(self.cuaderno)
+        self.extracion = Extracion(self.cuaderno, app)
         self.cuaderno.add(self.extracion, text='Issues EXTRACIONES')
+    
     def ocultar(self):
         self.extracion.hide()
+
+    def bsc(self):
+        self.extracion.buscar()
+    
     def widgets_APP(self):
             self.menuBar = tk.Menu(self.root, relief=FLAT, border=0)
             self.root.config(menu=self.menuBar)
@@ -1597,7 +1633,7 @@ class Aplicacion():
                                 )
             self.editMenu.add_command(label="  Buscar",
                                         accelerator='Ctrl+F',
-                                        #command=self.buscar,
+                                        command=self.bsc,
                                         image=self.BuscarBar_icon,
                                         compound=LEFT)
             self.fileMenu.add_separator()
@@ -1656,6 +1692,7 @@ class Aplicacion():
                                         column=0, 
                                         columnspan=3,
                                         sticky='sew')
+    
     def mainloop(self):
         self.root.mainloop()
 

@@ -13,6 +13,7 @@ user = getuser()
 mypath = os.path.expanduser("~/")
 path_icon = mypath+"Compliance/image/"
 class Ventana(ttk.Frame):
+    
     def __init__(self, parent, name_vtn, customer, app, desviacion, path, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
         self.parent = parent
@@ -21,14 +22,13 @@ class Ventana(ttk.Frame):
         self.desviacion = desviacion
         self.path_ventanas = mypath+path
         self.tt_vtn = name_vtn
-        print(self.path_ventanas)
         self.vtn_ventanas = tk.Toplevel(self)
         self.vtn_ventanas.config(background='#F9F3DF')
         window_width=1028
-        window_height=650
+        window_height=720
         screen_width = self.app.root.winfo_x()
         screen_height= self.app.root.winfo_y()
-        position_top = int(screen_height+70)
+        position_top = int(screen_height)
         position_right = int(screen_width+150)
         self.vtn_ventanas.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
         self.vtn_ventanas.resizable(0,0)
@@ -78,6 +78,7 @@ class Ventana(ttk.Frame):
         self.srcVariable.bind("<Control-f>",self.act_buscar)
         self.listServer.bind("<Control-f>",self.act_buscar)
         self.tree.bind("<Control-f>",self.act_buscar)
+    
     def iconos(self):
         self.buscar_icon = ImageTk.PhotoImage(
                     Image.open(path_icon+r"buscar.png").resize((25, 25)))
@@ -87,6 +88,7 @@ class Ventana(ttk.Frame):
                     Image.open(path_icon+r"copiarALL_evd.png").resize((20, 20)))
         self.limpiar_icon = ImageTk.PhotoImage(
                     Image.open(path_icon+r"limpiar.png").resize((25, 25)))
+    
     def cerrar_vtn(self):
         self.vtn_ventanas.destroy()
     ## BUSCAR ventanas / FILE
@@ -99,6 +101,7 @@ class Ventana(ttk.Frame):
             self.btnBuscar.grid(row=0, column=1, sticky=W)
             self.cargar_ventanas()
             self.limpiar_widgets()
+    
     def clear_bsq(self, event):
         text_widget = event.widget
         entry = self.var_ent_buscar.get()
@@ -114,6 +117,7 @@ class Ventana(ttk.Frame):
             text_widget.icursor(0)
             self.btnLimpiar.grid_forget()
             self.btnBuscar.grid(row=0, column=1, sticky=W)
+    
     def limpiar_bsq(self):
         self.var_ent_buscar.set("Buscar Directories / File ...")
         #self.var_ent_buscar.set("")
@@ -124,6 +128,7 @@ class Ventana(ttk.Frame):
         self.menu_Contextual.entryconfig("  Limpiar", state="disabled")
         self.cargar_ventanas()
         self.limpiar_widgets()
+    
     def limpiar_bsq2(self, event=None):
         self.var_ent_buscar.set("")
         self.textBuscar.focus()
@@ -133,6 +138,7 @@ class Ventana(ttk.Frame):
         self.menu_Contextual.entryconfig("  Limpiar", state="disabled")
         self.cargar_ventanas()
         self.limpiar_widgets()
+    
     def buscar(self, event=None):
         valor_aBuscar = event
         valor_Buscado = [n for n in self.ventanas if valor_aBuscar.strip() in n]
@@ -172,6 +178,7 @@ class Ventana(ttk.Frame):
             self.btnBuscar.forget()
             self.btnLimpiar.grid(row=0, column=1, sticky=W)
             self.menu_Contextual.entryconfig("  Limpiar", state="normal")
+    
     def cargar_ventanas(self):
         self.ventanas = []
         #limpiando el arbol de vistas
@@ -186,10 +193,12 @@ class Ventana(ttk.Frame):
                     else:
                         self.tree.insert(parent='', index='end', iid=count, text='', value=(md['object'],md['owner'],md['tipo'],md['ownerGroup'],md['code']), tags=('oddrow'))
                     count += 1
+    
     def limpiar_tree(self):
         records = self.tree.get_children()
         for elemnt in records:
             self.tree.delete(elemnt)
+    
     def selecionar_elemntFile(self, event):
         tree_event = event.widget
         try:
@@ -202,6 +211,7 @@ class Ventana(ttk.Frame):
                 self.cargar_elemt_seleccionado(dir)
         except:
             pass
+    
     def cargar_elemt_seleccionado(self, dir):
         with open(self.path_ventanas) as g:
                 data = json.load(g)
@@ -219,6 +229,7 @@ class Ventana(ttk.Frame):
                         self.srcVariable.insert(END,variables)
                         self.lbl_SO['text'] = md['SO']
         self.cbxUser.set('CONTACTOS')
+    
     def limpiar_widgets(self):
         self.lbl_SO['text'] = "SISTEMA OPERATIVO"
         self.listServer.delete(0,END)
@@ -247,8 +258,10 @@ class Ventana(ttk.Frame):
                 'state':'normal'
             }
             self.menu_Contextual.insert_command(8, **data) """
+    
     def act_elemt_list(self, event):
         event.widget.focus()
+    
     def act_elemt_src(self, event):
         event.widget.focus()
         if event.widget:
@@ -257,15 +270,19 @@ class Ventana(ttk.Frame):
             self.menu_Contextual.entryconfig("  Copiar", state="normal")
             self.menu_Contextual.entryconfig("  Seleccionar todo", state="normal")
             self.menu_Contextual.entryconfig("  Limpiar", state="disabled")
+    
     def act_buscar(self, event=None):
         self.textBuscar.focus()
+    
     def seleccionar_todo(self):
         self.srcEvent.tag_add("sel","1.0","end")
         return 'break'
+    
     def _seleccionar_todo(self, event):
         srcEvent = event.widget
         srcEvent.tag_add("sel","1.0","end")
         return 'break'
+    
     def copiar(self):
         seleccion = self.srcEvent.tag_ranges(tk.SEL)
         if seleccion:
@@ -273,9 +290,11 @@ class Ventana(ttk.Frame):
             self.app.root.clipboard_append(self.srcEvent.get(*seleccion).strip())
             self.srcEvent.tag_remove("sel","1.0","end")
             return 'break'
+    
     def sel_text(self, event):
         if event.widget.select_present():
             self.var_ent_buscar.set("")
+    
     def pegar(self):
         if self.srcEvent.select_present():
             self.var_ent_buscar.set("")
@@ -283,6 +302,7 @@ class Ventana(ttk.Frame):
             self.btnBuscar.grid(row=0, column=1, sticky=W)
         self.srcEvent.event_generate("<<Paste>>")
         return 'break'
+    
     def menu_clickDerecho(self):
         self.text_font = font.Font(family='Consolas', size=13)   
         self.menu_Contextual = Menu(self, tearoff=0)
@@ -340,6 +360,7 @@ class Ventana(ttk.Frame):
                                 font=self.text_font,
                                 command=self.cerrar_vtn
                                 )
+    
     def display_menu_clickDerecho(self, event):
         self.menu_Contextual.tk_popup(event.x_root, event.y_root)
         self.srcEvent = event.widget
@@ -355,6 +376,7 @@ class Ventana(ttk.Frame):
                 self.menu_Contextual.entryconfig("  Copiar", state="normal")
             else:
                 self.menu_Contextual.entryconfig("  Copiar", state="disabled")
+    
     def copiar_optionLis(self, event):
         listbox = event
         index = listbox.curselection()
@@ -366,12 +388,15 @@ class Ventana(ttk.Frame):
         if listCopiada:
             self.app.root.clipboard_clear()
             self.app.root.clipboard_append(listCopiada)
+    
     def selALL_optionLis(self, event):
         listbox = event
         listbox.selection_set(0, tk.END)
+    
     def _selALL_optionLis(self, event):
         listbox = event.widget
         listbox.selection_set(0, tk.END)
+    
     def menuList_clickDerecho(self):
         self.text_font = font.Font(family='Consolas', size=13)   
         self.menuLis_Contextual = Menu(self, tearoff=0)
@@ -435,6 +460,7 @@ class Ventana(ttk.Frame):
             font=self.text_font,
             command=self.cerrar_vtn
         )
+    
     def display_menuLis_clickDerecho(self, event):
         self.menuLis_Contextual.tk_popup(event.x_root, event.y_root)
         self.srcEvent = event.widget
@@ -445,6 +471,7 @@ class Ventana(ttk.Frame):
             self.menuLis_Contextual.entryconfig("  Copiar", state="normal")
         except:
             self.menuLis_Contextual.entryconfig("  Copiar", state="disabled")
+    
     def TreeDown(self, event):
         tree_event = event.widget
         item_id = tree_event.selection()[0]
@@ -454,6 +481,7 @@ class Ventana(ttk.Frame):
             dir_selecionado = tree_event.item(index, 'values')
             dir = dir_selecionado[0]
             self.cargar_elemt_seleccionado(dir)
+    
     def TreeUp(self, event):
         tree_event = event.widget
         item_id = tree_event.selection()[0]
@@ -473,6 +501,7 @@ class Ventana(ttk.Frame):
                 self.app.root.clipboard_append(event.get(*seleccion).strip())
         else:
             event.tag_remove("sel","1.0","end")
+    
     def widgets_ventanas(self):
         self.var_ent_buscar = tk.StringVar(self)
         self.textBuscar = tk.Entry(
@@ -689,7 +718,7 @@ class Ventana(ttk.Frame):
             justify='center',
         )
         self.cbxUser.set('CONTACTOS')
-        self.cbxUser.grid(row=3, column=2, padx=5, pady=5, ipady=7, sticky='nsew')
+        self.cbxUser.grid(row=3, column=2, padx=5, pady=5, ipady=7, sticky='new')
 
         ## --- VARIABLE
         self.lbl4 = ttk.Label(
@@ -704,7 +733,7 @@ class Ventana(ttk.Frame):
         )
         self.srcVariable.config(
             font=self.text_font, 
-            height=4,
+            height=5,
             wrap=tk.WORD,
             highlightcolor='#297F87',
             borderwidth=0, 

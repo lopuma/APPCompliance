@@ -41,6 +41,26 @@
       ]
     }
   ],
+  "FT": [
+    {
+      "object": "aotipat1",
+      "owner": "CACF",
+      "tipo": "/S/",
+      "ownerGroup": "Group FT Linux",
+      "user": [
+        "Group FT Linux"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "GENERICO",
+      "impact": "GENERICO",
+      "variable": [
+        "Usuario para el proceso de Compliance"
+      ]
+    }
+  ],
   "LBK": [
     {
       "object": "indus",

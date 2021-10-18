@@ -41,11 +41,31 @@
       ]
     }
   ],
+  "FT": [
+    {
+      "object": "PermitRootLogin",
+      "owner": "Sistemas",
+      "tipo": "/S/",
+      "ownerGroup": "Group Sistemas",
+      "user": [
+        ""
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "AOTLXPRSIO10002"
+      ],
+      "risk": "By restricting root login through ssh, a user is forced to use a regular, account to login, and perform su to gain root acces.  Root access is achieved by logging into a regular non-privileged userid, and then su To provide an audit trail.",
+      "impact": "The configuration is required to perform server activities, for gpfs requirements it is mandatory to put it on the nodes of the cluster itself.",
+      "variable": [
+        "Para servidores CLUSTER, tiene PermitRootLogin a YES, con un Match Address a las IP del CLUSTER, puede ir conjunto con un PermitRootLogin a NO"
+      ]
+    }
+  ],
   "INFRA": [
     {
       "object": "LDAP",
       "owner": "Sistemas",
-      "tipo": "/F/",
+      "tipo": "/S/",
       "ownerGroup": "Sistemas",
       "user": [
         "Sistemas"

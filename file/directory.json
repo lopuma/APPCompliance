@@ -343,7 +343,29 @@
       "object": "/tmp/gts-ansible/",
       "owner": "lbkuxat2",
       "tipo": "/S/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "CACF",
+      "user": [
+        "Grupo de Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/tmp/gts-ansible/\"",
+        "fileTMP=\"/tmp/gts-ansible/\""
+      ],
+      "SO": "Linux"
+    }
+  ],
+  "FT": [
+    {
+      "object": "/tmp/gts-ansible/",
+      "owner": "aotipat1",
+      "tipo": "/S/",
+      "ownerGroup": "CACF",
       "user": [
         "Grupo de Sistemas"
       ],
@@ -357,16 +379,52 @@
         "directory=\"/tmp/gts-ansible/\""
       ],
       "SO": "Linux"
-    }
-  ],
-  "FT": [
+    },
     {
-      "object": "/tmp/gts-ansible/uidext_endpoint_6760218/",
-      "owner": "aotipat1",
-      "tipo": "/S/",
-      "ownerGroup": "*EAUXOS/",
+      "object": "/ogg_mdg/",
+      "owner": "ogg_mdg",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
       "user": [
         ""
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "GENERICO",
+      "impact": "GENERICO",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/op_sigma/",
+      "owner": "ap_opsig",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "GENERICO",
+      "impact": "GENERICO",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/opt/tivoli/tsm/client/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
       ],
       "code": "1-OK",
       "servers": [
@@ -375,7 +433,45 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "directory=\"/tmp/gts-ansible/uidext_endpoint_6760218/\""
+        "directory=\"/opt/tivoli/tsm/client/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/var/ibm/",
+      "owner": "bin",
+      "tipo": "/S/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/var/ibm/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/var/.com.zerog.registry.xml",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fileVAR=\"/var/.com.zerog.registry.xml\""
       ],
       "SO": "Linux"
     }
