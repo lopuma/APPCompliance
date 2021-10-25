@@ -354,16 +354,13 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "directory=\"/tmp/gts-ansible/\"",
-        "fileTMP=\"/tmp/gts-ansible/\""
+        "directory=\"/tmp/gts-ansible/\""
       ],
       "SO": "Linux"
-    }
-  ],
-  "FT": [
+    },
     {
-      "object": "/tmp/gts-ansible/",
-      "owner": "aotipat1",
+      "object": "/tmp/gts-ansible/uidext_endpoint_7057770/",
+      "owner": "lbkuxat2",
       "tipo": "/S/",
       "ownerGroup": "CACF",
       "user": [
@@ -376,7 +373,48 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "directory=\"/tmp/gts-ansible/\""
+        "fileTMP=\"/tmp/gts-ansible/uidext_endpoint_7057770/\"",
+        "directory=\"/tmp/gts-ansible/uidext_endpoint_7057770/\""
+      ],
+      "SO": "Linux"
+    }
+  ],
+  "FT": [
+    {
+      "object": "/tmp/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Grupo de Sistemas"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "GENERICO / OSR TMP / FT",
+      "impact": "GENERICO / OSR TMP / FT",
+      "variable": [
+        "Directorios, sub-directorios y ficheros, no se pueden editar permisos, sin authorizacion"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/tmp/gts-ansible/",
+      "owner": "aotipat1",
+      "tipo": "/S/",
+      "ownerGroup": "CACF",
+      "user": [
+        "Grupo de Sistemas"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "GENERICO / OSR TMP / FT",
+      "impact": "GENERICO / OSR TMP / FT",
+      "variable": [
+        "Directorios, sub-directorios y ficheros, no se pueden editar permisos, sin authorizacion"
       ],
       "SO": "Linux"
     },
@@ -392,8 +430,8 @@
       "servers": [
         "ALL servers"
       ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
+      "risk": "GENERICO / STICKY / CUSTOMER",
+      "impact": "GENERICO / STICKY / CUSTOMER",
       "variable": [
         ""
       ],
@@ -411,29 +449,10 @@
       "servers": [
         "ALL servers"
       ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
+      "risk": "GENERICO / STICKY / CUSTOMER",
+      "impact": "GENERICO / STICKY / CUSTOMER",
       "variable": [
         ""
-      ],
-      "SO": "Linux"
-    },
-    {
-      "object": "/opt/tivoli/tsm/client/",
-      "owner": "root",
-      "tipo": "/F/",
-      "ownerGroup": "Sistemas",
-      "user": [
-        "Sistemas"
-      ],
-      "code": "1-OK",
-      "servers": [
-        "ALL servers"
-      ],
-      "risk": "",
-      "impact": "",
-      "variable": [
-        "directory=\"/opt/tivoli/tsm/client/\""
       ],
       "SO": "Linux"
     },
@@ -457,7 +476,7 @@
       "SO": "Linux"
     },
     {
-      "object": "/var/.com.zerog.registry.xml",
+      "object": "/var/",
       "owner": "root",
       "tipo": "/F/",
       "ownerGroup": "Sistemas",
@@ -471,7 +490,199 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "fileVAR=\"/var/.com.zerog.registry.xml\""
+        "fileVAR=\"/var/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/opt/IBM/ITM/lx8266/08/bin/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fileOPT=\"/opt/IBM/ITM/lx8266/08/bin/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/opt/tivoli/tsm/client/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/opt/tivoli/tsm/client/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/opt/tivoli/tsm/client/api/bin64/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fileOPT=\"/opt/tivoli/tsm/client/api/bin64/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/opt/tivoli/tsm/client/oracle/_uninstall/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fileOPT=\"/opt/tivoli/tsm/client/oracle/_uninstall/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/etc/mount-dbfs.conf",
+      "owner": "oracle",
+      "tipo": "/F/",
+      "ownerGroup": "Administrador de ORACLE",
+      "user": [
+        "ORACLE"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "GENERICO / OSR ETC / FT",
+      "impact": "GENERICO / OSR ETC / FT",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/etc/mount-dbfs_ogg_mdg.conf",
+      "owner": "oracle",
+      "tipo": "/F/",
+      "ownerGroup": "Administrador de ORACLE",
+      "user": [
+        "ORACLE"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "GENERICO / OSR ETC / FT",
+      "impact": "GENERICO / OSR ETC / FT",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/etc/oracle/",
+      "owner": "oracle",
+      "tipo": "/F/",
+      "ownerGroup": "Administrador de ORACLE",
+      "user": [
+        "ORACLE"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "GENERICO / OSR ETC / FT",
+      "impact": "GENERICO / OSR ETC / FT",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/etc/oragchomelist",
+      "owner": "oracle",
+      "tipo": "/F/",
+      "ownerGroup": "Administrador de ORACLE",
+      "user": [
+        "ORACLE"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "GENERICO / OSR ETC / FT",
+      "impact": "GENERICO / OSR ETC / FT",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/etc/oratab",
+      "owner": "oracle",
+      "tipo": "/F/",
+      "ownerGroup": "Administrador de ORACLE",
+      "user": [
+        "ORACLE"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "GENERICO / OSR ETC / FT",
+      "impact": "GENERICO / OSR ETC / FT",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/etc/adsm/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/etc/adsm/\"",
+        "usuario=\"\"",
+        "grupo=\"\""
       ],
       "SO": "Linux"
     }

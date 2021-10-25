@@ -54,8 +54,8 @@
       "servers": [
         "ALL servers"
       ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
+      "risk": "GENERICO / MAXAGE / IBM",
+      "impact": "GENERICO / MAXAGE / IBM",
       "variable": [
         "Usuario para el proceso de Compliance"
       ]

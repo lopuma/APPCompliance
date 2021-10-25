@@ -29,6 +29,7 @@ class Extracion(ttk.Frame):
             path_icon+r"close.png").resize((25, 25)))
         self.wd = 300
         self.app = app
+        self.iconos()
         self.menu()
         #self.ampliador()
         self.text()
@@ -36,7 +37,18 @@ class Extracion(ttk.Frame):
         #self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=5)
         self.rowconfigure(0, weight=1)
-        self.bind('<Control-f>', self.buscar)
+        self.txt.bind('<Control-f>', lambda x : self.panel_buscar())
+        self._ocurrencias_encontradas = []
+        self._numero_ocurrencia_actual = None
+        self._estado_actual = False
+    
+    def iconos(self):
+        self.flecha_up = ImageTk.PhotoImage(
+            Image.open(path_icon+r"flecha1.png").resize((20, 20)))
+        self.flecha_down = ImageTk.PhotoImage(
+            Image.open(path_icon+r"flecha2.png").resize((20, 20)))
+        self.btn_x = ImageTk.PhotoImage(
+            Image.open(path_icon+r"btn-x.png").resize((20, 20)))
     
     def menu(self):
         self.text_font = font.Font(family='Consolas', size=16, weight="bold")
@@ -48,7 +60,7 @@ class Extracion(ttk.Frame):
         self.frame1.grid_propagate(False)
         self.frame1.grid(row=0, column=0, sticky="nsew")
         self.frame1.columnconfigure(0, weight=1)
-        self.frame1.rowconfigure(1, weight=1)
+        self.frame1.rowconfigure(1, weight=1)       
         self.btn_nav = Button(
             self,
             background="#39A2DB",
@@ -80,6 +92,7 @@ class Extracion(ttk.Frame):
         )
         self.treeview.heading("#0", text="EXTRACIONES", anchor="center")
         self.treeview.grid(row=1, column=0, sticky="nsew")
+
 
         self.treeview.tag_bind(
             "fstag", "<<TreeviewOpen>>", self.item_opened
@@ -160,11 +173,24 @@ class Extracion(ttk.Frame):
             selectforeground="#E0C097",
             padding=0, 
         )
-        # self.style.map('Treeview',
-        #     background=[
-        #         ("active","red")
-        #     ]
-        # )
+        self.style.configure(
+            'TOPS.TButton',
+            background = "#96BB7C",
+            foreground="white",
+            relief='sunke',
+            borderwidth=1,
+            anchor="center",
+            padding=2,
+            font=('Source Sans Pro', 10, font.BOLD), 
+        )
+        self.style.map(
+            'TOPS.TButton',
+            background=[("active","#FAD586")],
+            foreground=[("active","#C64756")],
+            padding=[("active",2)],
+            relief=[("active",'ridge'),("pressed",'groove')],
+            borderwidth=[("active",1)],
+        )
     
     def listdir(self, path):
         try:
@@ -230,17 +256,6 @@ class Extracion(ttk.Frame):
         records = self.treeview.get_children(iid)
         self.treeview.delete(*self.treeview.get_children())
         self.load_tree(abspath(path_extracion))
-
-        #self.listdir(path)
-        # for elemnts in records:
-        #     self.treeview.delete(elemnts)
-        #     self.load_tree(self.fsobjects[elemnts],
-        #                         parent=elemnts)
-        # for child_iid in self.treeview.get_children(iid):
-        #     if isdir(self.fsobjects[child_iid]):
-        #             self.load_tree(self.fsobjects[child_iid],
-        #                         parent=child_iid)
-        #self.load_subitems(iid)
 
     def select_extraction(self, event):
         iid = self.treeview.selection()[0]
@@ -319,6 +334,11 @@ class Extracion(ttk.Frame):
         parar = False
         print(self.wd)
 
+    def elim_tags(self, l_tags):
+        '''Eliminar etiqueta(s) pasada(s)'''
+        for l_tag in l_tags:
+            self.txt.tag_delete(l_tag)
+
     def buscar_todo(self, txt_buscar=None):
         '''Buscar todas las ocurrencias en el Entry de MainApp'''
         # eliminar toda marca establecida, si existiera, antes de plasmar nuevos resultados
@@ -346,131 +366,207 @@ class Extracion(ttk.Frame):
             #self.buscar_next(self.entr_str.get().strip())    
         else:
             pass
-        
             #MessageBox.showinfo('Info', 'Establecer algún criterior de búsqueda.')
+        tags = self.txt.tag_ranges('found')
+        self._ocurrencias_encontradas = list(zip(*[iter(tags)] * 2))
+        self.buscar_next()
 
-    def buscar_prev(self, txt_buscar=None):
+    def buscar_prev(self):
         '''Buscar previa ocurrencia en el Entry de MainApp'''
+        idx = self.indice_ocurrencia_actual[0] if self.indice_ocurrencia_actual else self.txt.index(tk.INSERT)    
+        self.indice_ocurrencia_actual = self.txt.tag_prevrange('found', idx) or self.txt.tag_prevrange('found', self.txt.index(tk.END)) or None
 
-        # Tratar índice por si viniera buscar_next()
-        self.idx_gnral.set(self.idx_gnral.get().replace('+', '-'))
-
-        # eliminar el tag 'found_prev_next', si existiera, antes de plasmar nuevo resultado
-        self.txt.tag_remove('found_prev_next', '1.0', tk.END)
-
-        if txt_buscar:
-            idx = self.txt.search(txt_buscar, self.idx_gnral.get(), nocase=1, backwards=True)
-            # Siempre que haya una coincidencia
-            if(idx != ''):
-                # Para hacer SCROLL hasta el resultado de la búsqueda
-                # si ésta no estuviera visible
-                self.txt.see(idx)
-                # index justo después del final de la ocurrencia
-                lastidx = '%s+%dc' % (idx, len(txt_buscar))
-                # etiquetando toda la ocurrencia (incluyendo el start, excluyendo el stop)
-                self.txt.tag_add('found_prev_next', idx, lastidx)
-                # preparar para buscar la anterior ocurrencia
-                lastidx_prev = '%s-%dc' % (idx, len(txt_buscar))
-                self.idx_gnral.set(lastidx_prev)
-
-                # establecer la marca distintiva para la ocurrencia a etiquetar
-                self.txt.tag_config('found_prev_next', background='orangered')
-
-        else:
-            pass
-            #MessageBox.showinfo('Info', 'Establecer algún criterio de búsqueda.')
-
-    def buscar_next(self, txt_buscar=None):
+    def buscar_next(self):
         '''Buscar siguiente ocurrencia en el Entry de MainApp'''
+        idx = self.indice_ocurrencia_actual[1] if self.indice_ocurrencia_actual else self.txt.index(tk.INSERT)    
+        self.indice_ocurrencia_actual = self.txt.tag_nextrange('found', idx) or self.txt.tag_nextrange('found', "0.0") or None
 
-        # Tratar índice por si viniera buscar_prev()
-        self.idx_gnral.set(self.idx_gnral.get().replace('-', '+'))
+    @property
+    def numero_ocurrencias(self):
+        return len(self._ocurrencias_encontradas)
 
-        # eliminar el tag 'found_prev_next', si existiera, antes de plasmar nuevo resultado
-        self.txt.tag_remove('found_prev_next', '1.0', tk.END)
+    @property
+    def numero_ocurrencia_actual(self):
+        return self._numero_ocurrencia_actual
 
-        if txt_buscar:
-            idx = self.txt.search(txt_buscar, self.idx_gnral.get(), nocase=1)
-            # Siempre que haya una coincidencia
-            if(idx != ''):
-                # Para hacer SCROLL hasta el resultado de la búsqueda
-                # si ésta no estuviera visible
-                self.txt.see(idx)
-                # index justo después del final de la ocurrencia
-                lastidx = '%s+%dc' % (idx, len(txt_buscar))
-                # etiquetando toda la ocurrencia (incluyendo el start, excluyendo el stop)
-                self.txt.tag_add('found_prev_next', idx, lastidx)
-                # preparar para buscar la siguiente ocurrencia
-                self.idx_gnral.set(lastidx)
+    @property
+    def indice_ocurrencia_actual(self):
+        tags = self.txt.tag_ranges('found_prev_next')
+        return tags[:2] if tags else None
 
-                # establecer la marca distintiva para la ocurrencia a etiquetar
-                self.txt.tag_config('found_prev_next', background='orangered')
+    @indice_ocurrencia_actual.setter
+    def indice_ocurrencia_actual(self, idx):
+        # establecer la marca distintiva para la ocurrencia a etiquetar
+        self.elim_tags(['found_prev_next'])
+        self.txt.tag_config('found_prev_next', background='orangered')
 
+        if idx is not None:
+            self.txt.tag_add('found_prev_next', *idx)
+            self.txt.see(idx[0])
+            self._numero_ocurrencia_actual = self._ocurrencias_encontradas.index(self.indice_ocurrencia_actual) + 1
         else:
-            pass
-            #MessageBox.showinfo('Info', 'Establecer algún criterio de búsqueda.')
+            self._numero_ocurrencia_actual = None
 
-    def buscar(self, event=None):
-        self.busca_top = tk.Toplevel(self.frame2)
-        # Considerando evento de cierre de la ventana
-        #self.busca_top.protocol('WM_DELETE_WINDOW', self.on_closing_busca_top)
-        window_width=550
-        window_height=100
-        screen_width = self.app.root.winfo_x()
-        screen_height= self.app.root.winfo_y()
-        position_top = int(screen_height)
-        position_right = int(screen_width+750)
-        self.busca_top.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
-        self.busca_top.transient(self)
+    @property
+    def ocurrencias_encontradas(self):
+        return self._ocurrencias_encontradas
 
-        #self.busca_top.geometry('380x80')
-        self.busca_top.config(bg='white', padx=5, pady=5)
-        self.busca_top.resizable(0,0)
+    def panel_buscar(self, event=None):
+        if not self._estado_actual:
+            self.busca_top = tk.Toplevel(self.frame2)
+            # Considerando evento de cierre de la ventana
+            self.busca_top.protocol('WM_DELETE_WINDOW', self.on_closing_busca_top)
+            self.busca_top.attributes('-type','splash')
+            window_width=510
+            window_height=100
+            bus_reem_top_msg_w = 240
+            screen_width = (self.app.root.winfo_x() +750)
+            screen_height= (self.app.root.winfo_y() +50)
+            position_top = int(screen_height)
+            position_right = int(screen_width)
+            self.busca_top.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
+            self.busca_top.transient(self)
+            self.busca_top.config(bg='#f1ecc3', padx=5, pady=5)
+            self.busca_top.resizable(0,0)
 
-        self.busca_frm_tit = tk.Frame(self.busca_top, bg='grey', pady=5)
-        self.busca_frm_tit.pack(fill='x', expand=1)
+            self.busca_frm_tit = tk.Frame(
+                self.busca_top, 
+                bg='#D1E8E4', 
+            )
+            self.busca_frm_tit.pack(fill='x', expand=1)
 
-        # ¿¿Cómo centrar este Frame o su contenido??
-        self.busca_frm_content = tk.Frame(self.busca_top, bg='grey', padx=5, pady=5)
-        self.busca_frm_content.pack(fill='x', expand=1)
+            # ¿¿Cómo centrar este Frame o su contenido??
+            self.busca_frm_content = tk.Frame(
+                self.busca_top, 
+                bg='#907FA4', 
+                padx=5, 
+                pady=10
+            )
+            self.busca_frm_content.pack(fill='x', expand=1)
 
-        self.busca_top.title('Buscar...')
-        buscar_01_txt = '~ Buscar ~'
+            self.busca_top.title('Buscar')
+            self.bus_reem_num_results = tk.StringVar()
+            self.bus_reem_num_results.set('~ {} ~'.format('No hay resultados'))
 
-        buscar_01_msg = tk.Message(self.busca_frm_tit, text=buscar_01_txt, bg='grey', padx=10, pady=0)
-        buscar_01_msg.pack(fill='both', expand=1)
-        buscar_01_msg.config(width=240, justify='center', font=('Consolas', 14, 'bold'))
+            buscar_01_msg = tk.Message(
+                self.busca_frm_tit,
+                textvariable=self.bus_reem_num_results,
+                padx=10, 
+                pady=0
+            )
+            buscar_01_msg.pack(fill='both', expand=1)
+            buscar_01_msg.config(
+                width=bus_reem_top_msg_w, 
+                justify='center', 
+                font=('Consolas', 12, 'bold'))
+            self.var_entry_bsc = tk.StringVar(self)
+            self.entr_str = tk.Entry(
+                self.busca_frm_content,
+                textvariable=self.var_entry_bsc,
+                width=35
+            )
+            self.entr_str.config(
+                foreground="black",
+                font=("Consolas", 14),
+                border=0,
+                borderwidth=0,
+                highlightthickness=1,
+                highlightcolor='#316B83',
+                selectforeground='#CDFFEB', 
+                selectbackground='#476072'
+            )
+            self.entr_str.grid(row=0, column=0, padx=5, sticky="nsew")
 
-        self.entr_str = tk.Entry(
-            self.busca_frm_content,
-            width=30
-        )
-        self.entr_str.config(
-            foreground="black",
-            font=("Consolas", 14),
-            border=0,
-            borderwidth=0,
-            highlightthickness=2,
-            highlightcolor='#316B83',
-            selectforeground='#CDFFEB', 
-            selectbackground='#476072'
-        )
-        self.entr_str.grid(row=0, column=0, ipady=4, padx=5)
-        self.entr_str.bind("<Return>",lambda e=None: self.buscar_todo(self.entr_str.get().strip()))
-        
-        self.btn_buscar = tk.Button(self.busca_frm_content, text='Buscar', command=lambda: self.buscar_todo(self.entr_str.get().strip()))
-        self.btn_buscar.grid(row=0, column=1, padx=5)
-        self.btn_buscar_prev = tk.Button(self.busca_frm_content, text='<|', command=lambda: self.buscar_prev(self.entr_str.get().strip()))
-        self.btn_buscar_prev.grid(row=0, column=2, padx=5)
-        self.btn_buscar_next = tk.Button(self.busca_frm_content, text='|>', command=lambda: self.buscar_next(self.entr_str.get().strip()))
-        self.btn_buscar_next.grid(row=0, column=3, padx=5)
+            self.btn_buscar = tk.Button(
+                self.busca_frm_content, 
+                text='X', 
+                image=self.btn_x,
+                command=self.on_closing_busca_top
+            )
+            self.btn_buscar.config(
+                background = "#907FA4",
+                activebackground="#A58FAA",
+                border=0,
+                highlightbackground="#907FA4",
+            )
+            self.btn_buscar.grid(row=0, column=3, padx=5, pady=5)
+            
+            self.btn_buscar_prev = tk.Button(
+                self.busca_frm_content, 
+                text='<|',
+                image=self.flecha_up,
+                command=self._buscar_anterior
+            )
+            self.btn_buscar_prev.config(
+                background = "#907FA4",
+                activebackground="#A58FAA",
+                border=0,
+                highlightbackground="#907FA4",
+            )
+            self.btn_buscar_prev.grid(row=0, column=1, padx=(5,0), pady=5, sticky="nsew")
+            
+            self.btn_buscar_next = tk.Button(
+                self.busca_frm_content, 
+                text='|>', 
+                image=self.flecha_down,
+                #style='TOPS.TButton',
+                command=self._buscar_siguiente
+            )
+            self.btn_buscar_next.config(
+                background = "#907FA4",
+                activebackground="#A58FAA",
+                border=0,
+                highlightbackground="#907FA4",
+            )
+            self.btn_buscar_next.grid(row=0, column=2, padx=(5,0), pady=5, sticky="nsew")
+            
+            self.entr_str.focus_set()
+            self.entr_str.bind('<Any-KeyRelease>', self.on_entr_str_busca_key_release)
+            self.entr_str.bind('<Control-f>', lambda x : self._buscar_focus(x))
+            self.entr_str.bind('<Control-v>', lambda x : self.sel_text(x))
+            self._estado_actual = True
+            print(self._estado_actual)
+        elif self._estado_actual:
+            self._buscar_focus(event=None)
+            return 'break'
+    
+    def _buscar_focus(self, event):
+        self.entr_str.select_range(0,tk.END)
         self.entr_str.focus_set()
+        return 'break'
+    
+    def sel_text(self, event):
+        if event.widget.select_present():
+            self.var_entry_bsc.set("")
 
     def on_closing_busca_top(self):
-        # '''En el momento de cerrar el cuadro de búsqueda'''
-        # if MessageBox.askokcancel('Quit', 'Do you want to quit?'):
-        #     # borrando toda etiqueta establecida en los resultados de búsqueda
-        #     self.text_01.tag_remove('found', '1.0', tk.END)
-        #     self.text_01.tag_remove('found_prev_next', '1.0', tk.END)
-        #     # cerrando búsqueda
         self.busca_top.destroy()
+        self._estado_actual = False
+
+    def on_entr_str_busca_key_release(self, event):
+        if event.keysym != "F2" and event.keysym != "F3":  # F2 y F3
+            self._buscar()
+            return "break"
+
+    def _buscar(self, event=None):
+        self.buscar_todo(self.entr_str.get().strip())
+        if self.ocurrencias_encontradas:
+            self.bus_reem_num_results.set('~ {} de {} ~'.format(self.numero_ocurrencia_actual, self.numero_ocurrencias))
+        else:
+            self.bus_reem_num_results.set('~ {} ~'.format('No hay resultados'))
+
+    def _buscar_siguiente(self, event=None):
+        self.buscar_next()
+        if self.ocurrencias_encontradas:
+            self.bus_reem_num_results.set('~ {} de {} ~'.format(self.numero_ocurrencia_actual, self.numero_ocurrencias))
+        else:
+            self.bus_reem_num_results.set('~ {} ~'.format('No hay resultados'))
+
+    def _buscar_anterior(self, event=None):
+        self.buscar_prev()
+        if self.ocurrencias_encontradas:
+            self.bus_reem_num_results.set('~ {} de {} ~'.format(self.numero_ocurrencia_actual, self.numero_ocurrencias))
+        else:
+            self.bus_reem_num_results.set('~ {} ~'.format('No hay resultados'))
+    
+    
