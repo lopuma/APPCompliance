@@ -52,12 +52,25 @@ txtWidget = ""
 top_active_LBK = False
 sis_oper = ""
 class Expandir(ttk.Frame):
-    def __init__(self, parent, customer, titulo, so, *args, **kwargs):
+    def __init__(self, parent, customer, titulo, so, st_btnDIR, st_btnAUTH, st_btnSER, st_btnACC, st_btnCMD, st_btnIDR, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.parent = parent
         self.customer = customer
         self.titulo = titulo
         self.so = so
+        self.st_btnDIR = st_btnDIR
+        self.st_btnAUTH = st_btnAUTH
+        self.st_btnSER = st_btnSER
+        self.st_btnACC = st_btnACC
+        self.st_btnCMD = st_btnCMD
+        self.st_btnIDR = st_btnIDR
+        print("dir ", self.st_btnDIR)
+        print("auth ", self.st_btnAUTH)
+        print("ser ", self.st_btnSER)
+        print("acc ", self.st_btnACC)
+        print("cmd ", self.st_btnCMD)
+        print("id_rsa ", self.st_btnIDR)
+        print("Titulo : ", self.titulo)
         self.vtn_expandir = tk.Toplevel(self)
         self.vtn_expandir.config(background='#F1ECC3')
         window_width=1005
@@ -166,6 +179,80 @@ class Expandir(ttk.Frame):
             insertbackground='#297F87',
             selectbackground='lightblue',
         )
+        self.EXP_btn_VentanasDIR = ttk.Button(
+            self.vtn_expandir,
+            text='Permissions',
+            compound='left',
+            image=desviacion.Expandir_icon1,            
+            command=desviacion.abrir_DIRECTORY,
+            style='DESV.TButton',
+            state="normal"
+        )
+        self.EXP_btn_VentanasAUTH = ttk.Button(
+            self.vtn_expandir,
+            text='Authorized',
+            compound='left',
+            image=desviacion.Expandir_icon1,            
+            command=desviacion.abrir_AUTHORIZED,
+            style='DESV.TButton',
+            state="normal"
+        )
+        self.EXP_btn_VentanasSER = ttk.Button(
+            self.vtn_expandir,
+            text='Service',
+            compound='left',
+            image=desviacion.Expandir_icon1,            
+            command=desviacion.abrir_SERVICE,
+            style='DESV.TButton',
+            state="normal"
+        )
+        self.EXP_btn_VentanasACC = ttk.Button(
+            self.vtn_expandir,
+            text='Account',
+            compound='left',
+            image=desviacion.Expandir_icon1,            
+            command=desviacion.abrir_ACCOUNT,
+            style='DESV.TButton',
+            state="normal"
+        )
+        self.EXP_btn_VentanasCMD = ttk.Button(
+            self.vtn_expandir,
+            text='Command',
+            compound='left',
+            image=desviacion.Expandir_icon1,            
+            command=desviacion.abrir_COMMAND,
+            style='DESV.TButton',
+            state="normal"
+        )
+        self.EXP_btn_VentanasIDR = ttk.Button(
+            self.vtn_expandir,
+            text='Id_Rsa',
+            compound='left',
+            image=desviacion.Expandir_icon1,            
+            command=desviacion.abrir_IDRSA,
+            style='DESV.TButton',
+            state="normal"
+        )
+        if self.st_btnDIR and self.titulo == "COMPROBACION":
+            self.EXP_btn_VentanasDIR.grid(row=0, column=1, pady=5, sticky='ne')
+        elif self.st_btnAUTH and self.titulo == "COMPROBACION":
+            self.EXP_btn_VentanasAUTH.grid(row=0, column=1, pady=5, sticky='ne')
+        elif self.st_btnSER and self.titulo == "COMPROBACION":
+            self.EXP_btn_VentanasSER.grid(row=0, column=1, pady=5, sticky='ne')
+        elif self.st_btnACC and self.titulo == "COMPROBACION":
+            self.EXP_btn_VentanasACC.grid(row=0, column=1, pady=5, sticky='ne')
+        elif self.st_btnCMD and self.titulo == "COMPROBACION":
+            self.EXP_btn_VentanasCMD.grid(row=0, column=1, pady=5, sticky='ne')
+        elif self.st_btnIDR and self.titulo == "COMPROBACION":
+            self.EXP_btn_VentanasIDR.grid(row=0, column=1, pady=5, sticky='ne')
+        else:
+            self.EXP_btn_VentanasDIR.forget()     
+            self.EXP_btn_VentanasAUTH.forget()     
+            self.EXP_btn_VentanasSER.forget()     
+            self.EXP_btn_VentanasACC.forget()     
+            self.EXP_btn_VentanasCMD.forget()     
+            self.EXP_btn_VentanasIDR.forget()     
+        
         self.EXP_btnCopyALL = ttk.Button(
             self.vtn_expandir,
             image=desviacion.CopyALL1_icon,
@@ -173,7 +260,7 @@ class Expandir(ttk.Frame):
             style='DESV.TButton',
             state="disabled"
         )
-        self.EXP_btnCopyALL.grid(row=0, column=1, padx=20, pady=5, sticky='ne')
+        self.EXP_btnCopyALL.grid(row=0, column=2, padx=20, pady=5, sticky='ne')
         self.EXP_btnScreamEvidencia = ttk.Button(
             self.vtn_expandir,
             image=desviacion.Captura1_icon,
@@ -181,15 +268,15 @@ class Expandir(ttk.Frame):
             style='DESV.TButton',
             state="disabled",
         )
-        self.EXP_btnScreamEvidencia.grid(row=0, column=2, pady=5, sticky='ne')
+        self.EXP_btnScreamEvidencia.grid(row=0, column=3, pady=5, sticky='ne')
         self.EXP_btnReducir = ttk.Button(
             self.vtn_expandir,
             image=desviacion.Reducir_icon,
             command=self.cerrar_vtn_expandir,
             style='DESV.TButton',
         )
-        self.EXP_btnReducir.grid(row=0, column=3, padx=20, pady=5, sticky='ne')
-        self.EXP_srcExpandir.grid(row=1, column=0, padx=5, pady=5, sticky='nsew', columnspan=4)
+        self.EXP_btnReducir.grid(row=0, column=4, padx=20, pady=5, sticky='ne')
+        self.EXP_srcExpandir.grid(row=1, column=0, padx=5, pady=5, sticky='nsew', columnspan=5)
 class Desviacion(ttk.Frame):
     def __init__(self, parent, *args, **kwargs):
         ttk.Frame.__init__(self, parent,*args)
@@ -247,9 +334,23 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_srcRefrescar.bind('<Control-f>', lambda e : self.buscar(e))
         self.DESVfr3_srcEvidencia.bind('<Control-f>', lambda e : self.buscar(e))
         self.DESVfr1_listbox.bind('<Control-f>', lambda e : self.buscar(e))
+        
+        self.DESVfr2_srcComprobacion.bind('<Control-F>', lambda e : self.buscar(e))
+        self.DESVfr2_srcBackup.bind('<Control-F>', lambda e : self.buscar(e))
+        self.DESVfr3_srcEditar.bind('<Control-F>', lambda e : self.buscar(e))
+        self.DESVfr3_srcRefrescar.bind('<Control-F>', lambda e : self.buscar(e))
+        self.DESVfr3_srcEvidencia.bind('<Control-F>', lambda e : self.buscar(e))
+        self.DESVfr1_listbox.bind('<Control-F>', lambda e : self.buscar(e))
+        
+        self.DESVfr1_entModulo.bind('<Control-F>', lambda e : self._buscar_focus(e))
+        self.DESVfr1_entModulo.bind('<Control-f>', lambda e : self._buscar_focus(e))
+        
         self.DESVfr1_listbox.bind("<Down>",lambda e : self.ListDown(e))
         self.DESVfr1_listbox.bind("<Up>",lambda e : self.ListUp(e))
+        
         self.DESVfr1_entModulo.bind('<Control-v>', lambda e : self.sel_text(e))
+        self.DESVfr1_entModulo.bind('<Control-V>', lambda e : self.sel_text(e))
+        
         self.DESVfr2_srcComprobacion.bind('<Control-c>', lambda e : self._copiar_texto_seleccionado(e))
         self.DESVfr2_srcBackup.bind('<Control-c>', lambda e : self._copiar_texto_seleccionado(e))
         self.DESVfr3_srcEditar.bind('<Control-c>', lambda e : self._copiar_texto_seleccionado(e))
@@ -257,6 +358,12 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_srcEvidencia.bind('<Control-c>', lambda e : self._copiar_texto_seleccionado(e))
         self.DESVfr1_entModulo.bind('<Control-x>', lambda e : self._clear_busqueda(e))        
         ## --- --- ##
+        self._btnDir = False
+        self._btnAuth = False
+        self._btnSer = False
+        self._btnAcc = False
+        self._btnCmd = False
+        self._btnIdr = False
     
     def iconos(self): #TODO ICONOS DE VENTANA DESVIACION
         self.BuscarModulo_icon = ImageTk.PhotoImage(
@@ -265,6 +372,8 @@ class Desviacion(ttk.Frame):
                     Image.open(path_icon+r"limpiar.png").resize((25, 25)))
         self.Expandir_icon = ImageTk.PhotoImage(
                     Image.open(path_icon+r"expandir.png").resize((20, 20)))
+        self.Expandir_icon1 = ImageTk.PhotoImage(
+                    Image.open(path_icon+r"expandir.png").resize((30, 30)))
         self.Captura_icon = ImageTk.PhotoImage(
                     Image.open(path_icon+r"captura.png").resize((20, 20)))
         self.Captura1_icon = ImageTk.PhotoImage(
@@ -341,8 +450,7 @@ class Desviacion(ttk.Frame):
         global expandir
         tittleExpand = var
         event.focus()
-        print("clien explan : ", asigne_Ciente)
-        expandir = Expandir(self,asigne_Ciente,tittleExpand, sis_oper)
+        expandir = Expandir(self,asigne_Ciente,tittleExpand, sis_oper, self._btnDir, self._btnAuth, self._btnSer, self._btnAcc, self._btnCmd, self._btnIdr)
         if event:
             text_aExpandir = event.get('1.0', tk.END)
             expandir.EXP_srcExpandir.insert('1.0',text_aExpandir)
@@ -448,6 +556,12 @@ class Desviacion(ttk.Frame):
         scr_Event.tag_add("sel","1.0","end")
         return 'break'
     
+    def _buscar_focus(self, event):
+        entry_event = event.widget
+        entry_event.select_range(0,tk.END)
+        entry_event.focus_set()
+        return 'break'
+
     def sel_text(self, event):
         if event.widget.select_present():
             self.var_entry_bsc.set("")
@@ -486,6 +600,7 @@ class Desviacion(ttk.Frame):
     
     def buscar(self, event):
         self.DESVfr1_entModulo.focus()
+        self._buscar_focus(event=self.DESVfr1_entModulo)
     
     def _buscar(self, event):
         event.focus()
@@ -539,7 +654,13 @@ class Desviacion(ttk.Frame):
             self.mostrar_buttons_modulo(modulo_selecionado)
     
     def mostrar_buttons_modulo(self, modulo_selecionado): #TODO añadir demas botones
-        if str(modulo_selecionado) == "Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /TMP Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /VAR Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /OPT Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /ETC Restrictions":
+        if str(modulo_selecionado) == "Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /TMP Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /VAR Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /OPT Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /ETC Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /USR Restrictions":
+            self._btnDir = True
+            self._btnAuth = False
+            self._btnSer = False
+            self._btnAcc = False
+            self._btnCmd = False
+            self._btnIdr = False
             self.DESV_btnDirectory.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
             self.DESV_btnAuthorized.grid_forget()
             self.DESV_btnService.grid_forget()
@@ -547,13 +668,25 @@ class Desviacion(ttk.Frame):
             self.DESV_btnCommand.grid_forget()
             self.DESV_btnIdrsa.grid_forget()
         elif str(modulo_selecionado) == "Password Requirements/Private Key File Restriction":
+            self._btnDir = False
+            self._btnAuth = True
+            self._btnSer = False
+            self._btnAcc = False
+            self._btnCmd = False
+            self._btnIdr = False
             self.DESV_btnDirectory.grid_forget()
             self.DESV_btnService.grid_forget()
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnCommand.grid_forget()
             self.DESV_btnIdrsa.grid_forget()
             self.DESV_btnAuthorized.grid(row=2, column=1, padx=5, pady=5, sticky='ne')    
-        elif str(modulo_selecionado) == "Network Settings/Ensure LDAP Server is not enabled" or str(modulo_selecionado) == "Password Requirements/SSH PermitRootLogin Restriction":
+        elif str(modulo_selecionado) == "Network Settings/Ensure LDAP Server is not enabled" or str(modulo_selecionado) == "Password Requirements/SSH PermitRootLogin Restriction" or str(modulo_selecionado) == "Network Settings/Prohibited Processes":
+            self._btnDir = False
+            self._btnAuth = False
+            self._btnSer = True
+            self._btnAcc = False
+            self._btnCmd = False
+            self._btnIdr = False
             self.DESV_btnDirectory.grid_forget()
             self.DESV_btnAuthorized.grid_forget()
             self.DESV_btnAccount.grid_forget()
@@ -561,6 +694,12 @@ class Desviacion(ttk.Frame):
             self.DESV_btnIdrsa.grid_forget()
             self.DESV_btnService.grid(row=2, column=1, padx=5, pady=5, sticky='ne')    
         elif str(modulo_selecionado) == "Password Requirements/Password MAX Age /etc/shadow":
+            self._btnDir = False
+            self._btnAuth = False
+            self._btnSer = False
+            self._btnAcc = True
+            self._btnCmd = False
+            self._btnIdr = False
             self.DESV_btnDirectory.grid_forget()
             self.DESV_btnAuthorized.grid_forget()
             self.DESV_btnService.grid_forget()
@@ -568,6 +707,12 @@ class Desviacion(ttk.Frame):
             self.DESV_btnIdrsa.grid_forget()
             self.DESV_btnAccount.grid(row=2, column=1, padx=5, pady=5, sticky='ne')  
         elif str(modulo_selecionado) == "protecting Resources-OSRs/SUDO Command WW Permissions":
+            self._btnDir = False
+            self._btnAuth = False
+            self._btnSer = False
+            self._btnAcc = False
+            self._btnCmd = True
+            self._btnIdr = False
             self.DESV_btnDirectory.grid_forget()
             self.DESV_btnAuthorized.grid_forget()
             self.DESV_btnService.grid_forget()
@@ -575,6 +720,12 @@ class Desviacion(ttk.Frame):
             self.DESV_btnIdrsa.grid_forget()
             self.DESV_btnCommand.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
         elif str(modulo_selecionado) == "Password Requirements/NULL Passphrase":
+            self._btnDir = False
+            self._btnAuth = False
+            self._btnSer = False
+            self._btnAcc = False
+            self._btnCmd = False
+            self._btnIdr = True
             self.DESV_btnDirectory.grid_forget()
             self.DESV_btnAuthorized.grid_forget()
             self.DESV_btnService.grid_forget()
@@ -582,6 +733,12 @@ class Desviacion(ttk.Frame):
             self.DESV_btnCommand.grid_forget()
             self.DESV_btnIdrsa.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
         else:
+            self._btnDir = False
+            self._btnAuth = False
+            self._btnSer = False
+            self._btnAcc = False
+            self._btnCmd = False
+            self._btnIdr = False
             self.DESV_btnDirectory.grid_forget()
             self.DESV_btnAuthorized.grid_forget()
             self.DESV_btnService.grid_forget()
@@ -661,7 +818,13 @@ class Desviacion(ttk.Frame):
             self.DESV_btnIdrsa.grid_forget()
     
     def mostrar_buttons_clave(self, clave_Buscado):
-        if clave_Buscado == "STICKY" or clave_Buscado == "OSRTMP" or clave_Buscado == "OSRVAR" or clave_Buscado == "OSROPT" or clave_Buscado == "OSRETC":
+        if clave_Buscado == "STICKY" or clave_Buscado == "OSRTMP" or clave_Buscado == "OSRVAR" or clave_Buscado == "OSROPT" or clave_Buscado == "OSRETC" or clave_Buscado == "OSRUSR":
+            self._btnDir = True
+            self._btnAuth = False
+            self._btnSer = False
+            self._btnAcc = False
+            self._btnCmd = False
+            self._btnIdr = False
             self.DESV_btnDirectory.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
             self.DESV_btnAuthorized.grid_forget()
             self.DESV_btnService.grid_forget()
@@ -669,6 +832,12 @@ class Desviacion(ttk.Frame):
             self.DESV_btnCommand.grid_forget() 
             self.DESV_btnIdrsa.grid_forget()
         elif clave_Buscado == "COMMAND":
+            self._btnDir = False
+            self._btnAuth = False
+            self._btnSer = False
+            self._btnAcc = False
+            self._btnCmd = True
+            self._btnIdr = False
             self.DESV_btnCommand.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
             self.DESV_btnAuthorized.grid_forget()
             self.DESV_btnService.grid_forget()
@@ -676,20 +845,64 @@ class Desviacion(ttk.Frame):
             self.DESV_btnDirectory.grid_forget()
             self.DESV_btnIdrsa.grid_forget()
         elif clave_Buscado == "IDRSA":
+            self._btnDir = False
+            self._btnAuth = False
+            self._btnSer = False
+            self._btnAcc = False
+            self._btnCmd = False
+            self._btnIdr = True
             self.DESV_btnIdrsa.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
             self.DESV_btnCommand.grid_forget()
             self.DESV_btnAuthorized.grid_forget()
             self.DESV_btnService.grid_forget()
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnDirectory.grid_forget()
-        elif clave_Buscado == "PERMITROOTLOGIN":
+        elif clave_Buscado == "PERMITROOTLOGIN" or clave_Buscado == "LDAP" or clave_Buscado == "PROCESSES":
+            self._btnDir = False
+            self._btnAuth = False
+            self._btnSer = True
+            self._btnAcc = False
+            self._btnCmd = False
+            self._btnIdr = False
             self.DESV_btnIdrsa.grid_forget()
             self.DESV_btnCommand.grid_forget()
             self.DESV_btnAuthorized.grid_forget()
             self.DESV_btnService.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnDirectory.grid_forget()
+        elif clave_Buscado == "AUTHORIZED_KEY":
+            self._btnDir = False
+            self._btnAuth = True
+            self._btnSer = False
+            self._btnAcc = False
+            self._btnCmd = False
+            self._btnIdr = False
+            self.DESV_btnDirectory.grid_forget()
+            self.DESV_btnService.grid_forget()
+            self.DESV_btnAccount.grid_forget()
+            self.DESV_btnCommand.grid_forget()
+            self.DESV_btnIdrsa.grid_forget()
+            self.DESV_btnAuthorized.grid(row=2, column=1, padx=5, pady=5, sticky='ne')    
+        elif clave_Buscado == "MAXAGE":
+            self._btnDir = False
+            self._btnAuth = False
+            self._btnSer = False
+            self._btnAcc = True
+            self._btnCmd = False
+            self._btnIdr = False
+            self.DESV_btnDirectory.grid_forget()
+            self.DESV_btnAuthorized.grid_forget()
+            self.DESV_btnService.grid_forget()
+            self.DESV_btnCommand.grid_forget()
+            self.DESV_btnIdrsa.grid_forget()
+            self.DESV_btnAccount.grid(row=2, column=1, padx=5, pady=5, sticky='ne')  
         else:
+            self._btnDir = False
+            self._btnAuth = False
+            self._btnSer = False
+            self._btnAcc = False
+            self._btnCmd = False
+            self._btnIdr = False
             self.DESV_btnDirectory.grid_forget()
             self.DESV_btnAuthorized.grid_forget()
             self.DESV_btnService.grid_forget()
@@ -803,10 +1016,8 @@ class Desviacion(ttk.Frame):
         if clt_modulo is not None:
             customer = clt_modulo
             self.clientesVar.set(customer)
-            print("1 : ", asigne_Ciente)
         else:
             customer = self.clientesVar.get()
-            print("2")
         ## --- LIMPIAR -----------------------------
         self.DESVfr1_listbox.delete(0,END)
         self.limpiar_Widgets()
@@ -1051,7 +1262,7 @@ class Desviacion(ttk.Frame):
         )
         self.DESV_btnIdrsa = ttk.Button(
             self.DESV_frame2,
-            text='ID_RSA',
+            text='Id_Rsa',
             compound='left',
             image=self.Expandir_icon,
             state='enabled',
@@ -1431,12 +1642,14 @@ class Aplicacion():
                             relief=[("active",'ridge'),("pressed",'groove')],
                             borderwidth=[("active",1)],
                             )
-        self.style.configure('DESV.TButton',
-                            background = "#D4ECDD",
-                            relief='sunke',
-                            borderwidth=1,
-                            padding=10,
-                            )
+        self.style.configure(
+            'DESV.TButton',
+            background = "#D4ECDD",
+            relief='sunke',
+            borderwidth=1,
+            padding=10,
+            font=('Source Sans Pro', 13, font.BOLD), 
+        )
         self.style.map('DESV.TButton',
                             background = [("active","#F6D167")],
                             padding=[("active",10),("pressed",10)],

@@ -15,7 +15,7 @@
             "risk": "",
             "impact": "",
             "variable": [
-                "file_id_rsa=\"/home/dnsadmin/.ssh/id_rsa\""
+                "file_idrsa=\"/home/dnsadmin/.ssh/id_rsa\""
             ],
             "SO": "LINUX"
         }

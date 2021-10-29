@@ -38,6 +38,7 @@ class Extracion(ttk.Frame):
         self.columnconfigure(2, weight=5)
         self.rowconfigure(0, weight=1)
         self.txt.bind('<Control-f>', lambda x : self.panel_buscar())
+        self.txt.bind('<Control-F>', lambda x : self.panel_buscar())
         self._ocurrencias_encontradas = []
         self._numero_ocurrencia_actual = None
         self._estado_actual = False
@@ -108,15 +109,27 @@ class Extracion(ttk.Frame):
         self.file_image = tk.PhotoImage(file=path_icon+r"files.png")
         self.folder_image = tk.PhotoImage(file=path_icon+r"folder.png")
 
-        self.max = ttk.Button(
+        self.max = tk.Button(
             self.frame1,
+            background="#39A2DB",
+            border=0,
+            borderwidth=0,
+            highlightthickness=0,
+            relief='flat',
             text="+",
+            font=("Consolas", 12, font.BOLD)
         )
         self.max.grid(row=2, column=0, sticky="e")
 
-        self.min = ttk.Button(
+        self.min = tk.Button(
             self.frame1,
+            background="#39A2DB",
+            border=0,
+            borderwidth=0,
+            highlightthickness=0,
+            relief='flat',
             text="-",
+            font=("Consolas", 12, font.BOLD)
         )
         self.min.grid(row=2, column=0, sticky="w")
                 
@@ -156,7 +169,6 @@ class Extracion(ttk.Frame):
     
     def seleccionar_plantilla(self, plantilla):
         self.plantilla = plantilla
-        print(self.plantilla)
         with open(plantilla) as g:
             data = g.read()
             self.txt.delete('1.0',tk.END)
@@ -267,6 +279,105 @@ class Extracion(ttk.Frame):
                 break
         if len(path) != 0:
             self.seleccionar_plantilla(path)
+            self.colour_line()
+            self.colour_line2()
+
+    def colour_line(self):
+        indx = '1.0'
+        indx3 = '1.0'
+        indx4 = '1.0'
+        indx5 = '1.0'
+        indx6 = '1.0'
+        line1 = "+-------------------------------------------------------------------------------------+"
+        line3 = "CONTESTAR NO"
+        line4 = "CONTESTAR N/A"
+        line5 = "---AD"
+        line6 = "---IZ"
+        if line1:
+            while True:
+                indx = self.txt.search(line1, indx, nocase=1, stopindex=tk.END)
+                if not indx: 
+                    break
+                lastidx = '%s+%dc' % (indx, len(line1))
+                self.txt.tag_add('found1', indx, lastidx)
+                indx = lastidx
+            self.txt.tag_config(
+                'found1', 
+                foreground='dodgerblue',
+                font=("Consolas", 14, font.BOLD)
+            )
+        if line3:
+            while True:
+                indx3 = self.txt.search(line3, indx3, nocase=1, stopindex=tk.END)
+                if not indx3: 
+                    break
+                lastidx3 = '%s+%dc' % (indx3, len(line3))
+                self.txt.tag_add('found3', indx3, lastidx3)
+                indx3 = lastidx3
+            self.txt.tag_config(
+                'found3', 
+                background='black',
+                foreground="red",
+                font=("Consolas", 14, font.BOLD)
+            )
+        if line4:
+            while True:
+                indx4 = self.txt.search(line4, indx4, nocase=1, stopindex=tk.END)
+                if not indx4: 
+                    break
+                lastidx4 = '%s+%dc' % (indx4, len(line4))
+                self.txt.tag_add('found4', indx4, lastidx4)
+                indx4 = lastidx4
+            self.txt.tag_config(
+                'found4', 
+                background='black',
+                foreground="ORANGE",
+                font=("Consolas", 14, font.BOLD)
+            )
+        if line5:
+            while True:
+                indx5 = self.txt.search(line5, indx5, nocase=1, stopindex=tk.END)
+                if not indx5: 
+                    break
+                lastidx5 = '%s+%dc' % (indx5, len(line5)+27)
+                print(lastidx5)
+                print("-- ",indx5)
+                self.txt.tag_add('found5', indx5, lastidx5)
+                indx5 = lastidx5
+            self.txt.tag_config(
+                'found5', 
+                font=("Consolas", 14, font.BOLD)
+            )
+        if line6:
+            while True:
+                indx6 = self.txt.search(line6, indx6, nocase=1, stopindex=tk.END)
+                if not indx6: 
+                    break
+                lastidx6 = '%s+%dc' % (indx6, len(line6)+27)
+                print(lastidx6)
+                print("-- ",indx6)
+                self.txt.tag_add('found6', indx6, lastidx6)
+                indx6 = lastidx6
+            self.txt.tag_config(
+                'found6', 
+                font=("Consolas", 14, font.BOLD)
+            )
+    def colour_line2(self):
+        indx2 = '1.0'
+        line2 = "CONTESTAR YES"
+        while True:
+            indx2 = self.txt.search(line2, indx2, nocase=1, stopindex=tk.END)
+            if not indx2: 
+                break
+            lastidx2 = '%s+%dc' % (indx2, len(line2))
+            self.txt.tag_add('found2', indx2, lastidx2)
+            indx2 = lastidx2
+        self.txt.tag_config(
+            'found2',
+            background="black",
+            foreground='green',
+            font=("Consolas",14,font.BOLD)
+        )
 
     def ampliador(self):
         self.frame3 = tk.Frame(
@@ -344,7 +455,6 @@ class Extracion(ttk.Frame):
         # eliminar toda marca establecida, si existiera, antes de plasmar nuevos resultados
         self.txt.tag_remove('found', '1.0', tk.END)
         self.txt.tag_remove('found_prev_next', '1.0', tk.END)
-
         if txt_buscar:
             # empezar desde el principio (y parar al llegar al final [stopindex >> END])
             idx = '1.0'
@@ -438,7 +548,7 @@ class Extracion(ttk.Frame):
             # ¿¿Cómo centrar este Frame o su contenido??
             self.busca_frm_content = tk.Frame(
                 self.busca_top, 
-                bg='#907FA4', 
+                bg='#39A2DB', 
                 padx=5, 
                 pady=10
             )
@@ -456,7 +566,9 @@ class Extracion(ttk.Frame):
             )
             buscar_01_msg.pack(fill='both', expand=1)
             buscar_01_msg.config(
-                width=bus_reem_top_msg_w, 
+                width=bus_reem_top_msg_w,
+                background="#035397",
+                foreground="white", 
                 justify='center', 
                 font=('Consolas', 12, 'bold'))
             self.var_entry_bsc = tk.StringVar(self)
@@ -484,10 +596,10 @@ class Extracion(ttk.Frame):
                 command=self.on_closing_busca_top
             )
             self.btn_buscar.config(
-                background = "#907FA4",
-                activebackground="#A58FAA",
+                background = "#39A2DB",
+                activebackground="#035397",
                 border=0,
-                highlightbackground="#907FA4",
+                highlightbackground="#39A2DB",
             )
             self.btn_buscar.grid(row=0, column=3, padx=5, pady=5)
             
@@ -498,10 +610,10 @@ class Extracion(ttk.Frame):
                 command=self._buscar_anterior
             )
             self.btn_buscar_prev.config(
-                background = "#907FA4",
-                activebackground="#A58FAA",
+                background = "#39A2DB",
+                activebackground="#035397",
                 border=0,
-                highlightbackground="#907FA4",
+                highlightbackground="#39A2DB",
             )
             self.btn_buscar_prev.grid(row=0, column=1, padx=(5,0), pady=5, sticky="nsew")
             
@@ -513,28 +625,29 @@ class Extracion(ttk.Frame):
                 command=self._buscar_siguiente
             )
             self.btn_buscar_next.config(
-                background = "#907FA4",
-                activebackground="#A58FAA",
+                background = "#39A2DB",
+                activebackground="#035397",
                 border=0,
-                highlightbackground="#907FA4",
+                highlightbackground="#39A2DB",
             )
             self.btn_buscar_next.grid(row=0, column=2, padx=(5,0), pady=5, sticky="nsew")
             
             self.entr_str.focus_set()
             self.entr_str.bind('<Any-KeyRelease>', self.on_entr_str_busca_key_release)
-            self.entr_str.bind('<Control-f>', lambda x : self._buscar_focus(x))
+            self.entr_str.bind('<Control-f>', lambda x : self._buscar_focus())
+            self.entr_str.bind('<Control-F>', lambda x : self._buscar_focus())
             self.entr_str.bind('<Control-v>', lambda x : self.sel_text(x))
+            self.entr_str.bind('<Control-V>', lambda x : self.sel_text(x))
             self._estado_actual = True
-            print(self._estado_actual)
         elif self._estado_actual:
-            self._buscar_focus(event=None)
+            self._buscar_focus()
             return 'break'
-    
-    def _buscar_focus(self, event):
+
+    def _buscar_focus(self,  event=None):
         self.entr_str.select_range(0,tk.END)
         self.entr_str.focus_set()
         return 'break'
-    
+
     def sel_text(self, event):
         if event.widget.select_present():
             self.var_entry_bsc.set("")
@@ -552,21 +665,37 @@ class Extracion(ttk.Frame):
         self.buscar_todo(self.entr_str.get().strip())
         if self.ocurrencias_encontradas:
             self.bus_reem_num_results.set('~ {} de {} ~'.format(self.numero_ocurrencia_actual, self.numero_ocurrencias))
+            self.entr_str.configure(
+                highlightthickness=2,
+                highlightcolor='blue')
         else:
             self.bus_reem_num_results.set('~ {} ~'.format('No hay resultados'))
-
+            self.entr_str.configure(
+                highlightthickness=2,
+                highlightcolor='red')
     def _buscar_siguiente(self, event=None):
         self.buscar_next()
         if self.ocurrencias_encontradas:
             self.bus_reem_num_results.set('~ {} de {} ~'.format(self.numero_ocurrencia_actual, self.numero_ocurrencias))
+            self.entr_str.configure(
+                highlightthickness=2,
+                highlightcolor='blue')
         else:
             self.bus_reem_num_results.set('~ {} ~'.format('No hay resultados'))
-
+            self.entr_str.configure(
+                highlightthickness=2,
+                highlightcolor='red')
     def _buscar_anterior(self, event=None):
         self.buscar_prev()
         if self.ocurrencias_encontradas:
             self.bus_reem_num_results.set('~ {} de {} ~'.format(self.numero_ocurrencia_actual, self.numero_ocurrencias))
+            self.entr_str.configure(
+                highlightthickness=2,
+                highlightcolor='blue')
         else:
             self.bus_reem_num_results.set('~ {} ~'.format('No hay resultados'))
+            self.entr_str.configure(
+                highlightthickness=2,
+                highlightcolor='red')
     
     

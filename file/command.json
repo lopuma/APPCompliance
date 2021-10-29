@@ -60,7 +60,7 @@
       "risk": "GENERICO",
       "impact": "GENERICO",
       "variable": [
-        ""
+        "Pertenece al cliente"
       ],
       "SO": "Linux"
     },

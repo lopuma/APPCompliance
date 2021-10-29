@@ -9,5 +9,16 @@
         "refrescar": null,
         "evidencia": "clear\ndate\nhostname\nls -la /var/log/wtmp\ncat /lib/tmpfiles.d/var.conf | grep -w wtmp\ncat /etc/logrotate.conf | grep -w wtmp -A4",
         "SO": "Linux"
+    },
+    {
+        "modulo": "Business Use Notice/Business Use Notice Required",
+        "clave": "BUN",
+        "descripcion": "Missing or Incorrect Business Use Notice. It should be set in /etc/motd",
+        "comprobacion": "##Debe tener el BUN actual.",
+        "copia": null,
+        "editar": "vi /etc/motd\n\n+-------------------------------------------------------------------------------+\n##añadir / remplazar :\n+-------------------------------------------------------------------------------+\n\n*******************************************************************************\n*                                                                             *\n*                                                                             *\n* Asisa systems must only be used for conducting Asisa business or            * \n* for purposes authorized by Asisa management.                                *\n*                                                                             *\n*                                                                             *\n*******************************************************************************",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nhostname\ncat /etc/motd",
+        "SO": "Linux"
     }
 ]

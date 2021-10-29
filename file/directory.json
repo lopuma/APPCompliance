@@ -495,6 +495,25 @@
       "SO": "Linux"
     },
     {
+      "object": "/var/.com.zerog.registry.xml",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fichero=\"/var/.com.zerog.registry.xml\""
+      ],
+      "SO": "Linux"
+    },
+    {
       "object": "/opt/IBM/ITM/lx8266/08/bin/",
       "owner": "root",
       "tipo": "/F/",
@@ -552,7 +571,7 @@
       "SO": "Linux"
     },
     {
-      "object": "/opt/tivoli/tsm/client/oracle/_uninstall/",
+      "object": "/opt/tivoli/tsm/client/oracle/_uninstall/.com.zerog.registry.xml",
       "owner": "root",
       "tipo": "/F/",
       "ownerGroup": "Sistemas",
@@ -566,7 +585,7 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "fileOPT=\"/opt/tivoli/tsm/client/oracle/_uninstall/\""
+        "fichero=\"/opt/tivoli/tsm/client/oracle/_uninstall/.com.zerog.registry.xml\""
       ],
       "SO": "Linux"
     },
@@ -576,16 +595,41 @@
       "tipo": "/F/",
       "ownerGroup": "Administrador de ORACLE",
       "user": [
-        "ORACLE"
+        "FT-BBDD - Javi de Paula",
+        "FT-BBDD - Santiago Santos"
       ],
       "code": "2-DOC",
       "servers": [
         "ALL servers"
       ],
-      "risk": "GENERICO / OSR ETC / FT",
-      "impact": "GENERICO / OSR ETC / FT",
+      "risk": "ORACLE, DBA / OSR ETC / FT",
+      "impact": "ORACLE, DBA / OSR ETC / FT",
       "variable": [
-        ""
+        "Se debe excepcionar",
+        "OWNER : Oracle, Grid, Oragr1d,Ora4g3nt, Oradb, Sargraph.",
+        "GROUP : Oinstall, Dba. "
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/etc/tmpfiles.d/oracleGI.conf",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "dba",
+      "user": [
+        "FT-BBDD - Javi de Paula",
+        "FT-BBDD - Santiago Santos"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "ORACLE, DBA / OSR ETC / FT",
+      "impact": "ORACLE, DBA / OSR ETC / FT",
+      "variable": [
+        "Se debe excepcionar",
+        "OWNER : Oracle, Grid, Oragr1d,Ora4g3nt, Oradb, Sargraph.",
+        "GROUP : Oinstall, Dba. "
       ],
       "SO": "Linux"
     },
@@ -595,16 +639,19 @@
       "tipo": "/F/",
       "ownerGroup": "Administrador de ORACLE",
       "user": [
-        "ORACLE"
+        "FT-BBDD - Javi de Paula",
+        "FT-BBDD - Santiago Santos"
       ],
       "code": "2-DOC",
       "servers": [
         "ALL servers"
       ],
-      "risk": "GENERICO / OSR ETC / FT",
-      "impact": "GENERICO / OSR ETC / FT",
+      "risk": "ORACLE, DBA / OSR ETC / FT",
+      "impact": "ORACLE, DBA / OSR ETC / FT",
       "variable": [
-        ""
+        "Se debe excepcionar",
+        "OWNER : Oracle, Grid, Oragr1d,Ora4g3nt, Oradb, Sargraph.",
+        "GROUP : Oinstall, Dba. "
       ],
       "SO": "Linux"
     },
@@ -614,16 +661,19 @@
       "tipo": "/F/",
       "ownerGroup": "Administrador de ORACLE",
       "user": [
-        "ORACLE"
+        "FT-BBDD - Javi de Paula",
+        "FT-BBDD - Santiago Santos"
       ],
       "code": "2-DOC",
       "servers": [
         "ALL servers"
       ],
-      "risk": "GENERICO / OSR ETC / FT",
-      "impact": "GENERICO / OSR ETC / FT",
+      "risk": "ORACLE, DBA / OSR ETC / FT",
+      "impact": "ORACLE, DBA / OSR ETC / FT",
       "variable": [
-        ""
+        "Se debe excepcionar",
+        "OWNER : Oracle, Grid, Oragr1d,Ora4g3nt, Oradb, Sargraph.",
+        "GROUP : Oinstall, Dba. "
       ],
       "SO": "Linux"
     },
@@ -633,16 +683,19 @@
       "tipo": "/F/",
       "ownerGroup": "Administrador de ORACLE",
       "user": [
-        "ORACLE"
+        "FT-BBDD - Javi de Paula",
+        "FT-BBDD - Santiago Santos"
       ],
       "code": "2-DOC",
       "servers": [
         "ALL servers"
       ],
-      "risk": "GENERICO / OSR ETC / FT",
-      "impact": "GENERICO / OSR ETC / FT",
+      "risk": "ORACLE, DBA / OSR ETC / FT",
+      "impact": "ORACLE, DBA / OSR ETC / FT",
       "variable": [
-        ""
+        "Se debe excepcionar",
+        "OWNER : Oracle, Grid, Oragr1d,Ora4g3nt, Oradb, Sargraph.",
+        "GROUP : Oinstall, Dba. "
       ],
       "SO": "Linux"
     },
@@ -652,16 +705,19 @@
       "tipo": "/F/",
       "ownerGroup": "Administrador de ORACLE",
       "user": [
-        "ORACLE"
+        "FT-BBDD - Javi de Paula",
+        "FT-BBDD - Santiago Santos"
       ],
       "code": "2-DOC",
       "servers": [
         "ALL servers"
       ],
-      "risk": "GENERICO / OSR ETC / FT",
-      "impact": "GENERICO / OSR ETC / FT",
+      "risk": "ORACLE, DBA / OSR ETC / FT",
+      "impact": "ORACLE, DBA / OSR ETC / FT",
       "variable": [
-        ""
+        "Se debe excepcionar",
+        "OWNER : Oracle, Grid, Oragr1d,Ora4g3nt, Oradb, Sargraph.",
+        "GROUP : Oinstall, Dba. "
       ],
       "SO": "Linux"
     },
@@ -683,6 +739,85 @@
         "directory=\"/etc/adsm/\"",
         "usuario=\"\"",
         "grupo=\"\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/opt/tivoli/tsm/client/api/bin64/cit/bin/etc/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/opt/tivoli/tsm/client/api/bin64/cit/bin/etc/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/home/ess01047/",
+      "owner": "ess01047",
+      "tipo": "/E/",
+      "ownerGroup": "PHC",
+      "user": [
+        "Blazquez Martin, Leire"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/home/ess01047/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/opt/IBM/ITM/08_Silent_Config.txt",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fichero=\"/opt/IBM/ITM/08_Silent_Config.txt\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/usr/sbin/cvuqdisk",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "dba",
+      "user": [
+        "FT-BBDD - Javi de Paula",
+        "FT-BBDD - Santiago Santos"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "ORACLE, DBA / OSR USR / FT",
+      "impact": "ORACLE, DBA / OSR USR / FT",
+      "variable": [
+        "Se debe excepcionar",
+        "OWNER : Oracle, Grid, Oragr1d,Ora4g3nt, Oradb, Sargraph.",
+        "GROUP : Oinstall, Dba. "
       ],
       "SO": "Linux"
     }

@@ -84,22 +84,23 @@
   ],
   "LBK": [
     {
-      "object": "",
-      "owner": "",
-      "tipo": "",
-      "ownerGroup": "",
+      "object": "netstat",
+      "owner": "Sistemas",
+      "tipo": "/S/",
+      "ownerGroup": "Grupo de Sistemas",
       "user": [
-        "",
-        ""
+        "GEMMA ESCAR APARICIO", 
+        "NINELA ELENA PAVEL MANCIU", 
+        "RAMON RUIZ GARCIA"
       ],
-      "code": "",
+      "code": "2-DOC",
       "servers": [
-        ""
+        "SVTARQFRT7P"
       ],
-      "risk": "",
-      "impact": "",
+      "risk": "GENERICO /  SERVICE Netsat / LBK",
+      "impact": "GENERICO /  SERVICE Netsat / LBK",
       "variable": [
-        "service=\"\""
+        ""
       ]
     }
   ]

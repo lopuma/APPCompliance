@@ -226,6 +226,10 @@ class Ventana(ttk.Frame):
                         self.cbxUser['values'] = md["user"]
                         variables = str(md['variable'])
                         variables = variables.replace("[","").replace("]","").replace("'","").replace(",",";")
+                        if md['code'] == "2-DOC":
+                            self.lbl4['text'] = "COMENTARIO"
+                        else:
+                            self.lbl4['text'] = "VARIABLES"
                         self.srcVariable.insert(END,variables)
                         self.lbl_SO['text'] = md['SO']
         self.cbxUser.set('CONTACTOS')
@@ -571,19 +575,19 @@ class Ventana(ttk.Frame):
         ## ---configuramos el scroll al trieview
         self.tree_scrollbar.config(command=self.tree.yview)
         ## ---creamos las columnas
-        self.tree['columns'] = ("FILE","ACCOUNT","GECOS","OWNERGROUP","CODE")
+        self.tree['columns'] = ("NAME","OWNER","TIPO","OWNERGROUP","CODE")
         ## --- formato a las columnas
         self.tree.column("#0", width=0, stretch=NO)
-        self.tree.column("FILE", anchor=W, width=300)
-        self.tree.column("ACCOUNT", anchor=CENTER, width=100)
-        self.tree.column("GECOS", anchor=CENTER, width=100)
+        self.tree.column("NAME", anchor=W, width=350)
+        self.tree.column("OWNER", anchor=CENTER, width=150)
+        self.tree.column("TIPO", anchor=CENTER, width=100)
         self.tree.column("OWNERGROUP", anchor=CENTER, width=150)
         self.tree.column("CODE", anchor=CENTER, width=100)
         ## --- indicar cabecera
         self.tree.heading("#0", text="", anchor=W)
-        self.tree.heading("#1", text="FILE", anchor=W)
-        self.tree.heading("#2", text="ACCOUNT", anchor=CENTER)
-        self.tree.heading("#3", text="GECOS", anchor=CENTER)
+        self.tree.heading("#1", text="NAME", anchor=W)
+        self.tree.heading("#2", text="OWNER", anchor=CENTER)
+        self.tree.heading("#3", text="TIPO", anchor=CENTER)
         self.tree.heading("#4", text="OWNER GROUP", anchor=CENTER)
         self.tree.heading("#5", text="CODE", anchor=CENTER)
         self.tree.tag_configure('oddrow', background="#CEE5D0", font=self.text_font)
@@ -723,7 +727,7 @@ class Ventana(ttk.Frame):
         ## --- VARIABLE
         self.lbl4 = ttk.Label(
             self.labelframe2,
-            text='VARIABLE',
+            text='VARIABLES',
             style='TOP.TLabel',
         )
         self.lbl4.grid(row=2, column=3, pady=5, padx=5, sticky='W')
