@@ -556,12 +556,6 @@ class Desviacion(ttk.Frame):
         scr_Event.tag_add("sel","1.0","end")
         return 'break'
     
-    def _buscar_focus(self, event):
-        entry_event = event.widget
-        entry_event.select_range(0,tk.END)
-        entry_event.focus_set()
-        return 'break'
-
     def sel_text(self, event):
         if event.widget.select_present():
             self.var_entry_bsc.set("")
@@ -600,10 +594,21 @@ class Desviacion(ttk.Frame):
     
     def buscar(self, event):
         self.DESVfr1_entModulo.focus()
-        self._buscar_focus(event=self.DESVfr1_entModulo)
+        self._buscar_Ativate_focus()
     
+    def _buscar_focus(self, event):
+        entry_event = event.widget
+        entry_event.select_range(0,tk.END)
+        entry_event.focus_set()
+        return 'break'
+
+    def _buscar_Ativate_focus(self):
+        self.DESVfr1_entModulo.select_range(0,tk.END)
+        self.DESVfr1_entModulo.focus_set()
+        return 'break'
+
     def _buscar(self, event):
-        event.focus()
+        self._buscar_Ativate_focus()
     ## ------------------------------------- ##
     ## --- FUNCIONES AL SELECIONAR MODULO, O BUSCAR MODULO ------- ##
     def asignarValor_aWidgets(self, md):
@@ -654,7 +659,7 @@ class Desviacion(ttk.Frame):
             self.mostrar_buttons_modulo(modulo_selecionado)
     
     def mostrar_buttons_modulo(self, modulo_selecionado): #TODO añadir demas botones
-        if str(modulo_selecionado) == "Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /TMP Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /VAR Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /OPT Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /ETC Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /USR Restrictions":
+        if str(modulo_selecionado) == "Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories" or str(modulo_selecionado) == "Protecting Resources-OSRs/CRON Command WW Permissions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /TMP Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /VAR Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /OPT Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /ETC Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /USR Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/CRON Command Group Permissions":
             self._btnDir = True
             self._btnAuth = False
             self._btnSer = False
@@ -693,7 +698,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnCommand.grid_forget()
             self.DESV_btnIdrsa.grid_forget()
             self.DESV_btnService.grid(row=2, column=1, padx=5, pady=5, sticky='ne')    
-        elif str(modulo_selecionado) == "Password Requirements/Password MAX Age /etc/shadow":
+        elif str(modulo_selecionado) == "Password Requirements/Password MAX Age /etc/shadow" or str(modulo_selecionado) == "Password Requirements/Password MAX Age":
             self._btnDir = False
             self._btnAuth = False
             self._btnSer = False
@@ -746,79 +751,8 @@ class Desviacion(ttk.Frame):
             self.DESV_btnCommand.grid_forget()
             self.DESV_btnIdrsa.grid_forget() 
     
-    def buscar_Modulos(self, event=None):
-        try:
-            valor_aBuscar = event
-            clave_Buscado = [n for n in listClave if valor_aBuscar.upper().strip() in n]
-            modulo_Buscado = [n for n in listModulo if valor_aBuscar.strip().replace("\\","/") in n]
-            if len(clave_Buscado) <= 1:
-                clave_Buscado = str(clave_Buscado).replace("[","").replace("]","").replace("'","")
-            else:
-                clave_Buscado = ""
-            if len(modulo_Buscado) <= 1:
-                modulo_Buscado = str(modulo_Buscado).replace("[","").replace("]","").replace("'","")
-            else:
-                modulo_Buscado = ""
-            # ## --------- OBTENER MODULO POR CLAVE O MODULO -------------- ## //TODO "definir si buscar por clave o modulo"
-            if len(clave_Buscado) == 0 and len(modulo_Buscado) == 0:
-                self.limpiar_Widgets()
-                self.DESVfr1_listbox.select_clear(ANCHOR)
-                mb.showerror("ERROR","Esta vacio o no existe el modulo.\nPrueba a buscar por CLAVE o el MODULO completo")
-                self.DESVfr1_entModulo.focus()
-                self.DESV_btnDirectory.grid_forget()
-                self.DESV_btnAuthorized.grid_forget()
-                self.DESV_btnService.grid_forget()
-                self.DESV_btnAccount.grid_forget()
-                self.DESV_btnCommand.grid_forget()
-                self.DESV_btnIdrsa.grid_forget()
-            elif len(clave_Buscado) != 0:
-                with open(path_modulo.format(asigne_Ciente)) as g:
-                    data = []
-                    data = json.load(g)
-                    for md in data:
-                        if clave_Buscado in md['clave']:
-                            modulo_Encontrado = md['modulo']
-                            ## --- LIMPIAR ------------------------------------- ##                      
-                            self.limpiar_Widgets()
-                            ## ------------------------------------------------- ##
-                            self.asignarValor_aWidgets(md)
-                    self.mostrar_buttons_clave(clave_Buscado)
-                    self.DESVfr1_listbox.selection_clear(0, tk.END)        
-                    modulo_ListBox = self.DESVfr1_listbox.get(0, tk.END)
-                    indice = modulo_ListBox.index(modulo_Encontrado)
-                    self.DESVfr1_listbox.selection_set(indice)
-            else:
-                data = []
-                with open(path_modulo.format(asigne_Ciente)) as g:
-                    data = json.load(g)
-                    for md in data:
-                        if modulo_Buscado in md['modulo']:
-                            modulo_Encontrado = md['modulo']
-                            ## --- LIMPIAR ------------------------------------- ##                      
-                            self.limpiar_Widgets()
-                            ## ------------------------------------------------- ##
-                            self.asignarValor_aWidgets(md)
-                    self.mostrar_buttons_modulo(modulo_Buscado)
-                    self.DESVfr1_listbox.selection_clear(0, tk.END)
-                    modulo_ListBox = self.DESVfr1_listbox.get(0, tk.END)
-                    indice = modulo_ListBox.index(modulo_Encontrado)
-                    self.DESVfr1_listbox.selection_set(indice)
-            self.DESVfr1_btnBuscar.grid_forget()
-            self.DESVfr1_btnLimpiar.grid(row=1, column=1, pady=5, padx=5, sticky='nsw')    
-        except:
-            self.DESVfr1_listbox.select_clear(ANCHOR)
-            mb.showerror("ERROR","Esta vacio o no existe el modulo.\nPrueba a buscar por CLAVE o el MODULO completo")
-            self.limpiar_Widgets()
-            self.DESVfr1_entModulo.focus()
-            self.DESV_btnDirectory.grid_forget()
-            self.DESV_btnAuthorized.grid_forget()
-            self.DESV_btnService.grid_forget()
-            self.DESV_btnAccount.grid_forget()
-            self.DESV_btnCommand.grid_forget()
-            self.DESV_btnIdrsa.grid_forget()
-    
     def mostrar_buttons_clave(self, clave_Buscado):
-        if clave_Buscado == "STICKY" or clave_Buscado == "OSRTMP" or clave_Buscado == "OSRVAR" or clave_Buscado == "OSROPT" or clave_Buscado == "OSRETC" or clave_Buscado == "OSRUSR":
+        if clave_Buscado == "STICKY" or clave_Buscado =="OSRsCRON" or clave_Buscado == "OSRTMP" or clave_Buscado == "OSRCRON" or clave_Buscado == "OSRVAR" or clave_Buscado == "OSROPT" or clave_Buscado == "OSRETC" or clave_Buscado == "OSRUSR":
             self._btnDir = True
             self._btnAuth = False
             self._btnSer = False
@@ -909,6 +843,77 @@ class Desviacion(ttk.Frame):
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnCommand.grid_forget()
             self.DESV_btnIdrsa.grid_forget()    
+    
+    def buscar_Modulos(self, event=None):
+        try:
+            valor_aBuscar = event
+            clave_Buscado = [n for n in listClave if valor_aBuscar.upper().strip() in n]
+            modulo_Buscado = [n for n in listModulo if valor_aBuscar.strip().replace("\\","/") in n]
+            if len(clave_Buscado) <= 1:
+                clave_Buscado = str(clave_Buscado).replace("[","").replace("]","").replace("'","")
+            else:
+                clave_Buscado = ""
+            if len(modulo_Buscado) <= 1:
+                modulo_Buscado = str(modulo_Buscado).replace("[","").replace("]","").replace("'","")
+            else:
+                modulo_Buscado = ""
+            # ## --------- OBTENER MODULO POR CLAVE O MODULO -------------- ## //TODO "definir si buscar por clave o modulo"
+            if len(clave_Buscado) == 0 and len(modulo_Buscado) == 0:
+                self.limpiar_Widgets()
+                self.DESVfr1_listbox.select_clear(ANCHOR)
+                mb.showerror("ERROR","Esta vacio o no existe el modulo.\nPrueba a buscar por CLAVE o el MODULO completo")
+                self.DESVfr1_entModulo.focus()
+                self.DESV_btnDirectory.grid_forget()
+                self.DESV_btnAuthorized.grid_forget()
+                self.DESV_btnService.grid_forget()
+                self.DESV_btnAccount.grid_forget()
+                self.DESV_btnCommand.grid_forget()
+                self.DESV_btnIdrsa.grid_forget()
+            elif len(clave_Buscado) != 0:
+                with open(path_modulo.format(asigne_Ciente)) as g:
+                    data = []
+                    data = json.load(g)
+                    for md in data:
+                        if clave_Buscado in md['clave']:
+                            modulo_Encontrado = md['modulo']
+                            ## --- LIMPIAR ------------------------------------- ##                      
+                            self.limpiar_Widgets()
+                            ## ------------------------------------------------- ##
+                            self.asignarValor_aWidgets(md)
+                    self.mostrar_buttons_clave(clave_Buscado)
+                    self.DESVfr1_listbox.selection_clear(0, tk.END)        
+                    modulo_ListBox = self.DESVfr1_listbox.get(0, tk.END)
+                    indice = modulo_ListBox.index(modulo_Encontrado)
+                    self.DESVfr1_listbox.selection_set(indice)
+            else:
+                data = []
+                with open(path_modulo.format(asigne_Ciente)) as g:
+                    data = json.load(g)
+                    for md in data:
+                        if modulo_Buscado in md['modulo']:
+                            modulo_Encontrado = md['modulo']
+                            ## --- LIMPIAR ------------------------------------- ##                      
+                            self.limpiar_Widgets()
+                            ## ------------------------------------------------- ##
+                            self.asignarValor_aWidgets(md)
+                    self.mostrar_buttons_modulo(modulo_Buscado)
+                    self.DESVfr1_listbox.selection_clear(0, tk.END)
+                    modulo_ListBox = self.DESVfr1_listbox.get(0, tk.END)
+                    indice = modulo_ListBox.index(modulo_Encontrado)
+                    self.DESVfr1_listbox.selection_set(indice)
+            self.DESVfr1_btnBuscar.grid_forget()
+            self.DESVfr1_btnLimpiar.grid(row=1, column=1, pady=5, padx=5, sticky='nsw')    
+        except:
+            self.DESVfr1_listbox.select_clear(ANCHOR)
+            mb.showerror("ERROR","Esta vacio o no existe el modulo.\nPrueba a buscar por CLAVE o el MODULO completo")
+            self.limpiar_Widgets()
+            self.DESVfr1_entModulo.focus()
+            self.DESV_btnDirectory.grid_forget()
+            self.DESV_btnAuthorized.grid_forget()
+            self.DESV_btnService.grid_forget()
+            self.DESV_btnAccount.grid_forget()
+            self.DESV_btnCommand.grid_forget()
+            self.DESV_btnIdrsa.grid_forget()
     
     def clear_busqueda(self, event):
         text_widget = event.widget

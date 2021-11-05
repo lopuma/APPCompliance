@@ -19,5 +19,64 @@
             ],
             "SO": "LINUX"
         }
+    ],
+    "LBK": [
+        {
+            "object": "/batchUCMD/batchUCMD.INTRANET/.ssh/id_rsa",
+            "owner": "ubroker",
+            "tipo": "/C/",
+            "ownerGroup": "Customer",
+            "user": [
+                "Customer"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Server"
+            ],
+            "risk": "GENERICO / ID_RSA / CUSTOMER",
+            "impact": "GENERICO / ID_RSA / CUSTOMER",
+            "variable": [
+                "Fichero pertenece a una cuenta de cliente"
+            ],
+            "SO": "Aix"
+        },
+        {
+            "object": "/home/nodejs/.ssh/id_rsa",
+            "owner": "nodejs",
+            "tipo": "/C/",
+            "ownerGroup": "Customer",
+            "user": [
+                "Customer"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Server"
+            ],
+            "risk": "GENERICO / ID_RSA / CUSTOMER",
+            "impact": "GENERICO / ID_RSA / CUSTOMER",
+            "variable": [
+                "Fichero pertenece a una cuenta de cliente"
+            ],
+            "SO": "Aix"
+        },
+        {
+            "object": "/home/tibco/.ssh/id_rsa",
+            "owner": "tibco",
+            "tipo": "/C/",
+            "ownerGroup": "Customer",
+            "user": [
+                "Customer"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Server"
+            ],
+            "risk": "GENERICO / ID_RSA / CUSTOMER",
+            "impact": "GENERICO / ID_RSA / CUSTOMER",
+            "variable": [
+                "Fichero pertenece a una cuenta de cliente"
+            ],
+            "SO": "Aix"
+        }
     ]
 }

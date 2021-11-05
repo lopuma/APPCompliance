@@ -22,23 +22,137 @@
   ],
   "ASISA": [
     {
-      "object": "",
-      "owner": "",
-      "tipo": "",
-      "ownerGroup": "",
+      "object": "/usr/lpp/sd/",
+      "owner": "archive",
+      "tipo": "/C/",
+      "ownerGroup": "ondemand",
       "user": [
-        ""
+        "Customer"
       ],
-      "code": "",
+      "code": "2-DOC",
       "servers": [
-        ""
+        "All servers"
+      ],
+      "risk": "GENERICO /  OSR-CRON / ASISA",
+      "impact": "GENERICO /  OSR-CRON / ASISA",
+      "variable": [
+        "El grupo, tiene cuentas de tipo /C/ (customer)"
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "/opt/WebSphere/AppServer/",
+      "owner": "was7",
+      "tipo": "/F/",
+      "ownerGroup": "EBH",
+      "user": [
+        "Silvia Pereira"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Server"
       ],
       "risk": "",
       "impact": "",
       "variable": [
-        "directory=\"\""
+        "fileOPT=\"/opt/WebSphere/AppServer/\""
       ],
-      "SO": "Linux"
+      "SO": "Aix"
+    },
+    {
+      "object": "/opt/IBMIHS/",
+      "owner": "ihs7",
+      "tipo": "/F/",
+      "ownerGroup": "EBH",
+      "user": [
+        "Silvia Pereira"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fileOPT=\"/opt/IBMIHS/\""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "/var/opt/ansible/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Lorenzo Fuertes"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/var/opt/ansible/\""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "/var/.com.zerog.registry.xml",
+      "owner": "root",
+      "tipo": "/F",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Lorenzo Fuertes"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fichero=\"/var/.com.zerog.registry.xml\""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "/opt/IBM/odwek/V9.0/_uninst900/.com.zerog.registry.xml",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Lorenzo Fuertes"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fichero=\"/opt/IBM/odwek/V9.0/_uninst900/.com.zerog.registry.xml\""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "/opt/IBM/db2/V9.7/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Lorenzo Fuertes"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fichero=\"/opt/IBM/db2/V9.7/\""
+      ],
+      "SO": "Aix"
     }
   ],
   "CESCE": [
@@ -136,7 +250,7 @@
       ],
       "code": "1-OK",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
@@ -157,7 +271,7 @@
       ],
       "code": "1-OK",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
@@ -174,11 +288,13 @@
       "tipo": "/F/",
       "ownerGroup": "Sistemas",
       "user": [
-        ""
+        "GEMMA ESCAR APARICIO", 
+        "NINELA ELENA PAVEL MANCIU", 
+        "RAMON RUIZ GARCIA"
       ],
       "code": "1-OK",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
@@ -193,11 +309,13 @@
       "tipo": "/F/",
       "ownerGroup": "Sistemas",
       "user": [
-        ""
+        "GEMMA ESCAR APARICIO", 
+        "NINELA ELENA PAVEL MANCIU", 
+        "RAMON RUIZ GARCIA"
       ],
       "code": "1-OK",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
@@ -212,11 +330,13 @@
       "tipo": "/F/",
       "ownerGroup": "Sistemas",
       "user": [
-        ""
+        "GEMMA ESCAR APARICIO", 
+        "NINELA ELENA PAVEL MANCIU", 
+        "RAMON RUIZ GARCIA"
       ],
       "code": "1-OK",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
@@ -231,11 +351,13 @@
       "tipo": "/F/",
       "ownerGroup": "Sistemas",
       "user": [
-        ""
+        "GEMMA ESCAR APARICIO", 
+        "NINELA ELENA PAVEL MANCIU", 
+        "RAMON RUIZ GARCIA"
       ],
       "code": "1-OK",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
@@ -254,7 +376,7 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "GENERICO",
       "impact": "GENERICO",
@@ -273,7 +395,7 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "GENERICO",
       "impact": "GENERICO",
@@ -292,7 +414,7 @@
       ],
       "code": "1-OK",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
@@ -311,7 +433,7 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "GENERICO",
       "impact": "GENERICO",
@@ -330,7 +452,7 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "GENERICO",
       "impact": "GENERICO",
@@ -349,7 +471,7 @@
       ],
       "code": "1-OK",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
@@ -368,13 +490,95 @@
       ],
       "code": "1-OK",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
       "variable": [
         "fileTMP=\"/tmp/gts-ansible/uidext_endpoint_7057770/\"",
         "directory=\"/tmp/gts-ansible/uidext_endpoint_7057770/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/etc/universal/",
+      "owner": "ubroker",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / OSR ETC / LBK",
+      "impact": "GENERICO / OSR ETC / LBK",
+      "variable": [
+        "Aplica a sub-directorios y ficheros de /etc/universal/"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/etc/adsm/Nodes/RESTORE/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "GEMMA ESCAR APARICIO", 
+        "NINELA ELENA PAVEL MANCIU", 
+        "RAMON RUIZ GARCIA"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fileETC=\"/etc/adsm/Nodes/RESTORE/\"",
+        "directory=\"/etc/adsm/Nodes/RESTORE/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/etc/adsm/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "GEMMA ESCAR APARICIO", 
+        "NINELA ELENA PAVEL MANCIU", 
+        "RAMON RUIZ GARCIA"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fileETC=\"/etc/adsm/\"",
+        "directory=\"/etc/adsm/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/etc/passwd-s3fs",
+      "owner": "ubroker",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / OSR ETC / LBK",
+      "impact": "GENERICO / OSR ETC / LBK",
+      "variable": [
+        ""
       ],
       "SO": "Linux"
     }
@@ -390,7 +594,7 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "GENERICO / OSR TMP / FT",
       "impact": "GENERICO / OSR TMP / FT",
@@ -398,6 +602,25 @@
         "Directorios, sub-directorios y ficheros, no se pueden editar permisos, sin authorizacion"
       ],
       "SO": "Linux"
+    },
+    {
+      "object": "/homeuser/hpfms/",
+      "owner": "hpfms",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "GENERICO / STICKY / CUSTOMER",
+      "impact": "GENERICO / STICKY / CUSTOMER",
+      "variable": [
+        "Usuario Aplicaciones HPFMS Fraude"
+      ],
+      "SO": "Aix"
     },
     {
       "object": "/tmp/gts-ansible/",
@@ -409,7 +632,7 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "GENERICO / OSR TMP / FT",
       "impact": "GENERICO / OSR TMP / FT",
@@ -428,7 +651,7 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "GENERICO / STICKY / CUSTOMER",
       "impact": "GENERICO / STICKY / CUSTOMER",
@@ -447,7 +670,7 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "GENERICO / STICKY / CUSTOMER",
       "impact": "GENERICO / STICKY / CUSTOMER",
@@ -466,7 +689,7 @@
       ],
       "code": "1-OK",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
@@ -485,7 +708,7 @@
       ],
       "code": "1-OK",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
@@ -504,7 +727,7 @@
       ],
       "code": "1-OK",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
@@ -523,7 +746,7 @@
       ],
       "code": "1-OK",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
@@ -542,7 +765,7 @@
       ],
       "code": "1-OK",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
@@ -561,7 +784,7 @@
       ],
       "code": "1-OK",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
@@ -580,7 +803,7 @@
       ],
       "code": "1-OK",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
@@ -600,7 +823,7 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "ORACLE, DBA / OSR ETC / FT",
       "impact": "ORACLE, DBA / OSR ETC / FT",
@@ -622,7 +845,7 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "ORACLE, DBA / OSR ETC / FT",
       "impact": "ORACLE, DBA / OSR ETC / FT",
@@ -644,7 +867,7 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "ORACLE, DBA / OSR ETC / FT",
       "impact": "ORACLE, DBA / OSR ETC / FT",
@@ -666,7 +889,7 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "ORACLE, DBA / OSR ETC / FT",
       "impact": "ORACLE, DBA / OSR ETC / FT",
@@ -688,7 +911,7 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "ORACLE, DBA / OSR ETC / FT",
       "impact": "ORACLE, DBA / OSR ETC / FT",
@@ -710,7 +933,7 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "ORACLE, DBA / OSR ETC / FT",
       "impact": "ORACLE, DBA / OSR ETC / FT",
@@ -731,7 +954,7 @@
       ],
       "code": "1-OK",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
@@ -752,7 +975,7 @@
       ],
       "code": "1-OK",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
@@ -771,7 +994,7 @@
       ],
       "code": "1-OK",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
@@ -790,7 +1013,7 @@
       ],
       "code": "1-OK",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
@@ -810,7 +1033,7 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "ORACLE, DBA / OSR USR / FT",
       "impact": "ORACLE, DBA / OSR USR / FT",

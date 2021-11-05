@@ -9,4 +9,34 @@
         "refrescar": "",
         "evidencia": "",
         "SO": "Linux"
+    },
+    {
+        "modulo": "",
+        "clave": "",
+        "descripcion": "",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Aix"
+    },
+    {
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
+      "user": [
+        ""
+      ],
+      "code": "",
+      "servers": [
+        ""
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        ""
+      ],
+      "SO": "Aix"
     }

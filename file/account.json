@@ -22,23 +22,209 @@
   ],
   "ASISA": [
     {
-      "object": "",
-      "owner": "",
-      "tipo": "",
-      "ownerGroup": "",
+      "object": "afernand",
+      "owner": "afernand",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
       "user": [
-        "",
-        ""
+        "Customer"
       ],
-      "code": "",
+      "code": "2-DOC",
       "servers": [
+        "ALL servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
         ""
+      ]
+    },
+    {
+      "object": "archive",
+      "owner": "archive",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ]
+    },
+    {
+      "object": "svjasper",
+      "owner": "svjasper",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ]
+    },
+    {
+      "object": "usaxwftp",
+      "owner": "usaxwftp",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ]
+    },
+    {
+      "object": "automate",
+      "owner": "automate",
+      "tipo": "/S/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Server"
       ],
       "risk": "",
       "impact": "",
       "variable": [
-        "account=\"\""
-      ]
+        "account=\"automate\""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "tivadmin",
+      "owner": "tivadmin",
+      "tipo": "/S/",
+      "ownerGroup": "Tivoli",
+      "user": [
+        "Mari Cruz Terciado"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"tivadmin\""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "was7",
+      "owner": "was7",
+      "tipo": "/F/",
+      "ownerGroup": "EBH",
+      "user": [
+        "Silvia Pereira"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"was7\""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "wasasisa",
+      "owner": "wasasisa",
+      "tipo": "/C/",
+      "ownerGroup": "EBH Customer",
+      "user": [
+        "Silvia Pereira"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        "Cuenta del cliente para EBH"
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "db2conn1",
+      "owner": "db2conn1",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "assuxat1",
+      "owner": "assuxat1",
+      "tipo": "/S/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"assuxat1\""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "assuxat2",
+      "owner": "assuxat2",
+      "tipo": "/S/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"assuxat2\""
+      ],
+      "SO": "Aix"
     }
   ],
   "FT": [
