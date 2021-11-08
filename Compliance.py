@@ -389,7 +389,6 @@ class Desviacion(ttk.Frame):
         event.widget['wraplength'] = event.width
     ## --- ACTIVAR MODO SOLO LECTURA ----------------------------- ##
     def widgets_SoloLectura(self, event):
-        print(event.state)
         if(20==event.state and event.keysym=='c' or event.keysym=='Down' or event.keysym=='Up' or 20==event.state and event.keysym=='f' or 20==event.state and event.keysym=='a'):
             return
         else:
@@ -523,8 +522,6 @@ class Desviacion(ttk.Frame):
         self.menu_Contextual.tk_popup(event.x_root, event.y_root)
         self.scrEvent = event.widget
         self.scrEvent.focus()
-        print(str(self.scrEvent))
-        print(str(self.DESVfr1_entModulo))
         if str(self.scrEvent) == str(self.DESVfr1_entModulo):
             self.menu_Contextual.entryconfig('  Buscar', state='disabled')
             self.menu_Contextual.entryconfig('  Pegar', state='normal')            

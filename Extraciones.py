@@ -13,6 +13,7 @@ from PIL import Image, ImageTk
 from tkinter.ttk import Style
 from threading import Thread
 import time
+
 user = getuser()
 mypath = os.path.expanduser("~/")
 path_extracion = mypath+"Compliance/extracion/"
@@ -42,6 +43,7 @@ class Extracion(ttk.Frame):
         self._ocurrencias_encontradas = []
         self._numero_ocurrencia_actual = None
         self._estado_actual = False
+        self._menu_clickDerecho()
     
     def iconos(self):
         self.flecha_up = ImageTk.PhotoImage(
@@ -362,6 +364,7 @@ class Extracion(ttk.Frame):
                 'found6', 
                 font=("Consolas", 14, font.BOLD)
             )
+    
     def colour_line2(self):
         indx2 = '1.0'
         line2 = "CONTESTAR YES"
@@ -411,8 +414,79 @@ class Extracion(ttk.Frame):
         self.txt.grid(row=0, column=0, sticky="nsew")
         self.idx_gnral = tk.StringVar()
         pos_cursor = self.txt.index(tk.INSERT)
-        print(pos_cursor)
         self.idx_gnral.set(pos_cursor)
+        self.txt.bind("<Key>", lambda e: self.widgets_SoloLectura(e))
+        self.txt.bind("<Button-3><ButtonRelease-3>",self._display_menu_clickDerecho)
+    
+    def widgets_SoloLectura(self, event):
+        if(20==event.state and event.keysym=='c' or event.keysym=='Down' or event.keysym=='Up' or 20==event.state and event.keysym=='f' or 20==event.state and event.keysym=='a'):
+            return
+        else:
+            return "break"
+
+    def _menu_clickDerecho(self):
+        self.text_font = font.Font(family='Consolas', size=13)   
+        self.menu_Contextual = Menu(self, tearoff=0)
+        self.menu_Contextual.add_command(
+            label="  Buscar", 
+            accelerator='Ctrl+F',
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            command=lambda e=self.txt : self.panel_buscar(e)
+        )
+        self.menu_Contextual.add_separator(background='#ccffff')
+        self.menu_Contextual.add_command(
+            label="  Copiar", 
+            accelerator='Ctrl+C',
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            state="disabled"
+        )
+        self.menu_Contextual.add_separator(background='#ccffff')
+        self.menu_Contextual.add_command(
+            label="  Seleccionar todo", 
+            accelerator='Ctrl+A',
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+        )
+        self.menu_Contextual.add_command(
+            label="  Limpiar Busqueda", 
+            accelerator='Ctrl+X',
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            command=self.limpiar_busqueda()
+        )
+        self.menu_Contextual.add_separator(background='#ccffff')
+        self.menu_Contextual.add_command(
+            label="  Cerrar pestaña", 
+            compound=LEFT,
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+        )
+
+    def _display_menu_clickDerecho(self, event):
+        self.menu_Contextual.tk_popup(event.x_root, event.y_root)
+        txt_select = event.widget.tag_ranges(tk.SEL)
+        if txt_select:
+            self.menu_Contextual.entryconfig("  Copiar", state="normal")
+        else:
+            self.menu_Contextual.entryconfig("  Copiar", state="disabled")
+
+    def limpiar_busqueda(self):
+        self.txt.tag_remove('found', '1.0', tk.END)
+        self.txt.tag_remove('found_prev_next', '1.0', tk.END)
+        #self.entr_str.select_range(0,tk.END)
+        self.entr_str.focus_set()
+    
+    def cerrar_vtn_desviacion(self):
+        pass
+        #self.cuaderno.forget(1)
+        #self.cuaderno.notebookContent.forget(1)
 
     def hide(self):
         global parar
@@ -673,6 +747,7 @@ class Extracion(ttk.Frame):
             self.entr_str.configure(
                 highlightthickness=2,
                 highlightcolor='red')
+    
     def _buscar_siguiente(self, event=None):
         self.buscar_next()
         if self.ocurrencias_encontradas:
@@ -685,6 +760,7 @@ class Extracion(ttk.Frame):
             self.entr_str.configure(
                 highlightthickness=2,
                 highlightcolor='red')
+    
     def _buscar_anterior(self, event=None):
         self.buscar_prev()
         if self.ocurrencias_encontradas:
@@ -697,5 +773,3 @@ class Extracion(ttk.Frame):
             self.entr_str.configure(
                 highlightthickness=2,
                 highlightcolor='red')
-    
-    
