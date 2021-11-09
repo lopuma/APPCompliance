@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import tkinter as tk
-from os import listdir, path, sep
+from os import listdir, path, sep, stat
 from os.path import isdir, join, abspath
 from getpass import getuser
 from tkinter import *
@@ -152,7 +152,6 @@ class Extracion(ttk.Frame):
                 self.frame1.config(width=self.wd)
             else:
                 self._parar_(event=None)
-        print(self.wd)
 
     def _parar_(self, event):
         global parar
@@ -342,8 +341,6 @@ class Extracion(ttk.Frame):
                 if not indx5: 
                     break
                 lastidx5 = '%s+%dc' % (indx5, len(line5)+27)
-                print(lastidx5)
-                print("-- ",indx5)
                 self.txt.tag_add('found5', indx5, lastidx5)
                 indx5 = lastidx5
             self.txt.tag_config(
@@ -356,8 +353,6 @@ class Extracion(ttk.Frame):
                 if not indx6: 
                     break
                 lastidx6 = '%s+%dc' % (indx6, len(line6)+27)
-                print(lastidx6)
-                print("-- ",indx6)
                 self.txt.tag_add('found6', indx6, lastidx6)
                 indx6 = lastidx6
             self.txt.tag_config(
@@ -458,7 +453,8 @@ class Extracion(ttk.Frame):
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
             font=self.text_font,
-            command=self.limpiar_busqueda()
+            state="disabled",
+            command=self.limpiar_busqueda
         )
         self.menu_Contextual.add_separator(background='#ccffff')
         self.menu_Contextual.add_command(
@@ -467,6 +463,7 @@ class Extracion(ttk.Frame):
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
             font=self.text_font,
+            command=self.cerrar_vtn_desviacion
         )
 
     def _display_menu_clickDerecho(self, event):
@@ -480,13 +477,10 @@ class Extracion(ttk.Frame):
     def limpiar_busqueda(self):
         self.txt.tag_remove('found', '1.0', tk.END)
         self.txt.tag_remove('found_prev_next', '1.0', tk.END)
-        #self.entr_str.select_range(0,tk.END)
-        self.entr_str.focus_set()
-    
+        self._buscar_focus()
+
     def cerrar_vtn_desviacion(self):
         pass
-        #self.cuaderno.forget(1)
-        #self.cuaderno.notebookContent.forget(1)
 
     def hide(self):
         global parar
@@ -508,7 +502,6 @@ class Extracion(ttk.Frame):
             self.hidden = 1
             self.btn_nav.grid(row=0, column=0, sticky="nw")
         parar = False
-        print(self.wd)        
 
     def show_btn_nav(self):
         global parar
@@ -517,7 +510,6 @@ class Extracion(ttk.Frame):
             self.hidden = 0
             self.btn_nav.grid_forget()
         parar = False
-        print(self.wd)
 
     def elim_tags(self, l_tags):
         '''Eliminar etiqueta(s) pasada(s)'''
@@ -705,7 +697,9 @@ class Extracion(ttk.Frame):
                 highlightbackground="#39A2DB",
             )
             self.btn_buscar_next.grid(row=0, column=2, padx=(5,0), pady=5, sticky="nsew")
-            
+
+            self.menu_Contextual.entryconfig("  Limpiar Busqueda", state="normal")
+
             self.entr_str.focus_set()
             self.entr_str.bind('<Any-KeyRelease>', self.on_entr_str_busca_key_release)
             self.entr_str.bind('<Control-f>', lambda x : self._buscar_focus())
@@ -729,6 +723,7 @@ class Extracion(ttk.Frame):
     def on_closing_busca_top(self):
         self.busca_top.destroy()
         self._estado_actual = False
+        self.menu_Contextual.entryconfig("  Limpiar Busqueda", state="disabled")
 
     def on_entr_str_busca_key_release(self, event):
         if event.keysym != "F2" and event.keysym != "F3":  # F2 y F3

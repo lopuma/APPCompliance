@@ -16,29 +16,28 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "fd_sudo=\"\""
+        "fdSUDO=\"\""
       ],
       "SO": "Linux"
     }
   ],
   "ASISA": [
     {
-      "object": "",
-      "owner": "",
-      "tipo": "",
-      "ownerGroup": "",
+      "object": "/usr/local/scripts/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
       "user": [
-        "",
-        ""
+        "Lorenzo Fuertes"
       ],
-      "code": "",
+      "code": "1-OK",
       "servers": [
-        ""
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
       "variable": [
-        "fd_sudo=\"\""
+        "fdSUDO=\"/usr/local/scripts/\""
       ],
       "SO": "Linux"
     }
@@ -80,7 +79,7 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "fd_sudo=\"\""
+        "fdSUDO=\"\""
       ],
       "SO": "Linux"
     }
@@ -102,7 +101,7 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "fd_sudo=\"\""
+        "fdSUDO=\"\""
       ],
       "SO": "Linux"
     },
@@ -122,7 +121,7 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "fd_sudo=\"\""
+        "fdSUDO=\"\""
       ],
       "SO": "Linux"
     }

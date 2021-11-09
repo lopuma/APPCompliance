@@ -12,7 +12,7 @@ from tkinter import scrolledtext as st
 from tkinter import messagebox as mb
 from tkinter import font as font
 from PIL import Image, ImageTk
-from tkinter.ttk import Style
+from tkinter.ttk import Notebook, Style
 from threading import Thread
 from ScrollableNotebook  import *
 from Extraciones import Extracion
@@ -51,6 +51,7 @@ txtWidget_focus = False
 txtWidget = ""
 top_active_LBK = False
 sis_oper = ""
+idpTab = 0
 class Expandir(ttk.Frame):
     def __init__(self, parent, customer, titulo, so, st_btnDIR, st_btnAUTH, st_btnSER, st_btnACC, st_btnCMD, st_btnIDR, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -91,6 +92,7 @@ class Expandir(ttk.Frame):
         self.EXP_srcExpandir.bind("<Motion>", lambda e:desviacion.activar_Focus(e))
         self.EXP_srcExpandir.bind("<Key>", lambda e: desviacion.widgets_SoloLectura(e))
         self.EXP_srcExpandir.bind('<Control-c>', lambda e : self._copiar_texto_seleccionado(e))
+
     ## --- MENU CONTEXTUAL --------------------------- ##
     def cerrar_vtn_expandir(self):
         if txtWidget_focus:
@@ -233,6 +235,17 @@ class Expandir(ttk.Frame):
             style='DESV.TButton',
             state="normal"
         )
+        self.EXP_btn_Siguiente = ttk.Button(
+            self.vtn_expandir,
+            text='SIGUIENTE',
+            compound='left',
+            #image=desviacion.Expandir_icon1,            
+            #command=lambda: controller.show_frame("PageOne"),
+            style='DESV.TButton',
+            state="normal"
+        )
+        self.EXP_btn_Siguiente.grid(row=0, column=1, pady=5, sticky='ne')
+        
         if self.st_btnDIR and self.titulo == "COMPROBACION":
             self.EXP_btn_VentanasDIR.grid(row=0, column=1, pady=5, sticky='ne')
         elif self.st_btnAUTH and self.titulo == "COMPROBACION":
@@ -1488,7 +1501,7 @@ class Aplicacion():
         self.root.configure(background='black') 
         self.root.tk.call('wm', 'iconphoto', self.root._w, tk.PhotoImage(file=path_icon+r'compliance.png'))       
         self.iconos()
-        self.cuaderno = ScrollableNotebook(self.root,wheelscroll=False,tabmenu=True)
+        self.cuaderno = ScrollableNotebook(self.root,wheelscroll=False,tabmenu=True, application=self)
         self.contenedor= ttk.Frame(self.cuaderno)
         self.contenedor.columnconfigure(1, weight=1)
         self.contenedor.rowconfigure(1, weight=1)
@@ -1729,12 +1742,18 @@ class Aplicacion():
     def display_menu_clickDerecho(self, event):
         self.menu_Contextual.tk_popup(event.x_root, event.y_root)
     
+    def _cerrar_vtn_desviacion(self):
+        print("IDE DE OPEN : ", idOpenTab)
+        #self.cuaderno.forget(idOpenTab)
+        #self.cuaderno.notebookContent.forget(idOpenTab) 
+    
     def cerrar_vtn_desviacion(self):
         if idOpenTab == 0:
             self.menu_Contextual.entryconfig('  Cerrar pestaña', state='disabled')
         else:
             self.menu_Contextual.entryconfig('  Cerrar pestaña', state='normal')
             self.cuaderno.forget(idOpenTab)
+            print("**** ",idOpenTab)
             self.cuaderno.notebookContent.forget(idOpenTab)
     ## ----------------------- ##
     def alCambiar_Pestaña(self, event):
@@ -1834,8 +1853,10 @@ class Aplicacion():
         self.cuaderno.add(desviacion, text='Issues DESVIACIONES ')
     
     def abrir_issuesExtracion(self):
+        global idpTab
         self.extracion = Extracion(self.cuaderno, app)
         self.cuaderno.add(self.extracion, text='Issues EXTRACIONES')
+        idpTab = self.cuaderno.index('current')
 
     def ocultar(self):
         self.extracion.hide()

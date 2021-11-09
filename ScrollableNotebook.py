@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) Muhammet Emin TURGUT 2020
 # For license see LICENSE
+from posixpath import commonpath
 import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import font
@@ -16,7 +17,7 @@ path_icon = path+"Compliance/image/"
 count = 0
 class ScrollableNotebook(ttk.Frame):
     _initialized = False
-    def __init__(self,parent,wheelscroll=False,tabmenu=False,*args,**kwargs):
+    def __init__(self,parent,wheelscroll=False,tabmenu=False, application=None,*args,**kwargs):
         ttk.Frame.__init__(self, parent, *args)
         if not self._initialized:
             self._initialize()
@@ -24,6 +25,7 @@ class ScrollableNotebook(ttk.Frame):
         kwargs["style"] = "ScrollableNotebook"
         self._active = None
         self.xLocation = 0
+        self._application = application
         self.WorkSpac_icon = ImageTk.PhotoImage(Image.open(path_icon+r"workspace.png").resize((20, 20)))
         self.novo = ImageTk.PhotoImage(Image.open(path_icon+r"novo.png").resize((25, 25)))
         self.notebookContent = ttk.Notebook(self,**kwargs)
@@ -35,7 +37,7 @@ class ScrollableNotebook(ttk.Frame):
             self.notebookTab.bind("<Button-4>", self._wheelscroll)
             self.notebookTab.bind("<Button-5>", self._wheelscroll)
         slideFrame = ttk.Frame(self)
-        slideFrame.place(relx=1.0, x=0, y=1, anchor=NE)
+        slideFrame.place(relx=1.0, x=0, y=0, anchor=NE)
         self.menuSpace=30
         if tabmenu==True:
             self.menuSpace=50
@@ -47,14 +49,17 @@ class ScrollableNotebook(ttk.Frame):
                                 anchor="center"
                                 )
             self.bottomTab.bind("<1>",self._bottomMenu)
-            self.bottomTab.pack(side=RIGHT, ipady=14)
+            self.bottomTab.pack(side=RIGHT, ipady=12)
         self.bottomTab_novo = ttk.Label(slideFrame, 
                                 image=self.novo,
+                                text="Abrir",
+                                width=5,
+                                padding=(5,0),
                                 background="#082032",
-                                padding=(10,0)
+                                foreground="white",
                                 )
         self.bottomTab_novo.bind("<1>",self._bottomMenu_novo)
-        self.bottomTab_novo.pack(side=LEFT, ipady=10)
+        self.bottomTab_novo.pack(side=LEFT, ipady=8)
 
         self.leftArrow = ttk.Label(slideFrame, 
                                 text=" \u276E ",
@@ -62,7 +67,7 @@ class ScrollableNotebook(ttk.Frame):
                                 )
         self.leftArrow.bind("<Button-1>",lambda e: Thread(target=self._leftSlide, daemon=True).start())
         self.leftArrow.bind("<ButtonRelease-1>", self._release_callback)
-        self.leftArrow.pack(side=LEFT, ipady=10)
+        self.leftArrow.pack(side=LEFT)
         self.rightArrow = ttk.Label(slideFrame, 
                                 text=" \u276F ",
                                 foreground="#297F87",
@@ -70,7 +75,7 @@ class ScrollableNotebook(ttk.Frame):
         #rightArrow.bind("<1>",self._rightSlide)
         self.rightArrow.bind("<Button-1>",lambda e: Thread(target=self._rightSlide, daemon=True).start())
         self.rightArrow.bind("<ButtonRelease-1>", self._release_callback)
-        self.rightArrow.pack(side=RIGHT, ipady=10)
+        self.rightArrow.pack(side=RIGHT)
 
         self.notebookContent.bind("<Configure>", self._resetSlide)
         self.notebookTab.bind("<ButtonPress-1>", self.on_tab_close_press, True)
@@ -212,7 +217,7 @@ class ScrollableNotebook(ttk.Frame):
         self.tabListMenu.add_command(
             label="  Desviaciones", 
             #accelerator='Ctrl+F',
-            command=self._abrir_issuesEXT,
+            command=self._abrir_issuesDESV,
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
             font=self.text_font,
@@ -220,9 +225,14 @@ class ScrollableNotebook(ttk.Frame):
         self.tabListMenu.tk_popup(event.x_root, event.y_root)
     
     def _abrir_issuesEXT(self):
-        pass
-        #app = Aplicacion()
-        #app.abrir_issuesExtracion()
+        self._application.abrir_issuesExtracion()
+        Thread(target=self._rightSlide, daemon=True).start()
+        self.leftArrow.configure(foreground='#297F87')
+
+    def _abrir_issuesDESV(self):
+        self._application.abrir_issuesDesviacion()
+        Thread(target=self._rightSlide, daemon=True).start()
+        self.leftArrow.configure(foreground='#297F87')
 
     def _tabChanger(self,event):
         if event.state == 0:
