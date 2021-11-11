@@ -53,8 +53,8 @@ class ScrollableNotebook(ttk.Frame):
         self.bottomTab_novo = ttk.Label(slideFrame, 
                                 image=self.novo,
                                 text="Abrir",
-                                width=5,
-                                padding=(5,0),
+                                #width=5,
+                                padding=(10,0),
                                 background="#082032",
                                 foreground="white",
                                 )
@@ -205,19 +205,18 @@ class ScrollableNotebook(ttk.Frame):
     def _bottomMenu_novo(self,event):
         self.text_font = tkFont.Font(family='Consolas', size=13)
         self.tabListMenu = Menu(self, tearoff = 0)
-        #for tab in self.notebookTab.tabs():
         self.tabListMenu.add_command(
-            label="  Extraciones", 
+            label="  Desviaciones", 
             #accelerator='Ctrl+F',
-            command=self._abrir_issuesEXT,
+            command=self._abrir_issuesDESV,
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
             font=self.text_font,
         )
         self.tabListMenu.add_command(
-            label="  Desviaciones", 
+            label="  Extraciones", 
             #accelerator='Ctrl+F',
-            command=self._abrir_issuesDESV,
+            command=self._abrir_issuesEXT,
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
             font=self.text_font,

@@ -52,26 +52,26 @@ txtWidget = ""
 top_active_LBK = False
 sis_oper = ""
 idpTab = 0
+varNum = 0
+text_aExpandir = ""
 class Expandir(ttk.Frame):
-    def __init__(self, parent, customer, titulo, so, st_btnDIR, st_btnAUTH, st_btnSER, st_btnACC, st_btnCMD, st_btnIDR, *args, **kwargs):
+    
+    def __init__(self, parent, text_EXP, widget_EXP, customer, titulo, so, st_btnDIR, st_btnAUTH, st_btnSER, st_btnACC, st_btnCMD, st_btnIDR, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.parent = parent
         self.customer = customer
         self.titulo = titulo
         self.so = so
+        # Recibe el text del SRC a expandir
+        self.txt_Expan = text_EXP
+        self.widget_EXP = widget_EXP
+        ##-----------------------------------
         self.st_btnDIR = st_btnDIR
         self.st_btnAUTH = st_btnAUTH
         self.st_btnSER = st_btnSER
         self.st_btnACC = st_btnACC
         self.st_btnCMD = st_btnCMD
         self.st_btnIDR = st_btnIDR
-        print("dir ", self.st_btnDIR)
-        print("auth ", self.st_btnAUTH)
-        print("ser ", self.st_btnSER)
-        print("acc ", self.st_btnACC)
-        print("cmd ", self.st_btnCMD)
-        print("id_rsa ", self.st_btnIDR)
-        print("Titulo : ", self.titulo)
         self.vtn_expandir = tk.Toplevel(self)
         self.vtn_expandir.config(background='#F1ECC3')
         window_width=1005
@@ -86,14 +86,20 @@ class Expandir(ttk.Frame):
         self.vtn_expandir.columnconfigure(0, weight=1)
         self.vtn_expandir.rowconfigure(1, weight=1)
         self.text_font = font.Font(family='Consolas', size=13)
+        self.icono()
         self.menu_clickDerecho()
         self.widgets_EXPANDIR()
         self.EXP_srcExpandir.bind("<Button-3><ButtonRelease-3>", self.display_menu_clickDerecho)
         self.EXP_srcExpandir.bind("<Motion>", lambda e:desviacion.activar_Focus(e))
         self.EXP_srcExpandir.bind("<Key>", lambda e: desviacion.widgets_SoloLectura(e))
         self.EXP_srcExpandir.bind('<Control-c>', lambda e : self._copiar_texto_seleccionado(e))
-
     ## --- MENU CONTEXTUAL --------------------------- ##
+    def icono(self):
+        self.previous_icon = ImageTk.PhotoImage(
+            Image.open(path_icon+r"previous.png").resize((40, 40)))
+        self.next_icon = ImageTk.PhotoImage(
+            Image.open(path_icon+r"next.png").resize((40, 40)))    
+    
     def cerrar_vtn_expandir(self):
         if txtWidget_focus:
             self.vtn_expandir.destroy()
@@ -181,6 +187,9 @@ class Expandir(ttk.Frame):
             insertbackground='#297F87',
             selectbackground='lightblue',
         )
+        ## Inserta el TEXT DEL SRC RECIBIO
+        self.EXP_srcExpandir.insert('1.0',self.txt_Expan)
+        ## -------------------------------
         self.EXP_btn_VentanasDIR = ttk.Button(
             self.vtn_expandir,
             text='Permissions',
@@ -235,29 +244,48 @@ class Expandir(ttk.Frame):
             style='DESV.TButton',
             state="normal"
         )
-        self.EXP_btn_Siguiente = ttk.Button(
+        self.EXP_btn_Siguiente = tk.Button(
             self.vtn_expandir,
             text='SIGUIENTE',
-            compound='left',
-            #image=desviacion.Expandir_icon1,            
-            #command=lambda: controller.show_frame("PageOne"),
-            style='DESV.TButton',
-            state="normal"
+            image=self.next_icon,            
+            command=desviacion._siguiente,
+            border=0,
+            borderwidth=0,
+            highlightthickness=0,
+            background='#f1ecc3',
+            relief="flat",
+            highlightbackground='#f1ecc3',
+            activebackground='#f1ecc3',
         )
-        self.EXP_btn_Siguiente.grid(row=0, column=1, pady=5, sticky='ne')
+        self.EXP_btn_Siguiente.grid(row=0, column=2, pady=5, padx=10, sticky='ns')
+        
+        self.EXP_btn_Anterior = tk.Button(
+            self.vtn_expandir,
+            text='ANTERIOR',
+            image=self.previous_icon,            
+            command=desviacion._anterior,
+            border=0,
+            borderwidth=0,
+            highlightthickness=0,
+            background='#f1ecc3',
+            relief="flat",
+            highlightbackground='#f1ecc3', 
+            activebackground='#f1ecc3',
+        )
+        self.EXP_btn_Anterior.grid(row=0, column=1, pady=5, sticky='ns')
         
         if self.st_btnDIR and self.titulo == "COMPROBACION":
-            self.EXP_btn_VentanasDIR.grid(row=0, column=1, pady=5, sticky='ne')
+            self.EXP_btn_VentanasDIR.grid(row=0, column=3, pady=5, sticky='ne')
         elif self.st_btnAUTH and self.titulo == "COMPROBACION":
-            self.EXP_btn_VentanasAUTH.grid(row=0, column=1, pady=5, sticky='ne')
+            self.EXP_btn_VentanasAUTH.grid(row=0, column=3, pady=5, sticky='ne')
         elif self.st_btnSER and self.titulo == "COMPROBACION":
-            self.EXP_btn_VentanasSER.grid(row=0, column=1, pady=5, sticky='ne')
+            self.EXP_btn_VentanasSER.grid(row=0, column=3, pady=5, sticky='ne')
         elif self.st_btnACC and self.titulo == "COMPROBACION":
-            self.EXP_btn_VentanasACC.grid(row=0, column=1, pady=5, sticky='ne')
+            self.EXP_btn_VentanasACC.grid(row=0, column=3, pady=5, sticky='ne')
         elif self.st_btnCMD and self.titulo == "COMPROBACION":
-            self.EXP_btn_VentanasCMD.grid(row=0, column=1, pady=5, sticky='ne')
+            self.EXP_btn_VentanasCMD.grid(row=0, column=3, pady=5, sticky='ne')
         elif self.st_btnIDR and self.titulo == "COMPROBACION":
-            self.EXP_btn_VentanasIDR.grid(row=0, column=1, pady=5, sticky='ne')
+            self.EXP_btn_VentanasIDR.grid(row=0, column=3, pady=5, sticky='ne')
         else:
             self.EXP_btn_VentanasDIR.forget()     
             self.EXP_btn_VentanasAUTH.forget()     
@@ -273,7 +301,7 @@ class Expandir(ttk.Frame):
             style='DESV.TButton',
             state="disabled"
         )
-        self.EXP_btnCopyALL.grid(row=0, column=2, padx=20, pady=5, sticky='ne')
+        self.EXP_btnCopyALL.grid(row=0, column=4, padx=20, pady=5, sticky='ne')
         self.EXP_btnScreamEvidencia = ttk.Button(
             self.vtn_expandir,
             image=desviacion.Captura1_icon,
@@ -281,16 +309,17 @@ class Expandir(ttk.Frame):
             style='DESV.TButton',
             state="disabled",
         )
-        self.EXP_btnScreamEvidencia.grid(row=0, column=3, pady=5, sticky='ne')
+        self.EXP_btnScreamEvidencia.grid(row=0, column=5, pady=5, sticky='ne')
         self.EXP_btnReducir = ttk.Button(
             self.vtn_expandir,
             image=desviacion.Reducir_icon,
             command=self.cerrar_vtn_expandir,
             style='DESV.TButton',
         )
-        self.EXP_btnReducir.grid(row=0, column=4, padx=20, pady=5, sticky='ne')
-        self.EXP_srcExpandir.grid(row=1, column=0, padx=5, pady=5, sticky='nsew', columnspan=5)
+        self.EXP_btnReducir.grid(row=0, column=6, padx=20, pady=5, sticky='ne')
+        self.EXP_srcExpandir.grid(row=1, column=0, padx=5, pady=5, sticky='nsew', columnspan=7)
 class Desviacion(ttk.Frame):
+    
     def __init__(self, parent, *args, **kwargs):
         ttk.Frame.__init__(self, parent,*args)
         self.parent = parent
@@ -337,6 +366,7 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_srcRefrescar.bind('<Control-a>', lambda e: self._seleccionar_todo(e))
         self.DESVfr3_srcEvidencia.bind('<Control-a>', lambda e: self._seleccionar_todo(e))
         ## --- BUSCAR --- ##
+        #self.DESVfr1_entModulo.bind("<Any-KeyRelease>", lambda event=None: self.buscar_Modulos(self.DESVfr1_entModulo.get()))
         self.DESVfr1_entModulo.bind("<Return>", lambda event=None: self.buscar_Modulos(self.DESVfr1_entModulo.get()))
         self.DESVfr1_entModulo.bind("<FocusIn>", lambda e: self.clear_busqueda(e))
         self.DESVfr1_entModulo.bind("<FocusOut>", lambda e: self.clear_busqueda(e))
@@ -459,19 +489,160 @@ class Desviacion(ttk.Frame):
     def expandir(self, event, var): #TODO comprobando expandir
         global sis_oper
         global asigne_Ciente
+        global varNum
         global expandir
+        global text_aExpandir
+        self.widget_Expan = event
+        print("SRC EXPANDIDO : ",self.widget_Expan)
         tittleExpand = var
-        event.focus()
-        expandir = Expandir(self,asigne_Ciente,tittleExpand, sis_oper, self._btnDir, self._btnAuth, self._btnSer, self._btnAcc, self._btnCmd, self._btnIdr)
-        if event:
-            text_aExpandir = event.get('1.0', tk.END)
-            expandir.EXP_srcExpandir.insert('1.0',text_aExpandir)
+        if tittleExpand == "COMPROBACION":
+            varNum= 1
+        elif tittleExpand == "BACKUP":
+            varNum= 2
+        elif tittleExpand == "EDITAR":
+            varNum= 3            
+        elif tittleExpand == "REFRESCAR":
+            varNum= 4
+        elif tittleExpand == "EVIDENCIA":        
+            varNum= 5
+        print("NUM ASIGNE : ", varNum)
+        self.widget_Expan.focus()
+        text_aExpandir = self.widget_Expan.get('1.0', tk.END)
+        print("text_aExpandir : ", text_aExpandir)
+        expandir = Expandir(self, text_aExpandir, self.widget_Expan, asigne_Ciente,tittleExpand, sis_oper, self._btnDir, self._btnAuth, self._btnSer, self._btnAcc, self._btnCmd, self._btnIdr)
+        # if self.widget_Expan:
+        #     text_aExpandir = self.widget_Expan.get('1.0', tk.END)
+        #     expandir.EXP_srcExpandir.insert('1.0',text_aExpandir)
         if tittleExpand == "EVIDENCIA":
             expandir.EXP_btnScreamEvidencia.configure(state="normal")
             expandir.EXP_btnCopyALL.configure(state="normal")
         elif tittleExpand == "REFRESCAR":
             expandir.EXP_btnCopyALL.configure(state="normal")            
-    ## --- MENU CONTEXTUAL --- ##
+    # ## --- MENU CONTEXTUAL --- ##
+    def _siguiente_(self):
+        global varNum
+        global text_aExpandir
+        print("MISMO : ",text_aExpandir)
+        print("MISMO NUM : ",varNum)
+
+        if varNum == 1:
+            expandir.vtn_expandir.destroy()
+            print(len(text_aExpandir))
+            if len(text_aExpandir) <= 1:
+                self.var = "EDITAR"
+                print(self.var)
+                #self.expandir(text_aExpandir, self.var)
+            else:
+                self.var = "BACKUP"
+                print(self.var)
+                #self.expandir(text_aExpandir, self.var)
+        elif varNum == 2:
+            expandir.vtn_expandir.destroy()
+            print(len(text_aExpandir))
+            if len(text_aExpandir) <= 1:
+                self.var = "REFRESCAR"
+                print(self.var)
+                #self.expandir(text_aExpandir, self.var)
+            else:
+                self.var = "EDITAR"
+                print(self.var)
+                #self.expandir(text_aExpandir, self.var)
+            
+    def _siguiente(self):
+        global varNum
+        if varNum== 1:
+            expandir.vtn_expandir.destroy()
+            self.txt_src = self.DESVfr2_srcBackup.get("1.0","end")
+            if len(self.txt_src) <= 1:
+                self.var = "EDITAR"
+                self.expandir(event=self.DESVfr3_srcEditar, var=self.var)
+            else:
+                self.var = "BACKUP"
+                self.expandir(event=self.DESVfr2_srcBackup, var=self.var)
+        elif varNum== 2:
+            expandir.vtn_expandir.destroy()
+            self.txt_src = self.DESVfr3_srcEditar.get("1.0","end")
+            if len(self.txt_src) <= 1:
+                self.var = "REFRESCAR"
+                self.expandir(event=self.DESVfr3_srcRefrescar, var=self.var)
+            else:
+                self.var = "EDITAR"
+                self.expandir(event=self.DESVfr3_srcEditar, var=self.var)
+        elif varNum== 3:
+            expandir.vtn_expandir.destroy()
+            self.txt_src = self.DESVfr3_srcRefrescar.get("1.0","end")
+            if len(self.txt_src) <= 1:
+                self.var = "EVIDENCIA"
+                self.expandir(event=self.DESVfr3_srcEvidencia, var=self.var)
+            else:
+                self.var = "REFRESCAR"
+                self.expandir(event=self.DESVfr3_srcRefrescar, var=self.var)
+        elif varNum== 4:
+            expandir.vtn_expandir.destroy()
+            self.txt_src = self.DESVfr3_srcEvidencia.get("1.0","end")
+            if len(self.txt_src) <= 1:
+                self.var = "COMPROBACION"
+                self.expandir(event=self.DESVfr2_srcComprobacion, var=self.var)
+            else:
+                self.var = "EVIDENCIA"
+                self.expandir(event=self.DESVfr3_srcEvidencia, var=self.var)
+        elif varNum== 5:
+            expandir.vtn_expandir.destroy()
+            self.txt_src = self.DESVfr2_srcComprobacion.get("1.0","end")
+            if len(self.txt_src) <= 1:
+                self.var = "BACKUP"
+                self.expandir(event=self.DESVfr2_srcBackup, var=self.var)
+            else:
+                self.var = "COMPROBACION"
+                self.expandir(event=self.DESVfr2_srcComprobacion, var=self.var)
+        
+    def _anterior(self):
+        if varNum== 1:
+            expandir.vtn_expandir.destroy()
+            self.txt_src = self.DESVfr3_srcEvidencia.get("1.0","end")
+            if len(self.txt_src) <= 1:
+                self.var = "REFRESCAR"
+                self.expandir(event=self.DESVfr3_srcRefrescar, var=self.var)
+            else:
+                self.var = "EVIDENCIA"
+                self.expandir(event=self.DESVfr3_srcEvidencia, var=self.var)
+        elif varNum== 2:
+            expandir.vtn_expandir.destroy()
+            self.txt_src = self.DESVfr2_srcComprobacion.get("1.0","end")
+            if len(self.txt_src) <= 1:
+                self.var = "EVIDENCIA"
+                self.expandir(event=self.DESVfr3_srcEvidencia, var=self.var)
+            else:
+                self.var = "COMPROBACION"
+                self.expandir(event=self.DESVfr2_srcComprobacion, var=self.var)
+        elif varNum== 3:
+            expandir.vtn_expandir.destroy()
+            self.txt_src = self.DESVfr2_srcBackup.get("1.0","end")
+            if len(self.txt_src) <= 1:
+                self.var = "COMPROBACION"
+                self.expandir(event=self.DESVfr2_srcComprobacion, var=self.var)
+            else:
+                self.var = "BACKUP"
+                self.expandir(event=self.DESVfr2_srcBackup, var=self.var)
+        elif varNum== 4:
+            expandir.vtn_expandir.destroy()
+            self.txt_src = self.DESVfr3_srcEditar.get("1.0","end")
+            if len(self.txt_src) <= 1:
+                self.var = "BACKUP"
+                self.expandir(event=self.DESVfr2_srcBackup, var=self.var)
+            else:
+                self.var = "EDITAR"
+                self.expandir(event=self.DESVfr3_srcEditar, var=self.var)
+        elif varNum== 5:
+            expandir.vtn_expandir.destroy()
+            self.txt_src = self.DESVfr3_srcRefrescar.get("1.0","end")
+            if len(self.txt_src) <= 1:
+                self.var = "EDITAR"
+                self.expandir(event=self.DESVfr3_srcEditar, var=self.var)
+            else:
+                self.var = "REFRESCAR"
+                self.expandir(event=self.DESVfr3_srcRefrescar, var=self.var)
+        
     def _menu_clickDerecho(self):
         self.text_font = font.Font(family='Consolas', size=13)   
         self.menu_Contextual = Menu(self, tearoff=0)
@@ -695,7 +866,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnCommand.grid_forget()
             self.DESV_btnIdrsa.grid_forget()
             self.DESV_btnAuthorized.grid(row=2, column=1, padx=5, pady=5, sticky='ne')    
-        elif str(modulo_selecionado) == "Network Settings/Ensure LDAP Server is not enabled" or str(modulo_selecionado) == "Password Requirements/SSH PermitRootLogin Restriction" or str(modulo_selecionado) == "Network Settings/Prohibited Processes":
+        elif str(modulo_selecionado) == "Network Settings/Ensure LDAP Server is not enabled" or str(modulo_selecionado) == "Network Settings/NFS root restrictions" or str(modulo_selecionado) == "E.1.5.22.3 Network Settings" or str(modulo_selecionado) == "Password Requirements/SSH PermitRootLogin Restriction" or str(modulo_selecionado) == "Network Settings/Prohibited Processes":
             self._btnDir = False
             self._btnAuth = False
             self._btnSer = True
@@ -801,7 +972,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnService.grid_forget()
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnDirectory.grid_forget()
-        elif clave_Buscado == "PERMITROOTLOGIN" or clave_Buscado == "LDAP" or clave_Buscado == "PROCESSES":
+        elif clave_Buscado == "PERMITROOTLOGIN" or clave_Buscado == "LDAP" or clave_Buscado == "PROCESSES" or clave_Buscado == "NFS":
             self._btnDir = False
             self._btnAuth = False
             self._btnSer = True
@@ -1489,6 +1660,7 @@ class Desviacion(ttk.Frame):
         app.cuaderno.tab(idOpenTab, option=None, text='DESVIACIONES : {} '.format(customer))
         app.cuaderno.notebookContent.tab(idOpenTab, option=None, text='DESVIACIONES : {} '.format(customer))
 class Aplicacion():
+    
     def __init__(self):
         self.root= tk.Tk()
         self.root.title("CONTINOUS COMPLIANCE")
@@ -1510,7 +1682,7 @@ class Aplicacion():
         self.cuaderno.bind_all("<<NotebookTabChanged>>",lambda e:self.alCambiar_Pestaña(e))
         self.cuaderno.enable_traversal()
         self.cuaderno.notebookTab.bind("<Button-3>", self.display_menu_clickDerecho)
-        self.root.bind("<Control-l>", lambda x : self.ocultar())
+        self.root.bind_all("<Control-l>", lambda x : self.ocultar())
         #self.root.bind("<Control-f>", lambda x : self.bsc())
         self.estilos()
         self.menu_clickDerecho()
@@ -1742,11 +1914,6 @@ class Aplicacion():
     def display_menu_clickDerecho(self, event):
         self.menu_Contextual.tk_popup(event.x_root, event.y_root)
     
-    def _cerrar_vtn_desviacion(self):
-        print("IDE DE OPEN : ", idOpenTab)
-        #self.cuaderno.forget(idOpenTab)
-        #self.cuaderno.notebookContent.forget(idOpenTab) 
-    
     def cerrar_vtn_desviacion(self):
         if idOpenTab == 0:
             self.menu_Contextual.entryconfig('  Cerrar pestaña', state='disabled')
@@ -1854,7 +2021,7 @@ class Aplicacion():
     
     def abrir_issuesExtracion(self):
         global idpTab
-        self.extracion = Extracion(self.cuaderno, app)
+        self.extracion = Extracion(self.cuaderno, app, application=self)
         self.cuaderno.add(self.extracion, text='Issues EXTRACIONES')
         idpTab = self.cuaderno.index('current')
 
@@ -1862,7 +2029,7 @@ class Aplicacion():
         self.extracion.hide()
 
     def bsc(self):
-        self.extracion.buscar()
+        self.extracion.panel_buscar()
     
     def cargar_modulos(self):
         desviacion._cargar_Modulos()

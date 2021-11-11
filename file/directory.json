@@ -150,7 +150,7 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "fichero=\"/opt/IBM/db2/V9.7/\""
+        "fileOPT=\"/opt/IBM/db2/V9.7/\""
       ],
       "SO": "Aix"
     }

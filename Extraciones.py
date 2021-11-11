@@ -22,7 +22,7 @@ path_icon = mypath+"Compliance/image/"
 parar = False
 class Extracion(ttk.Frame):
     
-    def __init__(self, parent, app, *args, **kwargs):
+    def __init__(self, parent, app,application=None, *args, **kwargs):
         ttk.Frame.__init__(self, parent, *args)
         self.navIcon = ImageTk.PhotoImage(Image.open(
             path_icon+r"menu.png").resize((25, 25)))
@@ -40,6 +40,9 @@ class Extracion(ttk.Frame):
         self.rowconfigure(0, weight=1)
         self.txt.bind('<Control-f>', lambda x : self.panel_buscar())
         self.txt.bind('<Control-F>', lambda x : self.panel_buscar())
+        self.txt.bind('<Control-l>', self.hide)
+        self.txt.bind('<Control-c>', lambda x : self._copiar_texto_seleccionado(x))
+        self.txt.bind('<Control-a>', lambda e: self._seleccionar_todo(e))
         self._ocurrencias_encontradas = []
         self._numero_ocurrencia_actual = None
         self._estado_actual = False
@@ -437,7 +440,8 @@ class Extracion(ttk.Frame):
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
             font=self.text_font,
-            state="disabled"
+            state="disabled",
+            command=self.copiar_texto_seleccionado
         )
         self.menu_Contextual.add_separator(background='#ccffff')
         self.menu_Contextual.add_command(
@@ -446,6 +450,7 @@ class Extracion(ttk.Frame):
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
             font=self.text_font,
+            command=self.seleccionar_todo
         )
         self.menu_Contextual.add_command(
             label="  Limpiar Busqueda", 
@@ -455,6 +460,26 @@ class Extracion(ttk.Frame):
             font=self.text_font,
             state="disabled",
             command=self.limpiar_busqueda
+        )
+        self.menu_Contextual.add_separator(background='#ccffff')
+        self.menu_Contextual.add_command(
+            label="  Ocultar Panel", 
+            accelerator='Ctrl+L',
+            compound=LEFT,
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            command=self.hide
+        )
+        self.menu_Contextual.add_command(
+            label="  Mostrar Panel",
+            state="disabled",
+            accelerator='Ctrl+L',
+            compound=LEFT,
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            command=self.hide
         )
         self.menu_Contextual.add_separator(background='#ccffff')
         self.menu_Contextual.add_command(
@@ -479,12 +504,42 @@ class Extracion(ttk.Frame):
         self.txt.tag_remove('found_prev_next', '1.0', tk.END)
         self._buscar_focus()
 
+    def copiar_texto_seleccionado(self):
+        seleccion = self.txt.tag_ranges(tk.SEL)
+        if seleccion:
+            self.app.root.clipboard_clear()
+            self.app.root.clipboard_append(self.txt.get(*seleccion).strip())
+            self.txt.tag_remove("sel","1.0","end")
+            return 'break'
+
+    def _copiar_texto_seleccionado(self, event):
+        scrText = event.widget
+        seleccion = scrText.tag_ranges(tk.SEL)
+        if seleccion:
+            self.app.root.clipboard_clear()
+            self.app.root.clipboard_append(scrText.get(*seleccion).strip())
+            scrText.tag_remove("sel","1.0","end")
+            return 'break'
+        else:
+            pass
+    
+    def seleccionar_todo(self):
+        self.txt.tag_add("sel","1.0","end")
+        return 'break'
+    
+    def _seleccionar_todo(self, event):
+        scr_Event = event.widget
+        scr_Event.tag_add("sel","1.0","end")
+        return 'break'
+    
     def cerrar_vtn_desviacion(self):
-        pass
+        self.app.cerrar_vtn_desviacion()
 
     def hide(self):
         global parar
         if self.hidden == 0:
+            self.menu_Contextual.entryconfig("  Ocultar Panel", state="disabled")
+            self.menu_Contextual.entryconfig("  Mostrar Panel", state="normal")
             self.frame1.destroy()
             self.hidden = 1
             self.btn_nav.grid(row=0, column=0, sticky="nw")
@@ -492,6 +547,8 @@ class Extracion(ttk.Frame):
         else:
             self.menu()
             self.hidden = 0
+            self.menu_Contextual.entryconfig("  Ocultar Panel", state="normal")
+            self.menu_Contextual.entryconfig("  Mostrar Panel", state="disabled")
             self.btn_nav.grid_forget()
             parar = False
 
@@ -515,37 +572,6 @@ class Extracion(ttk.Frame):
         '''Eliminar etiqueta(s) pasada(s)'''
         for l_tag in l_tags:
             self.txt.tag_delete(l_tag)
-
-    def buscar_todo(self, txt_buscar=None):
-        '''Buscar todas las ocurrencias en el Entry de MainApp'''
-        # eliminar toda marca establecida, si existiera, antes de plasmar nuevos resultados
-        self.txt.tag_remove('found', '1.0', tk.END)
-        self.txt.tag_remove('found_prev_next', '1.0', tk.END)
-        if txt_buscar:
-            # empezar desde el principio (y parar al llegar al final [stopindex >> END])
-            idx = '1.0'
-            while True:
-                # encontrar siguiente ocurrencia, salir del loop si no hay más
-                idx = self.txt.search(txt_buscar, idx, nocase=1, stopindex=tk.END)
-                if not idx: break
-                # index justo después del final de la ocurrencia
-                lastidx = '%s+%dc' % (idx, len(txt_buscar))
-                # etiquetando toda la ocurrencia (incluyendo el start, excluyendo el stop)
-                self.txt.tag_add('found', idx, lastidx)
-                # preparar para buscar la siguiente ocurrencia
-                idx = lastidx
-                self.txt.see(idx)
-            # configurando la forma de etiquetar las ocurrencias encontradas
-            self.txt.tag_config('found', background='dodgerblue')
-            #FUNCIONA
-            
-            #self.buscar_next(self.entr_str.get().strip())    
-        else:
-            pass
-            #MessageBox.showinfo('Info', 'Establecer algún criterior de búsqueda.')
-        tags = self.txt.tag_ranges('found')
-        self._ocurrencias_encontradas = list(zip(*[iter(tags)] * 2))
-        self.buscar_next()
 
     def buscar_prev(self):
         '''Buscar previa ocurrencia en el Entry de MainApp'''
@@ -596,8 +622,8 @@ class Extracion(ttk.Frame):
             window_width=510
             window_height=100
             bus_reem_top_msg_w = 240
-            screen_width = (self.app.root.winfo_x() +750)
-            screen_height= (self.app.root.winfo_y() +50)
+            screen_width = (self.app.root.winfo_x() +800)
+            screen_height= (self.app.root.winfo_y()+40)
             position_top = int(screen_height)
             position_right = int(screen_width)
             self.busca_top.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
@@ -743,6 +769,37 @@ class Extracion(ttk.Frame):
                 highlightthickness=2,
                 highlightcolor='red')
     
+    def buscar_todo(self, txt_buscar=None):
+        '''Buscar todas las ocurrencias en el Entry de MainApp'''
+        # eliminar toda marca establecida, si existiera, antes de plasmar nuevos resultados
+        self.txt.tag_remove('found', '1.0', tk.END)
+        self.txt.tag_remove('found_prev_next', '1.0', tk.END)
+        if txt_buscar:
+            # empezar desde el principio (y parar al llegar al final [stopindex >> END])
+            idx = '1.0'
+            while True:
+                # encontrar siguiente ocurrencia, salir del loop si no hay más
+                idx = self.txt.search(txt_buscar, idx, nocase=1, stopindex=tk.END)
+                if not idx: break
+                # index justo después del final de la ocurrencia
+                lastidx = '%s+%dc' % (idx, len(txt_buscar))
+                # etiquetando toda la ocurrencia (incluyendo el start, excluyendo el stop)
+                self.txt.tag_add('found', idx, lastidx)
+                # preparar para buscar la siguiente ocurrencia
+                idx = lastidx
+                self.txt.see(idx)
+            # configurando la forma de etiquetar las ocurrencias encontradas
+            self.txt.tag_config('found', background='dodgerblue')
+            #FUNCIONA
+            
+            #self.buscar_next(self.entr_str.get().strip())    
+        else:
+            pass
+            #MessageBox.showinfo('Info', 'Establecer algún criterior de búsqueda.')
+        tags = self.txt.tag_ranges('found')
+        self._ocurrencias_encontradas = list(zip(*[iter(tags)] * 2))
+        self.buscar_next()
+        
     def _buscar_siguiente(self, event=None):
         self.buscar_next()
         if self.ocurrencias_encontradas:

@@ -151,6 +151,25 @@
       "SO": "Aix"
     },
     {
+      "object": "ihs7",
+      "owner": "ihs7",
+      "tipo": "/F/",
+      "ownerGroup": "EBH",
+      "user": [
+        "Silvia Pereira"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"ihs7\""
+      ],
+      "SO": "Aix"
+    },
+    {
       "object": "wasasisa",
       "owner": "wasasisa",
       "tipo": "/C/",

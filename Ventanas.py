@@ -49,7 +49,9 @@ class Ventana(ttk.Frame):
         self.srcImpact.bind("<Key>", lambda e: self.desviacion.widgets_SoloLectura(e))
         self.srcVariable.bind("<Key>", lambda e: self.desviacion.widgets_SoloLectura(e))
         self.cbxUser.bind("<Key>", lambda e: self.desviacion.widgets_SoloLectura(e))
-        self.textBuscar.bind("<Return>", lambda event=None: self.buscar(self.textBuscar.get()))
+        #self.textBuscar.bind("<Any-KeyRelease>", lambda event=None: self.buscar(self.textBuscar.get()))
+        self.textBuscar.bind("<Any-KeyRelease>", self.on_entr_str_busca_key_release)
+        #self.textBuscar.bind("<Return>", lambda event=None: self.buscar(self.textBuscar.get()))
         #self.vtn_ventanas.bind("<Motion>", lambda e:desviacion.activar_Focus(e))
         self.srcImpact.bind("<Button-3>", self.display_menu_clickDerecho)
         self.srcRisk.bind("<Button-3>", self.display_menu_clickDerecho)
@@ -138,47 +140,64 @@ class Ventana(ttk.Frame):
         self.menu_Contextual.entryconfig("  Limpiar", state="disabled")
         self.cargar_ventanas()
         self.limpiar_widgets()
+    def on_entr_str_busca_key_release(self, event):
+        self._buscar()
+        return 'break'
     
-    def buscar(self, event=None):
-        valor_aBuscar = event
-        valor_Buscado = [n for n in self.ventanas if valor_aBuscar.strip() in n]
-        if valor_aBuscar == "":
-            mb.showerror(
-            "ERROR", "Esta vacio o no existe el directorio/fichero.\nPrueba a buscar de nuevo...", parent=self.vtn_ventanas
-            )            
-            self.cargar_ventanas()
-            self.limpiar_widgets()
-            self.btnLimpiar.grid_forget()
-            self.btnBuscar.grid(row=0, column=1, sticky=W)
-            self.textBuscar.focus()
+    def _buscar(self, event=None):
+        self._buscar_todo(self.textBuscar.get().strip())
+
+    def _buscar_todo(self, txt_buscar=None):
+        valor_aBuscar = txt_buscar
+        valor_Buscado = [n for n in self.ventanas if valor_aBuscar in n]
+        print(valor_Buscado)
+        if valor_aBuscar:
+
+        #     mb.showerror(
+        #     "ERROR", "Esta vacio o no existe el directorio/fichero.\nPrueba a buscar de nuevo...", parent=self.vtn_ventanas
+        #     )            
+        #     self.cargar_ventanas()
+        #     self.limpiar_widgets()
+        #     self.btnLimpiar.grid_forget()
+        #     self.btnBuscar.grid(row=0, column=1, sticky=W)
+        #     self.textBuscar.focus()
+        # else:
+        #     if len(valor_Buscado) == 0:
+        #         mb.showerror(
+        #         "ERROR", "Esta vacio o no existe el directorio/fichero.\nPrueba a buscar de nuevo...", parent=self.vtn_ventanas
+        #         )                 
+        #         self.cargar_ventanas()
+        #         self.limpiar_widgets()
+        #         self.btnLimpiar.grid_forget()
+        #         self.btnBuscar.grid(row=0, column=1, sticky=W)
+        #         self.textBuscar.focus()
+        #     else:
+            self.limpiar_tree()
+            with open(self.path_ventanas) as g:
+                data = json.load(g)
+                count = 0
+                for md in data[self.customer]:
+                    for vb in valor_Buscado:
+                        if vb == md['object']:
+                            if count % 2 == 0:
+                                self.tree.insert(parent='', index='end', iid=count, text='', value=(md['object'],md['owner'],md['tipo'],md['ownerGroup'],md['code']), tags=('evenrow'))
+                            else:
+                                self.tree.insert(parent='', index='end', iid=count, text='', value=(md['object'],md['owner'],md['tipo'],md['ownerGroup'],md['code']), tags=('oddrow'))
+                            count += 1
+                    self.limpiar_widgets()
+                self.btnBuscar.forget()
+                self.btnLimpiar.grid(row=0, column=1, sticky=W)
+                self.menu_Contextual.entryconfig("  Limpiar", state="normal")
         else:
-            if len(valor_Buscado) == 0:
-                mb.showerror(
-                "ERROR", "Esta vacio o no existe el directorio/fichero.\nPrueba a buscar de nuevo...", parent=self.vtn_ventanas
-                )                 
-                self.cargar_ventanas()
-                self.limpiar_widgets()
-                self.btnLimpiar.grid_forget()
-                self.btnBuscar.grid(row=0, column=1, sticky=W)
-                self.textBuscar.focus()
-            else:
-                self.limpiar_tree()
-                with open(self.path_ventanas) as g:
-                    data = json.load(g)
-                    count = 0
-                    for md in data[self.customer]:
-                        for vb in valor_Buscado:
-                            if vb == md['object']:
-                                if count % 2 == 0:
-                                    self.tree.insert(parent='', index='end', iid=count, text='', value=(md['object'],md['owner'],md['tipo'],md['ownerGroup'],md['code']), tags=('evenrow'))
-                                else:
-                                    self.tree.insert(parent='', index='end', iid=count, text='', value=(md['object'],md['owner'],md['tipo'],md['ownerGroup'],md['code']), tags=('oddrow'))
-                                count += 1
-                        self.limpiar_widgets()
-            self.btnBuscar.forget()
-            self.btnLimpiar.grid(row=0, column=1, sticky=W)
-            self.menu_Contextual.entryconfig("  Limpiar", state="normal")
-    
+            pass
+            # mb.showerror(
+            # "ERROR", "Esta vacio o no existe el directorio/fichero.\nPrueba a buscar de nuevo...", parent=self.vtn_ventanas
+            # )            
+            # self.cargar_ventanas()
+            # self.limpiar_widgets()
+            # self.btnLimpiar.grid_forget()
+            # self.btnBuscar.grid(row=0, column=1, sticky=W)
+            # self.textBuscar.focus()
     def cargar_ventanas(self):
         self.ventanas = []
         #limpiando el arbol de vistas

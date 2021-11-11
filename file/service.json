@@ -22,22 +22,75 @@
   ],
   "ASISA": [
     {
-      "object": "",
-      "owner": "",
-      "tipo": "",
-      "ownerGroup": "",
+      "object": "pcnfsd",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
       "user": [
-        "",
-        ""
+        "Sistemas"
       ],
-      "code": "",
+      "code": "1-OK",
       "servers": [
-        ""
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
       "variable": [
-        "service=\"\""
+        "service=\"pcnfsd\""
+      ]
+    },
+    {
+      "object": "rsh",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "service=\"rsh\""
+      ]
+    },
+    {
+      "object": "ftp",
+      "owner": "moulghaz",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Usuario de cliente, Oulghazi, Mohamed"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO /  SERVICE : FTP,  Port 21 / CUSTOMER",
+      "impact": "GENERICO /  SERVICE : FTP,  Port 21 / CUSTOMER",
+      "variable": [
+        "Aplica a todas las maquinas, que tengan FTP y lo utiliza el cliente "
+      ]
+    },
+    {
+      "object": "nfs",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "CP1ABWASPRE1"
+      ],
+      "risk": "GENERICO /  SERVICE : NFS / CUSTOMER",
+      "impact": "GENERICO /  SERVICE : NFS / CUSTOMER",
+      "variable": [
+        ""
       ]
     }
   ],
