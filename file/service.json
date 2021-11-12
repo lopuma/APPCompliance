@@ -92,6 +92,24 @@
       "variable": [
         ""
       ]
+    },
+    {
+      "object": "PermitRootLogin",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "sapasisasm"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "service=\"PermitRootLogin\""
+      ]
     }
   ],
   "FT": [

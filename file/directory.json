@@ -153,6 +153,82 @@
         "fileOPT=\"/opt/IBM/db2/V9.7/\""
       ],
       "SO": "Aix"
+    },
+    {
+      "object": "/tmp/connlicj.bin",
+      "owner": "jsmadm",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / OSR TMP / CUSTOMER",
+      "impact": "GENERICO / OSR TMP / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "/tmp/jccdiag.log",
+      "owner": "jsmadm",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / OSR TMP / CUSTOMER",
+      "impact": "GENERICO / OSR TMP / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "/tmp/license.lock",
+      "owner": "jsmadm",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / OSR TMP / CUSTOMER",
+      "impact": "GENERICO / OSR TMP / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "/tmp/serverlist.lock",
+      "owner": "jsmadm",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / OSR TMP / CUSTOMER",
+      "impact": "GENERICO / OSR TMP / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Aix"
     }
   ],
   "CESCE": [

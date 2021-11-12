@@ -469,5 +469,16 @@
         "refrescar": null,
         "evidencia": null,
         "SO": "Aix"
+    },
+    {
+        "modulo": "Identify and Authenticate Users/PermitRootLogin Restriction",
+        "clave": "PERMITROOTLOGIN",
+        "descripcion": "SSH Config File: /etc/ssh/sshd_config; Invalid setting (value:yes) in parameter 'PermitRootLogin': must be set to 'no'.",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
     }
 ]

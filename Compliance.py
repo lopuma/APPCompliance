@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import tkinter as tk
+#import tkinter as tk
 import json
 import os
 import subprocess
@@ -12,7 +12,7 @@ from tkinter import scrolledtext as st
 from tkinter import messagebox as mb
 from tkinter import font as font
 from PIL import Image, ImageTk
-from tkinter.ttk import Notebook, Style
+from tkinter.ttk import Style
 from threading import Thread
 from ScrollableNotebook  import *
 from Extraciones import Extracion
@@ -54,6 +54,8 @@ sis_oper = ""
 idpTab = 0
 varNum = 0
 text_aExpandir = ""
+value = ""
+valor_activo_list = ""
 class Expandir(ttk.Frame):
     
     def __init__(self, parent, text_EXP, widget_EXP, customer, titulo, so, st_btnDIR, st_btnAUTH, st_btnSER, st_btnACC, st_btnCMD, st_btnIDR, *args, **kwargs):
@@ -101,8 +103,8 @@ class Expandir(ttk.Frame):
             Image.open(path_icon+r"next.png").resize((40, 40)))    
     
     def cerrar_vtn_expandir(self):
-        if txtWidget_focus:
-            self.vtn_expandir.destroy()
+        #if txtWidget_focus:
+        self.vtn_expandir.destroy()
     
     def menu_clickDerecho(self):
         self.menu_Contextual = Menu(self.vtn_expandir, tearoff=0)
@@ -248,7 +250,7 @@ class Expandir(ttk.Frame):
             self.vtn_expandir,
             text='SIGUIENTE',
             image=self.next_icon,            
-            command=desviacion._siguiente,
+            command=desviacion._siguiente_,
             border=0,
             borderwidth=0,
             highlightthickness=0,
@@ -487,13 +489,12 @@ class Desviacion(ttk.Frame):
             app.menu_Contextual.entryconfig('  Copiar', state='disabled')
     ## ------ VENTANAS TOP EXPANDIR ------------------------------ ##
     def expandir(self, event, var): #TODO comprobando expandir
+        global expandir
         global sis_oper
         global asigne_Ciente
         global varNum
-        global expandir
         global text_aExpandir
         self.widget_Expan = event
-        print("SRC EXPANDIDO : ",self.widget_Expan)
         tittleExpand = var
         if tittleExpand == "COMPROBACION":
             varNum= 1
@@ -505,10 +506,8 @@ class Desviacion(ttk.Frame):
             varNum= 4
         elif tittleExpand == "EVIDENCIA":        
             varNum= 5
-        print("NUM ASIGNE : ", varNum)
         self.widget_Expan.focus()
         text_aExpandir = self.widget_Expan.get('1.0', tk.END)
-        print("text_aExpandir : ", text_aExpandir)
         expandir = Expandir(self, text_aExpandir, self.widget_Expan, asigne_Ciente,tittleExpand, sis_oper, self._btnDir, self._btnAuth, self._btnSer, self._btnAcc, self._btnCmd, self._btnIdr)
         # if self.widget_Expan:
         #     text_aExpandir = self.widget_Expan.get('1.0', tk.END)
@@ -520,33 +519,29 @@ class Desviacion(ttk.Frame):
             expandir.EXP_btnCopyALL.configure(state="normal")            
     # ## --- MENU CONTEXTUAL --- ##
     def _siguiente_(self):
-        global varNum
-        global text_aExpandir
-        print("MISMO : ",text_aExpandir)
-        print("MISMO NUM : ",varNum)
+        global value
+        global valor_activo_list
+        print("valor : ", value)
+        print("valor activo : ", app.valor_activo_list)
+        # global varNum
+        # global text_aExpandir
 
-        if varNum == 1:
-            expandir.vtn_expandir.destroy()
-            print(len(text_aExpandir))
-            if len(text_aExpandir) <= 1:
-                self.var = "EDITAR"
-                print(self.var)
-                #self.expandir(text_aExpandir, self.var)
-            else:
-                self.var = "BACKUP"
-                print(self.var)
-                #self.expandir(text_aExpandir, self.var)
-        elif varNum == 2:
-            expandir.vtn_expandir.destroy()
-            print(len(text_aExpandir))
-            if len(text_aExpandir) <= 1:
-                self.var = "REFRESCAR"
-                print(self.var)
-                #self.expandir(text_aExpandir, self.var)
-            else:
-                self.var = "EDITAR"
-                print(self.var)
-                #self.expandir(text_aExpandir, self.var)
+        # if varNum == 1:
+        #     expandir.vtn_expandir.destroy()
+        #     if len(text_aExpandir) <= 1:
+        #         self.var = "EDITAR"
+        #         #self.expandir(text_aExpandir, self.var)
+        #     else:
+        #         self.var = "BACKUP"
+        #         #self.expandir(text_aExpandir, self.var)
+        # elif varNum == 2:
+        #     expandir.vtn_expandir.destroy()
+        #     if len(text_aExpandir) <= 1:
+        #         self.var = "REFRESCAR"
+        #         #self.expandir(text_aExpandir, self.var)
+        #     else:
+        #         self.var = "EDITAR"
+        #         #self.expandir(text_aExpandir, self.var)
             
     def _siguiente(self):
         global varNum
@@ -823,9 +818,12 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_srcEvidencia.delete('1.0',END)
     
     def seleccionar_Modulo(self, event):
+        global value
+        #global valor_activo_list
         list_event = event.widget
         index = list_event.curselection()
         value = list_event.get(index[0])
+        #valor_activo_list = list_event.get(ANCHOR)
         self.cargar_elemt_selected(value)
     
     def cargar_elemt_selected(self, modulo_selecionado): #TODO CARGAR MODULO
@@ -866,7 +864,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnCommand.grid_forget()
             self.DESV_btnIdrsa.grid_forget()
             self.DESV_btnAuthorized.grid(row=2, column=1, padx=5, pady=5, sticky='ne')    
-        elif str(modulo_selecionado) == "Network Settings/Ensure LDAP Server is not enabled" or str(modulo_selecionado) == "Network Settings/NFS root restrictions" or str(modulo_selecionado) == "E.1.5.22.3 Network Settings" or str(modulo_selecionado) == "Password Requirements/SSH PermitRootLogin Restriction" or str(modulo_selecionado) == "Network Settings/Prohibited Processes":
+        elif str(modulo_selecionado) == "Network Settings/Ensure LDAP Server is not enabled" or str(modulo_selecionado) == "Network Settings/NFS root restrictions" or str(modulo_selecionado) == "E.1.5.22.3 Network Settings" or str(modulo_selecionado) == "Password Requirements/SSH PermitRootLogin Restriction" or str(modulo_selecionado) == "Network Settings/Prohibited Processes" or str(modulo_selecionado) == "Identify and Authenticate Users/PermitRootLogin Restriction":
             self._btnDir = False
             self._btnAuth = False
             self._btnSer = True
@@ -1165,11 +1163,9 @@ class Desviacion(ttk.Frame):
         #     data = json.load(g)
         #     for md in data:
         #         if modulo_selecionado in md['modulo']:
-        #             print(md["clave"])
         #             #self.DESVfr2_srcBackup.delete("1.0",END)
         #             ## --- LIMPIAR ------------------------------------- ##                      
         #             self.limpiar_Widgets()
-        #     #         print("limpia")
         #             ## ------------------------------------------------- ##
         #             self.asignarValor_aWidgets(md)
         # #self.mostrar_buttons_modulo(modulo_selecionado)
@@ -1214,7 +1210,6 @@ class Desviacion(ttk.Frame):
         self.DESV_btnCommand.grid_forget()
         ## ----------------------------------------- ##
         asigne_Ciente = customer       
-        print("asigne : ", asigne_Ciente)
         with open(path_modulo.format(customer)) as g:
             data = json.load(g)
             listModulo = []
@@ -1920,13 +1915,13 @@ class Aplicacion():
         else:
             self.menu_Contextual.entryconfig('  Cerrar pestaña', state='normal')
             self.cuaderno.forget(idOpenTab)
-            print("**** ",idOpenTab)
             self.cuaderno.notebookContent.forget(idOpenTab)
     ## ----------------------- ##
     def alCambiar_Pestaña(self, event):
         global idOpenTab
         global top_active_LBK
         global asigne_Ciente
+        #global valor_activo_list
         idOpenTab = event.widget.index('current')
         tab = event.widget.tab(idOpenTab)['text']
         if idOpenTab != 0:
@@ -1943,7 +1938,6 @@ class Aplicacion():
             Thread(target=self.cuaderno._leftSlide, daemon=True).start()
             self.cuaderno._release_callback(e=None)
             self.cuaderno.rightArrow.configure(foreground='#297F87')
-        print("tab : ", tab)
         ## -----------ASIGNAMOS A UNA VARIABLE CADA CLIENTE----------------------------
         if tab == 'WorkSpace  ':
             asigne_Ciente = ""
@@ -1984,7 +1978,6 @@ class Aplicacion():
             self.menu_Contextual.entryconfig('  Seleccionar todo', state='disabled')
             self.menu_Contextual.entryconfig('  Cerrar pestaña', state='normal')
         if 'asigne_Ciente' in globals() and len(asigne_Ciente) != 0:
-            print("val asigne : ", asigne_Ciente)
             with open(path_modulo.format(asigne_Ciente)) as g:
                 global listClave
                 global listModulo
@@ -2000,10 +1993,15 @@ class Aplicacion():
         else:
             self.editMenu.entryconfig('  Buscar', state='disabled')
         try:
+            print("TRY")
+            self.valor_activo_list = desviacion.DESVfr1_listbox.get(ANCHOR)
             self.extracion.on_closing_busca_top()
         except:
             pass
-        #self.extracion.on_closing_busca_top()
+        try:
+            expandir.cerrar_vtn_expandir()
+        except:
+            pass
 
     def abrir_issues(self):
         idx = self.IssuesVar.get()
