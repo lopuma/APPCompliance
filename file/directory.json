@@ -355,6 +355,63 @@
         "directory=\"/tmp/javasharedresources/\""
       ],
       "SO": "Linux"
+    },
+    {
+      "object": "/opt/SANnav/docker/docker/overlay2/19a827f987ca128698961358eb5b722794e55be4a515be5aabecb33cda1553e6/diff/usr/bin/docker",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "SANnav",
+      "user": [
+        "SANnav"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL server"
+      ],
+      "risk": "directorio : /opt/SANnav/ : (parte de un sofware de monitorización de la red de almancenamiento llamado SANnav)",
+      "impact": "",
+      "variable": [
+        "fichero=\"/opt/SANnav/docker/docker/overlay2/19a827f987ca128698961358eb5b722794e55be4a515be5aabecb33cda1553e6/diff/usr/bin/docker\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/opt/SANnav/docker/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "SANnav",
+      "user": [
+        "Francisco Javier Bravo Diaz"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL server"
+      ],
+      "risk": "directorio : /opt/SANnav/ : (parte de un sofware de monitorización de la red de almancenamiento llamado SANnav)",
+      "impact": "",
+      "variable": [
+        "directory=\"/opt/SANnav/docker/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/opt/SANnav/lost+found/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "SANnav",
+      "user": [
+        "Francisco Javier Bravo Diaz"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL server"
+      ],
+      "risk": "directorio : /opt/SANnav/ : (parte de un sofware de monitorización de la red de almancenamiento llamado SANnav)",
+      "impact": "",
+      "variable": [
+        "directory=\"/opt/SANnav/lost+found\""
+      ],
+      "SO": "Linux"
     }
   ],
   "LBK": [
@@ -454,8 +511,8 @@
       "servers": [
         "ALL Servers"
       ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
+      "risk": "GENERICO / STICKY / CUSTOMER",
+      "impact": "GENERICO / STICKY / CUSTOMER",
       "variable": [
         ""
       ],
@@ -473,8 +530,8 @@
       "servers": [
         "ALL Servers"
       ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
+      "risk": "GENERICO / STICKY / CUSTOMER",
+      "impact": "GENERICO / STICKY / CUSTOMER",
       "variable": [
         ""
       ],
@@ -511,8 +568,8 @@
       "servers": [
         "ALL Servers"
       ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
+      "risk": "GENERICO / STICKY / CUSTOMER",
+      "impact": "GENERICO / STICKY / CUSTOMER",
       "variable": [
         ""
       ],
@@ -530,8 +587,8 @@
       "servers": [
         "ALL Servers"
       ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
+      "risk": "GENERICO / STICKY / CUSTOMER",
+      "impact": "GENERICO / STICKY / CUSTOMER",
       "variable": [
         ""
       ],
@@ -1117,6 +1174,26 @@
         "Se debe excepcionar",
         "OWNER : Oracle, Grid, Oragr1d,Ora4g3nt, Oradb, Sargraph.",
         "GROUP : Oinstall, Dba. "
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/var/opt/ansible/ITM/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Grupo FT-LINUX Sigifi"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/var/opt/ansible/ITM/\"",
+        "fileOPT=\"/var/opt/ansible/ITM/\""
       ],
       "SO": "Linux"
     }

@@ -264,6 +264,24 @@
       "variable": [
         "Usuario para el proceso de Compliance"
       ]
+    },
+    {
+      "object": "root",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Group FT Linux - Sigifi"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"root\""
+      ]
     }
   ],
   "LBK": [

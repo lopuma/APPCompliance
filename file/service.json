@@ -67,7 +67,8 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL Servers"
+        "CP1ABWASPRU1",
+        "cp1abwaspre1"
       ],
       "risk": "GENERICO /  SERVICE : FTP,  Port 21 / CUSTOMER",
       "impact": "GENERICO /  SERVICE : FTP,  Port 21 / CUSTOMER",

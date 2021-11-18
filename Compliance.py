@@ -56,6 +56,15 @@ varNum = 0
 text_aExpandir = ""
 value = ""
 valor_activo_list = ""
+list_motion = ""
+srcCom = ""
+srcBac = ""
+srcEdi = ""
+srcRes = ""
+srcEvi = ""
+srcDes = ""
+srcMod = ""
+srcSO = ""
 class Expandir(ttk.Frame):
     
     def __init__(self, parent, text_EXP, widget_EXP, customer, titulo, so, st_btnDIR, st_btnAUTH, st_btnSER, st_btnACC, st_btnCMD, st_btnIDR, *args, **kwargs):
@@ -338,14 +347,16 @@ class Desviacion(ttk.Frame):
         self.DESVfr2_lblModulo.bind("<Configure>", self.label_resize)
         self.DESVfr2_lblDescripcion.bind("<Configure>", self.label_resize)
         ## --- ACTIVAR WIDGET. --- #
+        self.DESVfr2_lblModulo.bind("<Motion>",lambda e:self.activar_Focus(e))
+        self.DESV_frame2.bind("<Motion>",lambda e:self.activar_Focus(e))
+        self.DESVfr2_lblDescripcion.bind("<Motion>",lambda e:self.activar_Focus(e))
         self.DESVfr2_srcComprobacion.bind("<Motion>",lambda e:self.activar_Focus(e))
         self.DESVfr2_srcBackup.bind("<Motion>",lambda e:self.activar_Focus(e))
         self.DESVfr3_srcEditar.bind("<Motion>",lambda e:self.activar_Focus(e))
         self.DESVfr3_srcRefrescar.bind("<Motion>",lambda e:self.activar_Focus(e))
         self.DESVfr3_srcEvidencia.bind("<Motion>",lambda e:self.activar_Focus(e))
-        #self.DESVfr1_listbox.bind("<Motion>",lambda e:self.activar_Focus(e))
-        self.DESVfr1_entModulo.bind("<Motion>",lambda e:self.activar_Focus(e))
         app.cuaderno.bind("<Motion>",lambda e:self.activar_Focus(e))
+        self.DESVfr1_listbox.bind("<Motion>",lambda e:self._activar_Focus(e))
         ## --- MOSTRAR MENU DERECHO  --- ##
         #app.root.bind("<Button-3><ButtonRelease-3>", app.display_menu_clickDerecho)
         self.DESVfr2_srcComprobacion.bind("<Button-3><ButtonRelease-3>",self._display_menu_clickDerecho)
@@ -353,7 +364,6 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_srcEditar.bind("<Button-3><ButtonRelease-3>",self._display_menu_clickDerecho)
         self.DESVfr3_srcRefrescar.bind("<Button-3><ButtonRelease-3>",self._display_menu_clickDerecho)
         self.DESVfr3_srcEvidencia.bind("<Button-3><ButtonRelease-3>",self._display_menu_clickDerecho)
-        #self.DESVfr1_listbox.bind("<Button-3><ButtonRelease-3>",app.display_menu_clickDerecho)
         self.DESVfr1_entModulo.bind("<Button-3><ButtonRelease-3>",self._display_menu_clickDerecho)
         ## --- ACTIVAR MODO SOLO LECTURA --- ##
         self.DESVfr2_srcComprobacion.bind("<Key>", lambda e: self.widgets_SoloLectura(e))
@@ -441,6 +451,14 @@ class Desviacion(ttk.Frame):
     ## --- ACTIVAR WIDGET ---------------------------------------- ##
     def activar_Focus(self, event):
         global txtWidget
+        global srcDes
+        global srcCom
+        global srcBac
+        global srcEdi
+        global srcRes
+        global srcEvi
+        global srcMod
+        global srcSO
         global txtWidget_focus
         txtWidget = event.widget
         if txtWidget == self.DESVfr1_entModulo:
@@ -451,6 +469,7 @@ class Desviacion(ttk.Frame):
             self.DESVfr3_srcRefrescar.tag_remove("sel","1.0","end")
             self.DESVfr3_srcEvidencia.tag_remove("sel","1.0","end")
         elif txtWidget == self.DESVfr2_srcComprobacion:
+            srcCom = txtWidget
             txtWidget.focus()
             txtWidget_focus = True
             self.DESVfr2_srcBackup.tag_remove("sel","1.0","end")
@@ -458,9 +477,11 @@ class Desviacion(ttk.Frame):
             self.DESVfr3_srcRefrescar.tag_remove("sel","1.0","end")
             self.DESVfr3_srcEvidencia.tag_remove("sel","1.0","end")
         elif txtWidget == self.DESVfr2_srcBackup:
+            srcBac = txtWidget
             txtWidget.focus()
             txtWidget_focus = True
         elif txtWidget == self.DESVfr3_srcEditar:
+            srcEdi = txtWidget
             txtWidget.focus()
             txtWidget_focus = True
             self.DESVfr2_srcComprobacion.tag_remove("sel","1.0","end")
@@ -468,19 +489,28 @@ class Desviacion(ttk.Frame):
             self.DESVfr3_srcRefrescar.tag_remove("sel","1.0","end")
             self.DESVfr3_srcEvidencia.tag_remove("sel","1.0","end")
         elif txtWidget == self.DESVfr3_srcRefrescar:
+            srcRes = txtWidget
             txtWidget.focus()
             txtWidget_focus = True
-            # self.DESVfr2_srcComprobacion.tag_remove("sel","1.0","end")
-            # self.DESVfr2_srcBackup.tag_remove("sel","1.0","end")
-            # self.DESVfr3_srcEditar.tag_remove("sel","1.0","end")
-            # self.DESVfr3_srcEvidencia.tag_remove("sel","1.0","end")
         elif txtWidget == self.DESVfr3_srcEvidencia:
+            srcEvi = txtWidget
             txtWidget.focus()
             txtWidget_focus = True
             self.DESVfr2_srcComprobacion.tag_remove("sel","1.0","end")
             self.DESVfr2_srcBackup.tag_remove("sel","1.0","end")
             self.DESVfr3_srcEditar.tag_remove("sel","1.0","end")
             self.DESVfr3_srcRefrescar.tag_remove("sel","1.0","end")
+        elif txtWidget == self.DESVfr2_lblDescripcion:
+            srcDes = txtWidget
+        elif txtWidget == self.DESVfr2_lblModulo:
+            srcMod = txtWidget
+        elif txtWidget == self.DESV_frame2:
+            srcSO = txtWidget
+
+    def _activar_Focus(self, event):
+        global list_motion
+        list_motion = event.widget
+        list_motion.focus()
     
     def disabled_copy(self, txt_select):
         if txt_select:
@@ -521,8 +551,6 @@ class Desviacion(ttk.Frame):
     def _siguiente_(self):
         global value
         global valor_activo_list
-        print("valor : ", value)
-        print("valor activo : ", app.valor_activo_list)
         # global varNum
         # global text_aExpandir
 
@@ -819,7 +847,6 @@ class Desviacion(ttk.Frame):
     
     def seleccionar_Modulo(self, event):
         global value
-        #global valor_activo_list
         list_event = event.widget
         index = list_event.curselection()
         value = list_event.get(index[0])
@@ -1609,6 +1636,21 @@ class Desviacion(ttk.Frame):
         self.DESV_btn5Expandir.grid(row=4, column=3, padx=(5,20), pady=5, sticky='ne')
         ## ------------------------------------------------------------------------------ ##
     ## --- FUNCIONES PARA ABRIR VENTANAS EMERGENTE --------------- ##
+    def _QuitarSeleccion(self):
+        global list_motion
+        global txtWidget
+        srcCom.delete('1.0',END)
+        srcBac.delete('1.0',END)
+        srcEdi.delete('1.0',END)
+        srcRes.delete('1.0',END)
+        srcEvi.delete('1.0',END)
+        srcDes['text'] = ''
+        srcSO['text'] = 'SISTEMA OPERATIVO'
+        srcMod['text'] = 'MODULO'
+        if list_motion:
+            list_motion.selection_clear(0,tk.END)
+            self.limpiar_Widgets()
+
     def abrir_DIRECTORY(self):
         global asigne_Ciente
         global directory
@@ -1678,7 +1720,6 @@ class Aplicacion():
         self.cuaderno.enable_traversal()
         self.cuaderno.notebookTab.bind("<Button-3>", self.display_menu_clickDerecho)
         self.root.bind_all("<Control-l>", lambda x : self.ocultar())
-        #self.root.bind("<Control-f>", lambda x : self.bsc())
         self.estilos()
         self.menu_clickDerecho()
         self.widgets_APP()
@@ -1921,7 +1962,6 @@ class Aplicacion():
         global idOpenTab
         global top_active_LBK
         global asigne_Ciente
-        #global valor_activo_list
         idOpenTab = event.widget.index('current')
         tab = event.widget.tab(idOpenTab)['text']
         if idOpenTab != 0:
@@ -1993,7 +2033,6 @@ class Aplicacion():
         else:
             self.editMenu.entryconfig('  Buscar', state='disabled')
         try:
-            print("TRY")
             self.valor_activo_list = desviacion.DESVfr1_listbox.get(ANCHOR)
             self.extracion.on_closing_busca_top()
         except:
@@ -2002,7 +2041,14 @@ class Aplicacion():
             expandir.cerrar_vtn_expandir()
         except:
             pass
+        self._QuitarSeleccion()
 
+    def _QuitarSeleccion(self):
+        try:
+            desviacion._QuitarSeleccion()
+            desviacion.limpiar_Widgets()
+        except:
+            pass
     def abrir_issues(self):
         idx = self.IssuesVar.get()
         itm = list_issues[idx]

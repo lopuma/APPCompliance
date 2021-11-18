@@ -2,6 +2,8 @@
 import json
 import os
 import tkinter as tk
+import collections
+import operator
 from getpass import getuser
 from tkinter import *
 from tkinter import ttk
@@ -140,6 +142,7 @@ class Ventana(ttk.Frame):
         self.menu_Contextual.entryconfig("  Limpiar", state="disabled")
         self.cargar_ventanas()
         self.limpiar_widgets()
+    
     def on_entr_str_busca_key_release(self, event):
         self._buscar()
         return 'break'
@@ -150,33 +153,12 @@ class Ventana(ttk.Frame):
     def _buscar_todo(self, txt_buscar=None):
         valor_aBuscar = txt_buscar
         valor_Buscado = [n for n in self.ventanas if valor_aBuscar in n]
-        print(valor_Buscado)
         if valor_aBuscar:
-
-        #     mb.showerror(
-        #     "ERROR", "Esta vacio o no existe el directorio/fichero.\nPrueba a buscar de nuevo...", parent=self.vtn_ventanas
-        #     )            
-        #     self.cargar_ventanas()
-        #     self.limpiar_widgets()
-        #     self.btnLimpiar.grid_forget()
-        #     self.btnBuscar.grid(row=0, column=1, sticky=W)
-        #     self.textBuscar.focus()
-        # else:
-        #     if len(valor_Buscado) == 0:
-        #         mb.showerror(
-        #         "ERROR", "Esta vacio o no existe el directorio/fichero.\nPrueba a buscar de nuevo...", parent=self.vtn_ventanas
-        #         )                 
-        #         self.cargar_ventanas()
-        #         self.limpiar_widgets()
-        #         self.btnLimpiar.grid_forget()
-        #         self.btnBuscar.grid(row=0, column=1, sticky=W)
-        #         self.textBuscar.focus()
-        #     else:
             self.limpiar_tree()
             with open(self.path_ventanas) as g:
                 data = json.load(g)
                 count = 0
-                for md in data[self.customer]:
+                for md in sorted(data[self.customer], key=lambda md:md['object']):
                     for vb in valor_Buscado:
                         if vb == md['object']:
                             if count % 2 == 0:
@@ -190,29 +172,25 @@ class Ventana(ttk.Frame):
                 self.menu_Contextual.entryconfig("  Limpiar", state="normal")
         else:
             pass
-            # mb.showerror(
-            # "ERROR", "Esta vacio o no existe el directorio/fichero.\nPrueba a buscar de nuevo...", parent=self.vtn_ventanas
-            # )            
-            # self.cargar_ventanas()
-            # self.limpiar_widgets()
-            # self.btnLimpiar.grid_forget()
-            # self.btnBuscar.grid(row=0, column=1, sticky=W)
-            # self.textBuscar.focus()
+
     def cargar_ventanas(self):
+        #crear una lista vacia
         self.ventanas = []
         #limpiando el arbol de vistas
         self.limpiar_tree()
+        #Cargar datos desde el archivo JSON
         with open(self.path_ventanas) as g:
                 data = json.load(g)
                 count = 0
-                for md in data[self.customer]:
+                for md in sorted(data[self.customer], key=lambda md:md['object']):
+                    #guardar solo el valor de 'object a una lista'
                     self.ventanas.append(md['object'])
                     if count % 2 == 0:
                         self.tree.insert(parent='', index='end', iid=count, text='', value=(md['object'],md['owner'],md['tipo'],md['ownerGroup'],md['code']), tags=('evenrow'))
                     else:
                         self.tree.insert(parent='', index='end', iid=count, text='', value=(md['object'],md['owner'],md['tipo'],md['ownerGroup'],md['code']), tags=('oddrow'))
                     count += 1
-    
+
     def limpiar_tree(self):
         records = self.tree.get_children()
         for elemnt in records:
@@ -405,7 +383,6 @@ class Ventana(ttk.Frame):
         index = listbox.curselection()
         listCopiada = []
         for i in index:
-            print(i)
             value = listbox.get(i)
             listCopiada.append(value)
         if listCopiada:
