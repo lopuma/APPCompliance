@@ -65,6 +65,7 @@ srcEvi = ""
 srcDes = ""
 srcMod = ""
 srcSO = ""
+_tt_Desv = ""
 class Expandir(ttk.Frame):
     
     def __init__(self, parent, text_EXP, widget_EXP, customer, titulo, so, st_btnDIR, st_btnAUTH, st_btnSER, st_btnACC, st_btnCMD, st_btnIDR, *args, **kwargs):
@@ -92,6 +93,7 @@ class Expandir(ttk.Frame):
         position_top = int(screen_height+70)
         position_right = int(screen_width+150)
         self.vtn_expandir.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
+        self.vtn_expandir.tk.call('wm', 'iconphoto', self.vtn_expandir._w, tk.PhotoImage(file=path_icon+r'expandir1.png'))       
         self.vtn_expandir.transient(self.parent)
         self.vtn_expandir.title("DESVIACIONES : {} - {}".format(self.customer,self.so))
         self.vtn_expandir.columnconfigure(0, weight=1)
@@ -178,6 +180,194 @@ class Expandir(ttk.Frame):
         else:
             pass
         
+    def _siguiente(self):
+        global varNum
+        global _tt_Desv
+        if varNum == 1:
+            with open(path_modulo.format(asigne_Ciente)) as g:
+                data = json.load(g)
+                for md in data:
+                    if value in md['modulo']:
+                        self._txt_Desv = md['copia']
+                        if self._txt_Desv is None:
+                            _tt_Desv = "EDITAR"
+                            self.EXP_lblWidget['text'] =  _tt_Desv
+                            self.EXP_srcExpandir.delete('1.0',END)
+                            self.EXP_srcExpandir.insert(END,md['editar'])
+                            varNum = 3
+                        else:
+                            _tt_Desv = "BACKUP"
+                            self.EXP_lblWidget['text'] =  _tt_Desv
+                            self.EXP_srcExpandir.delete('1.0',END)
+                            self.EXP_srcExpandir.insert(END,self._txt_Desv)
+                            varNum = 2
+        elif varNum == 2:
+            with open(path_modulo.format(asigne_Ciente)) as g:
+                data = json.load(g)
+                for md in data:
+                    if value in md['modulo']:
+                        self._txt_Desv = md['editar']
+                        if self._txt_Desv is None:
+                            _tt_Desv = "REFRESCAR"
+                            self.EXP_lblWidget['text'] =  _tt_Desv
+                            self.EXP_srcExpandir.delete('1.0',END)
+                            self.EXP_srcExpandir.insert(END,md['refrescar'])
+                            varNum = 4
+                        else:
+                            _tt_Desv = "EDITAR"
+                            self.EXP_lblWidget['text'] =  _tt_Desv
+                            self.EXP_srcExpandir.delete('1.0',END)
+                            self.EXP_srcExpandir.insert(END,self._txt_Desv)
+                            varNum = 3
+        elif varNum == 3:
+            with open(path_modulo.format(asigne_Ciente)) as g:
+                data = json.load(g)
+                for md in data:
+                    if value in md['modulo']:
+                        self._txt_Desv = md['refrescar']
+                        if self._txt_Desv is None:
+                            _tt_Desv = "EVIDENCIA"
+                            self.EXP_lblWidget['text'] =  _tt_Desv
+                            self.EXP_srcExpandir.delete('1.0',END)
+                            self.EXP_srcExpandir.insert(END,md['evidencia'])
+                            varNum = 5
+                        else:
+                            _tt_Desv = "REFRESCAR"
+                            self.EXP_lblWidget['text'] =  _tt_Desv
+                            self.EXP_srcExpandir.delete('1.0',END)
+                            self.EXP_srcExpandir.insert(END,self._txt_Desv)
+                            varNum = 4
+        elif varNum == 4:
+            with open(path_modulo.format(asigne_Ciente)) as g:
+                data = json.load(g)
+                for md in data:
+                    if value in md['modulo']:
+                        self._txt_Desv = md['evidencia']
+                        if self._txt_Desv is None:
+                            _tt_Desv = "COMPROBACION"
+                            self.EXP_lblWidget['text'] =  _tt_Desv
+                            self.EXP_srcExpandir.delete('1.0',END)
+                            self.EXP_srcExpandir.insert(END,md['comprobacion'])
+                            varNum = 1
+                        else:
+                            _tt_Desv = "EVIDENCIA"
+                            self.EXP_lblWidget['text'] =  _tt_Desv
+                            self.EXP_srcExpandir.delete('1.0',END)
+                            self.EXP_srcExpandir.insert(END,self._txt_Desv)
+                            varNum = 5
+        elif varNum == 5:
+            with open(path_modulo.format(asigne_Ciente)) as g:
+                data = json.load(g)
+                for md in data:
+                    if value in md['modulo']:
+                        self._txt_Desv = md['comprobacion']
+                        if self._txt_Desv is None:
+                            _tt_Desv = "BACKUP"
+                            self.EXP_lblWidget['text'] =  _tt_Desv
+                            self.EXP_srcExpandir.delete('1.0',END)
+                            self.EXP_srcExpandir.insert(END,md['copia'])
+                            varNum = 2
+                        else:
+                            _tt_Desv = "COMPROBACION"
+                            self.EXP_lblWidget['text'] =  _tt_Desv
+                            self.EXP_srcExpandir.delete('1.0',END)
+                            self.EXP_srcExpandir.insert(END,self._txt_Desv)
+                            varNum = 1
+
+    def _anterior(self):
+        global varNum
+        global _tt_Desv
+        if varNum == 1:
+            with open(path_modulo.format(asigne_Ciente)) as g:
+                data = json.load(g)
+                for md in data:
+                    if value in md['modulo']:
+                        self._txt_Desv = md['evidencia']
+                        if self._txt_Desv is None:
+                            _tt_Desv = "REFRESCAR"
+                            self.EXP_lblWidget['text'] =  _tt_Desv
+                            self.EXP_srcExpandir.delete('1.0',END)
+                            self.EXP_srcExpandir.insert(END,md['refrescar'])
+                            varNum = 4
+                        else:
+                            _tt_Desv = "EVIDENCIA"
+                            self.EXP_lblWidget['text'] =  _tt_Desv
+                            self.EXP_srcExpandir.delete('1.0',END)
+                            self.EXP_srcExpandir.insert(END,self._txt_Desv)
+                            varNum = 5
+        elif varNum == 2:
+            with open(path_modulo.format(asigne_Ciente)) as g:
+                data = json.load(g)
+                for md in data:
+                    if value in md['modulo']:
+                        self._txt_Desv = md['comprobacion']
+                        if self._txt_Desv is None:
+                            _tt_Desv = "EVIDENCIA"
+                            self.EXP_lblWidget['text'] =  _tt_Desv
+                            self.EXP_srcExpandir.delete('1.0',END)
+                            self.EXP_srcExpandir.insert(END,md['evidencia'])
+                            varNum = 5
+                        else:
+                            _tt_Desv = "COMPROBACION"
+                            self.EXP_lblWidget['text'] =  _tt_Desv
+                            self.EXP_srcExpandir.delete('1.0',END)
+                            self.EXP_srcExpandir.insert(END,self._txt_Desv)
+                            varNum = 1
+        elif varNum == 3:
+            with open(path_modulo.format(asigne_Ciente)) as g:
+                data = json.load(g)
+                for md in data:
+                    if value in md['modulo']:
+                        self._txt_Desv = md['copia']
+                        if self._txt_Desv is None:
+                            _tt_Desv = "COMPROBACION"
+                            self.EXP_lblWidget['text'] =  _tt_Desv
+                            self.EXP_srcExpandir.delete('1.0',END)
+                            self.EXP_srcExpandir.insert(END,md['evidencia'])
+                            varNum = 1
+                        else:
+                            _tt_Desv = "BACKUP"
+                            self.EXP_lblWidget['text'] =  _tt_Desv
+                            self.EXP_srcExpandir.delete('1.0',END)
+                            self.EXP_srcExpandir.insert(END,self._txt_Desv)
+                            varNum = 2
+        elif varNum == 4:
+            with open(path_modulo.format(asigne_Ciente)) as g:
+                data = json.load(g)
+                for md in data:
+                    if value in md['modulo']:
+                        self._txt_Desv = md['editar']
+                        if self._txt_Desv is None:
+                            _tt_Desv = "BACKUP"
+                            self.EXP_lblWidget['text'] =  _tt_Desv
+                            self.EXP_srcExpandir.delete('1.0',END)
+                            self.EXP_srcExpandir.insert(END,md['copia'])
+                            varNum = 2
+                        else:
+                            _tt_Desv = "EDITAR"
+                            self.EXP_lblWidget['text'] =  _tt_Desv
+                            self.EXP_srcExpandir.delete('1.0',END)
+                            self.EXP_srcExpandir.insert(END,self._txt_Desv)
+                            varNum = 3
+        elif varNum == 5:
+            with open(path_modulo.format(asigne_Ciente)) as g:
+                data = json.load(g)
+                for md in data:
+                    if value in md['modulo']:
+                        self._txt_Desv = md['refrescar']
+                        if self._txt_Desv is None:
+                            _tt_Desv = "EDITAR"
+                            self.EXP_lblWidget['text'] =  _tt_Desv
+                            self.EXP_srcExpandir.delete('1.0',END)
+                            self.EXP_srcExpandir.insert(END,md['editar'])
+                            varNum = 2
+                        else:
+                            _tt_Desv = "REFRESCAR"
+                            self.EXP_lblWidget['text'] =  _tt_Desv
+                            self.EXP_srcExpandir.delete('1.0',END)
+                            self.EXP_srcExpandir.insert(END,self._txt_Desv)
+                            varNum = 1
+
     def widgets_EXPANDIR(self):
         self.EXP_lblWidget = ttk.Label(
             self.vtn_expandir, 
@@ -259,7 +449,7 @@ class Expandir(ttk.Frame):
             self.vtn_expandir,
             text='SIGUIENTE',
             image=self.next_icon,            
-            command=desviacion._siguiente_,
+            command=self._siguiente,
             border=0,
             borderwidth=0,
             highlightthickness=0,
@@ -274,7 +464,7 @@ class Expandir(ttk.Frame):
             self.vtn_expandir,
             text='ANTERIOR',
             image=self.previous_icon,            
-            command=desviacion._anterior,
+            command=self._anterior,
             border=0,
             borderwidth=0,
             highlightthickness=0,
@@ -547,125 +737,7 @@ class Desviacion(ttk.Frame):
             expandir.EXP_btnCopyALL.configure(state="normal")
         elif tittleExpand == "REFRESCAR":
             expandir.EXP_btnCopyALL.configure(state="normal")            
-    # ## --- MENU CONTEXTUAL --- ##
-    def _siguiente_(self):
-        global value
-        global valor_activo_list
-        # global varNum
-        # global text_aExpandir
-
-        # if varNum == 1:
-        #     expandir.vtn_expandir.destroy()
-        #     if len(text_aExpandir) <= 1:
-        #         self.var = "EDITAR"
-        #         #self.expandir(text_aExpandir, self.var)
-        #     else:
-        #         self.var = "BACKUP"
-        #         #self.expandir(text_aExpandir, self.var)
-        # elif varNum == 2:
-        #     expandir.vtn_expandir.destroy()
-        #     if len(text_aExpandir) <= 1:
-        #         self.var = "REFRESCAR"
-        #         #self.expandir(text_aExpandir, self.var)
-        #     else:
-        #         self.var = "EDITAR"
-        #         #self.expandir(text_aExpandir, self.var)
-            
-    def _siguiente(self):
-        global varNum
-        if varNum== 1:
-            expandir.vtn_expandir.destroy()
-            self.txt_src = self.DESVfr2_srcBackup.get("1.0","end")
-            if len(self.txt_src) <= 1:
-                self.var = "EDITAR"
-                self.expandir(event=self.DESVfr3_srcEditar, var=self.var)
-            else:
-                self.var = "BACKUP"
-                self.expandir(event=self.DESVfr2_srcBackup, var=self.var)
-        elif varNum== 2:
-            expandir.vtn_expandir.destroy()
-            self.txt_src = self.DESVfr3_srcEditar.get("1.0","end")
-            if len(self.txt_src) <= 1:
-                self.var = "REFRESCAR"
-                self.expandir(event=self.DESVfr3_srcRefrescar, var=self.var)
-            else:
-                self.var = "EDITAR"
-                self.expandir(event=self.DESVfr3_srcEditar, var=self.var)
-        elif varNum== 3:
-            expandir.vtn_expandir.destroy()
-            self.txt_src = self.DESVfr3_srcRefrescar.get("1.0","end")
-            if len(self.txt_src) <= 1:
-                self.var = "EVIDENCIA"
-                self.expandir(event=self.DESVfr3_srcEvidencia, var=self.var)
-            else:
-                self.var = "REFRESCAR"
-                self.expandir(event=self.DESVfr3_srcRefrescar, var=self.var)
-        elif varNum== 4:
-            expandir.vtn_expandir.destroy()
-            self.txt_src = self.DESVfr3_srcEvidencia.get("1.0","end")
-            if len(self.txt_src) <= 1:
-                self.var = "COMPROBACION"
-                self.expandir(event=self.DESVfr2_srcComprobacion, var=self.var)
-            else:
-                self.var = "EVIDENCIA"
-                self.expandir(event=self.DESVfr3_srcEvidencia, var=self.var)
-        elif varNum== 5:
-            expandir.vtn_expandir.destroy()
-            self.txt_src = self.DESVfr2_srcComprobacion.get("1.0","end")
-            if len(self.txt_src) <= 1:
-                self.var = "BACKUP"
-                self.expandir(event=self.DESVfr2_srcBackup, var=self.var)
-            else:
-                self.var = "COMPROBACION"
-                self.expandir(event=self.DESVfr2_srcComprobacion, var=self.var)
-        
-    def _anterior(self):
-        if varNum== 1:
-            expandir.vtn_expandir.destroy()
-            self.txt_src = self.DESVfr3_srcEvidencia.get("1.0","end")
-            if len(self.txt_src) <= 1:
-                self.var = "REFRESCAR"
-                self.expandir(event=self.DESVfr3_srcRefrescar, var=self.var)
-            else:
-                self.var = "EVIDENCIA"
-                self.expandir(event=self.DESVfr3_srcEvidencia, var=self.var)
-        elif varNum== 2:
-            expandir.vtn_expandir.destroy()
-            self.txt_src = self.DESVfr2_srcComprobacion.get("1.0","end")
-            if len(self.txt_src) <= 1:
-                self.var = "EVIDENCIA"
-                self.expandir(event=self.DESVfr3_srcEvidencia, var=self.var)
-            else:
-                self.var = "COMPROBACION"
-                self.expandir(event=self.DESVfr2_srcComprobacion, var=self.var)
-        elif varNum== 3:
-            expandir.vtn_expandir.destroy()
-            self.txt_src = self.DESVfr2_srcBackup.get("1.0","end")
-            if len(self.txt_src) <= 1:
-                self.var = "COMPROBACION"
-                self.expandir(event=self.DESVfr2_srcComprobacion, var=self.var)
-            else:
-                self.var = "BACKUP"
-                self.expandir(event=self.DESVfr2_srcBackup, var=self.var)
-        elif varNum== 4:
-            expandir.vtn_expandir.destroy()
-            self.txt_src = self.DESVfr3_srcEditar.get("1.0","end")
-            if len(self.txt_src) <= 1:
-                self.var = "BACKUP"
-                self.expandir(event=self.DESVfr2_srcBackup, var=self.var)
-            else:
-                self.var = "EDITAR"
-                self.expandir(event=self.DESVfr3_srcEditar, var=self.var)
-        elif varNum== 5:
-            expandir.vtn_expandir.destroy()
-            self.txt_src = self.DESVfr3_srcRefrescar.get("1.0","end")
-            if len(self.txt_src) <= 1:
-                self.var = "EDITAR"
-                self.expandir(event=self.DESVfr3_srcEditar, var=self.var)
-            else:
-                self.var = "REFRESCAR"
-                self.expandir(event=self.DESVfr3_srcRefrescar, var=self.var)
-        
+    # ## --- MENU CONTEXTUAL --- ##    
     def _menu_clickDerecho(self):
         self.text_font = font.Font(family='Consolas', size=13)   
         self.menu_Contextual = Menu(self, tearoff=0)
@@ -815,26 +887,6 @@ class Desviacion(ttk.Frame):
         self._buscar_Ativate_focus()
     ## ------------------------------------- ##
     ## --- FUNCIONES AL SELECIONAR MODULO, O BUSCAR MODULO ------- ##
-    def asignarValor_aWidgets(self, md):
-        global sis_oper
-        if md['SO'] is not None:
-            sis_oper = md['SO']
-            self.DESV_frame2['text'] = md['SO']
-        if md['modulo'] is not None:
-            self.DESVfr2_lblModulo['text'] = md['modulo']
-        if md['descripcion'] is not None:
-            self.DESVfr2_lblDescripcion['text'] = md['descripcion']
-        if md['comprobacion'] is not None:
-            self.DESVfr2_srcComprobacion.insert(END,md['comprobacion'])
-        if md['copia'] is not None:
-            self.DESVfr2_srcBackup.insert(END,md['copia'])
-        if md['editar'] is not None:
-            self.DESVfr3_srcEditar.insert(END,md['editar'])
-        if md['refrescar'] is not None:
-            self.DESVfr3_srcRefrescar.insert(END,md['refrescar'])
-        if md['evidencia'] is not None:
-            self.DESVfr3_srcEvidencia.insert(END,md['evidencia'])
-    
     def limpiar_Widgets(self):
         self.DESV_frame2['text'] = 'SISTEMA OPERATIVO'
         self.DESVfr2_lblModulo['text'] = 'MODULO'
@@ -850,7 +902,6 @@ class Desviacion(ttk.Frame):
         list_event = event.widget
         index = list_event.curselection()
         value = list_event.get(index[0])
-        #valor_activo_list = list_event.get(ANCHOR)
         self.cargar_elemt_selected(value)
     
     def cargar_elemt_selected(self, modulo_selecionado): #TODO CARGAR MODULO
@@ -863,6 +914,46 @@ class Desviacion(ttk.Frame):
                     ## ------------------------------------------------- ##
                     self.asignarValor_aWidgets(md)
             self.mostrar_buttons_modulo(modulo_selecionado)
+    
+    def asignarValor_aWidgets(self, md):
+        global sis_oper
+        if md['SO'] is not None:
+            sis_oper = md['SO']
+            self.DESV_frame2['text'] = md['SO']
+        if md['modulo'] is not None:
+            self.DESVfr2_lblModulo['text'] = md['modulo']
+        if md['descripcion'] is not None:
+            self.DESVfr2_lblDescripcion['text'] = md['descripcion']
+
+        if md['comprobacion'] is not None:
+            self.DESVfr2_srcComprobacion.insert(END,md['comprobacion'])
+            self.DESV_btn1Expandir.configure(state='normal')
+        else:
+            self.DESV_btn1Expandir.configure(state='disabled')
+
+        if md['copia'] is not None:
+            self.DESVfr2_srcBackup.insert(END,md['copia'])
+            self.DESV_btn2Expandir.configure(state='normal')
+        else:
+            self.DESV_btn2Expandir.configure(state='disabled')
+
+        if md['editar'] is not None:
+            self.DESVfr3_srcEditar.insert(END,md['editar'])
+            self.DESV_btn3Expandir.configure(state='normal')
+        else:
+            self.DESV_btn3Expandir.configure(state='disabled')
+
+        if md['refrescar'] is not None:
+            self.DESV_btn4Expandir.configure(state='normal')
+            self.DESVfr3_srcRefrescar.insert(END,md['refrescar'])
+        else:
+            self.DESV_btn4Expandir.configure(state='disabled')
+
+        if md['evidencia'] is not None:
+            self.DESVfr3_srcEvidencia.insert(END,md['evidencia'])
+            self.DESV_btn5Expandir.configure(state='normal')
+        else:
+            self.DESV_btn5Expandir.configure(state='disabled')
     
     def mostrar_buttons_modulo(self, modulo_selecionado): #TODO añadir demas botones
         if str(modulo_selecionado) == "Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories" or str(modulo_selecionado) == "Protecting Resources-OSRs/CRON Command WW Permissions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /TMP Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /VAR Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /OPT Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /ETC Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /USR Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/CRON Command Group Permissions":
@@ -1037,20 +1128,10 @@ class Desviacion(ttk.Frame):
             self.DESV_btnIdrsa.grid_forget()
             self.DESV_btnAccount.grid(row=2, column=1, padx=5, pady=5, sticky='ne')  
         else:
-            self._btnDir = False
-            self._btnAuth = False
-            self._btnSer = False
-            self._btnAcc = False
-            self._btnCmd = False
-            self._btnIdr = False
-            self.DESV_btnDirectory.grid_forget()
-            self.DESV_btnAuthorized.grid_forget()
-            self.DESV_btnService.grid_forget()
-            self.DESV_btnAccount.grid_forget()
-            self.DESV_btnCommand.grid_forget()
-            self.DESV_btnIdrsa.grid_forget()    
+            self._disabled_buttons()   
     
     def buscar_Modulos(self, event=None):
+        global value
         try:
             valor_aBuscar = event
             clave_Buscado = [n for n in listClave if valor_aBuscar.upper().strip() in n]
@@ -1069,12 +1150,7 @@ class Desviacion(ttk.Frame):
                 self.DESVfr1_listbox.select_clear(ANCHOR)
                 mb.showerror("ERROR","Esta vacio o no existe el modulo.\nPrueba a buscar por CLAVE o el MODULO completo")
                 self.DESVfr1_entModulo.focus()
-                self.DESV_btnDirectory.grid_forget()
-                self.DESV_btnAuthorized.grid_forget()
-                self.DESV_btnService.grid_forget()
-                self.DESV_btnAccount.grid_forget()
-                self.DESV_btnCommand.grid_forget()
-                self.DESV_btnIdrsa.grid_forget()
+                self._disabled_buttons()
             elif len(clave_Buscado) != 0:
                 with open(path_modulo.format(asigne_Ciente)) as g:
                     data = []
@@ -1082,6 +1158,7 @@ class Desviacion(ttk.Frame):
                     for md in data:
                         if clave_Buscado in md['clave']:
                             modulo_Encontrado = md['modulo']
+                            value = modulo_Encontrado
                             ## --- LIMPIAR ------------------------------------- ##                      
                             self.limpiar_Widgets()
                             ## ------------------------------------------------- ##
@@ -1098,6 +1175,7 @@ class Desviacion(ttk.Frame):
                     for md in data:
                         if modulo_Buscado in md['modulo']:
                             modulo_Encontrado = md['modulo']
+                            value = modulo_Encontrado
                             ## --- LIMPIAR ------------------------------------- ##                      
                             self.limpiar_Widgets()
                             ## ------------------------------------------------- ##
@@ -1114,12 +1192,7 @@ class Desviacion(ttk.Frame):
             mb.showerror("ERROR","Esta vacio o no existe el modulo.\nPrueba a buscar por CLAVE o el MODULO completo")
             self.limpiar_Widgets()
             self.DESVfr1_entModulo.focus()
-            self.DESV_btnDirectory.grid_forget()
-            self.DESV_btnAuthorized.grid_forget()
-            self.DESV_btnService.grid_forget()
-            self.DESV_btnAccount.grid_forget()
-            self.DESV_btnCommand.grid_forget()
-            self.DESV_btnIdrsa.grid_forget()
+            self._disabled_buttons()
     
     def clear_busqueda(self, event):
         text_widget = event.widget
@@ -1230,11 +1303,7 @@ class Desviacion(ttk.Frame):
         ## --- LIMPIAR -----------------------------
         self.DESVfr1_listbox.delete(0,END)
         self.limpiar_Widgets()
-        self.DESV_btnDirectory.grid_forget()
-        self.DESV_btnAuthorized.grid_forget()
-        self.DESV_btnService.grid_forget()
-        self.DESV_btnAccount.grid_forget()
-        self.DESV_btnCommand.grid_forget()
+        self._disabled_buttons() 
         ## ----------------------------------------- ##
         asigne_Ciente = customer       
         with open(path_modulo.format(customer)) as g:
@@ -1248,6 +1317,20 @@ class Desviacion(ttk.Frame):
         self.var_entry_bsc.set("Buscar modulo...")
         self.DESVfr1_listbox.insert(END,*listModulo)
         self.cambiar_NamePestaña(customer)
+
+    def _disabled_buttons(self):
+        self._btnDir = False
+        self._btnAuth = False
+        self._btnSer = False
+        self._btnAcc = False
+        self._btnCmd = False
+        self._btnIdr = False
+        self.DESV_btnDirectory.grid_forget()
+        self.DESV_btnAuthorized.grid_forget()
+        self.DESV_btnService.grid_forget()
+        self.DESV_btnAccount.grid_forget()
+        self.DESV_btnCommand.grid_forget()
+        self.DESV_btnIdrsa.grid_forget()
     
     def _cargar_Modulos(self):
         idx = app.ClientVar.get()
@@ -2039,16 +2122,20 @@ class Aplicacion():
             pass
         try:
             expandir.cerrar_vtn_expandir()
+            desviacion.limpiar_Widgets()
         except:
             pass
+
         self._QuitarSeleccion()
 
     def _QuitarSeleccion(self):
         try:
             desviacion._QuitarSeleccion()
             desviacion.limpiar_Widgets()
+            desviacion._disabled_buttons()
         except:
             pass
+
     def abrir_issues(self):
         idx = self.IssuesVar.get()
         itm = list_issues[idx]

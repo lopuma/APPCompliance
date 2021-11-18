@@ -35,6 +35,8 @@ class Ventana(ttk.Frame):
         self.vtn_ventanas.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
         self.vtn_ventanas.resizable(0,0)
         self.vtn_ventanas.title('{} for client {}'.format(self.tt_vtn, self.customer))
+        self.vtn_ventanas.tk.call('wm', 'iconphoto', self.vtn_ventanas._w, tk.PhotoImage(file=path_icon+r'ventanas.png'))       
+
         #self.vtn_ventanas.transient(self)
         #self.vtn_ventanas.grab_set()
         self.vtn_ventanas.columnconfigure(0, weight=1)

@@ -37,7 +37,10 @@ class ScrollableNotebook(ttk.Frame):
             self.notebookTab.bind("<Button-4>", self._wheelscroll)
             self.notebookTab.bind("<Button-5>", self._wheelscroll)
         slideFrame = ttk.Frame(self)
-        slideFrame.place(relx=1.0, x=0, y=0, anchor=NE)
+        slideFrame.config(border=0,
+        borderwidth=0,
+        )
+        slideFrame.place(relx=1.0, x=0, y=0, anchor='ne')
         self.menuSpace=30
         if tabmenu==True:
             self.menuSpace=50
@@ -55,11 +58,11 @@ class ScrollableNotebook(ttk.Frame):
                                 text="Abrir",
                                 #width=5,
                                 padding=(10,0),
-                                background="#082032",
+                                #background="#082032",
                                 foreground="white",
                                 )
         self.bottomTab_novo.bind("<1>",self._bottomMenu_novo)
-        self.bottomTab_novo.pack(side=LEFT, ipady=8)
+        self.bottomTab_novo.pack(side=LEFT, ipady=8, anchor='center')
 
         self.leftArrow = ttk.Label(slideFrame, 
                                 text=" \u276E ",
