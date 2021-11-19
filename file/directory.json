@@ -1193,7 +1193,7 @@
       "impact": "",
       "variable": [
         "directory=\"/var/opt/ansible/ITM/\"",
-        "fileOPT=\"/var/opt/ansible/ITM/\""
+        "fileVAR=\"/var/opt/ansible/ITM/\""
       ],
       "SO": "Linux"
     }

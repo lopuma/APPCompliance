@@ -102,6 +102,7 @@ class Expandir(ttk.Frame):
         self.icono()
         self.menu_clickDerecho()
         self.widgets_EXPANDIR()
+        self.colour_line()
         self.EXP_srcExpandir.bind("<Button-3><ButtonRelease-3>", self.display_menu_clickDerecho)
         self.EXP_srcExpandir.bind("<Motion>", lambda e:desviacion.activar_Focus(e))
         self.EXP_srcExpandir.bind("<Key>", lambda e: desviacion.widgets_SoloLectura(e))
@@ -273,6 +274,7 @@ class Expandir(ttk.Frame):
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,self._txt_Desv)
                             varNum = 1
+        self.colour_line()
 
     def _anterior(self):
         global varNum
@@ -367,6 +369,7 @@ class Expandir(ttk.Frame):
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,self._txt_Desv)
                             varNum = 1
+        self.colour_line()
 
     def widgets_EXPANDIR(self):
         self.EXP_lblWidget = ttk.Label(
@@ -519,6 +522,24 @@ class Expandir(ttk.Frame):
         )
         self.EXP_btnReducir.grid(row=0, column=6, padx=20, pady=5, sticky='ne')
         self.EXP_srcExpandir.grid(row=1, column=0, padx=5, pady=5, sticky='nsew', columnspan=7)
+
+    def colour_line(self):
+        indx = '1.0'
+        line1 = "+-------------------------------------------------------------------------------+"
+        if line1:
+            print("YES")
+            while True:
+                indx = self.EXP_srcExpandir.search(line1, indx, nocase=1, stopindex=tk.END)
+                if not indx: 
+                    break
+                lastidx = '%s+%dc' % (indx, len(line1))
+                self.EXP_srcExpandir.tag_add('found1', indx, lastidx)
+                indx = lastidx
+                self.EXP_srcExpandir.tag_config(
+                'found1', 
+                foreground='#396eb0',
+                font=("Consolas", 14, font.BOLD)
+                )
 class Desviacion(ttk.Frame):
     
     def __init__(self, parent, *args, **kwargs):
@@ -954,6 +975,8 @@ class Desviacion(ttk.Frame):
             self.DESV_btn5Expandir.configure(state='normal')
         else:
             self.DESV_btn5Expandir.configure(state='disabled')
+        
+        self.colour_line()
     
     def mostrar_buttons_modulo(self, modulo_selecionado): #TODO añadir demas botones
         if str(modulo_selecionado) == "Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories" or str(modulo_selecionado) == "Protecting Resources-OSRs/CRON Command WW Permissions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /TMP Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /VAR Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /OPT Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /ETC Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /USR Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/CRON Command Group Permissions":
@@ -969,7 +992,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnCommand.grid_forget()
             self.DESV_btnIdrsa.grid_forget()
-        elif str(modulo_selecionado) == "Password Requirements/Private Key File Restriction":
+        elif str(modulo_selecionado) == "Password Requirements/Private Key File Restriction" or str(modulo_selecionado) == "Identify and Authenticate Users/Public Key Authentication" or str(modulo_selecionado) == "AV.1.1.6 Password Requirements":
             self._btnDir = False
             self._btnAuth = True
             self._btnSer = False
@@ -1101,7 +1124,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnService.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnDirectory.grid_forget()
-        elif clave_Buscado == "AUTHORIZED_KEY":
+        elif clave_Buscado == "AUTHORIZED_KEY" or clave_Buscado == "PUBLICKEY":
             self._btnDir = False
             self._btnAuth = True
             self._btnSer = False
@@ -1318,6 +1341,24 @@ class Desviacion(ttk.Frame):
         self.DESVfr1_listbox.insert(END,*listModulo)
         self.cambiar_NamePestaña(customer)
 
+    def colour_line(self):
+        indx = '1.0'
+        line1 = "+-------------------------------------------------------------------------------+"
+        if line1:
+            print("YES")
+            while True:
+                indx = self.DESVfr2_srcComprobacion.search(line1, indx, nocase=1, stopindex=tk.END)
+                if not indx: 
+                    break
+                lastidx = '%s+%dc' % (indx, len(line1))
+                self.DESVfr2_srcComprobacion.tag_add('found1', indx, lastidx)
+                indx = lastidx
+                self.DESVfr2_srcComprobacion.tag_config(
+                'found1', 
+                foreground='#396eb0',
+                font=("Consolas", 13)
+                )
+    
     def _disabled_buttons(self):
         self._btnDir = False
         self._btnAuth = False

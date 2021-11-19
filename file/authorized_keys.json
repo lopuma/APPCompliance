@@ -78,5 +78,45 @@
             ],
             "SO": "LINUX"
         }
+    ],
+    "FT": [
+        {
+            "object": "/home/mpolofue/.ssh/authorized_keys",
+            "owner": "mpolofue",
+            "tipo": "/E/",
+            "ownerGroup": "ibmctm",
+            "user": [
+                "Polo De La Fuente, Miguel"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/mpolofue/.ssh/authorized_keys\""
+            ],
+            "SO": "Linux"
+        },
+        {
+            "object": "/home/esy9da5a/.ssh/authorized_keys",
+            "owner": "esy9da5a",
+            "tipo": "/E/",
+            "ownerGroup": "ibmctm",
+            "user": [
+                "BRYAN STEVEN TORRES ABAD"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/esy9da5a/.ssh/authorized_keys\""
+            ],
+            "SO": "Linux"
+        }
     ]
 }
