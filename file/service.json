@@ -17,7 +17,8 @@
       "impact": "",
       "variable": [
         "service=\"\""
-      ]
+      ],
+      "SO": "Linux"
     }
   ],
   "ASISA": [
@@ -37,7 +38,8 @@
       "impact": "",
       "variable": [
         "service=\"pcnfsd\""
-      ]
+      ],
+      "SO": "Aix"
     },
     {
       "object": "rsh",
@@ -55,7 +57,8 @@
       "impact": "",
       "variable": [
         "service=\"rsh\""
-      ]
+      ],
+      "SO": "Aix"
     },
     {
       "object": "ftp",
@@ -74,7 +77,8 @@
       "impact": "GENERICO /  SERVICE : FTP,  Port 21 / CUSTOMER",
       "variable": [
         "Aplica a todas las maquinas, que tengan FTP y lo utiliza el cliente "
-      ]
+      ],
+      "SO": "Aix"
     },
     {
       "object": "nfs",
@@ -92,10 +96,11 @@
       "impact": "GENERICO /  SERVICE : NFS / CUSTOMER",
       "variable": [
         ""
-      ]
+      ],
+      "SO": "Aix"
     },
     {
-      "object": "PermitRootLogin",
+      "object": "permitrootlogin",
       "owner": "root",
       "tipo": "/F/",
       "ownerGroup": "Sistemas",
@@ -110,7 +115,8 @@
       "impact": "",
       "variable": [
         "service=\"PermitRootLogin\""
-      ]
+      ],
+      "SO": "Aix"
     }
   ],
   "FT": [
@@ -130,7 +136,8 @@
       "impact": "The configuration is required to perform server activities, for gpfs requirements it is mandatory to put it on the nodes of the cluster itself.",
       "variable": [
         "Para servidores CLUSTER, tiene PermitRootLogin a YES, con un Match Address a las IP del CLUSTER, puede ir conjunto con un PermitRootLogin a NO"
-      ]
+      ],
+      "SO": "Linux"
     }
   ],
   "INFRA": [
@@ -173,7 +180,8 @@
       "impact": "GENERICO /  SERVICE Netsat / LBK",
       "variable": [
         ""
-      ]
+      ],
+      "SO": "Linux"
     }
   ]
 }

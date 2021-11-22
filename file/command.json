@@ -19,6 +19,66 @@
         "fdSUDO=\"\""
       ],
       "SO": "Linux"
+    },
+    {
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
+      "user": [
+        "",
+        ""
+      ],
+      "code": "",
+      "servers": [
+        ""
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fdSUDO=\"\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
+      "user": [
+        "",
+        ""
+      ],
+      "code": "",
+      "servers": [
+        ""
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fdSUDO=\"\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
+      "user": [
+        "",
+        ""
+      ],
+      "code": "",
+      "servers": [
+        ""
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fdSUDO=\"\""
+      ],
+      "SO": "Linux"
     }
   ],
   "ASISA": [

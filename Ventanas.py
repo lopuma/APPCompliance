@@ -227,7 +227,11 @@ class Ventana(ttk.Frame):
                         variables = variables.replace("[","").replace("]","").replace("'","").replace(",",";")
                         if md['code'] == "2-DOC":
                             self.lbl4['text'] = "COMENTARIO"
+                            self.lbl2['text'] = "RISK"
+                            self.lbl3['text'] = "IMPACT"
                         else:
+                            self.lbl2['text'] = "INFORMACION"
+                            self.lbl3['text'] = "INFORMACION"
                             self.lbl4['text'] = "VARIABLES"
                         self.srcVariable.insert(END,variables)
                         self.lbl_SO['text'] = md['SO']

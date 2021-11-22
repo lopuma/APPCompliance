@@ -729,6 +729,7 @@ class Extracion(ttk.Frame):
             self.entr_str.focus_set()
             self.entr_str.bind('<Any-KeyRelease>', self.on_entr_str_busca_key_release)
             self.entr_str.bind('<Control-f>', lambda x : self._buscar_focus())
+            self.entr_str.bind('<Button-1>', lambda x : self._buscar_focus())
             self.entr_str.bind('<Control-F>', lambda x : self._buscar_focus())
             self.entr_str.bind('<Control-v>', lambda x : self.sel_text(x))
             self.entr_str.bind('<Control-V>', lambda x : self.sel_text(x))

@@ -1,4 +1,238 @@
 {
+    "ASISA": [
+        {
+            "object": "/home/ESY9BABH/.ssh/authorized_keys",
+            "owner": "orphan",
+            "tipo": "orphan",
+            "ownerGroup": "orphan",
+            "user": [
+                "orphan"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Fichero authorized_key con owner huerfano (orphan)",
+            "impact": "Fichero authorized_key con owner huerfano (orphan)",
+            "variable": [
+                "file_authorized=\"/home/ESY9BABH/.ssh/authorized_keys\""
+            ],
+            "SO": "Aix"
+        },
+        {
+            "object": "/home/es082009/.ssh/authorized_keys",
+            "owner": "orphan",
+            "tipo": "orphan",
+            "ownerGroup": "orphan",
+            "user": [
+                "orphan"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Fichero authorized_key con owner huerfano (orphan)",
+            "impact": "Fichero authorized_key con owner huerfano (orphan)",
+            "variable": [
+                "file_authorized=\"/home/es082009/.ssh/authorized_keys\""
+            ],
+            "SO": "Aix"
+        },
+        {
+            "object": "/home/ESY9CEEF/.ssh/authorized_keys",
+            "owner": "ESY9CEEF",
+            "tipo": "/E/",
+            "ownerGroup": "ibmldadm",
+            "user": [
+                "ESY9CEEF no existe"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Fichero authorized_key con owner diferente",
+            "impact": "Fichero authorized_key con owner diferente",
+            "variable": [
+                "file_authorized=\"/home/ESY9CEEF/.ssh/authorized_keys\""
+            ],
+            "SO": "Aix"
+        },
+        {
+            "object": "/home/ESY9CEEG/.ssh/authorized_keys",
+            "owner": "ESY9CEEG",
+            "tipo": "/E/",
+            "ownerGroup": "ibmldadm",
+            "user": [
+                "ESY9CEEG no existe"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Fichero authorized_key con owner diferente",
+            "impact": "Fichero authorized_key con owner diferente",
+            "variable": [
+                "file_authorized=\"/home/ESY9CEEG/.ssh/authorized_keys\""
+            ],
+            "SO": "Aix"
+        },
+        {
+            "object": "/home/ESY9CJNB/.ssh/authorized_keys",
+            "owner": "ESY9CJNB",
+            "tipo": "/E/",
+            "ownerGroup": "ibmldadm",
+            "user": [
+                "ESY9CJNB no existe"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Fichero authorized_key con owner diferente",
+            "impact": "Fichero authorized_key con owner diferente",
+            "variable": [
+                "file_authorized=\"/home/ESY9CJNB/.ssh/authorized_keys\""
+            ],
+            "SO": "Aix"
+        },
+        {
+            "object": "/home/ESY9D74Y/.ssh/authorized_keys",
+            "owner": "ESY9D74Y",
+            "tipo": "/E/",
+            "ownerGroup": "ibmldadm",
+            "user": [
+                "ESY9D74Y no existe"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Fichero authorized_key con owner diferente",
+            "impact": "Fichero authorized_key con owner diferente",
+            "variable": [
+                "file_authorized=\"/home/ESY9D74Y/.ssh/authorized_keys\""
+            ],
+            "SO": "Aix"
+        }
+    ],
+    "AFB": [
+        {
+            "object": "/home/afb-md/.ssh/authorized_keys",
+            "owner": "afb-md",
+            "tipo": "/C/",
+            "ownerGroup": "Customer",
+            "user": [
+                "Customer"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "GENERICO / LABEL / CUSTOMER",
+            "impact": "GENERICO / LABEL / CUSTOMER",
+            "variable": [
+                "Usuario de aplicativo"
+            ],
+            "SO": "Linux"
+        },
+        {
+            "object": "/home/runadm/.ssh/authorized_keys",
+            "owner": "runadm",
+            "tipo": "/C/",
+            "ownerGroup": "Customer",
+            "user": [
+                "Customer"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "GENERICO / LABEL / CUSTOMER",
+            "impact": "GENERICO / LABEL / CUSTOMER",
+            "variable": [
+                "Usuario para automatizaciones"
+            ],
+            "SO": "Linux"
+        },
+        {
+            "object": "/home/ullink/.ssh/authorized_keys",
+            "owner": "ulprd-md",
+            "tipo": "/C/",
+            "ownerGroup": "Customer",
+            "user": [
+                "Customer"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "GENERICO / LABEL / CUSTOMER",
+            "impact": "GENERICO / LABEL / CUSTOMER",
+            "variable": [
+                "Usuario de aplicativo"
+            ],
+            "SO": "Linux"
+        },
+        {
+            "object": "/home/userauto/.ssh/authorized_keys",
+            "owner": "userauto",
+            "tipo": "/C/",
+            "ownerGroup": "Customer",
+            "user": [
+                "Customer"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "GENERICO / LABEL / CUSTOMER",
+            "impact": "GENERICO / LABEL / CUSTOMER",
+            "variable": [
+                "automation user rundeck"
+            ],
+            "SO": "Linux"
+        },
+        {
+            "object": "/home/afbuxat1/.ssh/authorized_keys",
+            "owner": "afbuxat1",
+            "tipo": "/S/",
+            "ownerGroup": "Sistemas",
+            "user": [
+                "COVADONGA DIAZ ZARZOSO", 
+                "JESUS SANCHEZ VALLE"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Usuario de ANSIBLE",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/afbuxat1/.ssh/authorized_keys\""
+            ],
+            "SO": "Linux"
+        },
+        {
+            "object": "/home/afbuxat2/.ssh/authorized_keys",
+            "owner": "afbuxat2",
+            "tipo": "/S/",
+            "ownerGroup": "Sistemas",
+            "user": [
+                "COVADONGA DIAZ ZARZOSO", 
+                "JESUS SANCHEZ VALLE"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Usuario de ANSIBLE",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/afbuxat2/.ssh/authorized_keys\""
+            ],
+            "SO": "Linux"
+        }
+    ],
     "INFRA": [
         {
             "object": "/home/ncosftp/.ssh/authorized_keys",

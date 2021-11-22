@@ -86,7 +86,7 @@ class Expandir(ttk.Frame):
         self.st_btnIDR = st_btnIDR
         self.vtn_expandir = tk.Toplevel(self)
         self.vtn_expandir.config(background='#F1ECC3')
-        window_width=1005
+        window_width=925
         window_height=650
         screen_width = app.root.winfo_x()
         screen_height= app.root.winfo_y()
@@ -102,7 +102,7 @@ class Expandir(ttk.Frame):
         self.icono()
         self.menu_clickDerecho()
         self.widgets_EXPANDIR()
-        self.colour_line()
+        self.Expan_color_lineas()
         self.EXP_srcExpandir.bind("<Button-3><ButtonRelease-3>", self.display_menu_clickDerecho)
         self.EXP_srcExpandir.bind("<Motion>", lambda e:desviacion.activar_Focus(e))
         self.EXP_srcExpandir.bind("<Key>", lambda e: desviacion.widgets_SoloLectura(e))
@@ -184,6 +184,8 @@ class Expandir(ttk.Frame):
     def _siguiente(self):
         global varNum
         global _tt_Desv
+        self.EXP_btnScreamEvidencia.configure(state="disabled")
+        self.EXP_btnCopyALL.configure(state="disabled")
         if varNum == 1:
             with open(path_modulo.format(asigne_Ciente)) as g:
                 data = json.load(g)
@@ -213,6 +215,7 @@ class Expandir(ttk.Frame):
                             self.EXP_lblWidget['text'] =  _tt_Desv
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,md['refrescar'])
+                            self.EXP_btnCopyALL.configure(state="normal")                        
                             varNum = 4
                         else:
                             _tt_Desv = "EDITAR"
@@ -231,12 +234,15 @@ class Expandir(ttk.Frame):
                             self.EXP_lblWidget['text'] =  _tt_Desv
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,md['evidencia'])
+                            self.EXP_btnScreamEvidencia.configure(state="normal")
+                            self.EXP_btnCopyALL.configure(state="normal")
                             varNum = 5
                         else:
                             _tt_Desv = "REFRESCAR"
                             self.EXP_lblWidget['text'] =  _tt_Desv
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,self._txt_Desv)
+                            self.EXP_btnCopyALL.configure(state="normal")                        
                             varNum = 4
         elif varNum == 4:
             with open(path_modulo.format(asigne_Ciente)) as g:
@@ -255,6 +261,8 @@ class Expandir(ttk.Frame):
                             self.EXP_lblWidget['text'] =  _tt_Desv
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,self._txt_Desv)
+                            self.EXP_btnScreamEvidencia.configure(state="normal")
+                            self.EXP_btnCopyALL.configure(state="normal")
                             varNum = 5
         elif varNum == 5:
             with open(path_modulo.format(asigne_Ciente)) as g:
@@ -274,11 +282,13 @@ class Expandir(ttk.Frame):
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,self._txt_Desv)
                             varNum = 1
-        self.colour_line()
+        self.Expan_color_lineas()
 
     def _anterior(self):
         global varNum
         global _tt_Desv
+        self.EXP_btnScreamEvidencia.configure(state="disabled")
+        self.EXP_btnCopyALL.configure(state="disabled")
         if varNum == 1:
             with open(path_modulo.format(asigne_Ciente)) as g:
                 data = json.load(g)
@@ -290,12 +300,15 @@ class Expandir(ttk.Frame):
                             self.EXP_lblWidget['text'] =  _tt_Desv
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,md['refrescar'])
+                            self.EXP_btnCopyALL.configure(state="normal")                        
                             varNum = 4
                         else:
                             _tt_Desv = "EVIDENCIA"
                             self.EXP_lblWidget['text'] =  _tt_Desv
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,self._txt_Desv)
+                            self.EXP_btnScreamEvidencia.configure(state="normal")
+                            self.EXP_btnCopyALL.configure(state="normal")
                             varNum = 5
         elif varNum == 2:
             with open(path_modulo.format(asigne_Ciente)) as g:
@@ -308,6 +321,8 @@ class Expandir(ttk.Frame):
                             self.EXP_lblWidget['text'] =  _tt_Desv
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,md['evidencia'])
+                            self.EXP_btnScreamEvidencia.configure(state="normal")
+                            self.EXP_btnCopyALL.configure(state="normal")
                             varNum = 5
                         else:
                             _tt_Desv = "COMPROBACION"
@@ -368,8 +383,9 @@ class Expandir(ttk.Frame):
                             self.EXP_lblWidget['text'] =  _tt_Desv
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,self._txt_Desv)
+                            self.EXP_btnCopyALL.configure(state="normal")                        
                             varNum = 1
-        self.colour_line()
+        self.Expan_color_lineas()
 
     def widgets_EXPANDIR(self):
         self.EXP_lblWidget = ttk.Label(
@@ -523,7 +539,7 @@ class Expandir(ttk.Frame):
         self.EXP_btnReducir.grid(row=0, column=6, padx=20, pady=5, sticky='ne')
         self.EXP_srcExpandir.grid(row=1, column=0, padx=5, pady=5, sticky='nsew', columnspan=7)
 
-    def colour_line(self):
+    def Expan_color_lineas(self):
         indx = '1.0'
         line1 = "+-------------------------------------------------------------------------------+"
         if line1:
@@ -609,6 +625,7 @@ class Desviacion(ttk.Frame):
         self.DESVfr1_listbox.bind('<Control-F>', lambda e : self.buscar(e))
         
         self.DESVfr1_entModulo.bind('<Control-F>', lambda e : self._buscar_focus(e))
+        self.DESVfr1_entModulo.bind('<Button-1>', lambda e : self._buscar_focus(e))
         self.DESVfr1_entModulo.bind('<Control-f>', lambda e : self._buscar_focus(e))
         
         self.DESVfr1_listbox.bind("<Down>",lambda e : self.ListDown(e))
@@ -737,6 +754,10 @@ class Desviacion(ttk.Frame):
         global text_aExpandir
         self.widget_Expan = event
         tittleExpand = var
+        
+        self.widget_Expan.focus()
+        text_aExpandir = self.widget_Expan.get('1.0', tk.END)
+        expandir = Expandir(self, text_aExpandir, self.widget_Expan, asigne_Ciente,tittleExpand, sis_oper, self._btnDir, self._btnAuth, self._btnSer, self._btnAcc, self._btnCmd, self._btnIdr)
         if tittleExpand == "COMPROBACION":
             varNum= 1
         elif tittleExpand == "BACKUP":
@@ -745,19 +766,11 @@ class Desviacion(ttk.Frame):
             varNum= 3            
         elif tittleExpand == "REFRESCAR":
             varNum= 4
+            expandir.EXP_btnCopyALL.configure(state="normal")            
         elif tittleExpand == "EVIDENCIA":        
             varNum= 5
-        self.widget_Expan.focus()
-        text_aExpandir = self.widget_Expan.get('1.0', tk.END)
-        expandir = Expandir(self, text_aExpandir, self.widget_Expan, asigne_Ciente,tittleExpand, sis_oper, self._btnDir, self._btnAuth, self._btnSer, self._btnAcc, self._btnCmd, self._btnIdr)
-        # if self.widget_Expan:
-        #     text_aExpandir = self.widget_Expan.get('1.0', tk.END)
-        #     expandir.EXP_srcExpandir.insert('1.0',text_aExpandir)
-        if tittleExpand == "EVIDENCIA":
             expandir.EXP_btnScreamEvidencia.configure(state="normal")
             expandir.EXP_btnCopyALL.configure(state="normal")
-        elif tittleExpand == "REFRESCAR":
-            expandir.EXP_btnCopyALL.configure(state="normal")            
     # ## --- MENU CONTEXTUAL --- ##    
     def _menu_clickDerecho(self):
         self.text_font = font.Font(family='Consolas', size=13)   
@@ -976,7 +989,11 @@ class Desviacion(ttk.Frame):
         else:
             self.DESV_btn5Expandir.configure(state='disabled')
         
-        self.colour_line()
+        self.colour_line_com()
+        self.colour_line_bak()
+        self.colour_line_edi()
+        self.colour_line_ref()
+        self.colour_line_evi()
     
     def mostrar_buttons_modulo(self, modulo_selecionado): #TODO añadir demas botones
         if str(modulo_selecionado) == "Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories" or str(modulo_selecionado) == "Protecting Resources-OSRs/CRON Command WW Permissions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /TMP Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /VAR Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /OPT Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /ETC Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /USR Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/CRON Command Group Permissions":
@@ -992,7 +1009,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnCommand.grid_forget()
             self.DESV_btnIdrsa.grid_forget()
-        elif str(modulo_selecionado) == "Password Requirements/Private Key File Restriction" or str(modulo_selecionado) == "Identify and Authenticate Users/Public Key Authentication" or str(modulo_selecionado) == "AV.1.1.6 Password Requirements":
+        elif str(modulo_selecionado) == "Password Requirements/Private Key File Restriction" or str(modulo_selecionado) == "Identify and Authenticate Users/Public Key Authentication" or str(modulo_selecionado) == "AV.1.1.6 Password Requirements" or str(modulo_selecionado) == "Identify and Authenticate Users/Public Key Label" or str(modulo_selecionado) == "AV.1.1.7 Password Requirements":
             self._btnDir = False
             self._btnAuth = True
             self._btnSer = False
@@ -1044,7 +1061,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnIdrsa.grid_forget()
             self.DESV_btnCommand.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
-        elif str(modulo_selecionado) == "Password Requirements/NULL Passphrase":
+        elif str(modulo_selecionado) == "Password Requirements/NULL Passphrase" or str(modulo_selecionado) == "Password Requirements/Private Key Passphrase":
             self._btnDir = False
             self._btnAuth = False
             self._btnSer = False
@@ -1098,7 +1115,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnDirectory.grid_forget()
             self.DESV_btnIdrsa.grid_forget()
-        elif clave_Buscado == "IDRSA":
+        elif clave_Buscado == "IDRSA" or clave_Buscado == "NOT PASSPHRASE":
             self._btnDir = False
             self._btnAuth = False
             self._btnSer = False
@@ -1124,7 +1141,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnService.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnDirectory.grid_forget()
-        elif clave_Buscado == "AUTHORIZED_KEY" or clave_Buscado == "PUBLICKEY":
+        elif clave_Buscado == "AUTHORIZED_KEY" or clave_Buscado == "PUBLICKEY" or clave_Buscado == "LABEL":
             self._btnDir = False
             self._btnAuth = True
             self._btnSer = False
@@ -1341,14 +1358,14 @@ class Desviacion(ttk.Frame):
         self.DESVfr1_listbox.insert(END,*listModulo)
         self.cambiar_NamePestaña(customer)
 
-    def colour_line(self):
+    def colour_line_com(self):
         indx = '1.0'
         line1 = "+-------------------------------------------------------------------------------+"
         if line1:
             print("YES")
             while True:
                 indx = self.DESVfr2_srcComprobacion.search(line1, indx, nocase=1, stopindex=tk.END)
-                if not indx: 
+                if not indx: #or not indx1 or not indx2 or not indx3 or not indx4: 
                     break
                 lastidx = '%s+%dc' % (indx, len(line1))
                 self.DESVfr2_srcComprobacion.tag_add('found1', indx, lastidx)
@@ -1359,6 +1376,84 @@ class Desviacion(ttk.Frame):
                 font=("Consolas", 13)
                 )
     
+    def colour_line_bak(self):
+        indx1 = '1.0'
+        line1 = "+-------------------------------------------------------------------------------+"
+        if line1:
+            print("YES")
+            while True:
+                indx1 = self.DESVfr2_srcBackup.search(line1, indx1, nocase=1, stopindex=tk.END)
+                if not indx1: #or not indx2 or not indx3 or not indx4: 
+                    break
+                lastidx1 = '%s+%dc' % (indx1, len(line1))
+                self.DESVfr2_srcBackup.tag_add('found1', indx1, lastidx1)
+                indx1 = lastidx1
+                self.DESVfr2_srcBackup.tag_config(
+                'found1', 
+                foreground='#396eb0',
+                font=("Consolas", 13)
+                )
+    
+    def colour_line_ref(self):
+        indx3 = '1.0'
+        line1 = "+-------------------------------------------------------------------------------+"
+        if line1:
+            print("YES")
+            while True:
+                indx3 = self.DESVfr3_srcRefrescar.search(line1, indx3, nocase=1, stopindex=tk.END)
+                if not indx3: #or not indx4: 
+                    break
+                lastidx3 = '%s+%dc' % (indx3, len(line1))
+                self.DESVfr3_srcRefrescar.tag_add('found1', indx3, lastidx3)
+                indx3 = lastidx3
+                self.DESVfr3_srcRefrescar.tag_config(
+                'found1', 
+                foreground='#396eb0',
+                font=("Consolas", 13)
+                )
+                # self.DESVfr3_srcEvidencia.tag_config(
+                # 'found1', 
+                # foreground='#396eb0',
+                # font=("Consolas", 13)
+                # )
+
+    def colour_line_edi(self):
+        indx2 = '1.0'
+        # indx4 = '1.0'
+        line1 = "+-------------------------------------------------------------------------------+"
+        if line1:
+            print("YES")
+            while True:
+                indx2 = self.DESVfr3_srcEditar.search(line1, indx2, nocase=1, stopindex=tk.END)
+                if not indx2: 
+                    break
+                lastidx2 = '%s+%dc' % (indx2, len(line1))
+                self.DESVfr3_srcEditar.tag_add('found1', indx2, lastidx2)
+                indx2 = lastidx2
+                self.DESVfr3_srcEditar.tag_config(
+                'found1', 
+                foreground='#396eb0',
+                font=("Consolas", 13)
+                )
+
+    def colour_line_evi(self):
+        indx4 = '1.0'
+        line1 = "+-------------------------------------------------------------------------------+"
+        if line1:
+            print("YES")
+            while True:
+                indx4 = self.DESVfr3_srcEvidencia.search(line1, indx4, nocase=1, stopindex=tk.END)
+                if not indx4: 
+                    break
+                lastidx4 = '%s+%dc' % (indx4, len(line1))
+                self.DESVfr3_srcEvidencia.tag_add('found1', indx4, lastidx4)
+                indx4 = lastidx4
+                self.DESVfr3_srcEvidencia.tag_config(
+                'found1', 
+                foreground='#396eb0',
+                font=("Consolas", 13)
+                )
+
     def _disabled_buttons(self):
         self._btnDir = False
         self._btnAuth = False

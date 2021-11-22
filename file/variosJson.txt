@@ -39,4 +39,23 @@
         ""
       ],
       "SO": "Aix"
+    },
+    {
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
+      "user": [
+        ""
+      ],
+      "code": "",
+      "servers": [
+        ""
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
     }

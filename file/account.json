@@ -297,8 +297,8 @@
       "servers": [
         "ALL servers"
       ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
       "variable": [
         ""
       ]
@@ -315,8 +315,8 @@
       "servers": [
         "ALL servers"
       ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
       "variable": [
         ""
       ]
@@ -333,11 +333,31 @@
       "servers": [
         "ALL servers"
       ],
-      "risk": "GENERICO",
-      "impact": "GENERICO",
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
       "variable": [
         ""
       ]
+    },
+    {
+      "object": "ncosys",
+      "owner": "ncosys",
+      "tipo": "/S/",
+      "ownerGroup": "Grupo Tivoli",
+      "user": [
+        "MARIA CRUZ TERCIADO TERCIADO"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM",
+      "impact": "GENERICO / MAXAGE / IBM",
+      "variable": [
+        "Usuario de aplicativo TIVOLI"
+      ],
+      "SO": "Linux"
     }
+
   ]
 }

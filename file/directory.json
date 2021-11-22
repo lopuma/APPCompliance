@@ -520,7 +520,7 @@
     },
     {
       "object": "/appsrv/LBK_ARQ_SPA_5_SERVER_COUCH/",
-      "owner": "nodejs",
+      "owner": "nodejs/opt/IBM/",
       "tipo": "/C/",
       "ownerGroup": "CUSTOMER",
       "user": [
@@ -712,6 +712,25 @@
       "impact": "GENERICO / OSR ETC / LBK",
       "variable": [
         ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/opt/IBM/ITMdepot/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/opt/IBM/ITMdepot/\""
       ],
       "SO": "Linux"
     }
