@@ -409,7 +409,26 @@
       "risk": "directorio : /opt/SANnav/ : (parte de un sofware de monitorización de la red de almancenamiento llamado SANnav)",
       "impact": "",
       "variable": [
-        "directory=\"/opt/SANnav/lost+found\""
+        "directory=\"/opt/SANnav/lost+found/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/tmp/tsmclient/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/tmp/tsmclient/\""
       ],
       "SO": "Linux"
     }

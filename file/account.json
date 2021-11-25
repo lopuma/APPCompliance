@@ -244,6 +244,139 @@
         "account=\"assuxat2\""
       ],
       "SO": "Aix"
+    },
+    {
+      "object": "aspadm",
+      "owner": "aspadm",
+      "tipo": "/F/",
+      "ownerGroup": "ABAP DB2 Connect User",
+      "user": [
+        "ISIDORO AREVALO PEÑA"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM-SAP",
+      "impact": "GENERICO / MAXAGE / IBM-SAP",
+      "variable": [
+        "Usuario de SAP"
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "db2sm1",
+      "owner": "db2sm1",
+      "tipo": "/F/",
+      "ownerGroup": "Database Administrator ",
+      "user": [
+        "ISIDORO AREVALO PEÑA"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM-SAP",
+      "impact": "GENERICO / MAXAGE / IBM-SAP",
+      "variable": [
+        "Usuario de SAP"
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "sapasp",
+      "owner": "sapasp",
+      "tipo": "/F/",
+      "ownerGroup": "ABAP DB2 Connect User",
+      "user": [
+        "ISIDORO AREVALO PEÑA"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM-SAP",
+      "impact": "GENERICO / MAXAGE / IBM-SAP",
+      "variable": [
+        "Usuario de SAP"
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "sapsm1",
+      "owner": "sapsm1",
+      "tipo": "/F/",
+      "ownerGroup": "Database Administrator ",
+      "user": [
+        "ISIDORO AREVALO PEÑA"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM-SAP",
+      "impact": "GENERICO / MAXAGE / IBM-SAP",
+      "variable": [
+        "Usuario de SAP"
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "sapsm1db",
+      "owner": "sapsm1db",
+      "tipo": "/F/",
+      "ownerGroup": "Java Database Connect User",
+      "user": [
+        "ISIDORO AREVALO PEÑA"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM-SAP",
+      "impact": "GENERICO / MAXAGE / IBM-SAP",
+      "variable": [
+        "Usuario de SAP"
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "sm1adm",
+      "owner": "sm1adm",
+      "tipo": "/F/",
+      "ownerGroup": "SAP System Administrator",
+      "user": [
+        "ISIDORO AREVALO PEÑA"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM-SAP",
+      "impact": "GENERICO / MAXAGE / IBM-SAP",
+      "variable": [
+        "Usuario de SAP"
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "smdadm",
+      "owner": "smdadm",
+      "tipo": "/F/",
+      "ownerGroup": "ABAP DB2 Connec",
+      "user": [
+        "ISIDORO AREVALO PEÑA"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM-SAP",
+      "impact": "GENERICO / MAXAGE / IBM-SAP",
+      "variable": [
+        "Usuario de SAP"
+      ],
+      "SO": "Aix"
     }
   ],
   "FT": [

@@ -90,12 +90,32 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "CP1ABWASPRE1"
+        "CP1ABWASPRE1",
+        "SAPASISASM"
       ],
       "risk": "GENERICO /  SERVICE : NFS / CUSTOMER",
       "impact": "GENERICO /  SERVICE : NFS / CUSTOMER",
       "variable": [
         ""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "NFS",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "CP1ABWASPRE2"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "service=\"nfs\""
       ],
       "SO": "Aix"
     },

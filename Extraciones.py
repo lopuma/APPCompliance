@@ -376,7 +376,7 @@ class Extracion(ttk.Frame):
         self.txt.tag_config(
             'found2',
             background="black",
-            foreground='green',
+            foreground='#4E9F3D',
             font=("Consolas",14,font.BOLD)
         )
 

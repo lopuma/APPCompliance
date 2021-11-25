@@ -53,9 +53,7 @@ class Ventana(ttk.Frame):
         self.srcImpact.bind("<Key>", lambda e: self.desviacion.widgets_SoloLectura(e))
         self.srcVariable.bind("<Key>", lambda e: self.desviacion.widgets_SoloLectura(e))
         self.cbxUser.bind("<Key>", lambda e: self.desviacion.widgets_SoloLectura(e))
-        #self.textBuscar.bind("<Any-KeyRelease>", lambda event=None: self.buscar(self.textBuscar.get()))
         self.textBuscar.bind("<Any-KeyRelease>", self.on_entr_str_busca_key_release)
-        #self.textBuscar.bind("<Return>", lambda event=None: self.buscar(self.textBuscar.get()))
         #self.vtn_ventanas.bind("<Motion>", lambda e:desviacion.activar_Focus(e))
         self.srcImpact.bind("<Button-3>", self.display_menu_clickDerecho)
         self.srcRisk.bind("<Button-3>", self.display_menu_clickDerecho)
@@ -75,6 +73,9 @@ class Ventana(ttk.Frame):
         self.tree.bind("<Down>", lambda e:self.TreeDown(e))
         self.tree.bind("<Up>", lambda e:self.TreeUp(e))
         self.textBuscar.bind("<Control-x>",self.limpiar_bsq2)
+        self.textBuscar.bind("<Control-f>",self._buscar_focus)        
+        self.textBuscar.bind("<Control-F>",self._buscar_focus)        
+        self.textBuscar.bind("<Button-1>",self._buscar_focus)        
         self.srcRisk.bind("<Control-a>",lambda e:self._seleccionar_todo(e))
         self.srcImpact.bind("<Control-a>",lambda e:self._seleccionar_todo(e))
         self.srcVariable.bind("<Control-a>",lambda e:self._seleccionar_todo(e))
@@ -123,7 +124,7 @@ class Ventana(ttk.Frame):
             text_widget.icursor(0)
             self.btnLimpiar.grid_forget()
             self.btnBuscar.grid(row=0, column=1, sticky=W)
-    
+        
     def limpiar_bsq(self):
         self.var_ent_buscar.set("Buscar Directories / File ...")
         #self.var_ent_buscar.set("")
@@ -146,11 +147,15 @@ class Ventana(ttk.Frame):
         self.limpiar_widgets()
     
     def on_entr_str_busca_key_release(self, event):
-        self._buscar()
+        textBuscar_Event = event.widget
+        self._buscar(textBuscar_Event)
+        if len(textBuscar_Event.get()) == 0:
+            self.cargar_ventanas()
         return 'break'
-    
+
     def _buscar(self, event=None):
-        self._buscar_todo(self.textBuscar.get().strip())
+        textBuscar_Event = event
+        self._buscar_todo(textBuscar_Event.get().strip())
 
     def _buscar_todo(self, txt_buscar=None):
         valor_aBuscar = txt_buscar
@@ -252,20 +257,7 @@ class Ventana(ttk.Frame):
             self.menu_Contextual.entryconfig("  Pegar", state="normal")
             self.menu_Contextual.entryconfig("  Copiar", state="disabled")
             self.menu_Contextual.entryconfig("  Seleccionar todo", state="disabled")
-            #self.menu_Contextual.entryconfig("  Limpiar", state="normal")
-            """ data = {
-                'label':'Limpiand',
-                'accelerator' : 'Ctrl+X',
-                'background':'#ccffff', 
-                'foreground':'black',
-                'activebackground':'#004c99',
-                'activeforeground':'white',
-                'font':'self.text_font',
-                'command':'self.seleccionar_todo',
-                'state':'normal'
-            }
-            self.menu_Contextual.insert_command(8, **data) """
-    
+
     def act_elemt_list(self, event):
         event.widget.focus()
     
@@ -279,7 +271,15 @@ class Ventana(ttk.Frame):
             self.menu_Contextual.entryconfig("  Limpiar", state="disabled")
     
     def act_buscar(self, event=None):
-        self.textBuscar.focus()
+        self.textBuscar.select_range(0,tk.END)
+        self.textBuscar.focus_set()
+        return 'break'
+
+    def _buscar_focus(self, event):
+        entry_event = event.widget
+        entry_event.select_range(0,tk.END)
+        entry_event.focus_set()
+        return 'break'
     
     def seleccionar_todo(self):
         self.srcEvent.tag_add("sel","1.0","end")

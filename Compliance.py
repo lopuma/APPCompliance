@@ -86,7 +86,7 @@ class Expandir(ttk.Frame):
         self.st_btnIDR = st_btnIDR
         self.vtn_expandir = tk.Toplevel(self)
         self.vtn_expandir.config(background='#F1ECC3')
-        window_width=925
+        window_width=1010
         window_height=650
         screen_width = app.root.winfo_x()
         screen_height= app.root.winfo_y()
@@ -541,7 +541,7 @@ class Expandir(ttk.Frame):
 
     def Expan_color_lineas(self):
         indx = '1.0'
-        line1 = "+-------------------------------------------------------------------------------+"
+        line1 = "+-------------------------------------------------------------------------------------+"
         if line1:
             print("YES")
             while True:
@@ -800,7 +800,7 @@ class Desviacion(ttk.Frame):
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
             font=self.text_font,
-            command=self.pegar_texto_seleccionado,
+            command=lambda e=self.DESVfr1_entModulo:self.pegar_texto_seleccionado(e),
         )
         self.menu_Contextual.add_separator(background='#ccffff')
         self.menu_Contextual.add_command(
@@ -872,13 +872,13 @@ class Desviacion(ttk.Frame):
             self.DESVfr1_btnLimpiar.grid_forget()
             self.DESVfr1_btnBuscar.grid(row=1, column=1, pady=5, padx=5, sticky='nsw')
     
-    def pegar_texto_seleccionado(self):
-        global txtWidget
-        if txtWidget.select_present():
+    def pegar_texto_seleccionado(self, event):
+        entModulo_event = event
+        if entModulo_event.select_present():
             self.var_entry_bsc.set("")
             self.DESVfr1_btnLimpiar.grid_forget()
             self.DESVfr1_btnBuscar.grid(row=1, column=1, pady=5, padx=5, sticky='nsw')
-        txtWidget.event_generate("<<Paste>>")
+        entModulo_event.event_generate("<<Paste>>")
     
     def copiar_texto_seleccionado(self):
         global txtWidget_focus
@@ -1360,7 +1360,7 @@ class Desviacion(ttk.Frame):
 
     def colour_line_com(self):
         indx = '1.0'
-        line1 = "+-------------------------------------------------------------------------------+"
+        line1 = "+-------------------------------------------------------------------------------------+"
         if line1:
             print("YES")
             while True:
@@ -1378,7 +1378,7 @@ class Desviacion(ttk.Frame):
     
     def colour_line_bak(self):
         indx1 = '1.0'
-        line1 = "+-------------------------------------------------------------------------------+"
+        line1 = "+-------------------------------------------------------------------------------------+"
         if line1:
             print("YES")
             while True:
@@ -1396,7 +1396,7 @@ class Desviacion(ttk.Frame):
     
     def colour_line_ref(self):
         indx3 = '1.0'
-        line1 = "+-------------------------------------------------------------------------------+"
+        line1 = "+-------------------------------------------------------------------------------------+"
         if line1:
             print("YES")
             while True:
@@ -1420,7 +1420,7 @@ class Desviacion(ttk.Frame):
     def colour_line_edi(self):
         indx2 = '1.0'
         # indx4 = '1.0'
-        line1 = "+-------------------------------------------------------------------------------+"
+        line1 = "+-------------------------------------------------------------------------------------+"
         if line1:
             print("YES")
             while True:
@@ -1438,7 +1438,7 @@ class Desviacion(ttk.Frame):
 
     def colour_line_evi(self):
         indx4 = '1.0'
-        line1 = "+-------------------------------------------------------------------------------+"
+        line1 = "+-------------------------------------------------------------------------------------+"
         if line1:
             print("YES")
             while True:
@@ -1919,7 +1919,7 @@ class Aplicacion():
     
     def __init__(self):
         self.root= tk.Tk()
-        self.root.title("CONTINOUS COMPLIANCE")
+        self.root.title("CONTINUOUS COMPLIANCE")
         window_width,window_height=1028,768
         screen_width = self.root.winfo_screenwidth()
         screen_height= self.root.winfo_screenheight()

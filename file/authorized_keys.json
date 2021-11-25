@@ -96,6 +96,44 @@
             "SO": "Aix"
         },
         {
+            "object": "/home/ES083821/.ssh/authorized_keys",
+            "owner": "ES083821",
+            "tipo": "/E/",
+            "ownerGroup": "ibmldadm",
+            "user": [
+                "ES083821"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Fichero authorized_key con owner externo",
+            "impact": "Fichero authorized_key con owner externo",
+            "variable": [
+                "file_authorized=\"/home/ES083821/.ssh/authorized_keys\""
+            ],
+            "SO": "Aix"
+        },
+        {
+            "object": "/home/ESY9AMMH/.ssh/authorized_keys",
+            "owner": "ESY9AMMH",
+            "tipo": "/E/",
+            "ownerGroup": "ibmldadm",
+            "user": [
+                "ESY9AMMH no existe"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Fichero authorized_key con owner diferente",
+            "impact": "Fichero authorized_key con owner diferente",
+            "variable": [
+                "file_authorized=\"/home/ESY9AMMH/.ssh/authorized_keys\""
+            ],
+            "SO": "Aix"
+        },
+        {
             "object": "/home/ESY9D74Y/.ssh/authorized_keys",
             "owner": "ESY9D74Y",
             "tipo": "/E/",
@@ -111,6 +149,84 @@
             "impact": "Fichero authorized_key con owner diferente",
             "variable": [
                 "file_authorized=\"/home/ESY9D74Y/.ssh/authorized_keys\""
+            ],
+            "SO": "Aix"
+        },
+        {
+            "object": "/home/es082027/.ssh/authorized_keys",
+            "owner": "es082027",
+            "tipo": "/E/",
+            "ownerGroup": "ibmldadm",
+            "user": [
+                "es082027"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Fichero authorized_key con owner externo",
+            "impact": "Fichero authorized_key con owner externo",
+            "variable": [
+                "file_authorized=\"/home/es082027/.ssh/authorized_keys\""
+            ],
+            "SO": "Aix"
+        },
+        {
+            "object": "/home/es082062/.ssh/authorized_keys",
+            "owner": "LORENZO FUERTES RAMON",
+            "tipo": "/E/",
+            "ownerGroup": "ibmldadm",
+            "user": [
+                "LORENZO FUERTES RAMON"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Fichero authorized_key de LORENZO FUERTES RAMON",
+            "impact": "Fichero authorized_key de LORENZO FUERTES RAMON",
+            "variable": [
+                "file_authorized=\"/home/es082062/.ssh/authorized_keys\""
+            ],
+            "SO": "Aix"
+        },
+        {
+            "object": "/home/assuxat1/.ssh/authorized_keys",
+            "owner": "assuxat1",
+            "tipo": "/S/",
+            "ownerGroup": "IPC automation",
+            "user": [
+                "Sistemas"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Cuenta de aplicativo : IPC automation",
+            "impact": "Cuenta de aplicativo : IPC automation",
+            "variable": [
+                "file_authorized=\"/home/assuxat1/.ssh/authorized_keys\"",
+                "from=\"129.39.41.*\""
+            ],
+            "SO": "Aix"
+        },
+        {
+            "object": "/home/assuxat2/.ssh/authorized_keys",
+            "owner": "assuxat2",
+            "tipo": "/S/",
+            "ownerGroup": "IPC automation",
+            "user": [
+                "Sistemas"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Cuenta de aplicativo : IPC automation",
+            "impact": "Cuenta de aplicativo : IPC automation",
+            "variable": [
+                "file_authorized=\"/home/assuxat2/.ssh/authorized_keys\"",
+                "from=\"129.39.41.*\""
             ],
             "SO": "Aix"
         }
