@@ -539,7 +539,7 @@
     },
     {
       "object": "/appsrv/LBK_ARQ_SPA_5_SERVER_COUCH/",
-      "owner": "nodejs/opt/IBM/",
+      "owner": "nodejs",
       "tipo": "/C/",
       "ownerGroup": "CUSTOMER",
       "user": [
@@ -749,7 +749,8 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "directory=\"/opt/IBM/ITMdepot/\""
+        "directory=\"/opt/IBM/ITMdepot/\"",
+        "fileOPT=\"/opt/IBM/ITMdepot/\""
       ],
       "SO": "Linux"
     }
@@ -923,6 +924,25 @@
       "impact": "",
       "variable": [
         "fileOPT=\"/opt/IBM/ITM/lx8266/08/bin/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/opt/IBM/ITM/smitools/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/opt/IBM/ITM/smitools/\"","fileOPT=\"/opt/IBM/ITM/smitools/\""
       ],
       "SO": "Linux"
     },

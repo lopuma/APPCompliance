@@ -111,7 +111,7 @@
     },
     {
         "modulo": "Password Requirements/Automatic Logoff support shells",
-        "clave": "TMUX",
+        "clave": "SHELL LOGINS",
         "descripcion": "/usr/bin/tmux.\n/bin/tmux.\nEnsure that /etc/shells only allows users to select shells which support time out.",
         "comprobacion": "+-------------------------------------------------------------------------------------+\n## Si los shells están indicados como desaparecidos, añádalos a /etc/shells.\n## Si cualquier shell se indica como no conforme, elimínelas.\n+-------------------------------------------------------------------------------------+\n\ncat /etc/shells | grep -i tmux",
         "copia": "## Obtener usuario logueado:\n\nuser=$(logname)\n\n+-------------------------------------------------------------------------------------+\n## Backup con HOME en MAYÚSCULAS\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/shells /home/${user^^}/shells_`date +%d%m%y_%T`\n\n+-------------------------------------------------------------------------------------+\n## Backup con HOME en minúsculas\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/shells /home/${user,,}/shells__`date +%d%m%y_%T`\n",

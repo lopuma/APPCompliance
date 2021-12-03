@@ -158,6 +158,63 @@
         "Para servidores CLUSTER, tiene PermitRootLogin a YES, con un Match Address a las IP del CLUSTER, puede ir conjunto con un PermitRootLogin a NO"
       ],
       "SO": "Linux"
+    },
+    {
+      "object": "nfs",
+      "owner": "Sistemas",
+      "tipo": "/S/",
+      "ownerGroup": "Group Sistemas",
+      "user": [
+        ""
+      ],
+      "code": "1-OK",
+      "servers": [
+        "tibbwp2"
+      ],
+      "risk":"",
+      "impact": "",
+      "variable": [
+        "service=\"nfs\""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "ftp",
+      "owner": "Sistemas",
+      "tipo": "/S/",
+      "ownerGroup": "Group Sistemas",
+      "user": [
+        "PEDRO JAVIER PRIETO HOLGUIN"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk":"Aplica a todos los server que no tengan conexiones FTP",
+      "impact": "Pertenece al puerto 21",
+      "variable": [
+        "service=\"ftp\""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "telnet",
+      "owner": "Sistemas",
+      "tipo": "/S/",
+      "ownerGroup": "Group Sistemas",
+      "user": [
+        "PEDRO JAVIER PRIETO HOLGUIN"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk":"Aplica a todos los server que no tengan shell `/bin/false`, para la cuenta FTP",
+      "impact": "Pertenece al puerto 23",
+      "variable": [
+        "service=\"telnet\""
+      ],
+      "SO": "Aix"
     }
   ],
   "INFRA": [

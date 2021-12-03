@@ -543,7 +543,6 @@ class Expandir(ttk.Frame):
         indx = '1.0'
         line1 = "+-------------------------------------------------------------------------------------+"
         if line1:
-            print("YES")
             while True:
                 indx = self.EXP_srcExpandir.search(line1, indx, nocase=1, stopindex=tk.END)
                 if not indx: 
@@ -582,6 +581,7 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_srcEditar.bind("<Motion>",lambda e:self.activar_Focus(e))
         self.DESVfr3_srcRefrescar.bind("<Motion>",lambda e:self.activar_Focus(e))
         self.DESVfr3_srcEvidencia.bind("<Motion>",lambda e:self.activar_Focus(e))
+        self.DESVfr1_entModulo.bind("<Motion>",lambda e:self._act_focus_ent(e))
         app.cuaderno.bind("<Motion>",lambda e:self.activar_Focus(e))
         self.DESVfr1_listbox.bind("<Motion>",lambda e:self._activar_Focus(e))
         ## --- MOSTRAR MENU DERECHO  --- ##
@@ -677,6 +677,12 @@ class Desviacion(ttk.Frame):
         else:
             return "break"
     ## --- ACTIVAR WIDGET ---------------------------------------- ##
+    def _act_focus_ent(self, event):
+        self.txtWidget = event.widget
+        self.txtWidget.select_range(0,tk.END)
+        self.txtWidget.focus_set()
+        return 'break'
+
     def activar_Focus(self, event):
         global txtWidget
         global srcDes
@@ -996,6 +1002,7 @@ class Desviacion(ttk.Frame):
         self.colour_line_evi()
     
     def mostrar_buttons_modulo(self, modulo_selecionado): #TODO añadir demas botones
+        #DIRECTORY
         if str(modulo_selecionado) == "Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories" or str(modulo_selecionado) == "Protecting Resources-OSRs/CRON Command WW Permissions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /TMP Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /VAR Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /OPT Files Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /ETC Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/OSR /USR Restrictions" or str(modulo_selecionado) == "Protecting Resources-OSRs/CRON Command Group Permissions":
             self._btnDir = True
             self._btnAuth = False
@@ -1009,6 +1016,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnCommand.grid_forget()
             self.DESV_btnIdrsa.grid_forget()
+        #AUTHORIZED
         elif str(modulo_selecionado) == "Password Requirements/Private Key File Restriction" or str(modulo_selecionado) == "Identify and Authenticate Users/Public Key Authentication" or str(modulo_selecionado) == "AV.1.1.6 Password Requirements" or str(modulo_selecionado) == "Identify and Authenticate Users/Public Key Label" or str(modulo_selecionado) == "AV.1.1.7 Password Requirements":
             self._btnDir = False
             self._btnAuth = True
@@ -1022,7 +1030,8 @@ class Desviacion(ttk.Frame):
             self.DESV_btnCommand.grid_forget()
             self.DESV_btnIdrsa.grid_forget()
             self.DESV_btnAuthorized.grid(row=2, column=1, padx=5, pady=5, sticky='ne')    
-        elif str(modulo_selecionado) == "Network Settings/Ensure LDAP Server is not enabled" or str(modulo_selecionado) == "Network Settings/NFS root restrictions" or str(modulo_selecionado) == "E.1.5.22.3 Network Settings" or str(modulo_selecionado) == "Password Requirements/SSH PermitRootLogin Restriction" or str(modulo_selecionado) == "Network Settings/Prohibited Processes" or str(modulo_selecionado) == "Identify and Authenticate Users/PermitRootLogin Restriction":
+        #SERVICE
+        elif str(modulo_selecionado) == "Network Settings/Ensure LDAP Server is not enabled" or str(modulo_selecionado) == "Network Settings/NFS root restrictions" or str(modulo_selecionado) == "E.1.5.22.3 Network Settings" or str(modulo_selecionado) == "Password Requirements/SSH PermitRootLogin Restriction" or str(modulo_selecionado) == "Network Settings/Prohibited Processes" or str(modulo_selecionado) == "Identify and Authenticate Users/PermitRootLogin Restriction" or str(modulo_selecionado) == "Network Settings/Disable NFS server":
             self._btnDir = False
             self._btnAuth = False
             self._btnSer = True
@@ -1035,6 +1044,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnCommand.grid_forget()
             self.DESV_btnIdrsa.grid_forget()
             self.DESV_btnService.grid(row=2, column=1, padx=5, pady=5, sticky='ne')    
+        #ACCOUNT
         elif str(modulo_selecionado) == "Password Requirements/Password MAX Age /etc/shadow" or str(modulo_selecionado) == "Password Requirements/Password MAX Age":
             self._btnDir = False
             self._btnAuth = False
@@ -1048,6 +1058,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnCommand.grid_forget()
             self.DESV_btnIdrsa.grid_forget()
             self.DESV_btnAccount.grid(row=2, column=1, padx=5, pady=5, sticky='ne')  
+        #COMMAND
         elif str(modulo_selecionado) == "protecting Resources-OSRs/SUDO Command WW Permissions":
             self._btnDir = False
             self._btnAuth = False
@@ -1061,6 +1072,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnIdrsa.grid_forget()
             self.DESV_btnCommand.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
+        #ID RSA
         elif str(modulo_selecionado) == "Password Requirements/NULL Passphrase" or str(modulo_selecionado) == "Password Requirements/Private Key Passphrase":
             self._btnDir = False
             self._btnAuth = False
@@ -1249,7 +1261,8 @@ class Desviacion(ttk.Frame):
             text_widget.icursor(0)
             self.DESVfr1_btnLimpiar.grid_forget()
             self.DESVfr1_btnBuscar.grid(row=1, column=1, pady=5, padx=5, sticky='nsw')
-    
+        text_widget.select_clear()
+
     def _clear_busqueda(self, event):
         self.var_entry_bsc.set("")
         self.DESVfr1_btnLimpiar.grid_forget()
@@ -1362,7 +1375,6 @@ class Desviacion(ttk.Frame):
         indx = '1.0'
         line1 = "+-------------------------------------------------------------------------------------+"
         if line1:
-            print("YES")
             while True:
                 indx = self.DESVfr2_srcComprobacion.search(line1, indx, nocase=1, stopindex=tk.END)
                 if not indx: #or not indx1 or not indx2 or not indx3 or not indx4: 
@@ -1380,7 +1392,6 @@ class Desviacion(ttk.Frame):
         indx1 = '1.0'
         line1 = "+-------------------------------------------------------------------------------------+"
         if line1:
-            print("YES")
             while True:
                 indx1 = self.DESVfr2_srcBackup.search(line1, indx1, nocase=1, stopindex=tk.END)
                 if not indx1: #or not indx2 or not indx3 or not indx4: 
@@ -1398,7 +1409,6 @@ class Desviacion(ttk.Frame):
         indx3 = '1.0'
         line1 = "+-------------------------------------------------------------------------------------+"
         if line1:
-            print("YES")
             while True:
                 indx3 = self.DESVfr3_srcRefrescar.search(line1, indx3, nocase=1, stopindex=tk.END)
                 if not indx3: #or not indx4: 
@@ -1422,7 +1432,6 @@ class Desviacion(ttk.Frame):
         # indx4 = '1.0'
         line1 = "+-------------------------------------------------------------------------------------+"
         if line1:
-            print("YES")
             while True:
                 indx2 = self.DESVfr3_srcEditar.search(line1, indx2, nocase=1, stopindex=tk.END)
                 if not indx2: 
@@ -1440,7 +1449,6 @@ class Desviacion(ttk.Frame):
         indx4 = '1.0'
         line1 = "+-------------------------------------------------------------------------------------+"
         if line1:
-            print("YES")
             while True:
                 indx4 = self.DESVfr3_srcEvidencia.search(line1, indx4, nocase=1, stopindex=tk.END)
                 if not indx4: 
