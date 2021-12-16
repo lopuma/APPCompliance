@@ -68,7 +68,7 @@ srcSO = ""
 _tt_Desv = ""
 class Expandir(ttk.Frame):
     
-    def __init__(self, parent, text_EXP, widget_EXP, customer, titulo, so, st_btnDIR, st_btnAUTH, st_btnSER, st_btnACC, st_btnCMD, st_btnIDR, *args, **kwargs):
+    def __init__(self, parent, text_EXP, widget_EXP, customer, titulo, so, st_btnDIR, st_btnAUTH, st_btnSER, st_btnACC, st_btnCMD, st_btnIDR, varNum, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.parent = parent
         self.customer = customer
@@ -84,6 +84,7 @@ class Expandir(ttk.Frame):
         self.st_btnACC = st_btnACC
         self.st_btnCMD = st_btnCMD
         self.st_btnIDR = st_btnIDR
+        self.varNum = varNum
         self.vtn_expandir = tk.Toplevel(self)
         self.vtn_expandir.config(background='#F1ECC3')
         window_width=1010
@@ -182,11 +183,10 @@ class Expandir(ttk.Frame):
             pass
         
     def _siguiente(self):
-        global varNum
         global _tt_Desv
         self.EXP_btnScreamEvidencia.configure(state="disabled")
         self.EXP_btnCopyALL.configure(state="disabled")
-        if varNum == 1:
+        if self.varNum == 1:
             with open(path_modulo.format(asigne_Ciente)) as g:
                 data = json.load(g)
                 for md in data:
@@ -197,14 +197,16 @@ class Expandir(ttk.Frame):
                             self.EXP_lblWidget['text'] =  _tt_Desv
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,md['editar'])
-                            varNum = 3
+                            self.varNum = 3
+                            self.descativar_botones()
                         else:
                             _tt_Desv = "BACKUP"
                             self.EXP_lblWidget['text'] =  _tt_Desv
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,self._txt_Desv)
-                            varNum = 2
-        elif varNum == 2:
+                            self.varNum = 2
+                            self.descativar_botones()
+        elif self.varNum == 2:
             with open(path_modulo.format(asigne_Ciente)) as g:
                 data = json.load(g)
                 for md in data:
@@ -216,14 +218,16 @@ class Expandir(ttk.Frame):
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,md['refrescar'])
                             self.EXP_btnCopyALL.configure(state="normal")                        
-                            varNum = 4
+                            self.varNum = 4
+                            self.descativar_botones()
                         else:
                             _tt_Desv = "EDITAR"
                             self.EXP_lblWidget['text'] =  _tt_Desv
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,self._txt_Desv)
-                            varNum = 3
-        elif varNum == 3:
+                            self.varNum = 3
+                            self.descativar_botones()
+        elif self.varNum == 3:
             with open(path_modulo.format(asigne_Ciente)) as g:
                 data = json.load(g)
                 for md in data:
@@ -236,15 +240,17 @@ class Expandir(ttk.Frame):
                             self.EXP_srcExpandir.insert(END,md['evidencia'])
                             self.EXP_btnScreamEvidencia.configure(state="normal")
                             self.EXP_btnCopyALL.configure(state="normal")
-                            varNum = 5
+                            self.varNum = 5
+                            self.descativar_botones()
                         else:
                             _tt_Desv = "REFRESCAR"
                             self.EXP_lblWidget['text'] =  _tt_Desv
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,self._txt_Desv)
                             self.EXP_btnCopyALL.configure(state="normal")                        
-                            varNum = 4
-        elif varNum == 4:
+                            self.varNum = 4      
+                            self.descativar_botones()
+        elif self.varNum == 4:
             with open(path_modulo.format(asigne_Ciente)) as g:
                 data = json.load(g)
                 for md in data:
@@ -255,7 +261,8 @@ class Expandir(ttk.Frame):
                             self.EXP_lblWidget['text'] =  _tt_Desv
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,md['comprobacion'])
-                            varNum = 1
+                            self.varNum = 1
+                            self.activar_botones()
                         else:
                             _tt_Desv = "EVIDENCIA"
                             self.EXP_lblWidget['text'] =  _tt_Desv
@@ -263,8 +270,9 @@ class Expandir(ttk.Frame):
                             self.EXP_srcExpandir.insert(END,self._txt_Desv)
                             self.EXP_btnScreamEvidencia.configure(state="normal")
                             self.EXP_btnCopyALL.configure(state="normal")
-                            varNum = 5
-        elif varNum == 5:
+                            self.varNum = 5
+                            self.descativar_botones()
+        elif self.varNum == 5:
             with open(path_modulo.format(asigne_Ciente)) as g:
                 data = json.load(g)
                 for md in data:
@@ -275,21 +283,36 @@ class Expandir(ttk.Frame):
                             self.EXP_lblWidget['text'] =  _tt_Desv
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,md['copia'])
-                            varNum = 2
+                            self.varNum = 2
+                            self.descativar_botones()
                         else:
                             _tt_Desv = "COMPROBACION"
                             self.EXP_lblWidget['text'] =  _tt_Desv
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,self._txt_Desv)
-                            varNum = 1
+                            self.varNum = 1
+                            self.activar_botones()
         self.Expan_color_lineas()
 
+    def activar_botones(self):
+        if self.st_btnDIR:
+            self.EXP_btn_VentanasDIR.grid(row=0, column=3, pady=5, sticky='ne')
+        elif self.st_btnAUTH:
+            self.EXP_btn_VentanasAUTH.grid(row=0, column=3, pady=5, sticky='ne')
+        elif self.st_btnSER:
+            self.EXP_btn_VentanasSER.grid(row=0, column=3, pady=5, sticky='ne')
+        elif self.st_btnACC:
+            self.EXP_btn_VentanasACC.grid(row=0, column=3, pady=5, sticky='ne')
+        elif self.st_btnCMD:
+            self.EXP_btn_VentanasCMD.grid(row=0, column=3, pady=5, sticky='ne')
+        elif self.st_btnIDR:
+            self.EXP_btn_VentanasIDR.grid(row=0, column=3, pady=5, sticky='ne')
+
     def _anterior(self):
-        global varNum
         global _tt_Desv
         self.EXP_btnScreamEvidencia.configure(state="disabled")
         self.EXP_btnCopyALL.configure(state="disabled")
-        if varNum == 1:
+        if self.varNum == 1:
             with open(path_modulo.format(asigne_Ciente)) as g:
                 data = json.load(g)
                 for md in data:
@@ -301,7 +324,8 @@ class Expandir(ttk.Frame):
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,md['refrescar'])
                             self.EXP_btnCopyALL.configure(state="normal")                        
-                            varNum = 4
+                            self.varNum = 4
+                            self.descativar_botones()
                         else:
                             _tt_Desv = "EVIDENCIA"
                             self.EXP_lblWidget['text'] =  _tt_Desv
@@ -309,8 +333,9 @@ class Expandir(ttk.Frame):
                             self.EXP_srcExpandir.insert(END,self._txt_Desv)
                             self.EXP_btnScreamEvidencia.configure(state="normal")
                             self.EXP_btnCopyALL.configure(state="normal")
-                            varNum = 5
-        elif varNum == 2:
+                            self.varNum = 5
+                            self.descativar_botones()
+        elif self.varNum == 2:
             with open(path_modulo.format(asigne_Ciente)) as g:
                 data = json.load(g)
                 for md in data:
@@ -323,14 +348,16 @@ class Expandir(ttk.Frame):
                             self.EXP_srcExpandir.insert(END,md['evidencia'])
                             self.EXP_btnScreamEvidencia.configure(state="normal")
                             self.EXP_btnCopyALL.configure(state="normal")
-                            varNum = 5
+                            self.varNum = 5
+                            self.descativar_botones()
                         else:
                             _tt_Desv = "COMPROBACION"
                             self.EXP_lblWidget['text'] =  _tt_Desv
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,self._txt_Desv)
-                            varNum = 1
-        elif varNum == 3:
+                            self.varNum = 1
+                            self.activar_botones()
+        elif self.varNum == 3:
             with open(path_modulo.format(asigne_Ciente)) as g:
                 data = json.load(g)
                 for md in data:
@@ -341,14 +368,16 @@ class Expandir(ttk.Frame):
                             self.EXP_lblWidget['text'] =  _tt_Desv
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,md['evidencia'])
-                            varNum = 1
+                            self.varNum = 1
+                            self.activar_botones()
                         else:
                             _tt_Desv = "BACKUP"
                             self.EXP_lblWidget['text'] =  _tt_Desv
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,self._txt_Desv)
-                            varNum = 2
-        elif varNum == 4:
+                            self.varNum = 2
+                            self.descativar_botones()
+        elif self.varNum == 4:
             with open(path_modulo.format(asigne_Ciente)) as g:
                 data = json.load(g)
                 for md in data:
@@ -359,14 +388,16 @@ class Expandir(ttk.Frame):
                             self.EXP_lblWidget['text'] =  _tt_Desv
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,md['copia'])
-                            varNum = 2
+                            self.varNum = 2
+                            self.descativar_botones()
                         else:
                             _tt_Desv = "EDITAR"
                             self.EXP_lblWidget['text'] =  _tt_Desv
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,self._txt_Desv)
-                            varNum = 3
-        elif varNum == 5:
+                            self.varNum = 3
+                            self.descativar_botones()
+        elif self.varNum == 5:
             with open(path_modulo.format(asigne_Ciente)) as g:
                 data = json.load(g)
                 for md in data:
@@ -377,14 +408,16 @@ class Expandir(ttk.Frame):
                             self.EXP_lblWidget['text'] =  _tt_Desv
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,md['editar'])
-                            varNum = 2
+                            self.varNum = 2
+                            self.descativar_botones()
                         else:
                             _tt_Desv = "REFRESCAR"
                             self.EXP_lblWidget['text'] =  _tt_Desv
                             self.EXP_srcExpandir.delete('1.0',END)
                             self.EXP_srcExpandir.insert(END,self._txt_Desv)
                             self.EXP_btnCopyALL.configure(state="normal")                        
-                            varNum = 1
+                            self.varNum = 1
+                            self.activar_botones()
         self.Expan_color_lineas()
 
     def widgets_EXPANDIR(self):
@@ -493,26 +526,20 @@ class Expandir(ttk.Frame):
             activebackground='#f1ecc3',
         )
         self.EXP_btn_Anterior.grid(row=0, column=1, pady=5, sticky='ns')
-        
-        if self.st_btnDIR and self.titulo == "COMPROBACION":
+        if self.st_btnDIR and self.titulo == "COMPROBACION" and self.varNum == 1:
             self.EXP_btn_VentanasDIR.grid(row=0, column=3, pady=5, sticky='ne')
-        elif self.st_btnAUTH and self.titulo == "COMPROBACION":
+        elif self.st_btnAUTH and self.titulo == "COMPROBACION" and self.varNum == 1:
             self.EXP_btn_VentanasAUTH.grid(row=0, column=3, pady=5, sticky='ne')
-        elif self.st_btnSER and self.titulo == "COMPROBACION":
+        elif self.st_btnSER and self.titulo == "COMPROBACION" and self.varNum == 1:
             self.EXP_btn_VentanasSER.grid(row=0, column=3, pady=5, sticky='ne')
-        elif self.st_btnACC and self.titulo == "COMPROBACION":
+        elif self.st_btnACC and self.titulo == "COMPROBACION" and self.varNum == 1:
             self.EXP_btn_VentanasACC.grid(row=0, column=3, pady=5, sticky='ne')
-        elif self.st_btnCMD and self.titulo == "COMPROBACION":
+        elif self.st_btnCMD and self.titulo == "COMPROBACION" and self.varNum == 1:
             self.EXP_btn_VentanasCMD.grid(row=0, column=3, pady=5, sticky='ne')
-        elif self.st_btnIDR and self.titulo == "COMPROBACION":
+        elif self.st_btnIDR and self.titulo == "COMPROBACION" and self.varNum == 1:
             self.EXP_btn_VentanasIDR.grid(row=0, column=3, pady=5, sticky='ne')
         else:
-            self.EXP_btn_VentanasDIR.forget()     
-            self.EXP_btn_VentanasAUTH.forget()     
-            self.EXP_btn_VentanasSER.forget()     
-            self.EXP_btn_VentanasACC.forget()     
-            self.EXP_btn_VentanasCMD.forget()     
-            self.EXP_btn_VentanasIDR.forget()     
+            self.descativar_botones()     
         
         self.EXP_btnCopyALL = ttk.Button(
             self.vtn_expandir,
@@ -538,6 +565,14 @@ class Expandir(ttk.Frame):
         )
         self.EXP_btnReducir.grid(row=0, column=6, padx=20, pady=5, sticky='ne')
         self.EXP_srcExpandir.grid(row=1, column=0, padx=5, pady=5, sticky='nsew', columnspan=7)
+
+    def descativar_botones(self):
+        self.EXP_btn_VentanasDIR.grid_forget()     
+        self.EXP_btn_VentanasAUTH.grid_forget()     
+        self.EXP_btn_VentanasSER.grid_forget()     
+        self.EXP_btn_VentanasACC.grid_forget()     
+        self.EXP_btn_VentanasCMD.grid_forget()     
+        self.EXP_btn_VentanasIDR.grid_forget()
 
     def Expan_color_lineas(self):
         indx = '1.0'
@@ -763,7 +798,6 @@ class Desviacion(ttk.Frame):
         
         self.widget_Expan.focus()
         text_aExpandir = self.widget_Expan.get('1.0', tk.END)
-        expandir = Expandir(self, text_aExpandir, self.widget_Expan, asigne_Ciente,tittleExpand, sis_oper, self._btnDir, self._btnAuth, self._btnSer, self._btnAcc, self._btnCmd, self._btnIdr)
         if tittleExpand == "COMPROBACION":
             varNum= 1
         elif tittleExpand == "BACKUP":
@@ -772,6 +806,10 @@ class Desviacion(ttk.Frame):
             varNum= 3            
         elif tittleExpand == "REFRESCAR":
             varNum= 4
+        elif tittleExpand == "EVIDENCIA":        
+            varNum= 5
+        expandir = Expandir(self, text_aExpandir, self.widget_Expan, asigne_Ciente,tittleExpand, sis_oper, self._btnDir, self._btnAuth, self._btnSer, self._btnAcc, self._btnCmd, self._btnIdr, varNum)         
+        if tittleExpand == "REFRESCAR":
             expandir.EXP_btnCopyALL.configure(state="normal")            
         elif tittleExpand == "EVIDENCIA":        
             varNum= 5

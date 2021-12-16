@@ -11,6 +11,61 @@
         "SO": "Linux"
     },
     {
+        "modulo": "Network Settings/On syslog clients, disable remote message collection",
+        "clave": "SYSLOGD",
+        "descripcion": "syslogd must be run with the -r flag",
+        "comprobacion": "/usr/sbin/syslogd , debe tener un - al final",
+        "copia": null,
+        "editar": "chssys -s syslogd -a \"-r\"",
+        "refrescar": "stopsrc -s syslogd; sleep 1; startsrc -s syslogd",
+        "evidencia": "clear\ndate\nuname -a\nps -ef |grep \"syslogd\"\n\n// El distintivo -r debe estar presente al final de la salida.//",
+        "SO": "Aix"
+    },
+    {
+        "modulo": "E.1.5.24.1 Network Settings",
+        "clave": "",
+        "descripcion": "syslogd must be run with the -r flag",
+        "comprobacion": "/usr/sbin/syslogd , debe tener un - al final",
+        "copia": null,
+        "editar": "chssys -s syslogd -a \"-r\"",
+        "refrescar": "stopsrc -s syslogd; sleep 1; startsrc -s syslogd",
+        "evidencia": "clear\ndate\nuname -a\nps -ef |grep \"syslogd\"\n\n// El distintivo -r debe estar presente al final de la salida.//",
+        "SO": "Aix"
+    },
+    {
+        "modulo": "Protecting Resources-OSRs/smit.log Restrictions",
+        "clave": "SMIT.LOG",
+        "descripcion": "Invalid Permissions or Ownership for File: /smit.log, Owner: root, Text Permissions: -rw-r--r---, must only be readable or writeable by root. Should be owned by root.",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Desvio similar al modulo : \n+-------------------------------------------------------------------------------------+\n\nProtecting Resources-OSRs/smit.script Restrictions\nProtecting Resources-OSRs/smit.transaction Restrictions\n",
+        "copia": null,
+        "editar": "chmod g-r,o-r /smit.log\n\n+-------------------------------------------------------------------------------------+\n## Corregir similares:\n+-------------------------------------------------------------------------------------+\n\nchmod g-r,o-r /smit.script\nchmod g-r,o-r /smit.transaction",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nuname -a\nls -ls /smit.log\nls -ls /smit.script\nls -ls /smit.script",
+        "SO": "Aix"
+    },
+    {
+        "modulo": "Protecting Resources-OSRs/smit.transaction Restrictions",
+        "clave": "SMIT.TRANSACTION",
+        "descripcion": "Invalid Permissions or Ownership for File: /smit.transaction, Owner: root, Text Permissions: -rw-r--r---, must only be readable or writeable by root. Should be owned by root.",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Desvio similar al modulo : \n+-------------------------------------------------------------------------------------+\n\nProtecting Resources-OSRs/smit.log Restrictions\nProtecting Resources-OSRs/smit.script Restrictions\n",
+        "copia": null,
+        "editar": "chmod g-r,o-r /smit.transaction\n\n+-------------------------------------------------------------------------------------+\n## Corregir similares:\n+-------------------------------------------------------------------------------------+\n\nchmod g-r,o-r /smit.script\nchmod g-r,o-r /smit.log",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nuname -a\nls -ls /smit.log\nls -ls /smit.script\nls -ls /smit.transaction",
+        "SO": "Aix"
+    },
+    {
+        "modulo": "E.1.8.9.1 Protecting Resources - OSRs",
+        "clave": "",
+        "descripcion": "Invalid Permissions or Ownership for File: /smit.log, Owner: root, Text Permissions: -rw-r--r---, must only be readable or writeable by root. Should be owned by root.",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Desvio similar al modulo : \n+-------------------------------------------------------------------------------------+\n\nProtecting Resources-OSRs/smit.script Restrictions\nProtecting Resources-OSRs/smit.transaction Restrictions\n",
+        "copia": null,
+        "editar": "chmod g-r,o-r /smit.log\n\n+-------------------------------------------------------------------------------------+\n## Corregir similares:\n+-------------------------------------------------------------------------------------+\n\nchmod g-r,o-r /smit.script\nchmod g-r,o-r /smit.transaction",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nuname -a\nls -ls /smit.log\nls -ls /smit.script\nls -ls /smit.script",
+        "SO": "Aix"
+    },
+    {
         "modulo": "Filesystem Configuration/nodev option set on /tmp partition",
         "clave": "NODEVTMP",
         "descripcion": "Ensure nodev option set on /tmp partition if it exist",
@@ -291,6 +346,17 @@
         "SO": "Linux"
     },
     {
+        "modulo": "E.2.0.1 Business Use Notice",
+        "clave": "",
+        "descripcion": "Missing or Incorrect Business Use Notice. It should be set in /etc/motd",
+        "comprobacion": "##Debe tener el BUN actual.",
+        "copia": null,
+        "editar": "vi /etc/motd\n\n##añadir / remplazar :\n\n* *--------------------------------------------------------------* *\n* * This system should be used for conducting IBM's              * *\n* * business or for purposes authorized by IBM management.       * *\n* *                                                              * *\n* * It is mandatory to comply with all the requirements          * *\n* * listed in the applicable security policy and only process    * *\n* * or store the data classes approved for this asset type.      * *\n* *                                                              * *\n* * Use is subject to audit at any time by IBM management.       * *\n* *                                                              * *\n* *--------------------------------------------------------------* *",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nhostname\ncat /etc/motd",
+        "SO": "Linux"
+    },
+    {
         "modulo": "Password Requirements/Password History",
         "clave": "REMEMBER",
         "descripcion": "PAM service file: /etc/pam.d/password-auth\nPAM service file: /etc/pam.d/system-auth\nMust have \"password sufficient pam_unix.so\" stanza with \"remember=8\" parameter. \"sufficient\" can be replaced with \"required\".",
@@ -408,7 +474,18 @@
         "copia": "## Obtener usuario logueado:\n\nuser=$(logname)\n\n## LINUX\n+-------------------------------------------------------------------------------------+\n## Backup con HOME en MAYÚSCULAS\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/ssh/sshd_config /home/${user^^}/sshd_config_`date +%d%m%y_%T`\n\n+-------------------------------------------------------------------------------------+\n## Backup con HOME en minúsculas\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/ssh/sshd_config /home/${user,,}/sshd_config_`date +%d%m%y_%T`\n\n\n## AIX\n+-------------------------------------------------------------------------------------+\n## Backup\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/ssh/sshd_config /home/$user/sshd_config_`date +%d%m%y_%T`",
         "editar": "+-------------------------------------------------------------------------------------+\n## Añadir estos Macs `hmac-sha2-512-etm@openssh.com`,`hmac-sha2-256-etm@openssh.com`,`hmac-sha2-512`,`hmac-sha2-256`\n## Si existen otros Macs dejarlos, debe estar debajo de los ciphers: \n## MAC`s\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Debe quedar algo asi:\n\nMACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512,hmac-sha2-256\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Editar\n+-------------------------------------------------------------------------------------+\n\nvi /etc/ssh/sshd_config",
         "refrescar": "+-------------------------------------------------------------------------------------+\n## LINUX\n+-------------------------------------------------------------------------------------+\n\nsystemctl stop sshd\nsystemctl start sshd\n\n+-------------------------------------------------------------------------------------+\n## AIX\n+-------------------------------------------------------------------------------------+\n\nstopsrc -s sshd;sleep 2;startsrc -s sshd",
-        "evidencia": "+-------------------------------------------------------------------------------------+\n## LINUX / AIX\n+-------------------------------------------------------------------------------------+\nclear\ndate\nhostname\n/usr/sbin/sshd -T|grep -i ciphers\ncat /etc/ssh/sshd_config | grep -i ciphers",
+        "evidencia": "+-------------------------------------------------------------------------------------+\n## LINUX / AIX\n+-------------------------------------------------------------------------------------+\nclear\ndate\nhostname\n/usr/sbin/sshd -T|grep -i Macs\ncat /etc/ssh/sshd_config | grep -i Mac",
+        "SO": "Linux / Aix"
+    },
+    {
+        "modulo": "AV.2.1.1.3 Encryption",
+        "clave": "",
+        "descripcion": "\nhmac-sha2-512-etm@openssh.com is not available\nhmac-sha2-256-etm@openssh.com is not available\nhmac-sha2-512 is not available\nhmac-sha2-256 is not available",
+        "comprobacion": "## Antes de corregir se debe comprobar que no estén los valores correctos por defecto\n\n+-------------------------------------------------------------------------------------+\n## Valor por defecto correcto es : \n## macs umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-sha1-etm@openssh.com,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-sha1\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Muestra el valor por defecto\n+-------------------------------------------------------------------------------------+\n\n/usr/sbin/sshd -T|grep -i mac\n\n+-------------------------------------------------------------------------------------+\n## Valor definido en el servidor, no debe estar comentado(#), o no debe estar vació\n+-------------------------------------------------------------------------------------+\n\ncat /etc/ssh/sshd_config | grep -i mac",
+        "copia": "## Obtener usuario logueado:\n\nuser=$(logname)\n\n## LINUX\n+-------------------------------------------------------------------------------------+\n## Backup con HOME en MAYÚSCULAS\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/ssh/sshd_config /home/${user^^}/sshd_config_`date +%d%m%y_%T`\n\n+-------------------------------------------------------------------------------------+\n## Backup con HOME en minúsculas\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/ssh/sshd_config /home/${user,,}/sshd_config_`date +%d%m%y_%T`\n\n\n## AIX\n+-------------------------------------------------------------------------------------+\n## Backup\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/ssh/sshd_config /home/$user/sshd_config_`date +%d%m%y_%T`",
+        "editar": "+-------------------------------------------------------------------------------------+\n## Añadir estos Macs `hmac-sha2-512-etm@openssh.com`,`hmac-sha2-256-etm@openssh.com`,`hmac-sha2-512`,`hmac-sha2-256`\n## Si existen otros Macs dejarlos, debe estar debajo de los ciphers: \n## MAC`s\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Debe quedar algo asi:\n\nMACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512,hmac-sha2-256\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Editar\n+-------------------------------------------------------------------------------------+\n\nvi /etc/ssh/sshd_config",
+        "refrescar": "+-------------------------------------------------------------------------------------+\n## LINUX\n+-------------------------------------------------------------------------------------+\n\nsystemctl stop sshd\nsystemctl start sshd\n\n+-------------------------------------------------------------------------------------+\n## AIX\n+-------------------------------------------------------------------------------------+\n\nstopsrc -s sshd;sleep 2;startsrc -s sshd",
+        "evidencia": "+-------------------------------------------------------------------------------------+\n## LINUX / AIX\n+-------------------------------------------------------------------------------------+\nclear\ndate\nhostname\n/usr/sbin/sshd -T|grep -i Macs\ncat /etc/ssh/sshd_config | grep -i Mac",
         "SO": "Linux / Aix"
     },
     {

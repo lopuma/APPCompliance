@@ -167,14 +167,14 @@
       "user": [
         ""
       ],
-      "code": "1-OK",
+      "code": "2-DOC",
       "servers": [
         "tibbwp2"
       ],
-      "risk":"",
-      "impact": "",
+      "risk":"GENERICO /  SERVICE : NFS / IBM",
+      "impact": "GENERICO /  SERVICE : NFS / IBM",
       "variable": [
-        "service=\"nfs\""
+        ""
       ],
       "SO": "Aix"
     },

@@ -360,10 +360,10 @@
             ],
             "code": "2-DOC",
             "servers": [
-                "ES06FNI03CS01XG"
+                "ALL servers"
             ],
-            "risk": "We don't run any risk with leaving it like this. It is impossible to copy the file id_rsa, take it to another machine and connect without password because on the target machine (ES01PNI03CS01XG) the authorized_keys is configured to only support connections without password from the source (ES06FNI03CS01XG)",
-            "impact": "If you set up id_rsa with passphrase the script that controls the HA of the JDBC GW would stop working, you could not control which machine is running and you could not copy the cache files. This could lead to BBDD corruption failures in DB2.",
+            "risk": "MONITORIZACION / AUTHORIZED_KEYS",
+            "impact": "MONITORIZACION / AUTHORIZED_KEYS",
             "variable": [
                 ""
             ],
@@ -381,8 +381,8 @@
             "servers": [
                 "ALL servers"
             ],
-            "risk": "GENERICO",
-            "impact": "GENERICO",
+            "risk": "MONITORIZACION / AUTHORIZED_KEYS",
+            "impact": "MONITORIZACION / AUTHORIZED_KEYS",
             "variable": [
                 ""
             ],
@@ -425,6 +425,26 @@
             "variable": [
                 "file_authorized=\"/home/icouxat1/.ssh/authorized_keys\"",
                 "from=\"129.39.41.5,129.39.41.6\""
+            ],
+            "SO": "LINUX"
+        },
+        {
+            "object": "/home/itimagt/.ssh/authorized_keys",
+            "owner": "itimagt",
+            "tipo": "/F/",
+            "ownerGroup": "Primary controls",
+            "user": [
+                "Grupo de Primary"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ES012SK01IR01NG","ES052SK01IR01NG","ES012SK01SR01NG","ES012SK05SR01NG","ES012SK06SR01NG","ES052SK01SR01NG","ES052SK05SR01NG","ES052SK06SR01NG","ES012SK00SR01NG","ES01PLP01IR01RM","ES012SK02SR01NG","ES052SK02SR01NG","ES012SK03SR01NG","ES012SK04SR01NG","ES052SH00SR01NG","ES052SK03SR01NG","ES052SK04SR01NG","ES012SK08SR01NG","ES012SK09SR01NG","ES052SK09SR01NG"
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/itimagt/.ssh/authorized_keys\"",
+                "from=\"129.39.41.5\""
             ],
             "SO": "LINUX"
         }

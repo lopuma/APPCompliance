@@ -307,11 +307,11 @@
         "modulo": "Protecting Resources-User Resources//etc/profile File Restriction",
         "clave": "INVOCATION.SH",
         "descripcion": "File does not  trigger an invocation of line . /etc/profile.d/IBMsinit.sh",
-        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Debe existir la llamada a IBMsinit.sh, en /etc/profile\n+-------------------------------------------------------------------------------------+\n\ncat /etc/profile | grep -i IBMsinit.sh\n\n+-------------------------------------------------------------------------------------+\n## Relacionado con :\n+-------------------------------------------------------------------------------------+\n\nAD.1.9.1.3 Protecting Resources - User Resources\nAD.1.9.1.4 Protecting Resources - User Resources\nProtecting Resources-OSRs/IBMsinit Permission Restriction",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Debe existir la llamada a IBMsinit.sh, en /etc/profile\n+-------------------------------------------------------------------------------------+\n\ncat /etc/profile | grep -i IBMsinit.sh -B 5\n\n+-------------------------------------------------------------------------------------+\n## Relacionado con :\n+-------------------------------------------------------------------------------------+\n\nAD.1.9.1.3 Protecting Resources - User Resources\nAD.1.9.1.4 Protecting Resources - User Resources\nProtecting Resources-OSRs/IBMsinit Permission Restriction",
         "copia": null,
         "editar": "+-------------------------------------------------------------------------------------+\n## Añadir la linea : . /etc/profile.d/IBMsinit.sh\n## Despues de un script UMASK\n+-------------------------------------------------------------------------------------+\n\nvi /etc/profile\n\n. /etc/profile.d/IBMsinit.sh",
         "refrescar": null,
-        "evidencia": "clear\ndate\nhostname\ncat /etc/profile | grep -i IBMsinit.sh",
+        "evidencia": "clear\ndate\nhostname\ncat /etc/profile | grep -i IBMsinit.sh -B 5",
         "SO": "Linux"
     },
     {
