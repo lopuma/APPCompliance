@@ -43,6 +43,7 @@ class Extracion(ttk.Frame):
         self.txt.bind('<Control-l>', self.hide)
         self.txt.bind('<Control-c>', lambda x : self._copiar_texto_seleccionado(x))
         self.txt.bind('<Control-a>', lambda e: self._seleccionar_todo(e))
+        self.txt.bind('<Control-x>', lambda e: self._limpiar_busqueda(e))
         self._ocurrencias_encontradas = []
         self._numero_ocurrencia_actual = None
         self._estado_actual = False
@@ -500,6 +501,14 @@ class Extracion(ttk.Frame):
             self.menu_Contextual.entryconfig("  Copiar", state="disabled")
 
     def limpiar_busqueda(self):
+        self.var_entry_bsc.set("")
+        self.menu_Contextual.entryconfig('  Limpiar Busqueda', state='disabled')
+        self.txt.tag_remove('found', '1.0', tk.END)
+        self.txt.tag_remove('found_prev_next', '1.0', tk.END)
+        self._buscar_focus()
+
+    def _limpiar_busqueda(self, event):
+        self.var_entry_bsc.set("")
         self.txt.tag_remove('found', '1.0', tk.END)
         self.txt.tag_remove('found_prev_next', '1.0', tk.END)
         self._buscar_focus()
@@ -558,6 +567,8 @@ class Extracion(ttk.Frame):
             self.frame1.destroy()
             self.hidden = 1
             self.btn_nav.grid(row=0, column=0, sticky="nw")
+            self.menu_Contextual.entryconfig("  Ocultar Panel", state="disabled")
+            self.menu_Contextual.entryconfig("  Mostrar Panel", state="normal")
         parar = False
 
     def show_btn_nav(self):
@@ -566,6 +577,8 @@ class Extracion(ttk.Frame):
             self.menu()
             self.hidden = 0
             self.btn_nav.grid_forget()
+            self.menu_Contextual.entryconfig("  Ocultar Panel", state="normal")
+            self.menu_Contextual.entryconfig("  Mostrar Panel", state="disabled")
         parar = False
 
     def elim_tags(self, l_tags):
@@ -733,6 +746,7 @@ class Extracion(ttk.Frame):
             self.entr_str.bind('<Control-F>', lambda x : self._buscar_focus())
             self.entr_str.bind('<Control-v>', lambda x : self.sel_text(x))
             self.entr_str.bind('<Control-V>', lambda x : self.sel_text(x))
+            self.entr_str.bind('<Control-x>', lambda x : self._limpiar_busqueda(x))
             self._estado_actual = True
         elif self._estado_actual:
             self._buscar_focus()
@@ -755,6 +769,7 @@ class Extracion(ttk.Frame):
     def on_entr_str_busca_key_release(self, event):
         if event.keysym != "F2" and event.keysym != "F3":  # F2 y F3
             self._buscar()
+            #
             return "break"
 
     def _buscar(self, event=None):
@@ -794,8 +809,9 @@ class Extracion(ttk.Frame):
             #FUNCIONA
             
             #self.buscar_next(self.entr_str.get().strip())    
+            self.menu_Contextual.entryconfig('  Limpiar Busqueda', state='normal')
         else:
-            pass
+            self.menu_Contextual.entryconfig('  Limpiar Busqueda', state='disabled')
             #MessageBox.showinfo('Info', 'Establecer algún criterior de búsqueda.')
         tags = self.txt.tag_ranges('found')
         self._ocurrencias_encontradas = list(zip(*[iter(tags)] * 2))

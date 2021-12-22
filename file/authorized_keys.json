@@ -404,7 +404,7 @@
             "impact": "",
             "variable": [
                 "file_authorized=\"/home/icouxat2/.ssh/authorized_keys\"",
-                "from=\"129.39.41.5,129.39.41.6\""
+                "from=\"129.39.41.5+129.39.41.6\""
             ],
             "SO": "LINUX"
         },
@@ -424,7 +424,7 @@
             "impact": "",
             "variable": [
                 "file_authorized=\"/home/icouxat1/.ssh/authorized_keys\"",
-                "from=\"129.39.41.5,129.39.41.6\""
+                "from=\"129.39.41.5+129.39.41.6\""
             ],
             "SO": "LINUX"
         },
@@ -445,6 +445,46 @@
             "variable": [
                 "file_authorized=\"/home/itimagt/.ssh/authorized_keys\"",
                 "from=\"129.39.41.5\""
+            ],
+            "SO": "LINUX"
+        },
+        {
+            "object": "/home/czy54480/.ssh/authorized_keys",
+            "owner": "czy54480",
+            "tipo": "/I/",
+            "ownerGroup": "IBM ADMIN (Z16916)",
+            "user": [
+                "Adam Svoboda"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/czy54480/.ssh/authorized_keys\"",
+                "from=\"9.156.198.39+9.149.47.23\""
+            ],
+            "SO": "LINUX"
+        },
+        {
+            "object": "/home/czz61942/.ssh/authorized_keys",
+            "owner": "czz61942",
+            "tipo": "/I/",
+            "ownerGroup": "IBM ADMIN (Z61942)",
+            "user": [
+                "Frantisek Tuma"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/czz61942/.ssh/authorized_keys\"",
+                "from=\"9.156.198.39+9.149.47.23\""
             ],
             "SO": "LINUX"
         }

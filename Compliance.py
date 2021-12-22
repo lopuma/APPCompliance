@@ -1984,9 +1984,12 @@ class Aplicacion():
         self.cuaderno.bind_all("<<NotebookTabChanged>>",lambda e:self.alCambiar_Pestaña(e))
         self.cuaderno.enable_traversal()
         self.cuaderno.notebookTab.bind("<Button-3>", self.display_menu_clickDerecho)
+        self.contenedor.bind("<Button-3>", self._display_menu_clickDerecho)
         self.root.bind_all("<Control-l>", lambda x : self.ocultar())
+        
         self.estilos()
         self.menu_clickDerecho()
+        self._menu_clickDerecho()
         self.widgets_APP()
     
     def iconos(self):
@@ -2215,6 +2218,72 @@ class Aplicacion():
     def display_menu_clickDerecho(self, event):
         self.menu_Contextual.tk_popup(event.x_root, event.y_root)
     
+    def _menu_clickDerecho(self):
+        self.text_font = font.Font(family='Consolas', size=13)   
+        self._menu_Contextual = Menu(self.root, tearoff=0)
+        self._menu_Contextual.add_command(
+            label="  Buscar", 
+            accelerator='Ctrl+F',
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            state='disabled',
+        )
+        self._menu_Contextual.add_separator(background='#ccffff')
+        self._menu_Contextual.add_command(
+            label="  Copiar", 
+            accelerator='Ctrl+C',
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            state='disabled',
+        )
+        self._menu_Contextual.add_command(
+            label="  Pegar", 
+            accelerator='Ctrl+V',
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            state='disabled',
+        )
+        self._menu_Contextual.add_separator(background='#ccffff')
+        self._menu_Contextual.add_command(
+            label="  Seleccionar todo", 
+            accelerator='Ctrl+A',
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            state='disabled',
+        )
+        self._menu_Contextual.add_command(
+            label="  Limpiar", 
+            accelerator='Ctrl+X',
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            state='disabled',
+        )
+        self._menu_Contextual.add_separator(background='#ccffff')
+        self._menu_Contextual.add_command(
+            label="  Cerrar pestaña", 
+            compound=LEFT,
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            state='disabled'
+        )
+        self._menu_Contextual.add_command(
+            label="  Salir", 
+            compound=LEFT,
+            background='#ccffff', foreground='black',
+            activebackground='#004c99',activeforeground='white',
+            font=self.text_font,
+            command=self.root.quit
+        )
+    
+    def _display_menu_clickDerecho(self, event):
+        self._menu_Contextual.tk_popup(event.x_root, event.y_root)
+    
     def cerrar_vtn_desviacion(self):
         if idOpenTab == 0:
             self.menu_Contextual.entryconfig('  Cerrar pestaña', state='disabled')
@@ -2347,6 +2416,152 @@ class Aplicacion():
     def cargar_modulos(self):
         desviacion._cargar_Modulos()
     
+    def label_resize(self, event):
+        event.widget['wraplength'] = event.width 
+    
+    def _acerca_de(self):
+        self.vtn_acerca_de = tk.Toplevel(self.root)
+        self.vtn_acerca_de.config(background='#F1ECC3')
+        window_width=680
+        window_height=450
+        screen_width = app.root.winfo_x()
+        screen_height= app.root.winfo_y()
+        position_top = int(screen_height+70)
+        position_right = int(screen_width+150)
+        self.vtn_acerca_de.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
+        # self.vtn_acerca_de.tk.call('wm', 'iconphoto', self.vtn_expandir._w, tk.PhotoImage(file=path_icon+r'expandir1.png'))       
+        self.vtn_acerca_de.transient(self.root)
+        self.vtn_acerca_de.title("Continuous Compliance")
+
+        self.icono_Acerca_de = ImageTk.PhotoImage(
+            Image.open(path_icon+r"img_acerca_de.png").resize((150, 150)))
+
+        self.AcercaDe_ico_frame = tk.Frame(
+                self.vtn_acerca_de,
+                background='#F1ECC3',
+                #
+                width=50,
+                #height=50  
+            )
+        #self.AcercaDe_ico_frame.grid_propagate(False)
+        self.AcercaDe_ico_frame.pack(fill='both', expand=1, side='left')
+
+        self.ico_Acerca_de = tk.Label(
+            self.AcercaDe_ico_frame, 
+            text='imagen',
+            image=self.icono_Acerca_de,
+            background='#F1ECC3'
+        )
+        self.ico_Acerca_de.place(x=50, y=50)
+
+        self.AcercaDe_txt_frame = tk.Frame(
+                self.vtn_acerca_de, 
+                background='#F1ECC3',
+                width=30,
+                height=50 
+            )
+        #self.AcercaDe_txt_frame.grid_propagate(False)
+        self.AcercaDe_txt_frame.pack(fill='both', expand=1, side='right')
+
+        self.lbl1 = tk.Label(
+            self.AcercaDe_txt_frame, 
+            text='CONTINUOUS COMPLIANCE',
+            background="#F1ECC3",
+            anchor='center',
+            font=("Consolas", 16, "bold")
+        )
+        self.lbl1.grid(row=0, column=0, padx=10, pady=10, sticky='nsew')
+
+        self.lbl5 = tk.Label(
+            self.AcercaDe_txt_frame,
+            width=20,
+            text='Herramienta para resolucion    de ISSUES Desviaciones / Extraciones',
+            background="#F1ECC3",
+            anchor='w',
+            font=("Consolas", 13)
+        )
+        self.lbl5.grid(row=1, column=0, padx=5, pady=5, sticky='nsew')
+        self.lbl5.bind("<Configure>", self.label_resize)
+
+        self.lbl2 = tk.Label(
+            self.AcercaDe_txt_frame, 
+            text='Versión:   1.5',
+            background="#F1ECC3",
+            anchor='w',
+            width=20,
+            font=("Consolas", 13)
+        )
+        self.lbl2.grid(row=2, column=0, padx=5, pady=5, sticky='nsew')
+        self.lbl2.bind("<Configure>", self.label_resize)
+
+        self.lbl3 = tk.Label(
+            self.AcercaDe_txt_frame, 
+            text='Fecha:   miercoles diciciembre 22 CET 2021',
+            background="#F1ECC3",
+            anchor='w',
+            width=20,
+            font=("Consolas", 11)
+        )
+        self.lbl3.grid(row=3, column=0, padx=5, pady=5, sticky='nsew')
+        self.lbl3.bind("<Configure>", self.label_resize)
+
+        self.lbl4 = tk.Label(
+            self.AcercaDe_txt_frame, 
+            width=20,
+            text='OS: x86_64 GNU/Linux',
+            background="#F1ECC3",
+            anchor='w',
+            font=("Consolas", 11)
+        )
+        self.lbl4.grid(row=4, column=0, padx=5, pady=5, sticky='nsew')
+        self.lbl4.bind("<Configure>", self.label_resize)
+
+        
+
+        self.lbl6 = tk.Label(
+            self.AcercaDe_txt_frame, 
+            width=20,
+            foreground='gray',
+            text='Documentado por el equipo de PHC - UNIX',
+            background="#F1ECC3",
+            anchor='w',
+            font=("Consolas", 11)
+        )
+        self.lbl6.grid(row=5, column=0, padx=5, pady=5, sticky='nsew')
+        self.lbl6.bind("<Configure>", self.label_resize)
+
+
+        self.lbl7 = tk.Label(
+            self.AcercaDe_txt_frame, 
+            width=20,
+            foreground='gray',
+            text='Creado por Jose Alvaro Cedeño Panchana',
+            background="#F1ECC3",
+            anchor='w',
+            font=("Consolas", 11)
+        )
+        self.lbl7.grid(row=6, column=0, padx=5, pady=5, sticky='nsew')
+        self.lbl7.bind("<Configure>", self.label_resize)
+
+        self.lbl8 = tk.Label(
+            self.AcercaDe_txt_frame, 
+            width=20,
+            foreground='gray',
+            text='Copyright © 2021 - 2022 Jose Alvaro Cedeño Panchana',
+            background="#F1ECC3",
+            anchor='w',
+            font=("Consolas", 11, 'bold')
+        )
+        self.lbl8.grid(row=7, column=0, padx=5, pady=5, sticky='nsew')
+        #self.lbl8.bind("<Configure>", self.label_resize)
+
+        self.boton = ttk.Button(
+            self.AcercaDe_txt_frame,
+            text='Close',
+            
+        )
+        self.boton.grid(row=8, column=0, sticky='e')
+    
     def widgets_APP(self):
             self.menuBar = tk.Menu(self.root, relief=FLAT, border=0)
             self.root.config(menu=self.menuBar)
@@ -2463,6 +2678,7 @@ class Aplicacion():
                 label="  Acerca de...",
                 image=self.AcercaDe_icon,
                 compound=LEFT,
+                command=self._acerca_de
             )
 
             self.menuBar.add_cascade(label=" Archivo ", menu=self.fileMenu)

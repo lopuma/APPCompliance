@@ -229,7 +229,7 @@ class Ventana(ttk.Frame):
                         self.srcImpact.insert(END,md['impact'])
                         self.cbxUser['values'] = md["user"]
                         variables = str(md['variable'])
-                        variables = variables.replace("[","").replace("]","").replace("'","").replace(",",";")
+                        variables = variables.replace("[","").replace("]","").replace("'","").replace(",",";").replace("+",",")
                         if md['code'] == "2-DOC":
                             self.lbl4['text'] = "COMENTARIO"
                             self.lbl2['text'] = "RISK"
