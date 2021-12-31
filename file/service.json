@@ -91,12 +91,13 @@
       "code": "2-DOC",
       "servers": [
         "CP1ABWASPRE1",
-        "SAPASISASM"
+        "SAPASISASM",
+        "SAPASISADESA"
       ],
       "risk": "GENERICO /  SERVICE : NFS / CUSTOMER",
       "impact": "GENERICO /  SERVICE : NFS / CUSTOMER",
       "variable": [
-        ""
+        "Sistema de archivos de red compartidos para cuentas de clientes."
       ],
       "SO": "Aix"
     },

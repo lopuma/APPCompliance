@@ -23,6 +23,7 @@ mypath = os.path.expanduser("~/")
 path_icon = mypath+"Compliance/image/"
 clt = ''
 path_modulo = mypath+"Compliance/file/desviaciones_{}.json"
+path_modulo_clave = mypath+"Compliance/file/{}.json"
 list_client = [
     "AFB",
     "ASISA",
@@ -66,6 +67,8 @@ srcDes = ""
 srcMod = ""
 srcSO = ""
 _tt_Desv = ""
+listbox_list = []
+
 class Expandir(ttk.Frame):
     
     def __init__(self, parent, text_EXP, widget_EXP, customer, titulo, so, st_btnDIR, st_btnAUTH, st_btnSER, st_btnACC, st_btnCMD, st_btnIDR, varNum, *args, **kwargs):
@@ -590,6 +593,7 @@ class Expandir(ttk.Frame):
                 foreground='#396eb0',
                 font=("Consolas", 14, font.BOLD)
                 )
+
 class Desviacion(ttk.Frame):
     
     def __init__(self, parent, *args, **kwargs):
@@ -1961,6 +1965,7 @@ class Desviacion(ttk.Frame):
     def cambiar_NamePestaña(self, customer):
         app.cuaderno.tab(idOpenTab, option=None, text='DESVIACIONES : {} '.format(customer))
         app.cuaderno.notebookContent.tab(idOpenTab, option=None, text='DESVIACIONES : {} '.format(customer))
+
 class Aplicacion():
     
     def __init__(self):
@@ -2419,49 +2424,51 @@ class Aplicacion():
     def label_resize(self, event):
         event.widget['wraplength'] = event.width 
     
+    def cerrar_vtn(self):
+        self.vtn_acerca_de.destroy()
+
     def _acerca_de(self):
         self.vtn_acerca_de = tk.Toplevel(self.root)
         self.vtn_acerca_de.config(background='#F1ECC3')
-        window_width=680
-        window_height=450
+        window_width=780
+        window_height=370
         screen_width = app.root.winfo_x()
         screen_height= app.root.winfo_y()
         position_top = int(screen_height+70)
         position_right = int(screen_width+150)
         self.vtn_acerca_de.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
-        # self.vtn_acerca_de.tk.call('wm', 'iconphoto', self.vtn_expandir._w, tk.PhotoImage(file=path_icon+r'expandir1.png'))       
-        self.vtn_acerca_de.transient(self.root)
+        self.vtn_acerca_de.tk.call('wm', 'iconphoto', self.vtn_acerca_de._w, tk.PhotoImage(file=path_icon+r'acercaDe.png'))       
+        #self.vtn_acerca_de.transient(self.root)
+        self.vtn_acerca_de.resizable(False,False)
         self.vtn_acerca_de.title("Continuous Compliance")
 
         self.icono_Acerca_de = ImageTk.PhotoImage(
-            Image.open(path_icon+r"img_acerca_de.png").resize((150, 150)))
+            Image.open(path_icon+r"img_acerca_de.png").resize((200, 200)))
 
         self.AcercaDe_ico_frame = tk.Frame(
                 self.vtn_acerca_de,
                 background='#F1ECC3',
-                #
-                width=50,
-                #height=50  
+                width=300,
             )
-        #self.AcercaDe_ico_frame.grid_propagate(False)
         self.AcercaDe_ico_frame.pack(fill='both', expand=1, side='left')
+        self.AcercaDe_ico_frame.pack_propagate(False)
 
         self.ico_Acerca_de = tk.Label(
             self.AcercaDe_ico_frame, 
             text='imagen',
             image=self.icono_Acerca_de,
-            background='#F1ECC3'
+            background='#F1ECC3',
         )
         self.ico_Acerca_de.place(x=50, y=50)
 
         self.AcercaDe_txt_frame = tk.Frame(
                 self.vtn_acerca_de, 
                 background='#F1ECC3',
-                width=30,
-                height=50 
+                #width=40,
+                #height=50 
             )
-        #self.AcercaDe_txt_frame.grid_propagate(False)
-        self.AcercaDe_txt_frame.pack(fill='both', expand=1, side='right')
+        self.AcercaDe_txt_frame.pack(fill='both', expand=1, side='left')
+        #self.AcercaDe_txt_frame.pack_propagate(False)
 
         self.lbl1 = tk.Label(
             self.AcercaDe_txt_frame, 
@@ -2485,42 +2492,42 @@ class Aplicacion():
 
         self.lbl2 = tk.Label(
             self.AcercaDe_txt_frame, 
-            text='Versión:   1.5',
+            text='Versión:   1.6',
             background="#F1ECC3",
             anchor='w',
-            width=20,
+            #width=20,
             font=("Consolas", 13)
         )
         self.lbl2.grid(row=2, column=0, padx=5, pady=5, sticky='nsew')
-        self.lbl2.bind("<Configure>", self.label_resize)
+        #self.lbl2.bind("<Configure>", self.label_resize)
 
         self.lbl3 = tk.Label(
             self.AcercaDe_txt_frame, 
             text='Fecha:   miercoles diciciembre 22 CET 2021',
             background="#F1ECC3",
             anchor='w',
-            width=20,
+            #width=20,
             font=("Consolas", 11)
         )
         self.lbl3.grid(row=3, column=0, padx=5, pady=5, sticky='nsew')
-        self.lbl3.bind("<Configure>", self.label_resize)
+        #self.lbl3.bind("<Configure>", self.label_resize)
 
         self.lbl4 = tk.Label(
             self.AcercaDe_txt_frame, 
-            width=20,
+            #width=20,
             text='OS: x86_64 GNU/Linux',
             background="#F1ECC3",
             anchor='w',
             font=("Consolas", 11)
         )
         self.lbl4.grid(row=4, column=0, padx=5, pady=5, sticky='nsew')
-        self.lbl4.bind("<Configure>", self.label_resize)
+        #self.lbl4.bind("<Configure>", self.label_resize)
 
         
 
         self.lbl6 = tk.Label(
             self.AcercaDe_txt_frame, 
-            width=20,
+            #width=20,
             foreground='gray',
             text='Documentado por el equipo de PHC - UNIX',
             background="#F1ECC3",
@@ -2528,12 +2535,12 @@ class Aplicacion():
             font=("Consolas", 11)
         )
         self.lbl6.grid(row=5, column=0, padx=5, pady=5, sticky='nsew')
-        self.lbl6.bind("<Configure>", self.label_resize)
+        #self.lbl6.bind("<Configure>", self.label_resize)
 
 
         self.lbl7 = tk.Label(
             self.AcercaDe_txt_frame, 
-            width=20,
+            #width=20,
             foreground='gray',
             text='Creado por Jose Alvaro Cedeño Panchana',
             background="#F1ECC3",
@@ -2541,11 +2548,11 @@ class Aplicacion():
             font=("Consolas", 11)
         )
         self.lbl7.grid(row=6, column=0, padx=5, pady=5, sticky='nsew')
-        self.lbl7.bind("<Configure>", self.label_resize)
+        #self.lbl7.bind("<Configure>", self.label_resize)
 
         self.lbl8 = tk.Label(
             self.AcercaDe_txt_frame, 
-            width=20,
+            #width=20,
             foreground='gray',
             text='Copyright © 2021 - 2022 Jose Alvaro Cedeño Panchana',
             background="#F1ECC3",
@@ -2558,10 +2565,148 @@ class Aplicacion():
         self.boton = ttk.Button(
             self.AcercaDe_txt_frame,
             text='Close',
-            
+            command=self.cerrar_vtn
         )
-        self.boton.grid(row=8, column=0, sticky='e')
+        self.boton.grid(row=8, column=0, sticky='e', pady=20, padx=10)
     
+    def _cargar_modulo_glosario(self, clt_modulo=None, *args):
+        with open(path_modulo_clave.format('GLOSARIO')) as g:
+            data = json.load(g)
+            listModulo = []
+            listClave = []
+            for md in data:
+                listModulo.append(md['modulo'])
+                listClave.append(md['clave'])
+        #listModulo.sort()
+        self._list_modulo.insert(END,*listModulo)
+        self._list_clave.insert(END,*listClave)
+
+    def on_select(self, event):
+        global listbox_list
+    
+        widget = event.widget
+        items = widget.curselection()
+        
+        for listbox in listbox_list:
+            if listbox != widget:
+                listbox.selection_clear(0, tk.END)
+                for index in items:
+                    listbox.selection_set(int(index))
+
+    def _glosario(self):
+        self.vtn_glosario = tk.Toplevel(self.root)
+        self.vtn_glosario.config(background='#F1ECC3')
+        window_width=800
+        window_height=400
+        screen_width = app.root.winfo_x()
+        screen_height= app.root.winfo_y()
+        position_top = int(screen_height+70)
+        position_right = int(screen_width+150)
+        self.vtn_glosario.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
+        self.vtn_glosario.tk.call('wm', 'iconphoto', self.vtn_glosario._w, tk.PhotoImage(file=path_icon+r'acercaDe.png'))       
+        #self.vtn_acerca_de.transient(self.root)
+        self.vtn_glosario.resizable(False,False)
+        self.vtn_glosario.title("Continuous Compliance")
+        
+        self.frame1 = tk.Frame(
+            self.vtn_glosario,
+            background='#F1ECC3',
+            height=40,
+        )
+        self.frame1.pack(fill='both', side='top', expand=0)
+
+        self.titulo = tk.Label(
+            self.frame1,
+            text='PALABRAS CLAVES DESVIACIONES',
+            font=('Consolas', 20, font.BOLD),
+            background='#F1ECC3'
+        )
+        self.titulo.pack(expand=1)
+
+        self.frame2 = tk.Frame(
+            self.vtn_glosario,
+            background='#F1ECC3',
+        )
+        self.frame2.pack(fill='both', side='left', expand=0, pady=10)
+        
+        #self.frame2.rowconfigure(0, weight=1)
+        self.frame2.rowconfigure(1, weight=1)
+
+        self.titulo_modulo = tk.Label(
+            self.frame2,
+            text='MODULO',
+            font=('Consolas', 15, font.BOLD),
+            background='#F1ECC3',
+            anchor='center',
+            width=50
+        )
+        self.titulo_modulo.grid(row=0, column=0, sticky='nsew', pady=5, padx=5)
+
+        self.ListModulo_yScroll = tk.Scrollbar(self.frame2, orient=tk.VERTICAL)
+        
+        ## LISTBOX MODULO
+        self._list_modulo = tk.Listbox(
+            self.frame2,
+            font=('Consolas', 12),
+            foreground='blue',
+            selectbackground='#297F87',
+            selectforeground='#F6D167',
+            disabledforeground='black',
+            exportselection=False,
+            highlightbackground='gray88',
+            highlightthickness=1,
+            highlightcolor='#297F87',
+            yscrollcommand=self.ListModulo_yScroll.set,
+        )
+        self._list_modulo.grid(row=1, column=0, sticky='nsew', pady=10)
+        listbox_list.append(self._list_modulo)
+        
+        
+        self.frame3 = tk.Frame(
+            self.vtn_glosario,
+            background='#F1ECC3',
+            width=40
+        )
+        self.frame3.pack(fill='both', side='right', expand=1, pady=10,padx=10)
+        self.frame3.columnconfigure(0, weight=1)
+        self.frame3.rowconfigure(1, weight=1)
+
+        self.titulo_clave = tk.Label(
+            self.frame3,
+            text='CLAVE',
+            font=('Consolas', 15, font.BOLD),
+            background='#F1ECC3',
+            anchor='center'
+        )
+        self.titulo_clave.grid(row=0, column=0, sticky='nsew', pady=5, padx=5, columnspan=2)
+
+        self.ListClave_yScroll = tk.Scrollbar(self.frame3, orient=tk.VERTICAL)
+        
+        ## LISTBOX CLAVE
+        self._list_clave = tk.Listbox(
+            self.frame3,
+            font=('Consolas', 11),
+            foreground='blue',
+            selectbackground='#297F87',
+            selectforeground='#F6D167',
+            disabledforeground='black',
+            exportselection=False,
+            highlightbackground='gray88',
+            highlightthickness=1,
+            highlightcolor='#297F87',
+            yscrollcommand=self.ListClave_yScroll.set,
+        )
+        self._list_clave.grid(row=1, column=0, sticky='nsew', pady=10,)
+        listbox_list.append(self._list_clave)
+
+        self.ListClave_yScroll.grid(row=1, column=1, pady=10, sticky='nse')
+        self.ListModulo_yScroll.grid(row=1, column=1, pady=10, sticky='nse')
+
+        self._list_modulo.bind('<<ListboxSelect>>', self.on_select)
+        self._list_clave.bind('<<ListboxSelect>>', self.on_select)
+
+        self._cargar_modulo_glosario()
+
     def widgets_APP(self):
             self.menuBar = tk.Menu(self.root, relief=FLAT, border=0)
             self.root.config(menu=self.menuBar)
@@ -2672,6 +2817,7 @@ class Aplicacion():
                 label="  Ayuda",
                 image=self.Ayuda_icon,
                 compound=LEFT,
+                command=self._glosario
             )
             self.helpMenu.add_separator()
             self.helpMenu.add_command(

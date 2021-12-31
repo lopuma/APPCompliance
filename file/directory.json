@@ -39,6 +39,24 @@
         "El grupo, tiene cuentas de tipo /C/ (customer)"
       ],
       "SO": "Aix"
+    },{
+      "object": "/opt/ctmagent/software/",
+      "owner": "controlm",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "All servers"
+      ],
+      "risk": "GENERICO / OSR OPT / CUSTOMER",
+      "impact": "GENERICO / OSR OPT / CUSTOMER",
+      "variable": [
+        "Cuenta de tipo customer."
+      ],
+      "SO": "Aix"
     },
     {
       "object": "/opt/WebSphere/AppServer/",

@@ -326,15 +326,37 @@
         "SO": "Linux"
     },
     {
-        "modulo": "Password Requirements/Password MIN Length and complexity",
-        "clave": "MINLEN",
-        "descripcion": "Incorrect System Default minimum password length or password complexity rules. Minimum password length should be set to 8 or more secure, in file \n/etc/pam.d/password-auth\n/etc/pam.d/system-auth.\nIt should be set through pam_cracklib.so or pam_pwquality.so. For more information about password length or password complexity rules see matrix coverage document.",
-        "comprobacion": null,
+        "modulo": "Password Requirements/Requirement for pwd_algorithm",
+        "clave": "PWD_ALGORITHM",
+        "descripcion": "Incorrect or missing value of \"pwd_algorithm\" in /etc/security/login.cfg. It Must be set to ssha512",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Cambiar el algoritmo a ssha512 en /etc/security/login.cfg\n+-------------------------------------------------------------------------------------+\n\nlssec -f /etc/security/login.cfg -s usw -a pwd_algorithm",
         "copia": null,
-        "editar": null,
+        "editar": "chsec -f /etc/security/login.cfg -s usw -a pwd_algorithm=ssha512",
         "refrescar": null,
-        "evidencia": null,
-        "SO": "Linux"
+        "evidencia": "clear\ndate\nuname -a\nlssec -f /etc/security/login.cfg -s usw -a pwd_algorithm",
+        "SO": "Aix"
+    },
+    {
+        "modulo": "Password Requirements/Password mindiff - System Default",
+        "clave": "MINDIFF",
+        "descripcion": "Invalid system default mindiff set to 1, must be not less than 4",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## El parametro mindiff, debe ser 4, para defautl.\n## Una vez cambiado a default, se corrigen para las demas cuentas, puede quedar root o alguna cuenta sin cambiar, por lo que se puede cambiar manual.\n+-------------------------------------------------------------------------------------+\n\nlssec -f /etc/security/user -s default -a mindiff",
+        "copia": null,
+        "editar": "chsec -f /etc/security/user -s default -a mindiff=4\nchsec -f /etc/security/user -s root -a mindiff=4",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nhostname\nlssec -f /etc/security/user -s default -a mindiff\nlssec -f /etc/security/user -s root -a mindiff",
+        "SO": "Aix"
+    },
+    {
+        "modulo": "Password Requirements/Password MIN Length - System Default",
+        "clave": "MINLENGTH",
+        "descripcion": "Invalid Password Min Length setting of 8, should be not less than 15\nInvalid system ACCOUNTS Min Length",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## El parametro minlen, debe ser 15, para defautl.\n## Una vez cambiado a default, se corrigen para las demas cuentas, puede quedar root o alguna cuenta sin cambiar, por lo que se puede cambiar manual.\n+-------------------------------------------------------------------------------------+\n\nlssec -f /etc/security/user -s default -a minlen",
+        "copia": null,
+        "editar": "chsec -f /etc/security/user -s default -a minlen=15\nchsec -f /etc/security/user -s root -a minlen=15",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nhostname\nlssec -f /etc/security/user -s default -a minlen\nlssec -f /etc/security/user -s root -a minlen",
+        "SO": "Aix"
     },
     {
         "modulo": "Protecting Resources-User Resources/Login.defs umask restriction",

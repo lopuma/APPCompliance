@@ -487,6 +487,125 @@
                 "from=\"9.156.198.39+9.149.47.23\""
             ],
             "SO": "LINUX"
+        },
+        {
+            "object": "/home/ES082009/.ssh/authorized_keys",
+            "owner": "ES082009",
+            "tipo": "/K/",
+            "ownerGroup": "Soporte",
+            "user": [
+                "Carbonell Santam, Roser"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/ES082009/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/K/K00458/KYNDRYL-SOD/Carbonell Santam, Roser!!\""
+            ],
+            "SO": "AIX"
+        },
+        {
+            "object": "/home/ES083300/.ssh/authorized_keys",
+            "owner": "ES083300",
+            "tipo": "/K/",
+            "ownerGroup": "Soporte",
+            "user": [
+                "JUAN ANTONIO VILLAFAINA GONZALEZ"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/ES083300/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/K/K00867/KYNDRYL/JUAN ANTONIO VILLAFAINA GONZALEZ!!\""
+            ],
+            "SO": "AIX"
+        },
+        {
+            "object": "/home/ESY9EDJN/.ssh/authorized_keys",
+            "owner": "ESY9EDJN",
+            "tipo": "/E/",
+            "ownerGroup": "Soporte",
+            "user": [
+                "JOSE LUIS HEREDIA AMAYA"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/ESY9EDJN/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/E/Y9F6AC/TENEA TE/JOSE LUIS HEREDIA!!\""
+            ],
+            "SO": "AIX"
+        },
+        {
+            "object": "/home/ESY9E0RN/.ssh/authorized_keys",
+            "owner": "ESY9E0RN",
+            "tipo": "/E/",
+            "ownerGroup": "Soporte",
+            "user": [
+                "LECH BARTLOMIEJ"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/ESY9E0RN/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/E/Y9F5E4/TUYU TEC/LECH BARTLOMIEJ!!\""
+            ],
+            "SO": "AIX"
+        },
+        {
+            "object": "/home/ESY9AMMH/.ssh/authorized_keys",
+            "owner": "ESY9AMMH",
+            "tipo": "/E/",
+            "ownerGroup": "ibmldadm",
+            "user": [
+                "ESY9AMMH no existe"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Fichero authorized_key con owner diferente, la cuenta ESY9AMMH no existe",
+            "impact": "Fichero authorized_key con owner diferente, la cuenta ESY9AMMH no existe",
+            "variable": [
+                "file_authorized=\"/home/ESY9AMMH/.ssh/authorized_keys\""
+            ],
+            "SO": "Aix"
+        },
+        {
+            "object": "/home/tws/.ssh/authorized_keys",
+            "owner": "tws",
+            "tipo": "/S/",
+            "ownerGroup": "EBH",
+            "user": [
+                "Silvia Pereira"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/tws/.ssh/authorized_keys\"",
+                "from=\"129.39.137.114\""
+            ],
+            "SO": "Aix"
         }
     ],
     "FT": [
