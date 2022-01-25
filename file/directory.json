@@ -251,21 +251,154 @@
   ],
   "CESCE": [
     {
-      "object": "",
-      "owner": "",
-      "tipo": "",
-      "ownerGroup": "",
+      "object": "/data/itdeusto/",
+      "owner": "itdeusto",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
       "user": [
-        ""
+        "Customer"
       ],
-      "code": "",
+      "code": "2-DOC",
       "servers": [
-        ""
+        "ALL server"
+      ],
+      "risk": "GENERICO / STICKY / CUSTOMER",
+      "impact": "GENERICO / STICKY / CUSTOMER",
+      "variable": [
+        "Directorio  y subdirectorios de cliente"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/data2/caixa/",
+      "owner": "caixa",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL server"
+      ],
+      "risk": "GENERICO / STICKY / CUSTOMER",
+      "impact": "GENERICO / STICKY / CUSTOMER",
+      "variable": [
+        "Directorio  y subdirectorios de cliente"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/data2/ctiUTDS2/",
+      "owner": "ctiutds2",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL server"
+      ],
+      "risk": "GENERICO / STICKY / CUSTOMER",
+      "impact": "GENERICO / STICKY / CUSTOMER",
+      "variable": [
+        "Directorio  y subdirectorios de cliente"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/data2/electrostocks/",
+      "owner": "electrostocks",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL server"
+      ],
+      "risk": "GENERICO / STICKY / CUSTOMER",
+      "impact": "GENERICO / STICKY / CUSTOMER",
+      "variable": [
+        "Directorio  y subdirectorios de cliente"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/data2/pcc/",
+      "owner": "pccProduccion",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL server"
+      ],
+      "risk": "GENERICO / STICKY / CUSTOMER",
+      "impact": "GENERICO / STICKY / CUSTOMER",
+      "variable": [
+        "Directorio  y subdirectorios de cliente"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/data2/onerate/",
+      "owner": "onerate",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL server"
+      ],
+      "risk": "GENERICO / STICKY / CUSTOMER",
+      "impact": "GENERICO / STICKY / CUSTOMER",
+      "variable": [
+        "Directorio  y subdirectorios de cliente"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/data2/postventa/",
+      "owner": "postventa",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL server"
+      ],
+      "risk": "GENERICO / STICKY / CUSTOMER",
+      "impact": "GENERICO / STICKY / CUSTOMER",
+      "variable": [
+        "Directorio  y subdirectorios de cliente"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/tmp/gts-ansible/",
+      "owner": "cesuxat2",
+      "tipo": "/S/",
+      "ownerGroup": "CACF",
+      "user": [
+        "Grupo de Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
       "variable": [
-        "directory=\"\""
+        "directory=\"/tmp/gts-ansible/\""
       ],
       "SO": "Linux"
     }

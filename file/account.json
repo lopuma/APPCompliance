@@ -392,8 +392,8 @@
       "servers": [
         "ALL servers"
       ],
-      "risk": "GENERICO / MAXAGE / IBM",
-      "impact": "GENERICO / MAXAGE / IBM",
+      "risk": "GENERICO / MAXAGE / KYNDRYL",
+      "impact": "GENERICO / MAXAGE / KYNDRYL",
       "variable": [
         "Usuario para el proceso de Compliance"
       ]
@@ -484,8 +484,8 @@
       "servers": [
         "ALL Servers"
       ],
-      "risk": "GENERICO / MAXAGE / IBM",
-      "impact": "GENERICO / MAXAGE / IBM",
+      "risk": "GENERICO / MAXAGE / KYNDRYL",
+      "impact": "GENERICO / MAXAGE / KYNDRYL",
       "variable": [
         "Usuario de aplicativo TIVOLI"
       ],

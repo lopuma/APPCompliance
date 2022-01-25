@@ -314,7 +314,7 @@
             "tipo": "/S/",
             "ownerGroup": "Sistemas",
             "user": [
-                "COVADONGA DIAZ ZARZOSO", 
+                "COVADONGA DIAZ ZARZOSO",
                 "JESUS SANCHEZ VALLE"
             ],
             "code": "1-OK",
@@ -334,7 +334,7 @@
             "tipo": "/S/",
             "ownerGroup": "Sistemas",
             "user": [
-                "COVADONGA DIAZ ZARZOSO", 
+                "COVADONGA DIAZ ZARZOSO",
                 "JESUS SANCHEZ VALLE"
             ],
             "code": "1-OK",
@@ -347,6 +347,123 @@
                 "file_authorized=\"/home/afbuxat2/.ssh/authorized_keys\""
             ],
             "SO": "Linux"
+        }
+    ],
+    "CESCE": [
+        {
+            "object": "/home/cesuxat1/.ssh/authorized_keys",
+            "owner": "cesuxat1",
+            "tipo": "/S/",
+            "ownerGroup": "Sistemas",
+            "user": [
+                "Usuario de Automation"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/cesuxat1/.ssh/authorized_keys\"",
+                "gecos=\"!!CZ/S/*ABJ83/IBM/Automation ID!!\""
+            ],
+            "SO": "AIX"
+        },
+        {
+            "object": "/cescelink/017054736/home/017054736/.ssh/authorized_keys",
+            "owner": "017054736",
+            "tipo": "/C/",
+            "ownerGroup": "CUSTOMER",
+            "user": [
+                "Usuario SFTP INDUSTRIAL AGUSTI 1876 SL"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "GENERICO / LABEL / CUSTOMER",
+            "impact": "GENERICO / LABEL / CUSTOMER",
+            "variable": [
+                "Cuenta de cliente"
+            ],
+            "SO": "AIX"
+        },
+        {
+            "object": "/cescelink/028350732/home/028350732/.ssh/authorized_keys",
+            "owner": "028350732",
+            "tipo": "/C/",
+            "ownerGroup": "CUSTOMER",
+            "user": [
+                "Usuario sFTP BURAN"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "GENERICO / LABEL / CUSTOMER",
+            "impact": "GENERICO / LABEL / CUSTOMER",
+            "variable": [
+                "Cuenta de cliente"
+            ],
+            "SO": "AIX"
+        },
+        {
+            "object": "/cescelink/IMFORTIA/home/IMFORTIA/.ssh/authorized_keys",
+            "owner": "IMFORTIA",
+            "tipo": "/C/",
+            "ownerGroup": "CUSTOMER",
+            "user": [
+                "Usuario sFTP IMfortia"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "GENERICO / LABEL / CUSTOMER",
+            "impact": "GENERICO / LABEL / CUSTOMER",
+            "variable": [
+                "Cuenta de cliente"
+            ],
+            "SO": "AIX"
+        },
+        {
+            "object": "/cescelink/prueba/home/prueba/.ssh/authorized_keys",
+            "owner": "prueba",
+            "tipo": "/C/",
+            "ownerGroup": "CUSTOMER",
+            "user": [
+                "Usuario de prueba para el cliente"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "GENERICO / LABEL / CUSTOMER",
+            "impact": "GENERICO / LABEL / CUSTOMER",
+            "variable": [
+                "Cuenta de cliente para pruebas"
+            ],
+            "SO": "AIX"
+        },
+        {
+            "object": "/cescelink/usuario1/home/usuario1/.ssh/authorized_keys",
+            "owner": "usuario1",
+            "tipo": "/C/",
+            "ownerGroup": "CUSTOMER",
+            "user": [
+                "Usuario para el cliente"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "GENERICO / LABEL / CUSTOMER",
+            "impact": "GENERICO / LABEL / CUSTOMER",
+            "variable": [
+                "Cuenta de cliente para pruebas"
+            ],
+            "SO": "AIX"
         }
     ],
     "INFRA": [
@@ -438,7 +555,26 @@
             ],
             "code": "1-OK",
             "servers": [
-                "ES012SK01IR01NG","ES052SK01IR01NG","ES012SK01SR01NG","ES012SK05SR01NG","ES012SK06SR01NG","ES052SK01SR01NG","ES052SK05SR01NG","ES052SK06SR01NG","ES012SK00SR01NG","ES01PLP01IR01RM","ES012SK02SR01NG","ES052SK02SR01NG","ES012SK03SR01NG","ES012SK04SR01NG","ES052SH00SR01NG","ES052SK03SR01NG","ES052SK04SR01NG","ES012SK08SR01NG","ES012SK09SR01NG","ES052SK09SR01NG"
+                "ES012SK01IR01NG",
+                "ES052SK01IR01NG",
+                "ES012SK01SR01NG",
+                "ES012SK05SR01NG",
+                "ES012SK06SR01NG",
+                "ES052SK01SR01NG",
+                "ES052SK05SR01NG",
+                "ES052SK06SR01NG",
+                "ES012SK00SR01NG",
+                "ES01PLP01IR01RM",
+                "ES012SK02SR01NG",
+                "ES052SK02SR01NG",
+                "ES012SK03SR01NG",
+                "ES012SK04SR01NG",
+                "ES052SH00SR01NG",
+                "ES052SK03SR01NG",
+                "ES052SK04SR01NG",
+                "ES012SK08SR01NG",
+                "ES012SK09SR01NG",
+                "ES052SK09SR01NG"
             ],
             "risk": "",
             "impact": "",
@@ -632,7 +768,7 @@
             "object": "/home/esy9da5a/.ssh/authorized_keys",
             "owner": "esy9da5a",
             "tipo": "/E/",
-            "ownerGroup": "ibmctm",
+            "ownerGroup": "INFORTEC",
             "user": [
                 "BRYAN STEVEN TORRES ABAD"
             ],
@@ -643,7 +779,8 @@
             "risk": "",
             "impact": "",
             "variable": [
-                "file_authorized=\"/home/esy9da5a/.ssh/authorized_keys\""
+                "file_authorized=\"/home/esy9da5a/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/E/Y9F49Y/INFORTEC/BRYAN STEVEN TORRES ABAD!!\""
             ],
             "SO": "Linux"
         },
@@ -662,9 +799,49 @@
             "risk": "",
             "impact": "",
             "variable": [
-                "file_authorized=\"/home/esy9d5vc/.ssh/authorized_keys\""
+                "file_authorized=\"/home/esy9d5vc/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/E/Y9D5VC/INFORTEC/Javier Perez Miguel!!\""
             ],
-            "SO": "Aix"
+            "SO": "Aix / Linux"
+        },
+        {
+            "object": "/home/es086327/.ssh/authorized_keys",
+            "owner": "es086327",
+            "tipo": "/K/",
+            "ownerGroup": "KYNDRYL",
+            "user": [
+                "ALEJANDRO GALLEGO GORDON"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/esy9da5a/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/K/K01161/KYNDRYL/ALEJANDRO GALLEGO GORDON!!\""
+            ],
+            "SO": "Linux"
+        },
+        {
+            "object": "/home/sigaux/.ssh/authorized_keys",
+            "owner": "sigaux",
+            "tipo": "/C/",
+            "ownerGroup": "Customer",
+            "user": [
+                "Customer"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "GENERICO / LABEL / CUSTOMER",
+            "impact": "GENERICO / LABEL / CUSTOMER",
+            "variable": [
+                ""
+            ],
+            "SO": "Aix / Linux"
         }
     ]
 }

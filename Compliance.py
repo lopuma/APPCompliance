@@ -42,6 +42,7 @@ list_issues = (
     "DESVIACIONES",
     "EXTRACIONES"
 )
+
 # --- VARIABLE GLOBAL ---
 asigne_Ciente = ""
 idOpenTab = 0
@@ -102,7 +103,10 @@ class Expandir(ttk.Frame):
         self.vtn_expandir.title("DESVIACIONES : {} - {}".format(self.customer,self.so))
         self.vtn_expandir.columnconfigure(0, weight=1)
         self.vtn_expandir.rowconfigure(1, weight=1)
-        self.text_font = font.Font(family='Consolas', size=13)
+        
+        # FUENTE PARA MENU CLICK DERECHO DE EXPLANDIR
+        self._font_MC_Expan = font.Font(family='Courier', size=15)
+        # ----------------------------------------------------------------
         self.icono()
         self.menu_clickDerecho()
         self.widgets_EXPANDIR()
@@ -129,7 +133,7 @@ class Expandir(ttk.Frame):
             compound=LEFT,
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
+            font=self._font_MC_Expan,
             command= desviacion.copiar_texto_seleccionado,
             state="disabled"
         )
@@ -139,7 +143,7 @@ class Expandir(ttk.Frame):
             compound=LEFT,
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
+            font=self._font_MC_Expan,
             command=lambda : desviacion.seleccionar_todo(event=None),
         )
         self.menu_Contextual.add_separator(background='#ccffff')
@@ -149,7 +153,7 @@ class Expandir(ttk.Frame):
             compound=LEFT,
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
+            font=self._font_MC_Expan,
             command=self.cerrar_vtn_expandir
         )
     
@@ -435,7 +439,7 @@ class Expandir(ttk.Frame):
             self.vtn_expandir,
         )
         self.EXP_srcExpandir.config(
-            font=('Consolas', 15), 
+            font=('IBM Plex Sans', 15), 
             wrap=tk.WORD,
             highlightcolor='#297F87',
             borderwidth=0, 
@@ -603,6 +607,15 @@ class Desviacion(ttk.Frame):
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=1)
         self.rowconfigure(0, weight=1)
+
+        # FUENTE PARA DESVIACIONES
+        # Fuente Menu click derecho 
+        self._font_MC_DESV = font.Font(family='Courier', size=15)
+        # ----------------------------------------------------------
+        # Fuente para TXT de DESV
+        self._font_TXT_DESV = font.Font(family='IBM Plex Sans', size=13)
+        # -----------------------------------------------------------
+
         self.iconos()
         self.widgets_DESVIACION()
         self._menu_clickDerecho()
@@ -820,15 +833,14 @@ class Desviacion(ttk.Frame):
             expandir.EXP_btnScreamEvidencia.configure(state="normal")
             expandir.EXP_btnCopyALL.configure(state="normal")
     # ## --- MENU CONTEXTUAL --- ##    
-    def _menu_clickDerecho(self):
-        self.text_font = font.Font(family='Consolas', size=13)   
+    def _menu_clickDerecho(self):   
         self.menu_Contextual = Menu(self, tearoff=0)
         self.menu_Contextual.add_command(
             label="  Buscar", 
             accelerator='Ctrl+F',
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
+            font=self._font_MC_DESV,
             command=lambda e=self.DESVfr1_entModulo:self._buscar(e),
             state='disabled',
         )
@@ -838,7 +850,7 @@ class Desviacion(ttk.Frame):
             accelerator='Ctrl+C',
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
+            font=self._font_MC_DESV,
             command=self.copiar_texto_seleccionado,
             state='disabled',
         )
@@ -847,7 +859,7 @@ class Desviacion(ttk.Frame):
             accelerator='Ctrl+V',
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
+            font=self._font_MC_DESV,
             command=lambda e=self.DESVfr1_entModulo:self.pegar_texto_seleccionado(e),
         )
         self.menu_Contextual.add_separator(background='#ccffff')
@@ -856,7 +868,7 @@ class Desviacion(ttk.Frame):
             accelerator='Ctrl+A',
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
+            font=self._font_MC_DESV,
             command=lambda : self.seleccionar_todo(event=None),
             state='disabled',
         )
@@ -865,7 +877,7 @@ class Desviacion(ttk.Frame):
             accelerator='Ctrl+X',
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
+            font=self._font_MC_DESV,
             command=lambda e=None:self._clear_busqueda(e),
             state='disabled',
         )
@@ -875,7 +887,7 @@ class Desviacion(ttk.Frame):
             compound=LEFT,
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
+            font=self._font_MC_DESV,
             command=app.cerrar_vtn_desviacion
         )
     
@@ -1292,13 +1304,13 @@ class Desviacion(ttk.Frame):
         text_widget = event.widget
         entry = self.var_entry_bsc.get()
         if entry == "Buscar modulo...":
-            text_widget.config(foreground="black", font=("Consolas", 14))
+            text_widget.config(foreground="black", font=("IBM Plex Sans Arabic", 12))
             self.var_entry_bsc.set("")
             text_widget.icursor(0)
             self.DESVfr1_btnLimpiar.grid_forget()
             self.DESVfr1_btnBuscar.grid(row=1, column=1, pady=5, padx=5, sticky='nsw')
         elif entry == "":
-            text_widget.config(foreground="gray75", font=("Consolas", 12))
+            text_widget.config(foreground="gray75", font=("IBM Plex Sans Arabic", 12))
             self.var_entry_bsc.set("Buscar modulo...")
             text_widget.icursor(0)
             self.DESVfr1_btnLimpiar.grid_forget()
@@ -1331,16 +1343,6 @@ class Desviacion(ttk.Frame):
         selecion = list_event.curselection()[0]+1
         modulo_selecionado = list_event.get(selecion)
         self.cargar_elemt_selected(modulo_selecionado)
-        # modulo_selecionado = event.widget.get(selecion)
-        # with open(path_modulo.format(asigne_Ciente)) as g:
-        #     data = json.load(g)
-        #     for md in data:
-        #         if modulo_selecionado in md['modulo']:
-        #             ## --- LIMPIAR ------------------------------------- ##                      
-        #             self.limpiar_Widgets()
-        #             ## ------------------------------------------------- ##
-        #             self.asignarValor_aWidgets(md)
-        #     self.mostrar_buttons_modulo(modulo_selecionado)
     
     def ListUp(self, event):
         list_event = event.widget
@@ -1348,22 +1350,6 @@ class Desviacion(ttk.Frame):
         selecion = list_event.curselection()[0]-1
         modulo_selecionado = list_event.get(selecion)
         self.cargar_elemt_selected(modulo_selecionado)
-        # widget_Focus = event.widget
-        # if widget_Focus:
-        #     self.DESVfr1_listbox.yview_scroll(-1,"units")
-        #     selecion = self.DESVfr1_listbox.curselection()
-        # data = []
-        # #     modulo_selecionado = event.widget.get(selecion)
-        # with open(path_modulo.format(asigne_Ciente)) as g:
-        #     data = json.load(g)
-        #     for md in data:
-        #         if modulo_selecionado in md['modulo']:
-        #             #self.DESVfr2_srcBackup.delete("1.0",END)
-        #             ## --- LIMPIAR ------------------------------------- ##                      
-        #             self.limpiar_Widgets()
-        #             ## ------------------------------------------------- ##
-        #             self.asignarValor_aWidgets(md)
-        # #self.mostrar_buttons_modulo(modulo_selecionado)
     
     def enabled_Widgets(self):
         self.DESVfr1_listbox.config(state="normal")
@@ -1463,11 +1449,6 @@ class Desviacion(ttk.Frame):
                 foreground='#396eb0',
                 font=("Consolas", 13)
                 )
-                # self.DESVfr3_srcEvidencia.tag_config(
-                # 'found1', 
-                # foreground='#396eb0',
-                # font=("Consolas", 13)
-                # )
 
     def colour_line_edi(self):
         indx2 = '1.0'
@@ -1544,7 +1525,6 @@ class Desviacion(ttk.Frame):
             event.tag_remove("sel","1.0","end")
     
     def widgets_DESVIACION(self):
-        self.text_font = font.Font(family='Consolas', size=13)
         # --- DEFINIMOS LOS LABEL FRAMEs, QUE CONTENDRAN LOS WIDGETS --------------------------#
         self.DESV_frame1=ttk.LabelFrame(
             self, 
@@ -1621,7 +1601,7 @@ class Desviacion(ttk.Frame):
         self.var_entry_bsc.set("Buscar modulo...")
         self.DESVfr1_entModulo.config(
             foreground="gray75",
-            font=self.text_font,
+            font=self._font_TXT_DESV,
             state='disabled',
             border=0,
             borderwidth=0,
@@ -1653,7 +1633,7 @@ class Desviacion(ttk.Frame):
             state='disabled',
             xscrollcommand=self.DESVlist_xScroll.set, 
             yscrollcommand=self.DESVlist_yScroll.set,
-            font=self.text_font,
+            font=self._font_TXT_DESV,
             foreground='blue',
             selectbackground='#297F87',
             selectforeground='#F6D167',
@@ -1748,7 +1728,7 @@ class Desviacion(ttk.Frame):
         )
         self.DESVfr2_srcComprobacion = st.ScrolledText(self.DESV_frame2)
         self.DESVfr2_srcComprobacion.config(
-            font=self.text_font,
+            font=self._font_TXT_DESV,
             wrap=tk.WORD,
             highlightcolor='#297F87',
             borderwidth=0, 
@@ -1778,7 +1758,7 @@ class Desviacion(ttk.Frame):
             self.DESV_frame2,
         )
         self.DESVfr2_srcBackup.config(
-            font=self.text_font,
+            font=self._font_TXT_DESV,
             wrap=tk.WORD,
             highlightcolor='#297F87',
             borderwidth=0, 
@@ -1807,7 +1787,7 @@ class Desviacion(ttk.Frame):
         
         self.DESVfr3_srcEditar = st.ScrolledText(self.DESV_frame3)
         self.DESVfr3_srcEditar.config(
-            font=self.text_font,
+            font=self._font_TXT_DESV,
             wrap=tk.WORD,
             highlightcolor='#297F87',
             borderwidth=0, 
@@ -1834,7 +1814,7 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_lblRefrescar.grid(row=2, column=0, padx=5, pady=5, sticky='w', columnspan=2)
         self.DESVfr3_srcRefrescar = st.ScrolledText(self.DESV_frame3)
         self.DESVfr3_srcRefrescar.config(
-            font=self.text_font,
+            font=self._font_TXT_DESV,
             wrap=tk.WORD,
             highlightcolor='#297F87',
             borderwidth=0, 
@@ -1870,7 +1850,7 @@ class Desviacion(ttk.Frame):
         self.DESVfr3_lblEvidencia.grid(row=4, column=0, padx=5, pady=5, sticky='w')
         self.DESVfr3_srcEvidencia = st.ScrolledText(self.DESV_frame3)
         self.DESVfr3_srcEvidencia.config(
-            font=self.text_font,
+            font=self._font_TXT_DESV,
             wrap=tk.WORD,
             highlightcolor='#297F87',
             borderwidth=0, 
@@ -1991,7 +1971,16 @@ class Aplicacion():
         self.cuaderno.notebookTab.bind("<Button-3>", self.display_menu_clickDerecho)
         self.contenedor.bind("<Button-3>", self._display_menu_clickDerecho)
         self.root.bind_all("<Control-l>", lambda x : self.ocultar())
-        
+        for fonti in font.families():
+            print(fonti)
+        # Fuente MENU CLICK DERECHO APP
+        self._font_MC_APP = font.Font(family='Courier', size=15)
+        # ----------------------------------------------------------
+
+        # Fuente para la barra de MENU
+        self._font_BARRA_APP = font.Font(family='Segoe Script', size=13, weight=font.BOLD)
+        # ----------------------------------------------------------
+
         self.estilos()
         self.menu_clickDerecho()
         self._menu_clickDerecho()
@@ -2165,15 +2154,14 @@ class Aplicacion():
                             foreground = "gray17",
                             font=('Helvetica',12, font.BOLD))
     ## --- MENU CONTEXTUAL --- ##
-    def menu_clickDerecho(self):
-        self.text_font = font.Font(family='Consolas', size=13)   
+    def menu_clickDerecho(self):  
         self.menu_Contextual = Menu(self.root, tearoff=0)
         self.menu_Contextual.add_command(
             label="  Buscar", 
             accelerator='Ctrl+F',
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
+            font=self._font_MC_APP,
             state='disabled',
         )
         self.menu_Contextual.add_separator(background='#ccffff')
@@ -2182,7 +2170,7 @@ class Aplicacion():
             accelerator='Ctrl+C',
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
+            font=self._font_MC_APP,
             state='disabled',
         )
         self.menu_Contextual.add_command(
@@ -2190,7 +2178,7 @@ class Aplicacion():
             accelerator='Ctrl+V',
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
+            font=self._font_MC_APP,
             state='disabled',
         )
         self.menu_Contextual.add_separator(background='#ccffff')
@@ -2199,7 +2187,7 @@ class Aplicacion():
             accelerator='Ctrl+A',
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
+            font=self._font_MC_APP,
             state='disabled',
         )
         self.menu_Contextual.add_command(
@@ -2207,7 +2195,7 @@ class Aplicacion():
             accelerator='Ctrl+X',
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
+            font=self._font_MC_APP,
             state='disabled',
         )
         self.menu_Contextual.add_separator(background='#ccffff')
@@ -2216,7 +2204,7 @@ class Aplicacion():
             compound=LEFT,
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
+            font=self._font_MC_APP,
             command=self.cerrar_vtn_desviacion
         )
     
@@ -2224,14 +2212,13 @@ class Aplicacion():
         self.menu_Contextual.tk_popup(event.x_root, event.y_root)
     
     def _menu_clickDerecho(self):
-        self.text_font = font.Font(family='Consolas', size=13)   
         self._menu_Contextual = Menu(self.root, tearoff=0)
         self._menu_Contextual.add_command(
             label="  Buscar", 
             accelerator='Ctrl+F',
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
+            font=self._font_MC_APP,
             state='disabled',
         )
         self._menu_Contextual.add_separator(background='#ccffff')
@@ -2240,7 +2227,7 @@ class Aplicacion():
             accelerator='Ctrl+C',
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
+            font=self._font_MC_APP,
             state='disabled',
         )
         self._menu_Contextual.add_command(
@@ -2248,7 +2235,7 @@ class Aplicacion():
             accelerator='Ctrl+V',
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
+            font=self._font_MC_APP,
             state='disabled',
         )
         self._menu_Contextual.add_separator(background='#ccffff')
@@ -2257,7 +2244,7 @@ class Aplicacion():
             accelerator='Ctrl+A',
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
+            font=self._font_MC_APP,
             state='disabled',
         )
         self._menu_Contextual.add_command(
@@ -2265,7 +2252,7 @@ class Aplicacion():
             accelerator='Ctrl+X',
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
+            font=self._font_MC_APP,
             state='disabled',
         )
         self._menu_Contextual.add_separator(background='#ccffff')
@@ -2274,7 +2261,7 @@ class Aplicacion():
             compound=LEFT,
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
+            font=self._font_MC_APP,
             state='disabled'
         )
         self._menu_Contextual.add_command(
@@ -2282,13 +2269,15 @@ class Aplicacion():
             compound=LEFT,
             background='#ccffff', foreground='black',
             activebackground='#004c99',activeforeground='white',
-            font=self.text_font,
+            font=self._font_MC_APP,
             command=self.root.quit
         )
     
     def _display_menu_clickDerecho(self, event):
         self._menu_Contextual.tk_popup(event.x_root, event.y_root)
-    
+        #desviacion.DESVfr1_entModulo.select_range(0,tk.END)
+        #desviacion.DESVfr1_entModulo.focus_set()
+
     def cerrar_vtn_desviacion(self):
         if idOpenTab == 0:
             self.menu_Contextual.entryconfig('  Cerrar pestaña', state='disabled')
@@ -2685,7 +2674,7 @@ class Aplicacion():
         ## LISTBOX CLAVE
         self._list_clave = tk.Listbox(
             self.frame3,
-            font=('Consolas', 11),
+            font=('Consolas', 12),
             foreground='blue',
             selectbackground='#297F87',
             selectforeground='#F6D167',
@@ -2713,7 +2702,7 @@ class Aplicacion():
             self.menuBar.config(
                 background='#1A1C20',
                 foreground='#CF7500',
-                font=('Sans serif',12,font.BOLD),
+                font=self._font_BARRA_APP,
                 activebackground='#003638',
                 activeforeground='#53B8BB',
             )
@@ -2721,7 +2710,7 @@ class Aplicacion():
             self.fileMenu.config(
                 background='#003638',
                 foreground='#F3F2C9',
-                font=('Sans serifo',12,font.BOLD),
+                font=self._font_BARRA_APP,
                 activebackground='#003638',
                 activeforeground='#53B8BB',
             )
@@ -2733,7 +2722,7 @@ class Aplicacion():
             self.issuesMenu.config(
                 background='#003638',
                 foreground='#F3F2C9',
-                font=('Sans serifo',12,font.BOLD),
+                font=self._font_BARRA_APP,
                 activebackground='#003638',
                 activeforeground='#53B8BB',
                 selectcolor='#CF7500'
@@ -2741,7 +2730,7 @@ class Aplicacion():
             self.clientMenu.config(
                 background='#003638',
                 foreground='#F3F2C9',
-                font=('Sans serifo',12,font.BOLD),
+                font=self._font_BARRA_APP,
                 activebackground='#003638',
                 activeforeground='#53B8BB',
                 selectcolor='#CF7500'
@@ -2792,7 +2781,7 @@ class Aplicacion():
             self.editMenu.config(
                 background='#003638',
                 foreground='#F3F2C9',
-                font=('Sans serif',12,font.BOLD),
+                font=self._font_BARRA_APP,
                 activebackground='#003638',
                 activeforeground='#53B8BB',
             )
@@ -2809,7 +2798,7 @@ class Aplicacion():
             self.helpMenu.config(
                 background='#003638',
                 foreground='#F3F2C9',
-                font=('Sans serif',12,font.BOLD),
+                font=self._font_BARRA_APP,
                 activebackground='#003638',
                 activeforeground='#53B8BB',
             )

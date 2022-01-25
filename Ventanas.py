@@ -229,7 +229,7 @@ class Ventana(ttk.Frame):
                         self.srcImpact.insert(END,md['impact'])
                         self.cbxUser['values'] = md["user"]
                         variables = str(md['variable'])
-                        variables = variables.replace("[","").replace("]","").replace("'","").replace(",",";").replace("+",",")
+                        variables = variables.replace("[","").replace("]","").replace("'","").replace("\"","'").replace(",",";").replace("+",",")
                         if md['code'] == "2-DOC":
                             self.lbl4['text'] = "COMENTARIO"
                             self.lbl2['text'] = "RISK"
@@ -311,7 +311,7 @@ class Ventana(ttk.Frame):
         return 'break'
     
     def menu_clickDerecho(self):
-        self.text_font = font.Font(family='Consolas', size=13)   
+        self.text_font = font.Font(family='Courier', size=15)   
         self.menu_Contextual = Menu(self, tearoff=0)
         self.menu_Contextual.add_command(
             label="  Buscar", 
