@@ -126,7 +126,7 @@
         "descripcion": "Account $account has invalid Password Min Age setting of null  should be set to Customer Required Setting: 1. Account Type: Customer",
         "comprobacion": "+-------------------------------------------------------------------------------------+\n## Todas las cuentas, ya sean /C/F/S, deben tener el MINAGE a 1.\n+-------------------------------------------------------------------------------------+",        
         "copia": null,
-        "editar": "+-------------------------------------------------------------------------------------+\n## Guardamos en la variable, la cuenta a aplicar MINAGE\n## Copiar la cuenta(entre las \"\")\n+-------------------------------------------------------------------------------------+\n\naccount=\"\"\n\ncat /etc/passwd | grep -i $account\n\n+-------------------------------------------------------------------------------------+\n## Cambiar MIANGE a 1\n+-------------------------------------------------------------------------------------+\n\nchage -m 1 $account",
+        "editar": "+-------------------------------------------------------------------------------------+\n## Cambiar MIANGE a 1, remplazar $account por la cuenta a corregir\n+-------------------------------------------------------------------------------------+\n\nchage -m 1 $account",
         "refrescar": null,
         "evidencia": "clear\ndate\nhostname\nchage -l $account\ncat /etc/passwd | grep -i $account",
         "SO": "Linux"

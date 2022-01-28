@@ -311,7 +311,7 @@ class Ventana(ttk.Frame):
         return 'break'
     
     def menu_clickDerecho(self):
-        self.text_font = font.Font(family='Courier', size=15)   
+        self.text_font = font.Font(family='Courier', size=14)   
         self.menu_Contextual = Menu(self, tearoff=0)
         self.menu_Contextual.add_command(
             label="  Buscar", 
@@ -532,7 +532,7 @@ class Ventana(ttk.Frame):
             text='Buscar',
             style='TOP1.TButton',
             image=self.buscar_icon,
-            command=lambda:self.buscar(self.textBuscar.get())
+            command=lambda:self._buscar(self.textBuscar.get())
         )
         self.btnBuscar.grid(row=0, column=1, sticky=W)
 

@@ -105,7 +105,7 @@ class Expandir(ttk.Frame):
         self.vtn_expandir.rowconfigure(1, weight=1)
         
         # FUENTE PARA MENU CLICK DERECHO DE EXPLANDIR
-        self._font_MC_Expan = font.Font(family='Courier', size=15)
+        self._font_MC_Expan = font.Font(family='Courier', size=14)
         # ----------------------------------------------------------------
         self.icono()
         self.menu_clickDerecho()
@@ -610,7 +610,7 @@ class Desviacion(ttk.Frame):
 
         # FUENTE PARA DESVIACIONES
         # Fuente Menu click derecho 
-        self._font_MC_DESV = font.Font(family='Courier', size=15)
+        self._font_MC_DESV = font.Font(family='Courier', size=14)
         # ----------------------------------------------------------
         # Fuente para TXT de DESV
         self._font_TXT_DESV = font.Font(family='IBM Plex Sans', size=13)
@@ -1971,10 +1971,9 @@ class Aplicacion():
         self.cuaderno.notebookTab.bind("<Button-3>", self.display_menu_clickDerecho)
         self.contenedor.bind("<Button-3>", self._display_menu_clickDerecho)
         self.root.bind_all("<Control-l>", lambda x : self.ocultar())
-        for fonti in font.families():
-            print(fonti)
+
         # Fuente MENU CLICK DERECHO APP
-        self._font_MC_APP = font.Font(family='Courier', size=15)
+        self._font_MC_APP = font.Font(family='Courier', size=14)
         # ----------------------------------------------------------
 
         # Fuente para la barra de MENU
