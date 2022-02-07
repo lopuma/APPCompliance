@@ -707,6 +707,8 @@ class Desviacion(ttk.Frame):
                     Image.open(path_icon+r"limpiar.png").resize((25, 25)))
         self.Expandir_icon = ImageTk.PhotoImage(
                     Image.open(path_icon+r"expandir.png").resize((20, 20)))
+        self.recortar_icon = ImageTk.PhotoImage(
+                    Image.open(path_icon+r"recortar.png").resize((20, 20)))
         self.Expandir_icon1 = ImageTk.PhotoImage(
                     Image.open(path_icon+r"expandir.png").resize((30, 30)))
         self.Captura_icon = ImageTk.PhotoImage(
@@ -1070,6 +1072,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnCommand.grid_forget()
             self.DESV_btnIdrsa.grid_forget()
+            self.DESV_btnRecortar.grid_forget()
         #AUTHORIZED
         elif str(modulo_selecionado) == "Password Requirements/Private Key File Restriction" or str(modulo_selecionado) == "Identify and Authenticate Users/Public Key Authentication" or str(modulo_selecionado) == "AV.1.1.6 Password Requirements" or str(modulo_selecionado) == "Identify and Authenticate Users/Public Key Label" or str(modulo_selecionado) == "AV.1.1.7 Password Requirements":
             self._btnDir = False
@@ -1083,6 +1086,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnCommand.grid_forget()
             self.DESV_btnIdrsa.grid_forget()
+            self.DESV_btnRecortar.grid_forget()
             self.DESV_btnAuthorized.grid(row=2, column=1, padx=5, pady=5, sticky='ne')    
         #SERVICE
         elif str(modulo_selecionado) == "Network Settings/Ensure LDAP Server is not enabled" or str(modulo_selecionado) == "Network Settings/NFS root restrictions" or str(modulo_selecionado) == "E.1.5.22.3 Network Settings" or str(modulo_selecionado) == "Password Requirements/SSH PermitRootLogin Restriction" or str(modulo_selecionado) == "Network Settings/Prohibited Processes" or str(modulo_selecionado) == "Identify and Authenticate Users/PermitRootLogin Restriction" or str(modulo_selecionado) == "Network Settings/Disable NFS server":
@@ -1097,6 +1101,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnCommand.grid_forget()
             self.DESV_btnIdrsa.grid_forget()
+            self.DESV_btnRecortar.grid_forget()
             self.DESV_btnService.grid(row=2, column=1, padx=5, pady=5, sticky='ne')    
         #ACCOUNT
         elif str(modulo_selecionado) == "Password Requirements/Password MAX Age /etc/shadow" or str(modulo_selecionado) == "Password Requirements/Password MAX Age":
@@ -1112,6 +1117,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnCommand.grid_forget()
             self.DESV_btnIdrsa.grid_forget()
             self.DESV_btnAccount.grid(row=2, column=1, padx=5, pady=5, sticky='ne')  
+            self.DESV_btnRecortar.grid(row=2, column=2, padx=5, pady=5, sticky='ne')  
         #COMMAND
         elif str(modulo_selecionado) == "protecting Resources-OSRs/SUDO Command WW Permissions":
             self._btnDir = False
@@ -1125,6 +1131,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnService.grid_forget()
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnIdrsa.grid_forget()
+            self.DESV_btnRecortar.grid_forget()
             self.DESV_btnCommand.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
         #ID RSA
         elif str(modulo_selecionado) == "Password Requirements/NULL Passphrase" or str(modulo_selecionado) == "Password Requirements/Private Key Passphrase":
@@ -1139,6 +1146,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnService.grid_forget()
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnCommand.grid_forget()
+            self.DESV_btnRecortar.grid_forget()
             self.DESV_btnIdrsa.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
         else:
             self._btnDir = False
@@ -1152,7 +1160,8 @@ class Desviacion(ttk.Frame):
             self.DESV_btnService.grid_forget()
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnCommand.grid_forget()
-            self.DESV_btnIdrsa.grid_forget() 
+            self.DESV_btnIdrsa.grid_forget()
+            self.DESV_btnRecortar.grid_forget()
     
     def mostrar_buttons_clave(self, clave_Buscado):
         if clave_Buscado == "STICKY" or clave_Buscado =="OSRsCRON" or clave_Buscado == "OSRTMP" or clave_Buscado == "OSRCRON" or clave_Buscado == "OSRVAR" or clave_Buscado == "OSROPT" or clave_Buscado == "OSRETC" or clave_Buscado == "OSRUSR":
@@ -1168,6 +1177,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnCommand.grid_forget() 
             self.DESV_btnIdrsa.grid_forget()
+            self.DESV_btnRecortar.grid_forget()
         elif clave_Buscado == "COMMAND":
             self._btnDir = False
             self._btnAuth = False
@@ -1181,6 +1191,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnDirectory.grid_forget()
             self.DESV_btnIdrsa.grid_forget()
+            self.DESV_btnRecortar.grid_forget()
         elif clave_Buscado == "IDRSA" or clave_Buscado == "NOT PASSPHRASE":
             self._btnDir = False
             self._btnAuth = False
@@ -1194,6 +1205,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnService.grid_forget()
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnDirectory.grid_forget()
+            self.DESV_btnRecortar.grid_forget()
         elif clave_Buscado == "PERMITROOTLOGIN" or clave_Buscado == "LDAP" or clave_Buscado == "PROCESSES" or clave_Buscado == "NFS":
             self._btnDir = False
             self._btnAuth = False
@@ -1207,6 +1219,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnService.grid(row=2, column=1, padx=5, pady=5, sticky='ne')
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnDirectory.grid_forget()
+            self.DESV_btnRecortar.grid_forget()
         elif clave_Buscado == "AUTHORIZED_KEY" or clave_Buscado == "PUBLICKEY" or clave_Buscado == "LABEL":
             self._btnDir = False
             self._btnAuth = True
@@ -1219,6 +1232,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnAccount.grid_forget()
             self.DESV_btnCommand.grid_forget()
             self.DESV_btnIdrsa.grid_forget()
+            self.DESV_btnRecortar.grid_forget()
             self.DESV_btnAuthorized.grid(row=2, column=1, padx=5, pady=5, sticky='ne')    
         elif clave_Buscado == "MAXAGE":
             self._btnDir = False
@@ -1233,6 +1247,7 @@ class Desviacion(ttk.Frame):
             self.DESV_btnCommand.grid_forget()
             self.DESV_btnIdrsa.grid_forget()
             self.DESV_btnAccount.grid(row=2, column=1, padx=5, pady=5, sticky='ne')  
+            self.DESV_btnRecortar.grid(row=2, column=2, padx=5, pady=5, sticky='ne')  
         else:
             self._disabled_buttons()   
     
@@ -1498,6 +1513,7 @@ class Desviacion(ttk.Frame):
         self.DESV_btnAccount.grid_forget()
         self.DESV_btnCommand.grid_forget()
         self.DESV_btnIdrsa.grid_forget()
+        self.DESV_btnRecortar.grid_forget()
     
     def _cargar_Modulos(self):
         idx = app.ClientVar.get()
@@ -1655,7 +1671,7 @@ class Desviacion(ttk.Frame):
             text='MODULO', 
             #width=10,
         )
-        self.DESVfr2_lblModulo.grid(row=0, column=0, padx=5, pady=5, sticky='new', columnspan=3)
+        self.DESVfr2_lblModulo.grid(row=0, column=0, padx=5, pady=5, sticky='new', columnspan=4)
         ## --- Descripcion
         self.DESVfr2_lblDescripcion = ttk.Label(
             self.DESV_frame2,
@@ -1665,7 +1681,7 @@ class Desviacion(ttk.Frame):
             background='#f1ecc3',
             foreground='gray55'
         ) 
-        self.DESVfr2_lblDescripcion.grid(row=1, column=0, padx=5, pady=5, sticky='new', columnspan=3)
+        self.DESVfr2_lblDescripcion.grid(row=1, column=0, padx=5, pady=5, sticky='new', columnspan=4)
         ## --- Comprobacion
         self.DESVfr2_lblComprobacion = ttk.Label(
             self.DESV_frame2, 
@@ -1690,6 +1706,7 @@ class Desviacion(ttk.Frame):
             command=self.abrir_SERVICE,
             style='TOPS.TButton'
         )
+        
         self.DESV_btnAuthorized = ttk.Button(
             self.DESV_frame2,
             text='Authorized',
@@ -1699,6 +1716,17 @@ class Desviacion(ttk.Frame):
             command=self.abrir_AUTHORIZED,
             style='TOPS.TButton'
         )
+
+        self.DESV_btnRecortar = ttk.Button(
+            self.DESV_frame2,
+            text='Recortar',
+            #compound='left',
+            image=self.recortar_icon,
+            state='enabled',
+            command=self.abrir_AUTHORIZED,
+            #style='TOPS.TButton'
+        )
+
         self.DESV_btnAccount = ttk.Button(
             self.DESV_frame2,
             text='Account',
@@ -1708,6 +1736,7 @@ class Desviacion(ttk.Frame):
             command=self.abrir_ACCOUNT,
             style='TOPS.TButton'
         )
+
         self.DESV_btnCommand = ttk.Button(
             self.DESV_frame2,
             text='Command',
@@ -1737,7 +1766,7 @@ class Desviacion(ttk.Frame):
             selectbackground='lightblue',
             state='disabled',
         )
-        self.DESVfr2_srcComprobacion.grid(row=3, column=0, padx=5, pady=5, sticky='new', columnspan=3)
+        self.DESVfr2_srcComprobacion.grid(row=3, column=0, padx=5, pady=5, sticky='new', columnspan=4)
         self.varComprobacion = "COMPROBACION"
         self.DESV_btn1Expandir = ttk.Button(
             self.DESV_frame2,
@@ -1745,7 +1774,7 @@ class Desviacion(ttk.Frame):
             state='disabled',
             command=lambda x=self.DESVfr2_srcComprobacion:self.expandir(x, self.varComprobacion),
         )
-        self.DESV_btn1Expandir.grid(row=2, column=2, padx=(5,20), pady=5, sticky='ne')
+        self.DESV_btn1Expandir.grid(row=2, column=3, padx=(5,20), pady=5, sticky='ne')
         ## --- BACKUP
         self.DESVfr2_lblBackup = ttk.Label(
             self.DESV_frame2, 
@@ -1767,7 +1796,7 @@ class Desviacion(ttk.Frame):
             selectbackground='lightblue',
             state='disabled',
         )
-        self.DESVfr2_srcBackup.grid(row=5, column=0, padx=5, pady=5, sticky='new', columnspan=3)
+        self.DESVfr2_srcBackup.grid(row=5, column=0, padx=5, pady=5, sticky='new', columnspan=4)
         
         self.varBackup = "BACKUP"
         self.DESV_btn2Expandir = ttk.Button(
@@ -1776,7 +1805,7 @@ class Desviacion(ttk.Frame):
             state='disabled',
             command=lambda x=self.DESVfr2_srcBackup:self.expandir(x, self.varBackup),
         )
-        self.DESV_btn2Expandir.grid(row=4, column=1, padx=(5,20), pady=5, sticky='nse', columnspan=2)
+        self.DESV_btn2Expandir.grid(row=4, column=1, padx=(5,20), pady=5, sticky='nse', columnspan=3)
         ## ======================== FRAME 3 ========================================= ##
         ## --- EDITAR
         self.DESVfr3_lblEditar = ttk.Label(
@@ -1805,7 +1834,7 @@ class Desviacion(ttk.Frame):
             state='disabled',
             command=lambda x=self.DESVfr3_srcEditar:self.expandir(x, self.varEditar),
         )
-        self.DESV_btn3Expandir.grid(row=0, column=1, padx=(5,20), pady=5, sticky='nse', columnspan=3)
+        self.DESV_btn3Expandir.grid(row=0, column=1, padx=(5,20), pady=5, sticky='nse', columnspan=4)
         ## --- REFEESCAR
         self.DESVfr3_lblRefrescar = ttk.Label(
             self.DESV_frame3, 
@@ -2079,14 +2108,14 @@ class Aplicacion():
             relief='sunke',
             borderwidth=1,
             anchor="center",
-            padding=7,
-            font=('Source Sans Pro', 13, font.BOLD), 
+            #padding=7,
+            font=('Source Sans Pro', 12, font.BOLD), 
         )
         self.style.map(
             'TOPS.TButton',
             background=[("active","#FAD586")],
             foreground=[("active","#C64756")],
-            padding=[("active",7)],
+            #padding=[("active",3)],
             relief=[("active",'ridge'),("pressed",'groove')],
             borderwidth=[("active",1)],
         )
@@ -2094,7 +2123,7 @@ class Aplicacion():
             'TOP.TLabel',
             background = "#F9F3DF",
             foreground = "#A45D5D",
-            font=('Source Sans Pro',12, font.BOLD)
+            font=('Source Sans Pro',14, font.BOLD)
         )
         ## ===============================================================================
         self.style.configure(
@@ -2118,11 +2147,13 @@ class Aplicacion():
                             background = "#D4ECDD",
                             relief='sunke',
                             borderwidth=1,
-                            padding=7,
+                            #padding=7,
+                            font=('Source Sans Pro', 12, font.BOLD)
                             )
         self.style.map('TButton',
-                            background = [("active","#F6D167")],
-                            padding=[("active",7),("pressed",5)],
+                            background=[("active","#FAD586")],
+                            foreground=[("active","#C64756")],
+                            #padding=[("active",7),("pressed",5)],
                             relief=[("active",'ridge'),("pressed",'groove')],
                             borderwidth=[("active",1)],
                             )

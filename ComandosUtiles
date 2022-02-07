@@ -1,0 +1,48 @@
+/*
+cat /etc/passwd | while read line; do cut -d: -f 1,7 | egrep -v "/bin/false|/sbin/nologin" |cut -d: -f1 | while read sline; do echo -n "$sline|" | read variable;done|cat /etc/shadow | egrep --color=always "$variable" |cut -d: -f1,2,5 | grep -v 90;done
+*/
+
+COPIAS
+/*
+- copiar a un servidor
+	scp -r /home/esy9d7l1/packages/ESY9D7L1  esy9d7l1@158.98.41.236:/home/ESY9D7L1/pack
+- copiar desde un servidor	
+	scp -r -P 22 esy9d7l1@129.39.137.82:/home/ESY9D7L1 .
+*/
+
+REMPLAZAR EXTENSION
+/*
+for f in *.txt;do mv -- "$f" "${f%.txt} "; done
+*/
+
+ZIPEAR
+/*
+tar -cvf /home/ESY9D7L1/RHEL-ITSSCSD_510.tar /var/opt/ansible/GTS/__GCM/RHEL-ITSSCSD_510/
+*/
+
+DESCOMPRIMIR
+
+/*
+tar -xvf parches_15122021.tar
+*/
+
+EDITAR
+/*
+## mostrar numero de linea al editar
+vim fichero
+:set number
+
+## ver resultado con su numero de linea
+cat fichero | grep -n 'opcion'
+*/
+
+REINICIAR VIRTUAL
+/*
+sudo virsh net-start default
+*/
+
+ 
+SACAR CUENTAS QUE NO EXPIRAN LA PASSWD 
+/*
+cat /etc/shadow | cut -d: -f1,2,5 | grep  ':90' | egrep -v "\*|\!\!|\!" | gawk -F: '{ print $1 }' >> maxage.txt;cat maxage.txt | while read tt; do cat /etc/passwd | grep $tt|awk -F: '{ print $1":"$5 }' >> label.txt;done;echo "";awk -F "/" '{ if ($2=="E") { print "Account "$1" has invalid Password Min Age setting of 0, should be set to Customer Required Setting: 1. Account Type : EXTERNO" } else if ($2=="C")  { print "Account "$1 " has invalid Password Min Age setting of 0, should be set to Customer Required Setting: 1. Account Type : CUSTOMER" } else if ($2=="F") { print "Account " $1 " has invalid Password Min Age setting of 0, should be set to Customer Required Setting: 1. Account Type : IBM" } else if ($2=="S") print "Account " $1 " has invalid Password Min Age setting of 0, should be set to Customer Required Setting: 1. Account Type : APLICATIVO" } ' label.txt;echo "";rm -f maxage.txt;rm -f label.txt
+*/

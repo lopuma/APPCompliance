@@ -1112,7 +1112,8 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "directory=\"/opt/tivoli/tsm/client/\""
+        "directory=\"/opt/tivoli/tsm/client/\"",
+        "fileOPT=\"/opt/tivoli/tsm/client/\""
       ],
       "SO": "Linux"
     },

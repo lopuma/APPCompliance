@@ -1,0 +1,4 @@
+Account aotipat1 has invalid Password Max Age setting of null, should be set to Customer Required Setting: 90. More secure value can be set. Account Type: ibm.
+Account root has invalid Password Max Age setting of 99999, should be set to Customer Required Setting: 90. More secure value can be set. Account Type: ibm.
+Account aotipat1 has invalid Password Min Age setting of 0, should be set to IBM Required Setting: 1. Account Type: IBM (Stricted Setting Validated)
+Account root has invalid Password Min Age setting of 0, should be set to IBM Required Setting: 1. Account Type: IBM (Stricted Setting Validated)

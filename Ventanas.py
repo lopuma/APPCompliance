@@ -239,8 +239,9 @@ class Ventana(ttk.Frame):
                             self.lbl3['text'] = "INFORMACION"
                             self.lbl4['text'] = "VARIABLES"
                         self.srcVariable.insert(END,variables)
-                        self.lbl_SO['text'] = md['SO']
-        self.cbxUser.set('CONTACTOS')
+                        self.lbl_SO['text'] = "S.O : "+md['SO']
+                        user = str(md["user"]).replace("[","").replace("]","").replace("'","")
+                        self.cbxUser.set(user)
     
     def limpiar_widgets(self):
         self.lbl_SO['text'] = "SISTEMA OPERATIVO"
@@ -722,6 +723,7 @@ class Ventana(ttk.Frame):
         self.cbxUser.config(
             font=("Consolas",14,font.BOLD), 
             justify='center',
+            foreground='#D9534F'
         )
         self.cbxUser.set('CONTACTOS')
         self.cbxUser.grid(row=3, column=2, padx=5, pady=5, ipady=7, sticky='new')
