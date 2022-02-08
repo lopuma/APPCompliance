@@ -5,10 +5,11 @@ dist/
 build/
 /home/esy9d7l1/Compliance/.gitconfig
 /home/esy9d7l1/Compliance/.gitignore
-/Compliance.py
+Compliance.py
 /home/esy9d7l1/Compliance/*.spec
 /home/esy9d7l1/Compliance/GUI.code-workspace
 /home/esy9d7l1/Compliance/descripciones.txt
 /home/esy9d7l1/Compliance/nohup.err
 /home/esy9d7l1/Compliance/nohup.out
 /home/esy9d7l1/Compliance/resultado.txt
+*.log
