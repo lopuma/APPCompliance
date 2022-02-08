@@ -63,8 +63,10 @@ OPCION ➡ 2. //Los ficheros de OS deben estar rotando.
            /etc/passwd                                | /etc/passwd
            /etc/group                                 | /etc/group
         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
-"Deben existir
-"Linux: 
+
+// Deben existir
+// Linux: 
+
 ls -la /var/log/secure /var/adm/sudo.log /var/log/messages /var/log/cron /var/log/wtmp
 
 "Aix / Vios: 
