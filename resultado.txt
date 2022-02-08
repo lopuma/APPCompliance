@@ -1,4 +1,0 @@
-chsec -f /etc/security/user -s aotipat1 -a minlen
-chsec -f /etc/security/user -s root -a minlen
-chsec -f /etc/security/user -s aotipat1 -a minlen
-chsec -f /etc/security/user -s root -a minlen
