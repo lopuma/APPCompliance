@@ -1,0 +1,123 @@
+////////////////////////////////////////////////////////////////////////////////////////////
+OS HMCipBase - Issue REF : 705523 / PRE 11
+
+/**********************************************************************************************************************************/
+BB.1.1.1 Password Requirements	Complex passwords	"Set the 'Enforce Strict Password Rules' checkbox for each user. 
+
+"N/A - This does not exist as of HMC V7"
+
+"Nota: este valor no es aplicable en el usuario root , hscroot, o hscpe. 
+"Con la Versión 7 release 3.4.0 
+
+"	Yes. (como no existe checkbox en el linux, se pone automáticamente,no hay que comprobar nada)
+
+"N/A Version
+lshmc -V
+
+/**********************************************************************************************************************************/
+BB.1.1.2 Password Requirements	Password expiration
+
+lshmcusr|grep -v pwage=90
+
+"YES: Si todos los usuarios tienen pwage=90 excepto root y hscroot > Caso contrario: Users with pwage=99999: (name=y97030,name=Y97032)
+
+"Wrong account nom expire password, is recomended 90 days
+
+name=es082027
+name=esy9dj0n
+name=esy9dcpj
+name=ess01020
+name=esy9drcb
+name=esy9dwks
+name=es082009
+name=ess01033
+name=es086075
+name=esy9ceeg
+name=esy9djb2
+name=esy9ceee
+name=es082062
+name=es021317
+name=esy9d773
+name=esy9cpkd
+name=es010503
+name=esy9d7l1
+name=esy9c0dj
+name=es086472
+name=ess01014
+name=es023501
+name=ess01012
+name=ess01011
+name=ess01041
+name=esy9ceas
+name=esy9bx34
+name=es087922
+name=ess01028
+
+"todos los usuarios tienen pwage=90 excepto root y hscroot"
+
+/**********************************************************************************************************************************/
+BB.1.1.3 Password Requirements	Individual Accountability
+
+"Cada usuario debe iniciar sesión con los ID de usuario individuales. Estos pueden tener el rol hmcsuperadmin. hscroot se puede utilizar donde se mantiene la responsabilidad individual.
+
+
+lshmcusr | grep -v ",taskrole=hmcsuperadmin,"
+
+"Wrong account taskrole=hmcsuperadmin, is recomended
+
+name=esR01198, 
+name=es023501, 
+name=es010503, 
+name=es021317, 
+
+"todos los usuarios tienen que tener el rol hmcsuperadmin
+/**********************************************************************************************************************************/
+BB.1.1.6 Password Requirements	Password Length	15
+
+lspwdpolicy -t p
+
+"ahi te pone el active=1, en el campo min_length si es 8 es NO"
+
+"Wrong Password Length=8, requerid 15"
+/**********************************************************************************************************************************/
+BB.1.2.6 Logging 	Synchronized system clocks	
+"Enable xntpd and add a time server	
+"Keep system clocks synchronized with a common reference time source to improve log accuracy
+
+lshmc -r
+lshmc -r -Fxntp
+
+"ahi te pone el campo xntp si es disabled es NO"
+
+"Wron parametro xntp=disable, is enable Recommended Setting "Enable xntpd and add a time server""
+/**********************************************************************************************************************************/
+BB.1.5.1 Network Settings
+BB.1.5.2 Network Settings
+BB.1.5.3 Network Settings
+BB.1.5.4 Network Settings
+
+"N/A Do not install
+"N/A TFTP is disabled 
+"N/A Do not install as an NFS server.
+"N/A Never activate or install
+
+
+https://www.ibm.com/support/pages/hmc-firewall-information
+/**********************************************************************************************************************************/
+BB.2.0.1 Business Use Notice 	Business use notice
+
+"Display business use notice in "Welcome Text" 
+
+"segun la versión una u otra pregunta (lshmc -V)
+	cat /etc/motd
+	echo $RLOGIN_MESSAGE
+lsusrtca  -t b
+
+/**********************************************************************************************************************************/
+BB.2.1.3 Encryption	Data Transmission	
+"Meet the minimum bit length value specified in the base policy
+
+cat /etc/ssh/sshd_config | grep -i protocol
+
+"debe ser protocol 2
+/**********************************************************************************************************************************/

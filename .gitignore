@@ -4,7 +4,6 @@ __pycache__/
 dist/
 compliance.spec
 build/
-extracion/
 GUI.code-workspace
 .gitconfig
 .gitignore

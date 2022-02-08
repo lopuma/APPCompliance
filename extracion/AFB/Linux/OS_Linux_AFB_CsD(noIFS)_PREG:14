@@ -1,0 +1,371 @@
+///////////////////////////////////////////////////////////////////////////////////////
+OS LINUX AFB CSD (noIFS) - Issue REF : 769512 / PREG 14
++-------------------------------------------------------------------------------------+
+---IZ.1.1.4.7 Password Requirements
+"For the password facility, ensure pam modules are in correct order.
+
+//Hay que revisar el orden del pam_cracklib.so or pam_pwquality, debe ser superior a pam_pwhistory.so, seguido de pam_unix.so , y último pam_deny.so"
+
+cat /etc/pam.d/system-auth | grep -i password
+
+//EJEMPLO
+#"password    required      pam_cracklib.so O pam_pwquality
+#"password    sufficient    pam_unix.so
+#"password    required      pam_deny.so
+
+cat /etc/*release
+
+"*/
+"Si es Rehl 7 superior, se revisa tambien en password-auth"
+
+cat /etc/pam.d/password-auth | grep -i password
+
+/* CONTESTAR YES  */ : "Si existe solo pam_cracklib O pam_pwquality, solo debe haber un modulo"
+
+/* CONTESTAR NO   */ : "Si no existe ningun de los 2 modulos mencionados o los 2 modulos por igual, o en distinto orden"
+
+/* NO  */ : "On /etc/pam.d/system-auth and /etc/pam.d/password-auth , you have configured pam_cracklib.so and pam_pwquality, only 1 must exist, if you cannot cause configuration problems.
+
+/* NO */ : "There are two entries in /etc/pam.d/password-auth, pam_cracklib.so and pam_pwquality, only one allowed entry must be configured.
++-------------------------------------------------------------------------------------+
+---IZ.1.1.7.1 Password Requirements
+"ROOT
+
+grep root /etc/shadow| cut -d ":" -f1,2,4,5
+
+/* CONTESTAR YES */ : " Si el usuario root tiene pw asignado y expira.
+
+/* CONTESTAR NO  */ : " Si root tiene passwd asignada y no expira.
+
+/* NO */ : "Account root has invalid Password Max Age setting of 99999  should be set to Customer Required Setting: 90. More secure value can be set.",
++-------------------------------------------------------------------------------------+
+---IZ.1.2.1.4.3 Logging	
+"Login success or failure, logs created secure by default.
+
+"Primero hay que verificar el umask, si no da resultado" // CONTESTAR YES
+
+grep umask /etc/rsyslog.conf /etc/rsyslog.d/*.conf | sort -V
+
+"*/
+
+"Si al lanzar UMASK muestra resultado, la siguiente linea debe ser $FileCreateMode 640 o mas restrictivo" // CONTESTAR YES
+
+grep -i 'FileCreateMode' /etc/rsyslog.conf /etc/rsyslog.d/*.conf
+
+"*/
+
+/* CONTESTAR NO */ : " en otro caso.
++-------------------------------------------------------------------------------------+
+SISTENAS LINUX / POLITICA OS / 90 DIAS
++-------------------------------------------------------------------------------------+	
+			/* POLITICA OS - OS LINUX */ 
+
+---AD.1.2.6 Logging	
+"Log record retention time frame.
+
+//Para la rotacion de archivos de registros de seguridad se revisa 2 cosas.
+	OPCION ➡ 1.- La rotacion que debe ser 90 dias.
+	OPCION ➡ 2.- El/Los fichero(s) de registro deben estar rotando.	
+
+#OPCION ➡ 1. - "La rotacion que debe ser 90 dias."#
+//Saber que sistema de rotacion USA, existen 3 OPCIONES
+
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1. "#-> LOOGKEEPER <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	//Si esta definido en el crontab
+	crontab -l|grep -v ^#|grep logkeeper
+
+	//Ejecutamos un -s del comando que nos devuelve
+	"Ejemplo
+	/usr/util/seguridad/logkeeper -s
+
+	//Mirar que los valores "$trim_retention_days, $backups_retention_days, " sean 90
+
+	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim_retention_days|backups_retention_days"
+
+	// -> si no funciona "LOGKEEPER" mirar Logrotate<-#
+
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2. "#-> LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	ls -la /etc/logrotate.conf
+
+	// La rotacion debe esta definida en semanas 'weekly' a 13:
+	cat /etc/logrotate.conf | head -10
+
+	//#->si no funciona mirar sin LOGKEEPE&sin LOGROTATE<-#
+
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3. "#-> sin LOGKEEPER && sin LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+
+#OPCION ➡ 2.- "El/Los fichero(s) de registro deben estar rotando."#
+//Saber que SO estamos revisando "dependeran los ficheros", ya sea Linux o Aix
+
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+          |                                             |
+          | - Os / Linux                                |
+          |---------------------------------------------|
+          | /var/log/secure "*INFORMACION DE AUTENT."   |
+          | /var/adm/sudo.log "LOG`S INDIVIDUALES"      |
+          | /var/log/messages "*MENSAJES DEL SISTEMAS"  |
+          | /var/log/cron "*INF. INICIO DE TAREAS"      |
+          | /var/log/wtmp "*INF. DE LOS LOGUEOS"	|
+        ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+"Deben existir"#
+//Linux:
+ls -la /var/log/secure /var/adm/sudo.log /var/log/messages /var/log/cron /var/log/wtmp
+
+// Debe existir una entrada del fichero de registro en la rotacion(OPCION ➡ 1. LOGKEEPER):
+
+	//Muestra resumen de la configuracion en LOGKEEPER	
+	/usr/util/seguridad/logkeeper -s
+
+	
+	//La rotacion de log se define en el fichero de configuracion
+	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim|backup|secure|messages|sudo.log|cron|wtmp"
+
+	//EJEMPLO debe estar implementado:
+	"$Trim a 90
+	"@backups = /var/log/messages, /var/log/secure, /var/adm/sudo.log, /var/log/cron, /var/log/wtmp
+
+	//O si ejecuta en rotalogs con job de control.
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -v "^#"|grep -i logkee
+	"Debe existir /usr/local/bin/tareas/logkeeperalt.cfg en el codigo que se ejecuta.
+
+// Debe existir una entrada del/los fichero(s) de registro en la rotacion(OPCION ➡ 2. LOGROTATE):
+
+	cat /etc/logrotate.conf | egrep -i "secure|messages|sudo.log|cron|wtmp" -A5 --color=always
+
+	//Si la configuracion de rotado para sudo, no existe en logrotate.conf, debe estar implementado en syslog
+	cat /etc/logrotate.d/* | egrep -i "secure|messages|sudo.log|cron|wtmp" -A7 --color=always
+
+
+
+/* CONTESTAR YES */ : "Si la rotacion es 90 dias (13 semanas) y existen los ficheros de registro y estan rotando"
+
+/* CONTESTAR NO   */ : " Si la rotacion no es de 90 dias (13 semanas), o los ficheros de rotatos no existen o no estan rotando"
+		       
+		       " Current rotation is '4' 'weeks' should be set to '13' 'weeks'.
+		       " The file: '/var/log/cron.log', does not exist.
+		       " The file: '/var/adm/sudo.log', exists, but is not rotating in '/etc/logrotate.conf'.
++-------------------------------------------------------------------------------------+
+---IZ.1.4.6.6 System Settings	
+"Login shell which supports time out
+
+//primero declarar una variable con las shell a comprobar
+
+Shells='/bin/csh|/bin/tcsh|/bin/sh|/bin/ksh|/bin/bash|/bin/sh|/bin/false|/sbin/nologin|/usr/bin/sh|/usr/bin/bash|/usr/sbin/nologin|/bin/ksh93|/usr/bin/ksh|/usr/bin/rksh|/usr/bin/ksh93|'
+
+//Segundo debemos comprobar que cada shell que retorna por usuario, soporten la funcion de TMOUT O autologout
+
+"NOTA : HAY QUE COPIAR EL SIGUIENTE CODIGO ENTERO.
+
+// El script muestra todas aquellas cuentas con su shell definida, las shell que aparecen son las que no estan definida por defecto en la variable Shells, Y son las que debemos comprobar si soportan TMOUT o autologout.
+
+cat /etc/passwd | egrep -v '^sync:.*:/bin/sync\s*$|^halt:.*:/sbin/halt\s*$|^shutdown:.*:/sbin/shutdown\s*$' |
+while read ENTRY
+do
+SHELL=$(echo $ENTRY | awk -F: '{printf $7"\n"}')
+Uid=$(echo $ENTRY | awk -F: '{printf $1"\n"}')
+[[ "$SHELL" != @($Shells) ]] && printf " AVISO: Verify shell da soporte a la función de autologo/TMOUT ID: \'$Uid\' -- SHELL: \'$SHELL\'\n"
+done
+
+
+/* CONTESTAR YES */ : "Si retorna vacio. o si retorna alguna shell y tiene autologout o TMOUT"
+
+/* CONTESTAR NO */ : "Si la shell que retorna, no soporta la funcion de autologout / TMOUT"
++-------------------------------------------------------------------------------------+
+---IZ.1.5.9.24.4.1 Network Settings
+
+"Configure vsftpd service where secure ftp is permitted. Purchased Cert. Option 1
+"Si vsftpd esta activo ver recommended settings"
+
+systemctl status vsftpd
+systemctl list-units --all --state=active | grep -i vsftpd
+
+
+##Configuracion de recommended settings
+"El archivo /etc/vsftpd/vsftpd.conf # debe existir con permisos de 600, si vsftpd es activo.
+ls -l /etc/vsftpd/vsftpd.conf
+
+"Y debe contener las siguiente configuraciones ver recommended settings"
+cat /etc/vsftpd/vsftpd.conf | grep -v '^\s*#' | egrep 'ssl_enable|allow_anon_ssl|force_local_|ssl_|rsa_'
+
+" y los archivos rsa_ * existen y tienen permisos de 600.
+"rsa_cert_file=/etc/pki/tls/certs/$pemFileName
+"rsa_private_key_file=/etc/pki/tls/private
+
+ls -l /etc/pki/tls/certs/$pemFileName
+ls -l /etc/pki/tls/private/$keyFileName
+
+/*CONTESTAR YES */ : " SI ESTA ACTIVO vsftpd, y al revisar LA CONFIGURACION ES CORRECTA"
+
+/*CONTESTAR N/A */ : " SI vsftpd NO ESTA ACTIVO"
+
+/* N/A */            " Unit vsftpd.service could not be found"
++-------------------------------------------------------------------------------------+
+---IZ.1.5.9.24.4.2 Network Settings
+
+"Configure vsftpd service where secure ftp is permitted. Self-signed. Option 2
+
+//Lo mismo que ---IZ.1.5.9.24.4.1 Network Settings"
+
+/*CONTESTAR N/A */ : "SI vsftpd NO ESTA ACTIVO"
+
+/* N/A */            " Unit vsftpd.service could not be found"
++-------------------------------------------------------------------------------------+
+---IZ.1.5.13.1 Network Settings
+"Ensure core dumps are restricted
+
+/*
+"Set 'hard core' ulimit to '0'.
+"O
+"Set fs.suid_dumpable to '0'.
+*/
+
+sysctl fs.suid_dumpable
+grep ""fs\.suid_dumpable"" /etc/sysctl.conf /etc/sysctl.d/*.conf | sort -V
+
+*/
+
+"SI fs.suid_dumpable to 0" // CONTESTAR YES, no se revisa nada mas
+
+//En caso contrario revisar que cumpla una de las 3 opciones siguientes "
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1.: Ulimit a traves del archivo de configuracion:
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	" CONTESTAR YES si esta definido en /etc/security/limits.conf"
+
+	cat /etc/security/limits.conf  | egrep -i "hard|core|ulimit"
+	egrep -i "hard|core|ulimit" /etc/security/limits.conf /etc/security/limits.d/* | sort -V
+
+	"*/
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2.: Configuracion Ulimit via perfiles.
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	" CONTESTAR YES si está definido ulimit a 0, en la configuracion de profile o en archivo personalizado disable-coredumps.sh "
+
+	cat  /etc/profile | egrep -i "hard|core|ulimit"
+	cat  /etc/profile.d/disable-coredumps.sh
+
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3.: Ulimit a traves de systemd 
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	" CONTESTAR YES si systemd-coredump service esta activo y la configuracion es correcta
+
+	cat /etc/services | egrep -i "systemd|coredump"
+	systemctl status systemd-coredump
+	systemctl list-units --all --state=active | grep -i coredump
+
+	"Revisar la siguente configuracionScheduleApprover
+	"Deben existir estos fichero y dentro debe estar configurado Storage=none, ProcessSizeMax=0
+
+	ls -la /etc/systemd/coredump.conf 
+	ls -la /etc/systemd/coredump.conf.d/*.conf 
+	ls -la /run/systemd/coredump.conf.d/*.conf 
+	ls -la /usr/lib/systemd/coredump.conf.d/*.conf
+
+	"*/
+
+	grep Storage /etc/systemd/coredump.conf /etc/systemd/coredump.conf.d/*.conf /run/systemd/coredump.conf.d/*.conf /usr/lib/systemd/coredump.conf.d/*.conf
+
+	"*/
+
+	grep ProcessSizeMax /etc/systemd/coredump.conf /etc/systemd/coredump.conf.d/*.conf /run/systemd/coredump.conf.d/*.conf /usr/lib/systemd/coredump.conf.d/*.conf
+
+	"*/
++-------------------------------------------------------------------------------------+
+---IZ.1.5.13.2 Network Settings
+"Ensure address space layout randomization (ASLR) is enabled
+
+//Debe existir" kernel.randomize_va_space = 2
+
+sysctl kernel.randomize_va_space
+grep randomize_va_space /etc/sysctl.conf /etc/sysctl.d/*.conf | sort -V
+
+"CONTESTAR YES */ : " Si existe la entrada kernel.randomize_va_space = 2
++-------------------------------------------------------------------------------------+
+---IZ.1.8.12.8 Protecting Resources - OSRs
+"gpgcheck
+
+//Debe ser gpgcheck=1
+
+cat /etc/yum.conf | grep -i "gpgcheck"
+grep -i "^gpgcheck" /etc/yum.repos.d/*
+
+"*/
+"debe devolver nada o gpgcheck=1"
+
+"CONTESTAR YES */ : " Si existe la entrada gpgcheck=1
+
+// Establecer gpgcheck= 1 en /etc/yum.conf, no alterar temporalmente en /etc/yum.repos.d.
++-------------------------------------------------------------------------------------+
+---IZ.1.8.23.1 Protecting Resources - mixed
+" Ensure sticky para todos los directorios que tengan 777.
+
+/*
+
+Establecer el bit de permanencia (t) en directorios grabables en el mundo impide que los usuarios supriman o renombren los archivos de ese directorio que no son propiedad de ellos.
+Nota: la intención de esta regla es aplicar a todos los directorios grabables en todo el mundo, OSR, no OSR y Recursos de usuario que se encuentran en sistemas de archivos locales.
+
+*/
+
+// Buscar todos los directorios que tengan permisos 777 y deben tener un STICKY BIT
+
+// Muestra el numero total de directorios que ecuenta con 777
+
+find / -type d -perm -o=wx -u=t | wc -l
+
+// Lista los directorios que tenga 777, y hay que revisar que tengan STICKT BIT (t)
+
+find / -type d -perm -o=wx | xargs -l ls -ld
+
+/* CONTESTAR YES */ : " Si todos los directorios que muestra tienen sticky bit
++-------------------------------------------------------------------------------------+
+---IZ.1.9.1.3 Protecting Resources - User Resources
+" /etc/profile.d/IBMsinit.sh
+---IZ.1.9.1.4 Protecting Resources - User Resources
+" /etc/profile.d/IBMsinit.csh
+
+//Deben existir y contener la configuracion de Recommended Setting"
+
+cat /etc/profile.d/IBMsinit.sh
+cat /etc/profile.d/IBMsinit.csh
+
+/* CONTESTAR YES */ : "Si la configuracion de los ficheros son correctas."
+
+/* CONTESTAR NO  */ : "Si la configuracion de cada fichero no es correcta."
+
+/*NO*/                          "does not exist the file /etc/profile.d/IBMsinit.xx and neither the recommended configuration"
+
+				" File /etc/profile.d/IBMsinit.sh must exist, be readable by all users, and contain at least: ""if [ $UID -gt 199 ]; then""\n""umask 077""\n""fi""
+
+				" File /etc/profile.d/IBMsinit.csh must exist, be readable by all users, and contain at least: ""if ($uid > 199) then""\n""umask 077""\n""endif""
++-------------------------------------------------------------------------------------+
+---IZ.C.6.2.6 User and Group Settings 	
+"Ensure root PATH Integrity in the default root environment
+
+"El usuario "root" puede ejecutar cualquier comando en el sistema y podría ser engañado para ejecutar programas sin querer si el "PATH" no está correctamente establecido.
+
+echo $PATH
+
+
+"Estan definidos los binarios a ejecutar, debemos hacer un ls y ver si son de root, deben no tener escritua en other, ni en grupo.
+ls -ld  /usr/local/sbin
+ls -ld  /usr/local/bin
+ls -ld  /sbin
+ls -ld  /bin
+ls -ld  /usr/sbin
+ls -ld  /usr/bin
+ls -ld  /root/bin
+
+"Si no existe tambien es un YES.
+
+/* CONTESTAR YES */ : "Si existen o no, y son propietario de root"
++-------------------------------------------------------------------------------------+
+///////////////////////////////////////////////////////////////////////////////////////
+

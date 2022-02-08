@@ -1,0 +1,180 @@
+////////////////////////////////////////////////////////////////////////////////////////////
+OS Aix INFRA ITSS(noIFSnoPHI) - Issue REF : 757087 / PRE 11
+
+✍
++--------------------------------------------------------------------------------------------------------------+
+---E.1.4.1 System Settings
+"TMOUT environment variable in /etc/profile
+
+egrep 'TMOUT' /etc/profile
+
+"retorna:
+export TMOUT=$X
+or
+TMOUT=$X
+
+"Si la exportación también exporta otra variable, eso es aceptable. 
+"También se puede especificar un tiempo mayor que 0 pero menor que $X.  
+"Sustituya $X por el valor adecuado de la columna de valores recomendados.
+
+"   Se puede especificar un intervalo de tiempo más corto. 
+"	- para servidores PCI, sustituya $X por 15 m, or  900 s
+"	- para los servidores GDPR, sustituya $X por 30 m, or 1800 s 
+"	- para los servidores HIPAA, sustituya $X por 130 m, or 1800 s
+"	- todos los demás servidores, sustituir $X por 6 hours, or 21600 s 
+
+"Si un servidor se ajusta a varias categorías, utilice el tiempo más breve aplicable. 
+
+/* CONTESTAR YES  */ : " Si tiene un TMOUT en /etc/profile"
++--------------------------------------------------------------------------------------------------------------+
+---E.1.4.2 System Settings	
+"TMOUT environment variable in /etc/tsh_profile
+
+"TMOUT, no debe estar definido mas de una vez, DEBE ESTAR en /etc/profile
+
+set | grep -i OUT
+cat /etc/profile | grep TMOUT
+
+/* CONTESTAR YES  */ : " Si TMOUT esta en /etc/profile"
+
+/* CONTESTAR N/A  */ : " Si el fichero : /etc/tsh_profile, no existe "
++--------------------------------------------------------------------------------------------------------------+
+---E.1.4.3 System Settings	
+"autologout in /etc/csh.login.
+
+"NOTA
+"Si csh está instalado, el archivo debe contener al menos: set autologouto=$X 
+
+"Comprobar
+"Saber que shell usa.
+echo $SHELL
+printenv SHELL
+
+"Si usa csh, ejecutar el siguiente comando.
+grep '^[^#]*autologout' /etc/csh.login
+
+/* CONTESTAR YES  */ : "Si la shell que retorna es distinta a csh. 
+		       "O si usa csh y retorna "set autologout=360"
+
+/* CONTESTAR NO   */ : " The server uses the csh shell and the file "/etc/csh.login." does not have "autologout" configured."
+
+" CONTESTAR N/A  : "The server does not use the csh shell."
++--------------------------------------------------------------------------------------------------------------+
+---E.1.4.4 System Settings	
+"Este archivo no necesita existir; pero si lo hace: No debe altera temporalmente el tiempo de espera para el usuario.*/
+
+"#Comprobar
+"TMOUT, no debe estar definido mas de una vez, DEBE ESTAR en /etc/profile
+ls -la /etc/security/.profile
+set | grep -i OUT
+cat /etc/profile | grep TMOUT
+
+/* CONTESTAR YES  */ : " Si TMOUT esta en /etc/profile"
+
+/* CONTESTAR N/A  */ : " Si el fichero "/etc/security/.profile" no existe "
++--------------------------------------------------------------------------------------------------------------+
+---E.1.5.2.3 Network Settings
+"Configuration of bin subdirectory of the ftp account home directory.
+---E.1.5.2.6 Network Settings
+"Configuration of other subdirectories of the ftp account home directory
+
+//Si existe la cuenta ftp anonymous habilitada, en su home, debe existir subdirectorio bin y other
+
+grep "^ftp:" /etc/passwd
+
+ls -la /home/ftp/
+
+/* CONTESTAR YES  */ : "Si no existe usuario FTP, o si existe el directorio bin, o otros subdirectios dentro del home de ftp y pertenece a root.
+
+/* CONTESTAR N/A  */ : "Si no existe una cuenta FTP, o no existe bin como subdirectorio de ftp
+/* N/A */	       " The anonymous ftp account is not enabled
++--------------------------------------------------------------------------------------------------------------+
+---E.1.5.18.1 Network Settings	
+"/etc/exports
+"Si se permite que NFS esté activo y se permite este método, el cliente debe proporcionar una lista de directorios/servidores 
+"exportados donde se permiten datos confidenciales/sensibles.
+
+lssrc -s nfsd
+
+//Si sale activo, comprobar lo siguiente::
+grep -v "^[[:space:]]*#" /etc/exports | egrep -v "sec=dh|sec=krb5|secure"
+
+// no debería devolver nada. Si se devuelve alguna exportación, compararlas con la lista proporcionada por el cliente. 
+// Si alguno de los directorios/servidores listados está presente.
+
+
+/* CONTESTAR YES  */ : " Si /etc/exports esta vacio, o tenga datos con restrinciones."
+
+/* CONTESTAR NO   */ : " File /etc/exports has invalid line: /ptfs -public,sec=sys:krb5p:krb5i:krb5:dh,rw
+		       " File /etc/exports has invalid line: /temporal -sec=sys:krb5p:krb5i:krb5:dh,rw
+
+/* CONTESTAR N/A  */ : " Si sale inoperative"
+/* N/A */              " the NFS serial is inoperative 
++--------------------------------------------------------------------------------------------------------------+
+---E.1.5.22.2 Network Settings	rlogin
+---E.1.5.22.3 Network Settings	rsh
+
+"Entry in /etc/inetd.conf must be removed or disabled
+
+egrep -i "rlogin|rsh" /etc/inetd.conf
+
+/* CONTESTAR YES  */ : " Si el resultado sale comentado (#) o esta vacio, o son redes seguras"
+
+/* CONTESTAR NO   */ : " The entry is not removed or disabled : entry rsh
+		       " The entry is not removed or disabled : entry rlogin
++--------------------------------------------------------------------------------------------------------------+
+---E.1.5.22.4 Network Settings	
+"sendmail to be disabled.
+
+"Entry in /etc/rc.tcpip must be removed or disabled.
+
+grep "^#*start[[:blank:]]/usr/.*/sendmail" /etc/rc.tcpip
+
+/* CONTESTAR YES  */ : " Si sale comentado o vacio.
++--------------------------------------------------------------------------------------------------------------+
+---E.C.1.1.2 Permissions and Ownership
+"La escritura de grupo y a other no están permitidos en los directorios del ejecutable $PATH del usuario root.
+"Para todos los directorios, incluidos los directorios padre, listados en $PATH para root deben cumplir los siguientes controles: 
+
+" OTHER y GROUP no debe escribir,  Excepción, /usr/ubc puede tener escritura de grupo.
+" Puede ser propiedad de root o bin.
+
+// Mostrar todos los directorios del ejecutable PATH de root
+echo $PATH
+
+"Excepción, /usr/ubc puede tener escritura de grupo, no debe tener escritura en other y debe ser propiedad de root o bin.
+
+// Listar y mostrar permisos de los directorios.
+"Ejemplo
+ls -ld /usr/bin
+ls -ld /etc
+ls -ld /usr/sbin
+ls -ld /usr/ucb
+ls -ld /usr/bin/X11
+ls -ld /sbin
+ls -ld /usr/local/bin
+ls -ld /bin
+ls -ld /usr/lpp/X11/bin
+ls -ld /usr/etc
+ls -ld /usr/lpp/x3270/bin
+ls -ld /usr/lss/afs_check/src
+ls -ld /usr/lss/aixcops
+ls -ld /usr/lss/loglooker
+ls -ld /usr/lss/lsscmvcc
+ls -ld /usr/lss/prune_logs
+ls -ld /usr/lss/dcecops
+ls -ld /var/ifor
+ls -ld /usr/opt/ifor/ls/conf
+ls -ld /usr/local/bin
+ls -ld /usr/vac/bin
+ls -ld /usr/OV/bin
+ls -ld /usr/util
+
+
+/* CONTESTAR YES  */ : " Si cumplen los permisos, o si no existe algun fichero.
+
+/* CONTESTAR NO   */ : "Si algun directorio que esta enlazado en el PATH de root, tenga permisos de escritura para other o grupo"
+/* NO */	       " The following directories, which are as executable in the root PATH, have write permissions for GROUP, cannot set stickibit for these directories::
+directory: /var/ifor, owner/group: bin:bin, permission must r-x for group/other, assigned permission is: drwxrwxrwt 
++--------------------------------------------------------------------------------------------------------------+
+////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,0 +1,474 @@
+///////////////////////////////////////////////////////////////////////////////////////
+OS LINUX LBK ITSS(noIFSnoPHI)(Split) - Issue REF : 762558 / PREG 21
+
++-------------------------------------------------------------------------------------+
+---AD.1.1.4.7 Password Requirements
+"For the password facility, ensure pam modules are in correct order.
+
+//Hay que revisar el orden del pam_cracklib.so or pam_pwquality, debe ser superior a pam_pwhistory.so, seguido de pam_unix.so , y último pam_deny.so"
+
+cat /etc/pam.d/system-auth | grep -i password
+
+//EJEMPLO
+#"password    required      pam_cracklib.so O pam_pwquality
+#"password    sufficient    pam_unix.so
+#"password    required      pam_deny.so
+
+cat /etc/*release
+
+"*/
+"Si es Rehl 7 superior, se revisa tambien en password-auth"
+
+cat /etc/pam.d/password-auth | grep -i password
+
+/* CONTESTAR YES  */ : "Si existe solo pam_cracklib O pam_pwquality, solo debe haber un modulo"
+
+/* CONTESTAR NO   */ : "Si no existe ningun de los 2 modulos mencionados o los 2 modulos por igual, o en distinto orden"
+
+/* NO  */ : "On /etc/pam.d/system-auth and /etc/pam.d/password-auth , you have configured pam_cracklib.so and pam_pwquality, only 1 must exist, if you cannot cause configuration problems.
+
+/* NO */ : "There are two entries in /etc/pam.d/password-auth, pam_cracklib.so and pam_pwquality, only one allowed entry must be configured.
++-------------------------------------------------------------------------------------+
+---AD.1.1.6.0 Password Requirements
+"loginretries
+
+//Hay que revisar que version de REHL es: 7 o 8"
+
+cat /etc/*release
+
+"*/
+"REHL 7#
+
+cat /etc/pam.d/system-auth
+cat /etc/pam.d/password-auth
+
+"Debe existir"
+auth        required      pam_tally2.so deny=5
+account     required      pam_tally2.so
+
+//Debe ser superior a cualquier entrada del del mismo tipo de módulo, con un distintivo de control de suficiente con la excepción de pam_deny.so "
+
+"REHL 8#
+auth 	    required 	  pam_faillock.so preauth silent deny=5 unlock_time= 0
+"Debe ser superior de auth pam_unix.so'"
+auth  	    [default=die] pam_faillock.so authfail  deny=5 unlock_time=0
+"Debe ser inferior de auth pam_unix.so y superior de pam_deny.so"
+
+account     required      pam_faillock.so
+"Debe ser supeiror de su modulo"
+
+// EJEMPLO REHL8
+auth        required      pam_faillock.so preauth silent deny=5 unlock_time=0
+auth        required      pam_env.so
+auth        required      pam_listfile.so item=user sense=deny file=/etc/security/$FILENAME onerr=succeed
+auth        sufficient    pam_unix.so try_first_pass
+auth  	    [default=die] pam_faillock.so authfail  deny=5 unlock_time=0
+auth        requisite     pam_succeed_if.so uid >= 1000 quiet_success
+auth        sufficient    pam_sss.so forward_pass
+auth        required      pam_deny.so
+
+account     required      pam_faillock.so
+
+/* CONTESTAR YES  */ : "Si existen uno de los 2 parametro definidos, dependiendo la version de RHEL que tiene el sistema.
+
+/* CONTESTAR NO   */ : "Si no existen, ninguno de los 2 opciones.
+
+/* NO  */ : " It is a REHL 7, and there is no configuration of the pam_tally2.so, or the order.
+/* NO  */ : " It is a REHL 8, and there is no configuration of the pam_faillock.so, or the order.
++-------------------------------------------------------------------------------------+
+---AD.1.1.7.1 Password Requirements
+"ROOT
+
+grep root /etc/shadow| cut -d ":" -f1,2,4,5
+
+/* CONTESTAR YES */ : " Si el usuario root tiene pw asignado y expira.
+
+/* CONTESTAR NO  */ : " Si root tiene passwd asignada y no expira.
+
+/* NO */ : "Account root has invalid Password Max Age setting of 99999  should be set to Customer Required Setting: 90. More secure value can be set.",
++-------------------------------------------------------------------------------------+
+---AD.1.2.1.4.2 Logging
+"Login success or failure, logs to specified files.
+
+//Requerido para los sistemas que usan rsyslog"
+
+ls -la /etc/rsyslog.conf
+
+"Debe tener una de las 2 opciones siguientes"
+/*
+$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
+*.info;mail.none;authpriv.none;cron.none                /var/log/messages
+authpriv.*                                              /var/log/secure
+
+or (if you don't want to use global variable $ActionFileDefaultTemplate)
+
+*.info;mail.none;authpriv.none;cron.none /var/log/messages;RSYSLOG_TraditionalFileFormat
+authpriv.* /var/log/secure;RSYSLOG_TraditionalFileFormat
+*/
+
+cat /etc/rsyslog.conf |grep -v "#" |egrep "Action|secure|messages"
+
+/* CONTESTAR YES */ : " Si en /etc/rsyslog.conf encontramos: lo indicado en Recommended Setting.
+
+/* CONTESTAR N/A */ : " Si el sistema no utiliza /etc/rsyslog.conf.
+
+/* N/A */ 		"System does not use /etc/rsyslog.conf
++-------------------------------------------------------------------------------------+
+---AD.1.2.1.4.3 Logging
+
+"Login success or failure, logs created secure by default.
+
+"Primero hay que verificar el umask, si no da resultado" // CONTESTAR YES
+
+grep umask /etc/rsyslog.conf /etc/rsyslog.d/*.conf | sort -V
+
+"*/
+
+"Si al lanzar UMASK muestra resultado, la siguiente linea debe ser $FileCreateMode 640 o mas restrictivo" // CONTESTAR YES
+
+grep -i 'FileCreateMode' /etc/rsyslog.conf /etc/rsyslog.d/*.conf
+
+"*/
+
+/* CONTESTAR NO */ : " en otro caso.
++-------------------------------------------------------------------------------------+
+---IZ.1.4.6.1 System Settings	
+"/etc/profile
+
+//Relacionado con la pregunta ---IZ.1.4.6.3
+
+//Debe tener la invocacion a IBMsinit.sh
+
+cat /etc/profile | grep -i "IBMsinit.sh"
+
+/* CONTESTAR YES */ : "El archivo RETORNA una invocación de " . /etc/profile.d/IBMsinit.sh
+
+/* CONTESTAR NO  */ : "Si no retorna la invocacion.
+
+/* NO */ : " In File /etc/profile, does not  trigger an invocation of line . /etc/profile.d/IBMsinit.sh
++-------------------------------------------------------------------------------------+
+---IZ.1.4.6.2 System Settings	
+"/etc/csh.login
+
+//NOTA
+"Si CSH está instalado, deb RETORNA una invocación de" source /etc/profile.d/IBMsinit.csh
+
+//Saber que shell usa.
+
+echo $SHELL
+printenv SHELL
+ps -p "$$"
+
+// Saber las shell que estan instaladas.
+
+cat /etc/shells
+
+"Si usa CSH o esta instalada CSH, ejecutar el siguiente comando.
+
+cat /etc/csh.login | grep -i "IBMsinit.csh"
+
+/* CONTESTAR YES */ : "El archivo RETORNA una invocación de" source /etc/profile.d/IBMsinit.csh
+
+/* CONTESTAR NO  */ : "Si no retorna la invocacion"
+
+/* NO */ : " In File /etc/csh.login, does not  trigger an invocation of line . /etc/profile.d/IBMsinit.csh
+
+/* CONTESTAR N/A  */ : " The server does not use the csh shell."
++-------------------------------------------------------------------------------------+
+---IZ.1.4.6.3 System Settings
+"/etc/profile.d/IBMsinit.sh
+
+//Debe tener configurado TMOUT en /etc/profile.d/IBMsinit.sh
+
+grep '^[^#]*TMOUT' /etc/profile.d/IBMsinit.sh
+
+/* CONTESTAR YES */ : "Debe retornar:-"
+			    TMOUT=21600
+			    export TMOUT
+
+/* CONTESTAR NO  */ : " Si no tiene un TMOUT establecido.
+/* NO */ : " /etc/profile.d/IBMsinit.sh Default: Set systems to terminate a session after 21600 seconds of inactivity. File must  contain "TMOUT=21600" followed by "export TMOUT". A shorter time frame may be specified.
++-------------------------------------------------------------------------------------+
+---IZ.1.4.6.4 System Settings
+"/etc/profile.d/IBMsinit.csh
+
+//NOTA
+"Si CSH está instalado, el archivo debe contener al menos: set autologouto=$X 
+
+//Saber que shell usa.
+
+echo $SHELL
+printenv SHELL
+
+// Saber las shell que estan instaladas.
+
+cat /etc/shells
+
+"Si usa CSH o esta instalada CSH, ejecutar el siguiente comando.
+
+grep '^[^#]*autologout' /etc/profile.d/IBMsinit.csh
+
+/* CONTESTAR YES  */ : " Si la shell que retorna es distinta a csh, O si usa csh y retorna "set autologout=360"
+
+/* CONTESTAR NO   */ : " Si usa shell's 'CSH' y no esta definido autologout"
+
+/* NO */ : " /etc/profile.d/IBMsinit.csh Default: Set systems to terminate a session after 360 minutes of inactivity. File must contain "set autologout=360". A shorter time frame may be specified.
+
+/* CONTESTAR N/A  */ : " The server does not use the csh shell."
++-------------------------------------------------------------------------------------+
+---IZ.1.4.6.5 System Settings	
+"Estos archivos no necesitan existir o no altera temporalmente el tiempo de espera para el usuario, o codifica los valores de tiempo de espera adecuados tal como se indica en ---IZ.1.4.6.3 e ---IZ.1.4.6.4
+
+/etc/skel/.cshrc
+/etc/skel/.login
+/etc/skel/.profile
+/etc/skel/.bashrc
+/etc/skel/.bash_profile
+/etc/skel/.bash_login
+/etc/skel/.tcshrc 
+
+"guardamos los ficheros en una variable
+ficheros="/etc/skel/.cshrc /etc/skel/.login /etc/skel/.profile /etc/skel/.bashrc /etc/skel/.bash_profile /etc/skel/.bash_login /etc/skel/.tcshrc"
+
+"Comprobamos que sistema de cierre de seccion automatica tiene.
+grep -v '^\s*#' $ficheros 2>/dev/null | egrep 'TMOUT|autologout'
+
+/* CONTESTAR YES */ : Si no retorna nada, o si retorna "TMOUT o autologout", este deber ser los requerido en la seccion "---IZ.1.4.6.3 e ---IZ.1.4.6.4""
++-------------------------------------------------------------------------------------+
+---IZ.1.4.6.6 System Settings	
+"Login shell which supports time out
+
+//primero declarar una variable con las shell a comprobar
+
+Shells='/bin/csh|/bin/tcsh|/bin/sh|/bin/ksh|/bin/bash|/bin/sh|/bin/false|/sbin/nologin|/usr/bin/sh|/usr/bin/bash|/usr/sbin/nologin|/bin/ksh93|/usr/bin/ksh|/usr/bin/rksh|/usr/bin/ksh93|'
+
+//Segundo debemos comprobar que cada shell que retorna por usuario, soporten la funcion de TMOUT O autologout
+
+"NOTA : HAY QUE COPIAR EL SIGUIENTE CODIGO ENTERO.
+
+// El script muestra todas aquellas cuentas con su shell definida, las shell que aparecen son las que no estan definida por defecto en la variable Shells, Y son las que debemos comprobar si soportan TMOUT o autologout.
+
+cat /etc/passwd | egrep -v '^sync:.*:/bin/sync\s*$|^halt:.*:/sbin/halt\s*$|^shutdown:.*:/sbin/shutdown\s*$' |
+while read ENTRY
+do
+SHELL=$(echo $ENTRY | awk -F: '{printf $7"\n"}')
+Uid=$(echo $ENTRY | awk -F: '{printf $1"\n"}')
+[[ "$SHELL" != @($Shells) ]] && printf " AVISO: Verify shell da soporte a la función de autologo/TMOUT ID: \'$Uid\' -- SHELL: \'$SHELL\'\n"
+done
+
+
+/* CONTESTAR YES */ : "Si retorna vacio. o si retorna alguna shell y tiene autologout o TMOUT"
+
+/* CONTESTAR NO */ : "Si la shell que retorna, no soporta la funcion de autologout / TMOUT"
++-------------------------------------------------------------------------------------+
+---IZ.1.4.6.7 System Settings	
+"Restrict user selection to login shells which supports time out
+
+"Tiene relacion con la pregunta ---IZ.1.4.6.6, donde se debe utilizar un shell 'login' que dé soporte al tiempo de espera (TMOUT), las shells compatibles son
+
+/bin/sh
+/bin/bash
+/sbin/nologin
+/usr/bin/sh
+/usr/bin/bash
+/usr/sbin/nologin
+/bin/tcsh
+/bin/csh
+/bin/ksh
+/bin/rksh
+# and optionally
+/bin/false
+/bin/ksh93
+/usr/bin/ksh
+/usr/bin/rksh
+/usr/bin/ksh93
+
+"Comprobar
+
+cat /etc/shells | egrep -v "/bin/sh|/bin/bash|/sbin/nologin|/usr/bin/sh|/usr/bin/bash|/usr/sbin/nologin|/bin/tcsh|/bin/csh|/bin/ksh|/bin/rksh|/bin/false|/bin/ksh93|/usr/bin/ksh|/usr/bin/rksh|/usr/bin/ksh93"
+
+
+/* CONTESTAR YES */ : "Si en etc/shells solo tiene las shell mencionadas anterior"
+
+/* CONTESTAR NO */ : "Si retorna alguna shell que no den soporte al tiempo de espera como `/usr/bin/tmux`, `/bin/tmux`"
+
+/* NO */ : " /usr/bin/tmux Ensure that /etc/shells only allows users to select shells which support time out.
+	   " /bin/tmux Ensure that /etc/shells only allows users to select shells which support time out.
++-------------------------------------------------------------------------------------+
+---AD.1.5.9.24.4.1 Network Settings	
+"Configure vsftpd service where secure ftp is permitted. Purchased Cert. Option 1
+
+//Si vsftpd esta activo ver recommended settings
+
+systemctl status vsftpd
+systemctl list-units --all --state=active | grep -i vsftpd
+
+
+/* CONTESTAR YES */ : " Si vsftpd esta activo, y la configuracion que se pide en recommended settings es correcta .*/
+
+/* CONTESTAR N/A */ : " Si vsftpd no esta activo..*/
+
+/* N/A */ : " Unit vsftpd.service could not be found
+
+//Configuracion de recommended settings
+"El archivo /etc/vsftpd/vsftpd.conf # debe existir con permisos de 600, si vsftpd es activo.
+
+ls -l /etc/vsftpd/vsftpd.conf
+
+"Y debe contener las siguiente configuraciones ver recommended settings"
+cat /etc/vsftpd/vsftpd.conf | grep -v '^\s*#' | egrep 'ssl_enable|allow_anon_ssl|force_local_|ssl_|rsa_'
+
+" y los archivos rsa_ * existen y tienen permisos de 600.
+"rsa_cert_file=/etc/pki/tls/certs/$pemFileName
+"rsa_private_key_file=/etc/pki/tls/private
+
+ls -l /etc/pki/tls/certs/$pemFileName
+ls -l /etc/pki/tls/private/$keyFileName
++-------------------------------------------------------------------------------------+
+---AD.1.5.9.24.4.2 Network Settings
+"Configure vsftpd service where secure ftp is permitted. Self-signed. Option 2
+
+//Lo mismo que ---AD.1.5.9.24.4.1 Network Settings, si esta activo vsftpd, revisar la opcion 2 de Recommended Setting"
+
+/* N/A */ : " Unit vsftpd.service could not be found
++-------------------------------------------------------------------------------------+
+---AD.1.5.10.1 Network Settings	
+"yppasswd daemon
+---AD.1.5.10.2 Network Settings	
+"NIS maps
+---AD.1.5.11 Network Settings	
+"NIS+ maps
+
+// No debe estar instalado yppasswd
+systemctl status yppasswd
+
+//(NADA REFERENTE A NIS, en passwd y group, si no es una autentificacion por NSS)
+cat /etc/nsswitch.conf|egrep -i "nis|passwd|group"
+cat /etc/rc.nfs|egrep -i "nis|passwd|group"
+
+"CONTESTAR YES */ : "Si la autentificacion no es por NIS"
++-------------------------------------------------------------------------------------+
+---AD.1.5.13.1 Network Settings
+"Ensure core dumps are restricted
+
+/*
+"Set 'hard core' ulimit to '0'.
+"O
+"Set fs.suid_dumpable to '0'.
+*/
+
+sysctl fs.suid_dumpable
+grep ""fs\.suid_dumpable"" /etc/sysctl.conf /etc/sysctl.d/*.conf | sort -V
+
+*/
+
+"SI fs.suid_dumpable to 0" // CONTESTAR YES, no se revisa nada mas
+
+//En caso contrario revisar que cumpla una de las 3 opciones siguientes "
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1.: Ulimit a traves del archivo de configuracion:
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	" CONTESTAR YES si esta definido en /etc/security/limits.conf"
+
+	cat /etc/security/limits.conf  | egrep -i "hard|core|ulimit"
+	egrep -i "hard|core|ulimit" /etc/security/limits.conf /etc/security/limits.d/* | sort -V
+
+	"*/
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2.: Configuracion Ulimit via perfiles.
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	" CONTESTAR YES si está definido ulimit a 0, en la configuracion de profile o en archivo personalizado disable-coredumps.sh "
+
+	cat  /etc/profile | egrep -i "hard|core|ulimit"
+	cat  /etc/profile.d/disable-coredumps.sh
+
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3.: Ulimit a traves de systemd 
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	" CONTESTAR YES si systemd-coredump service esta activo y la configuracion es correcta
+
+	cat /etc/services | egrep -i "systemd|coredump"
+	systemctl status systemd-coredump
+	systemctl list-units --all --state=active | grep -i coredump
+
+	"Revisar la siguente configuracionScheduleApprover
+	"Deben existir estos fichero y dentro debe estar configurado Storage=none, ProcessSizeMax=0
+
+	ls -la /etc/systemd/coredump.conf 
+	ls -la /etc/systemd/coredump.conf.d/*.conf 
+	ls -la /run/systemd/coredump.conf.d/*.conf 
+	ls -la /usr/lib/systemd/coredump.conf.d/*.conf
+
+	"*/
+
+	grep Storage /etc/systemd/coredump.conf /etc/systemd/coredump.conf.d/*.conf /run/systemd/coredump.conf.d/*.conf /usr/lib/systemd/coredump.conf.d/*.conf
+
+	"*/
+
+	grep ProcessSizeMax /etc/systemd/coredump.conf /etc/systemd/coredump.conf.d/*.conf /run/systemd/coredump.conf.d/*.conf /usr/lib/systemd/coredump.conf.d/*.conf
+
+	"*/
++-------------------------------------------------------------------------------------+
+---AD.1.5.13.2 Network Settings
+"Ensure address space layout randomization (ASLR) is enabled
+
+//Debe existir" kernel.randomize_va_space = 2
+
+sysctl kernel.randomize_va_space
+grep randomize_va_space /etc/sysctl.conf /etc/sysctl.d/*.conf | sort -V
+
+"CONTESTAR YES */ : " Si existe la entrada kernel.randomize_va_space = 2
++-------------------------------------------------------------------------------------+
+---AD.1.8.12.8 Protecting Resources - OSRs
+"gpgcheck
+
+//Debe ser gpgcheck=1
+
+cat /etc/yum.conf | grep -i "gpgcheck"
+grep -i "^gpgcheck" /etc/yum.repos.d/*
+
+"*/
+"debe devolver nada o gpgcheck=1"
+
+"CONTESTAR YES */ : " Si existe la entrada gpgcheck=1
+// Establecer gpgcheck= 1 en /etc/yum.conf, no alterar temporalmente en /etc/yum.repos.d.
++-------------------------------------------------------------------------------------+
+---AD.1.9.1.3 Protecting Resources - User Resources
+" /etc/profile.d/IBMsinit.sh
+---AD.1.9.1.4 Protecting Resources - User Resources
+" /etc/profile.d/IBMsinit.csh
+
+//Deben existir y contener la configuracion de Recommended Setting"
+
+cat /etc/profile.d/IBMsinit.sh
+cat /etc/profile.d/IBMsinit.csh
+
+/* CONTESTAR YES */ : "Si la configuracion de los ficheros son correctas."
+
+/* CONTESTAR NO  */ : "Si la configuracion de cada fichero no es correcta."
+
+/*NO*/                          "does not exist the file /etc/profile.d/IBMsinit.xx and neither the recommended configuration"
+
+/*NO*/                          "The configuration in: /etc/profile.d/IBMsinit.xx, is not the correct, it must be done according to the recommended configuration."
++-------------------------------------------------------------------------------------+
+---AD.2.1.2 Encryption	
+"File/Database Storage
+
+"Se debe mirar el protocol que sea 2 o serverkey sea 1024"
+cat /etc/ssh/sshd_config | egrep -i "protocol|ServerKeyBits"
+
+"Si sale comentado mirar en el MAN
+man sshd_config
+
+"Si no muestra resultado en el MAN, mirar que exista uno de estos 2 ficheros.
+
+rpm -q coreutils
+rpm -q openssl
+
+"el ssh a partir de la la versión OpenSSH_7.4p1 ya no utiliza protocolo 1."
+"y en RHEL 7.8 o > ambos están deprecated (obsoletos)"
+
+cat /etc/*release
+*/
++-------------------------------------------------------------------------------------+
+///////////////////////////////////////////////////////////////////////////////////////

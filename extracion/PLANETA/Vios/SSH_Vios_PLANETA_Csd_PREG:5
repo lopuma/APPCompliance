@@ -1,0 +1,138 @@
+////////////////////////////////////////////////////////////////////////////////////////////
+ SSH Vios PLANETA Csd - Issue REF : 733445 / PRE 5
+/**************************************************************************************************************************************************************************************************/
+---AV.1.1.1 Password Requirements	"PermitEmptyPasswords" = no
+    cat /etc/ssh/sshd_config | grep -i PermitEmptypassword
+    #"Si sale comentado mirar el MAN y ver el default"
+    man sshd_config
+    /PermitEmptyPasswords
+
+    /*🗒✔  CONTESTAR YES*/ : "Si PermitEmptyPasswords es NO o si en el man es por defecto NO"
+    /*🗒⛔ CONTESTAR NO*/  : "Si PermitEmptyPasswords es diferente a NO".#
+    /*🗒🔁 CONTESTAR N/A*/ : "Si la version de SSH no aplica al sistema, o otro motivo".#
+/**************************************************************************************************************************************************************************************************/
+---AV.1.1.6 Password Requirements
+---AV.1.1.7 Password Requirements	
+//Private Key Passphrases - security administrative and systemauthority
+
+ "Las claves privadas que se utilizan para obtener acceso a los ID que tienen autorización administrativa o del sistema de seguridad deben ser accesibles únicamente por los usuarios que tengan autorización administrativa o del sistema. Cualquier archivo authorized_keys o authorized_keys2 que otorgue acceso a un ID que tenga autorización administrativa o del sistema de seguridad debe limitar el acceso sólo de hosts específicos especificando la opción "from" con el valor adecuado.. 
+
+ "Se puede utilizar una frase de contraseña nula siempre que el archivo authorized_keys limite el acceso sólo de hosts específicos especificando la opción "from" con el valor adecuado. Para evitar que las cl---AVes se utilicen para los inicios de sesión de usuario interactivos, el archivo de cl---AVes privadas en los hosts de origen debe ser propiedad de usuarios/grupos de aplicaciones y sistemas, que no tienen capacidad de inicio de sesión autenticada por contraseña remota y que el propietario del archivo sólo puede leer y escribir en ellos.
+
+🔎🔎🔎🔎🔎
+#Comprobar
+ls -la /home/*/.ssh/* | grep -i authorized_keys
+
+/*en el caso de existir ficheros authorized_keys o authorized_keys2  ,hay que realizar un cat de los ficheros  y ver que tiene entradas del estilo:
+
+"from=*HOSTNAME*", esto se supone que el from limita desde que ips se puede acceder al usuario usando cl---AVe RSA.*/
+
+- "El siguiente comando te saca todos los ficheros authorized_keys o authorized_keys2.
+- "Debajo de cada fichero si te sale ssh-rsa, entonces es que tiene una línea que no es compliance, en la extracion es un NO.
+- "Si no saca informacion, signfica que no hay ficheros "authorized_keys o authorized_keys2"	es un YES."
+- "Si no salen lineas debajo de los ficheros es un YES, puede que este vacio o tenga un FROM.
+- "Si salen lineas vacias es compliance, es un YES.
+
+find /home/*/.ssh -name authorized_keys|while read kfil; do echo $kfil; cat $kfil|grep -v "from="|awk '{print $1}'; done
+
+find /home/*/.ssh -name authorized_keys2|while read kfil; do echo $kfil; cat $kfil|grep -v "from="|awk '{print $1}'; done
+
+/*Si no tiene el FROM tenemos que contestar NO y preguntar al técnico correspondiente cuando llegue la desviación.*/
+
+//Hemos encontrado algún caso que el contenido está comentado,eso también es correcto.
+ "Ejemplo
+ #ssh-rsa AAAAB3NzaC1yc2EAAAADA"
+
+ "NOTA
+ //SI HAY FICHEROS authorized_keys, authorized_keys2 CON OWNER HUERFANOS, SE PUEDE COMPROBAR QUE N O EXISTE EL OWNER Y tambien es un NO.
+
+
+/*🗒✔  CONTESTAR YES */ : "Si todos los ficheros authorize_keys y/o authorized_keys2, tienen un FROM "
+/*🗒⛔ CONTESTAR NO  */ : "Si hay fichero autorize_keys, sin un FROM
+The following authorized_keys or authorized_keys2 files do not have the FROM option:
+ACCOUNT CUSTOMER --> /home/apps/.ssh/authorized_keys 
+ACCOUNT IBM      --> /home/cesuxat1/.ssh/authorized_keys 
+                     /home/cesuxat2/.ssh/authorized_keys 
+                     /home/ESY9CBSK/.ssh/authorized_keys
+ /*🗒🔁 CONTESTAR N/A */ : ""
+/**************************************************************************************************************************************************************************************************/---AV.1.2.1.2 Logging	LogLevel 
+---AV.1.2.1.3 Logging	LogLevel 
+
+ cat /etc/ssh/sshd_config | grep -i LogLevel
+
+ #"Si sale comentado mirar el MAN y ver el default"
+
+ man sshd_config
+ /LogLevel
+
+ /* Si es INFO la pregunta---AV.1.2.1.2 es Yes, y la pregunta---AV.1.2.1.3 es*/N/A "LogLevel is Info"
+ /* Si es DEBUG la pregunta---AV.1.2.1.3 es Yes, y la pregunta---AV.1.2.1.2 es*/N/A "LogLevel is Debug"
+
+ /*🗒✔  CONTESTAR YES*/ : "Si LogLevel es INFO o si en el man es por defecto es INFO"
+ /*🗒⛔ CONTESTAR NO*/  : "Si LogLevel es diferente a INFO".#
+ /*🗒🔁 CONTESTAR N/A*/ : "Si la version de SSH no aplica al sistema, o otro motivo".#
+/**************************************************************************************************************************************************************************************************/
+			   📢⚙⚙⚙⚙⚙/* POLITICA SSH - AIX / VIOS */⚙⚙⚙⚙⚙📢 
+
+---AV.1.2.4 Logging
+ Retain Log Files = 90 days
+
+ "Para la rotacion de SSH se revisa 3 cosas.
+ 1.- La rotacion que debe ser 90 dias, en cualqueira de los 3 sistemas de rotado.
+ 2.- Rotacion de fichero en sistemas Aix en politica SSH
+ 3.- Revisar que los ficheros de segurida debe estar rotando a 90 dias.
+
+ 🔎🔎🔎🔎🔎🔎🔎
+ #COMPROBACIONES
+
+ ➡ 1. - "La rotacion que debe ser 90 dias."#
+ //Saber que sistema de rotado utiliza.
+
+ 📌# ➡ /* si no funciona mirar --> */"Logrotate" <--#
+  - "Si esta definido en el crontab/logkeeper
+      crontab -l|grep -v ^#|grep logkeeper
+      //Debe salir la tarea de /usr/util/seguridad/logkeeper
+  - "Vemos que esta definido en loogkeeper 
+      /usr/util/seguridad/logkeeper -s | egrep -i "config_fi|trim_ret|backups_ret"
+      //Debe salir los valores TRIM, BACK a 90, y si tiene fichero de configuracion o no.
+      cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim_retention_days|backups_retention_days"     //Mirar el fichero de configuracion, que no esten comentados el TRIM, BACK.
+
+ 📌# ➡ /* si no funciona mirar --> */"sinLOGKEEPE & sinLOGROTATE" <--#
+      cat /etc/logrotate.conf
+
+ 📌# ➡ /*--> sinLOGKEEPE & sinLOGROTATE <--*/#
+      cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+
+ ➡ 2.- "Rotacion de fichero en sistemas Aix."#
+ //Saber que SO estamos revisando "dependeran los ficheros de seguridad", ya sea Linux o Aix
+
+ |*******************************************|
+ |	    - OpenSSH / Aix -                |  
+ |-------------------------------------------|
+ |      "Fichero de configuracion "          |
+ |	 /etc/syslog.conf                    |
+ |	                                     |
+ |      "Ficheros de rotacion para SSH"      |
+ |	 /var/adm/messages                   |
+ |                                           |
+ |*******************************************|
+
+ ➡ 3.- "Revisar que los ficheros de segurida deben estar rotando a 90 dias y configurados."
+  #//Configuracion
+  cat /etc/syslog.conf |grep -v "#" |egrep -i "messages"
+  //debe salir algo como  auth.info /var/adm/messages 
+  //        authpriv.info /var/adm/messages
+
+  #//Rotacion
+  /usr/util/seguridad/logkeeper -s | egrep -i "config_fi|backup_list|messages"
+  //Debe salir el fichero de seguridad, messages y si tiene fichero de configuracion o no.
+  cat /usr/util/seguridad/logkeeper.cfg | egrep -i "backup_list|messages"
+  //Mirar el fichero de configuracion, que no esten comentados el fichero messages.
+
+ /*🗒✔  CONTESTAR YES*/: "Si esta rotando a 90 y existe el ficher " MESSAGES ", y configurado en la    rotacion"
+ /*🗒⛔ CONTESTAR NO*/ : "Si no esta rotando a 90 dias o no existen los fichero " MESSAGES ",         y configurado en la rotacion.".
+
+ /*NO*/    "The rotation is based on logkeeper, and is configured in 90 days, it is recommended 180 days in the configuration."
+
+ /*NO*/    "The rotation is based on the LOGKEEPER rotate, it does not h---AVe the values of 90 days uncommented and the security file for ssh is not configured, it is recommended to decompile the entries in the logkeeper configuration file, for the variables TRIM and BACKUP, in addition to configuring the SSH security file /var/adm/messages."
+/**************************************************************************************************************************************************************************************************/

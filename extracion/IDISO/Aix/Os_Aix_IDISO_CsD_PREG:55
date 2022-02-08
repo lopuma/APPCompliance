@@ -1,0 +1,158 @@
+/********************************************************************************************************************************************************************/
+E.1.1.5.1 Password Requirements	/usr/share/dict/words dictionary	"last line must be:
+$USER"
+
+"si es superior a 7.1 debe existir $USER al final"
+
+oslevel -s
+
+tail /usr/share/dict/words
+/********************************************************************************************************************************************************************/
+#"si es superior a 7.1 debe existir"#
+
+oslevel -s
+
+cat /etc/security/user|grep -v "*" | head -n 33 | egrep "default|dictionlist"
+/********************************************************************************************************************************************************************/
+E.1.1.12 Password Requirements	Sharing of passwords
+
+YES, es informacion del uso compartido de contraseñas
+/********************************************************************************************************************************************************************/
+E.1.2.4 Logging	Log record retention time frame.
+
+#VERIFICAR LA ROTACION en cualquiera de los 3 sistemas#
+
+#->Logrotate<-#
+cat /etc/logrotate.conf
+
+#->sinofunciona,mirar,logkeeper<-#
+/usr/util/seguridad/logkeeper -s
+
+#->sinLOGKEEPE&&&sinLOGROTATE<-#
+cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+/********************************************************************************************************************************************************************/
+E.1.2.5.2 Logging	/var/adm/auth.log
+
+"Debe existir y estar rotanto en el syslog"
+
+cat /etc/syslog.conf | egrep "auth|authpriv"
+ls -la /var/adm/auth.log
+/********************************************************************************************************************************************************************/
+E.1.5.2.3 Network Settings	Configuration of bin subdirectory of the ftp account home directory.
+
+Must be owned by root and grant write access only to the owner. Files contained in this directory must have mode 0555.
+
+"verificar permisos en el home en la cuenta del FTP, si existe la carpeta bin y subdirectorios, comprobar que los permisos sean 0555"
+
+ls -la /home/ftp
+ls -ld  /home/ftp/usr/bin
+ls -la /home/ftp/usr/bin
+/********************************************************************************************************************************************************************/
+E.1.5.2.6 Network Settings	Configuration of other subdirectories of the ftp account home directory
+
+#Contestamos yes si los subdirectorios del /home/ftp no tienen permisos de escritura en other#
+
+ls -la /home/ftp
+/********************************************************************************************************************************************************************/
+E.1.5.9 Network Settings	NNTP authentication and identification
+
+Contestamos YES:
+-Si la conexión al puerto 119 nos da refused.
+
+Comando:
+grep nntp /etc/services
+telnet localhost 119
+/********************************************************************************************************************************************************************/
+E.1.5.16 Network Settings	Directories enabled for anonymous FTP access.
+
+Contestamos NO:
+-Si tiene ftp activo y si se puede loguear como anónimo.
+Contestamos YES:
+-En cualquier otro caso.
+
+ftp localhostName (localhost:ESY9D7L1):> anonymous
+Password:> anonymous
+530 User anonymous unknown.
+Login failed.
+#Contestar YES#
+/********************************************************************************************************************************************************************/
+E.1.5.17 Network Settings	Directories enabled for tftp access.
+
+Comando:
+grep -i 'tftp' /etc/passwd
+ls -l /home/tftp
+"Si con esto no queda claro si el servicio está habilitado ,también podemos mirar lo siguiente":
+
+DE FORMA GENERAL PARA SABER EN UNIX SI UN SERVICIO ESTÁ CONFIGURADO Y HABILITADO.
+
+En el caso del tftp:
+
+grep tftp /etc/inetd.conf
+"#tftp"
+Yes
+/********************************************************************************************************************************************************************/
+E.1.5.18.1 Network Settings	/etc/exports
+E.1.5.18.2 Network Settings
+E.1.5.18.3 Network Settings
+E.1.5.18.4 Network Settings
+E.1.5.18.5 Network Settings
+
+may be exported by NFS without the -sec=dh or -secure option on an exception basis under the following conditions:
+Note: -secure is deprecated, but may be used if supported on your platform."
+
+cat /etc/exports
+/********************************************************************************************************************************************************************/
+E.1.5.19 Network Settings	NIS maps
+E.1.5.20 Network Settings	NIS+ maps
+
+#"Nada refente a NIS maps en los grupos o password"#
+La siguiente  configuración es incorrecta :
+
+passwd: nis
+group: nis
+
+cat /etc/rc.nfs|grep -i nis
+cat /etc/nsswitch.conf | grep -i nis
+/********************************************************************************************************************************************************************/
+E.1.5.22.2 Network Settings	rlogin
+E.1.5.22.3 Network Settings	rsh
+E.1.5.22.4 Network Settings	sendmail –bd
+
+Contestamos YES:
+-Si los servicios no estan activos, O SI ESTAN ACTIVOS QUE SEAN un red segura.
+
+#login remoto está activo para diferentes usuarios... Y no debería estar abierto para el root.
+El servicio rlogin es parte del inetd
+lssrc -ls inetd
+y está en el archivo /etc/inetd.conf. Estará comentado o no#
+
+Comando:
+lssrc -ls inetd
+#
+Service       Command                  Description              Status
+shell        /usr/sbin/rshd           /usr/sbin/rshd rshd      active
+#
+
+grep -i 'rlogin' /etc/inetd.conf
+grep -i 'rsh' /etc/inetd.conf
+#
+root@es1ds63meliaprd:/> grep -i 'rsh' /etc/inetd.conf
+shell   stream  tcp6    nowait  root    /usr/sbin/rshd  /usr/sbin/rshd rshd
+#
+grep -i 'sendmail' /etc/inetd.conf
+
+#Contestar NO para el rsh, no debería estar activo a no ser que lo necesite el cliente.#
+The RSH service is active, it is not a recommended service, consultar si es necesario o no.
+/********************************************************************************************************************************************************************/
+E.5.0.1 Privileged Authorizations/Userids	Persons with access to the 'root' user account 
+
+Contestamos N/A:
+-Siempre
+En el comentario : “No requirements in this category.”
+/********************************************************************************************************************************************************************/
+E.5.0.3.1 Privileged Authorizations/Userids
+hasta 
+E.5.0.4.20 Privileged Authorizations/Userids
+
+Contestar N/A “No requirements in this category.”
+/********************************************************************************************************************************************************************/

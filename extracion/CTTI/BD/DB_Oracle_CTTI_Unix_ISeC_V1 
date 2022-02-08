@@ -1,0 +1,335 @@
+Extracciones CTTI CLOUD ORACLE hojas con colorines Octubre 2019 - 89 filas
+
+ps -ef | grep pmon
+
+sudo su - root (*** esto no hacer si estamos con cinstall para los de Cloud, directamente nos ponemos como oraxxx)
+
+sudo su - oracle
+su - oracle
+
+
+export ORACLE_SID=r54dot011
+sqlplus "/AS SYSDBA"	
+
+SQL>
+
+********AG.1.1.1 Password Requirements	PASSWORD_LIFE_TIME
+select * from dba_profiles where resource_type='PASSWORD' and RESOURCE_NAME ='PASSWORD_LIFE_TIME';
+select * from dba_profiles where resource_type='PASSWORD' and RESOURCE_NAME ='PASSWORD_LIFE_TIME' and PROFILE ='DEFAULT';
+90 - 45
+
+********AG.1.1.2 Password Requirements	PASSWORD_GRACE_TIME
+select * from dba_profiles where resource_type='PASSWORD' and RESOURCE_NAME ='PASSWORD_GRACE_TIME';
+5 - 7
+
+********AG.1.1.3 Password Requirements	"PASSWORD_REUSE_MAX
+(Version 8i and below)"
+SELECT SUBSTR(VERSION,1,2) FROM V$INSTANCE;
+
+********AG.1.1.4 Password Requirements	"PASSWORD_REUSE_TIME
+(All Versions)"
+-- PASSWORD_REUSE_TIME
+SELECT P.PROFILE PERFIL, U.USERNAME USUARIO,P.LIMIT CADUCIDAD FROM DBA_USERS U, DBA_PROFILES P WHERE U.PROFILE=P.PROFILE AND P.RESOURCE_NAME='PASSWORD_REUSE_TIME' AND 360 < ( SELECT CASE WHEN UPPER(P.LIMIT) = 'UNLIMITED' THEN 9999 WHEN UPPER(P.LIMIT) = 'DEFAULT' THEN (SELECT CASE WHEN UPPER(P2.LIMIT) = 'UNLIMITED' THEN 9999 ELSE TO_NUMBER(P2.LIMIT) END L_DEF FROM DBA_PROFILES P2 WHERE P2.PROFILE='DEFAULT' AND P2.RESOURCE_NAME='PASSWORD_REUSE_TIME') ELSE TO_NUMBER(P.LIMIT) END CADUCIDAD FROM DBA_PROFILES P WHERE RESOURCE_NAME='PASSWORD_REUSE_TIME' AND P.PROFILE=U.PROFILE) ORDER BY 1,2;
+
+select * from dba_profiles where resource_type='PASSWORD' and PROFILE='DEFAULT' and RESOURCE_NAME ='PASSWORD_REUSE_TIME';
+que salgan 720 sobre todo en DEFAULT (algun perfil tipo C##IBM_ , c##PR_ , C##CTTI_ puede que no)
+
+********AG.1.1.5 Password Requirements	"PASSWORD_REUSE_MAX
+(Version 9i and above)"
+select * from dba_profiles where resource_type='PASSWORD' and RESOURCE_NAME ='PASSWORD_REUSE_MAX';
+select * from dba_profiles where resource_type='PASSWORD' and PROFILE='DEFAULT' and RESOURCE_NAME ='PASSWORD_REUSE_MAX';
+10
+
+********AG.1.1.6 Password Requirements	FAILED_LOGIN_ATTEMPTS
+-- FAILED_LOGIN_ATTEMPTS que salga 3
+select * from dba_profiles where resource_type='PASSWORD' and PROFILE='DEFAULT' and RESOURCE_NAME ='FAILED_LOGIN_ATTEMPTS';
+3 - 5
+
+********AG.1.1.7 Password Requirements	PASSWORD_LOCK_TIME
+-- PASSWORD_LOCK_TIME
+SELECT * from dba_profiles where resource_type='PASSWORD' and RESOURCE_NAME ='PASSWORD_LOCK_TIME' AND LIMIT !='UNLIMITED';
+SELECT * from dba_profiles where resource_type='PASSWORD' and RESOURCE_NAME ='PASSWORD_LOCK_TIME';
+select * from dba_profiles where resource_type='PASSWORD' and PROFILE='DEFAULT' and RESOURCE_NAME ='PASSWORD_LOCK_TIME';
+que salgan UNLIMITED en DEFAULT (algun perfil tipo C##IBM_ , c##PR_ , C##CTTI_ puede que no)
+unlimited
+
+********AG.1.1.8 Password Requirements	PASSWORD_VERIFY_FUNCTION
+-- PASSWORD_VERIFY_FUNCTION
+SELECT * FROM dba_objects WHERE object_name ='VERIFY_FUNCTION';
+
+********AG.1.1.10 Password Requirements	Externally Identified Accounts (typically OPS$ accounts)
+The identified externally option may be used if remote_os_authent=false
+SELECT DECODE ( COUNT(1), 0, 'AS RECOMENDED', 'EXISTEN PARAMETROS CON UN VALOR QUE NO SE AJUSTA A ISEC') as resultado from v$parameter where name='remote_os_authent' AND VALUE!='FALSE';
+
+********AG.1.1.11 Password Requirements	DEFAULT profile
+Assign all agreed or above recommended password parameter controls on the default profile.
+que cumpla todo lo ya visto sobre parametros de pass en los Default
+
+********AG.1.1.12 Password Requirements	EXPIRE and LOCK predefined service accounts.
+-- EXPIRE and LOCK accounts es el os_role (os_role=false)
+SELECT DECODE ( COUNT(1), 0, 'AS RECOMENDED', 'EXISTEN PARAMETROS CON UN VALOR QUE NO SE AJUSTA A ISEC') as resultado from v$parameter where name='os_role' AND VALUE!='FALSE';
+
+********AG.1.2.1 Logging	AUDIT_TRAIL parameter in the INIT.ORA file
+-- AUDIT_TRAIL parameter in the INIT.ORA file que sea db, os o true vale
+show parameter AUDIT_TRAIL
+si 12c o superiores N/A	Oracle Database 12c Enterprise Edition Release 12.1.0.2.0
+ya no tiene sentido pq no es la Audit tradicional
+
+********AG.1.2.2 Logging	Auditing
+si 12c o superiores N/A	Oracle Database 12c Enterprise Edition Release 12.1.0.2.0
+			Oracle Database 12c Enterprise Edition Release 12.2.0.1.0 - 64bit Productio
+ya no tiene sentido pq no es la Audit tradicional
+
+********AG.1.2.3 Logging	SEC_PROTOCOL_ERROR_TRACE_ACTION
+LOG (version 11g and above)
+-- SEC_PROTOCOL_ERROR_TRACE_ACTION que sea LOG
+show parameter SEC_PROTOCOL_ERROR_TRACE_ACTION
+
+********AG.1.2.4 Logging	"AUDIT_SYS_OPERATIONS
+(Version 9i and above)"
+-- AUDIT_SYS_OPERATIONS que sea TRUE
+show parameter AUDIT_SYS_OPERATIONS
+
+********AG.1.2.5 Logging	Retain logs
+-- RETAIN LOGS pero poner simplemente YES
+SELECT 'N/A - La retencion de LOGS se garantiza mediante TSM' FILA_22 from dual;
+-- RETAIN LOGS 365 en CTTI (después al salir)
+***cat /etc/logrotate.conf /etc/logrotate.d/wtmp /etc/logrotate.d/syslog|grep -v ^#
+En CTTI ya no se mira. Correo 13/02/2019 de Yolanda- rotacon ctti - Rotación logs automática Garantizada por el aplicativo AlienVault.
+
+********AG.1.2.6 Logging	Auditing definitions
+AUDIT ALL;
+ya no tiene sentido pq no es la Audit tradicional
+YES o 	N/A	Oracle Database 12c Enterprise Edition Release 12.1.0.2.0
+
+********AG.1.2.7 Logging	"Auditing definitions
+Only required where audit_trail = DB or DB_EXTENDED"
+ya no tiene sentido pq no es la Audit tradicional
+YES o 	N/A	Oracle Database 12c Enterprise Edition Release 12.1.0.2.0
+
+********AG.1.2.8 Logging	DELETE_CATALOG_ROLE
+SELECT DECODE ( COUNT(1), 0, 'AS RECOMENDED', 'EXISTEN PRIVILEGIOS SOBRE ROLES CON UN VALOR QUE NO SE AJUSTA A ISEC') as resultado from DBA_ROLE_PRIVS WHERE GRANTED_ROLE='DELETE_CATALOG_ROLE' AND GRANTEE NOT IN ('SYS','SYSTEM','DBA');
+
+********AG.1.4.1 System Settings	"O7_DICTIONARY_ACCESSIBILITY
+(from v8.0 onwards)" en adelante
+-- O7_DICTIONARY_ACCESSIBILITY que sea false
+show parameter O7_DICTIONARY_ACCESSIBILITY
+
+********AG.1.4.3 System Settings	REMOTE_OS_AUTHENT
+-- remote_os_authent y os_role QUE SEAn FALSE
+SELECT DECODE ( COUNT(1), 0, 'AS RECOMENDED', 'EXISTEN PARAMETROS CON UN VALOR QUE NO SE AJUSTA A ISEC') as resultado from v$parameter where name='remote_os_authent' AND VALUE!='FALSE';
+show parameter remote_os_authent;
+
+********AG.1.4.4 System Settings	SEC_MAX_FAILED_LOGIN_ATTEMPTS (Version 11g and above)
+-- SEC_MAX_FAILED_LOGIN_ATTEMPTS que sea 3 (ó 5)
+show parameter SEC_MAX_FAILED_LOGIN_ATTEMPTS
+
+********AG.1.4.5 System Settings	SEC_RETURN_SERVER_RELEASE_BANNER (Version 11g and above)
+show parameter SEC_RETURN_SERVER_RELEASE_BANNER
+false
+
+********AG.1.4.6 System Settings	DB_NAME
+-- DB_NAME
+SELECT DECODE ( COUNT(1), 0, 'AS RECOMENDED', 'EXISTEN PARAMETROS CON UN VALOR QUE NO SE AJUSTA A ISEC') as resultado from v$parameter where name='db_name' AND upper(VALUE)='ORCL';
+show parameter db_name
+
+********AG.1.4.7 System Settings	REMOTE_OS_ROLES
+-- REMOTE_OS_ROLES que sea false
+SELECT DECODE ( COUNT(1), 0, 'AS RECOMENDED', 'EXISTEN PARAMETROS CON UN VALOR QUE NO SE AJUSTA A ISEC') as resultado from v$parameter where name='remote_os_roles' AND VALUE!='FALSE';
+show parameter REMOTE_OS_ROLES
+
+********AG.1.4.8 System Settings	utl_file_dir
+utl_file_dir must not be set to "*"
+show parameter utl_file_dir
+
+********AG.1.5.1 Network Settings	Password for Listeners
+"For Oracle 8i and 9i only:
+Must have passwords that reflect base policy requirements, however they are not required to be changed every 90 days.
+For Oracle 10g and 11g: Only required where LOCAL_OS_AUTHENTICATION_<LISTENER>=OFF
+For Oracle 12c:
+Listener password feature is no longer supported."
+N/A	Oracle Database 12c Enterprise Edition Release 12.1.0.2.0
+
+********AG.1.5.2 Network Settings	Port (Version Oracle 8i and above-encima)
+Yes
+
+********AG.1.5.3 Network Settings	Listener name
+exit
+estando en oracle todavia :
+echo $ORACLE_HOME
+ls -la $ORACLE_HOME/network/admin/listener.ora
+cat $ORACLE_HOME/network/admin/listener.ora
+si no está ahi :
+cd  $ORACLE_HOME/network/admin
+ls -la
+ver donde está alojado tnsnames.ora -> /u01/app/oracle/tns_admin/tnsnames.ora
+cd /u01/app/oracle/tns_admin/
+ls -la
+ahi estará listener.ora
+si no tienen bien cambiar permisos (listener a 600 y tnsnames a 644)
+salir de oracle a cinstall
+exit
+pasar a root
+sudo su - root
+chmod 600 /u01/app/oracle/tns_admin/listener.ora
+644 a tnsnames.ora (suele tenerlo)
+(( por si no lo encontramos ahi find / -name listener.ora ))
+
+que SID_LIST_LISTENER_name name no sea default
+
+********AG.1.5.4 Network Settings	Set parameter "SECURE_REGISTER_<listenername>" in listener.ora
+Yes recomendacion
+********AG.1.7.1 Identify and Authenticate Users	Admin Accounts: sys, system
+Yes recomendacion
+********AG.1.7.3 Identify and Authenticate Users	Oracle product (service) Accounts
+Yes recomendacion
+********AG.1.7.4 Identify and Authenticate Users	All demo user Accounts: scott, adams, jones, clark, blake, hr, oe, sh
+select username,account_status,lock_date from dba_users WHERE username IN ('scott','adams','jones','clark','blake','hr','oe','sh');
+select username,account_status,lock_date from dba_users;
+
+********AG.1.7.5 Identify and Authenticate Users	User Account dbsnmp (Version 7 and higher)
+select username,account_status,lock_date from dba_users where username='DBSNMP';
+si hace falta :
+ALTER user "username" ACCOUNT LOCK;
+
+********AG.1.7.6 Identify and Authenticate Users	Privileges which must be restricted ******** YES todo desde aqui...
+AG.1.7.7 Identify and Authenticate Users	Operating system accounts used for managing Oracle software and databases
+AG.1.7.8 Identify and Authenticate Users	Oracle software owner OS group
+AG.1.7.9 Identify and Authenticate Users	DBA, SYSDBA, SYSOPER, SYSASM, SYSBACKUP, SYSDG and SYSKM roles (or privileges reserved uniquely for these roles)
+AG.1.7.12 Identify and Authenticate Users	Do not use dba name for the OSDBA group
+AG.1.7.14.1 Identify and Authenticate Users	Admin Accounts: CTXSYS
+AG.1.7.14.2 Identify and Authenticate Users	Admin Accounts: CTXSYS
+AG.1.7.14.3 Identify and Authenticate Users	Admin Accounts: CTXSYS
+AG.1.7.15 Identify and Authenticate Users	Privileges WITH ADMIN
+AG.1.7.16.1 Identify and Authenticate Users	package:utl_http
+AG.1.7.16.10 Identify and Authenticate Users	view:all_users
+AG.1.7.16.11 Identify and Authenticate Users	"_sys_logon_delay
+(Version 12c and above)"
+AG.1.7.16.2 Identify and Authenticate Users	package:utl_tcp
+AG.1.7.16.3 Identify and Authenticate Users	package:utl_file
+AG.1.7.16.4 Identify and Authenticate Users	package:utl_smtp
+AG.1.7.16.5 Identify and Authenticate Users	package:dbms_lob
+AG.1.7.16.6 Identify and Authenticate Users	package:dbms_sql
+AG.1.7.16.7 Identify and Authenticate Users	package:dbms_xmlgen
+AG.1.7.16.8 Identify and Authenticate Users	package:dbms_job
+AG.1.7.16.9 Identify and Authenticate Users	package:dbms_scheduler
+*********************************************************************** YES todo hasta aqui son todo revokes NO objeto de una extracción 
+********Desde aqui lo de ficheros
+AG.1.8.1 Protecting Resources -OSRs	Database datafiles
+"UNIX/Linux: 0600
+Windows: Admin & System set to Full Control
+General User: None
+OS 390: UACC (NONE)"
+
+AG.1.8.5 Protecting Resources -OSRs	Archive log files
+"UNIX/Linux: 0640
+Windows: Admin & System set to Full Control
+General User: None"
+
+AG.1.8.6 Protecting Resources -OSRs	Alert Logs
+"UNIX/Linux: 0640
+Windows: Admin & System set to Full Control
+General User: None
+OS 390: UACC (NONE)"
+
+AG.1.8.7 Protecting Resources -OSRs	Database Initialisation files (ie. init<SID>.ora, spfile<SID>.ora, config.ora or ifile)
+"0640 (UNIX)
+Windows: Admin & System set to Full Control
+General User: None
+OS 390: UACC (NONE)"
+
+AG.1.8.10 Protecting Resources -OSRs	Export dump files owned by the Oracle ID have read access for DBAs only (UNIX, LINUX & Windows)
+"UNIX/Linux: 0640
+Windows: System & Security Admin Authority set to Full Control
+General User: None"
+
+AG.1.8.11 Protecting Resources -OSRs	oratab, oraInst.loc*, tnsnames.ora, listener.ora in /etc, /var/opt/oracle, or $ORACLE_HOME
+"For UNIX & Linux, Must be owned by an oracle software owner and oracle group
+OS 390: UACC (NONE)"
+
+AG.1.8.12 Protecting Resources -OSRs	Directories containing the database files
+"UNIX and Linux only: Owned by the Oracle software owner, permissions of 750. (Note: Permission of 750 required by Oracle software for proper functioning.)
+Windows:System & Security Admin Authority set to Full Control"
+
+AG.1.8.13.1 Protecting Resources -OSRs	Oracle Maintenance files
+"Scripts and files required for the support of the Oracle database environment must not be world writable.
+Note.
+This includes scheduled cronjobs running under the owner of any user who has SYSDBA/SYSOPER access, and it may be necessary to negotiate runnin"
+
+AG.1.8.14 Protecting Resources -OSRs	listener.ora	600
+AG.1.8.15 Protecting Resources -OSRs	tnsnames.ora	644
+
+AG.1.8.16 Protecting Resources -OSRs	oracle password files	640
+AG.1.8.17 Protecting Resources -OSRs	Oracle EM Grid Agent configuration file targets.xml	640
+
+en oracle todavia
+echo $ORACLE_HOME
+ls -la $ORACLE_HOME/network/admin/listener.ora
+cat $ORACLE_HOME/network/admin/listener.ora
+
+ls -la $ORACLE_HOME/network/admin/samples $ORACLE_HOME/precomp/demo/sql $ORACLE_HOME/plsql/demo $ORACLE_HOME/ldap/demo $ORACLE_HOME/jdbc/demo $ORACLE_HOME/rdbms/demo $ORACLE_HOME/otrace/demo $ORACLE_HOME/sqlplus/demo $ORACLE_HOME/javavm/demo $ORACLE_HOME/sqlj/demo $ORACLE_HOME/xdk/java/parser/demo $ORACLE_HOME/xdk/java/transviewer/demo $ORACLE_HOME/xdk/java/classgen/demo $ORACLE_HOME/xdk/java/xsql/demo $ORACLE_HOME/xdk/plsql/demo $ORACLE_HOME/jsp/demo $ORACLE_HOME/Apache/Apache/htdocs/demo $ORACLE_HOME/precomp/demo
+
+a veces no estan en oracle_home
+ver donde esta el tnsnames.ora
+cd /u01/app/oracle/product/12.1.0/db/network/admin
+ls -la
+tnsnames.ora -> /u01/app/oracle/tns_admin/tnsnames.ora
+cd /u01/app/oracle/tns_admin/
+ls -la 
+si no los tienen cambiar permisos
+salir de oracle a cinstall
+exit
+pasar a root
+sudo su - root
+chmod 600 /u01/app/oracle/tns_admin/listener.ora
+644 a tnsnames.ora (suele tenerlo)
+
+-- export dump files a 640
+como root y desde /
+	
+find . -name "*.dmp" -type f -print 
+find . -name "*.dmp" -type f -print -exec ls -la {} \;
+
+solo los que son ( suelen ser expxxx.dmp y con fechas en el nombre...)
+./u03/export/*.dmp
+ls -la ./u03/export/expdp_*
+
+NOooo los que estan en otras carpetas y... ./u01/app/oracle/product/12.1.0/...... /*.dmp
+cuidado con no cambiar alguno de estos, se quedan sin poder escribir ahi y BOOM
+********Hasta aqui lo de ficheros
+
+********Filas moradas
+------ filas color morado
+en Reference/aditional info, todos empiazan con un Cx. numerados, Se garantizan en la instalación inicial de la base de datos, YES
+
+AG.1.8.18 Protecting Resources -OSRs	Init.ora
+AG.1.8.20 Protecting Resources -OSRs	sqlNet.ora
+AG.1.8.21 Protecting Resources -OSRs	Windows
+AG.1.8.22 Protecting Resources -OSRs	Windows
+AG.1.8.23 Protecting Resources -OSRs	Windows
+AG.1.8.24 Protecting Resources -OSRs	Init.ora
+AG.1.8.25 Protecting Resources -OSRs	Init.ora
+********Filas moradas
+
+********AG.1.9.1.1 Protecting Resources - User Resources	Umask for Oracle user
+********AG.1.9.1.2 Protecting Resources - User Resources	Umask for Oracle user
+-- UMASK (2 preguntas)
+umask del oracle user tiene que ser x022 - 022
+estando conectado como oraxx se consulta con:
+umask  
+para modificarlo:
+umask 022
+
+********
+AG.2.1.1 Encryption	Data Transmission
+AG.2.1.2 Encryption	File/Database Storage
+AG.2.1.3 Encryption	Data Transmission/File Database storage
+AG.2.1.4 Encryption	Data Transmission/File Database storage
+AG.2.1.5 Encryption	Data Transmission/File Database storage
+AG.2.1.6 Encryption	Data Transmission/File Database storage
+-- ENCRYPTION (6 preguntas)
+primera de listener sin sentido y resto en caso de...
+todas YES
+
+AG.3.0.1 Process Exceptions	sqlNet.ora
+una ultima morada: Se garantizan en la instalación inicial de la base de datos, YES

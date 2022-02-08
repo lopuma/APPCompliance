@@ -1,0 +1,428 @@
+///////////////////////////////////////////////////////////////////////////////////////
+SSH AIX ITSS - Issue REF : 711467 / PRE 91
+    
++-------------------------------------------------------------------------------------+
+---AV.1.1.1 Password Requirements	"PermitEmptyPasswords" = no
+
+cat /etc/ssh/sshd_config | grep -i PermitEmptypassword
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/PermitEmptyPasswords
++-------------------------------------------------------------------------------------+
+---AV.1.1.4 Password Requirements	Private Key Passphrases	
+"Debe asignarse una frase de contraseña a todas las claves privadas que se utilizan para la autenticación de usuario y no deben compartirse
+
+#"las claves privadas deben ser solor del owner"#
+
+ls -l $HOME/.ssh/*
+ls -la /home/*/.ssh/* | grep -i "id_rsa"
+
+#*/
+/*  CONTESTAR YES*/"Si las claves privadas pertenecen al owner.
+/* CONTESTAR NO*/ "Incorrect the user in the file:  : -rw-------    1 7033     ibmldadm        401 Oct 28 2015  /home/esy9babh/.ssh/id_rsa.pub
++-------------------------------------------------------------------------------------+
+##---AV.1.1.5 Password Requirements	
+"Private Key Passphrases
+// Nos habla de la caracteristicas de la Passphrases
+// Las frases de contraseña deben tener un número mínimo de 15 caracteres. Todas las demás reglas de contraseña son aplicables.
++-------------------------------------------------------------------------------------+
+---AV.1.1.6 Password Requirements	
+"Restrict Private Keys access using  "from=" parameter on Public Keys.
+
+---AV.1.1.7 Password Requirements	
+"Private Key Passphrases - security administrative and system authority
+
+// Nos habla de que la clave privada(id_rsa), puede no tener un passphrase, siempre que la clave_publica(authorized_keys), tenga un FROM.
+
+/*
+Las claves publicas que se utilizan para obtener acceso a los ID que tienen autorización administrativa o del sistema de seguridad deben ser accesibles únicamente por los usuarios que tengan autorización administrativa o del sistema. 
+
+Cualquier archivo authorized_keys o authorized_keys2 que otorgue acceso a un ID que tenga autorización administrativa o del sistema de seguridad debe limitar el acceso sólo de hosts específicos especificando la opción "from" con el valor adecuado.
+*/
+
+ls -la /home/*/.ssh/* | grep -i authorized_keys
+
+"*/
+"en el caso de existir ficheros authorized_keys o authorized_keys2  ,hay que realizar un cat de los ficheros  y ver que tiene entradas del estilo:
+
+'from=*HOSTNAME*', "esto se supone que es para limitar el acceso sólo desde sistemas principales específicos .
+
+" El siguiente comando saca, por cada fichero authorized_keys y authorized_keys2, aquellos que no tengan un FROM y los saca directo para poner NO en la extracion.
+
+find /home/*/.ssh -name authorized_keys|while read kfil; do cat $kfil|grep -vEe '^from=|^$'|awk -v var=$kfil '{print "SSH authorized_keys file: " var "; Invalid from section: *º or *.*.*.* or 0/0 or 0.0.0.0/0.  or empty are forbidden values in the `from=` parameter"}'; done
+
+find /home/*/.ssh -name authorized_keys2|while read kfil; do cat $kfil|grep -vEe '^from=|^$'|awk -v var=$kfil '{print "SSH authorized_keys file: " var "; Invalid from section: *º or *.*.*.* or 0/0 or 0.0.0.0/0.  or empty are forbidden values in the `from=` parameter"}'; done
+
+"Ejemplo
+from="emadlsmall.endesa.es
+from="10.152.*.*,172.24.*.*,10.151.*.*
+
+/* Si no tiene asi o similar, tenemos que contestar NO y preguntar al técnico correspondiente cuando llegue la desviación. */
+
+//Hemos encontrado algún caso que el contenido está comentado,eso también es correcto.
+"Ejemplo
+#ssh-rsa AAAAB3NzaC1yc2EAAAADA"
+
+"NOTA
+"//SI HAY ARCHIVOS authorized_keys CON OWNER HUERFANOS, SE PUEDE COMPROBAR QUE NO EXISTE EL OWNER Y SE PUEDEN BORRAR("en la DESVIACION")
+
+
+/* CONTESTAR YES */ : " Si los archivos authorized_keys son accesibles solo al owner del archivo y si son de adminitracion deben tener un from"
+/* CONTESTAR NO  */ : " SSH authorized_keys file: /home/es082027/.ssh/authorized_keys; Invalid from section: *º or *.*.*.* or 0/0 or 0.0.0.0/0.  or empty are forbidden values in the `from=` parameter
++-------------------------------------------------------------------------------------+
+---AV.1.2.1.2 Logging 	"LogLevel"
+---AV.1.2.1.3 Logging 	"LogLevel"
+
+cat /etc/ssh/sshd_config | grep -i logLevel
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/LogLevel
++-------------------------------------------------------------------------------------+
+---AV.1.2.2 Logging 	"QuietMode"
+
+"Specifies that only fatal errors should be logged.
+(F-Secure/SSH Communications Only - OS: Unix, Linux)"
+
+#"N/A OpenSSH"
++-------------------------------------------------------------------------------------+
+---AV.1.2.4 Logging 	
+Retain Log Files = 90 days
+
+//Primero saber que sistema de rotacion UTILIZA
+#->sinofunciona mirar,"Logrotate"<-#
+/usr/util/seguridad/logkeeper -s
+
+#->sinofunciona mirar "sinLOGKEEPE&&&sinLOGROTATE"<-#
+cat /etc/logrotate.conf
+
+#->sinLOGKEEPE&&&sinLOGROTATE<-#
+cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+
+//Segundo revisar que sistema estamos revisando sea Linux o Aix
+
+- OpenSSH / Linux				- OpenSSH / Aix
+--------------------		       ------------------------------
+//Fichero de configuracion		//Fichero de configuracion
+/etc/rsyslog.conf			 /etc/syslog.conf
+//Ficheros rotando			//Ficheros rotando
+/var/log/secure				 /var/adm/messages
+/var/log/messages
+
+//Tercero revisar si esta OK
+- OpenSSH / Linux
+"Para sistemas Linux y politica SSH, debe estar rotando, configurado"
+#//Configuracion
+#//Must contain:
+"*.info;mail.none;authpriv.none;cron.none                /var/log/messages
+"authpriv.*                                              /var/log/secure
+
+cat /etc/rsyslog.conf | egrep -i "secure|messages"
+#//En el fichero de rotacion debe estar rotando /var/log/secure & /var/log/messages
+
+/*  CONTESTAR YES*/ "Si el "/var/log/secure & /var/log/messages" esta rotando a 90 dias, y esta configurado.
+/* CONTESTAR NO*/ " in /etc/rsyslog.conf, there is no configurations.
++-------------------------------------------------------------------------------------+
+---AV.1.4.1 System Settings	"KeepAlive"
+
+#"Aplica si es OpenSSHV3.7 y inferior"#
+ssh -V
+
+#"N/A Top-end OpenSSH of 3.7"#
++-------------------------------------------------------------------------------------+
+---AV.1.4.2 System Settings	"TCPKeepAlive" = YES
+
+cat /etc/ssh/sshd_config | grep -i TCPKeepAlive
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/TCPKeepAlive
++-------------------------------------------------------------------------------------+
+---AV.1.4.3 System Settings	"LoginGraceTime" = 120 or less and must not be 0 
+ 
+cat /etc/ssh/sshd_config | grep -i LoginGraceTime
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/LoginGraceTime
++-------------------------------------------------------------------------------------+
+---AV.1.4.4 System Settings	"MaxConnections"
+
+#"N/A openSSH"#
++-------------------------------------------------------------------------------------+
+---AV.1.4.5 System Settings	
+MaxStartups = 100 O MENOS
+
+cat /etc/ssh/sshd_config | grep -i MaxStartups
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/MaxStartups
++-------------------------------------------------------------------------------------+
+---AV.1.4.8 System Settings	"MaxAuthTries" = "5 or less
+"
+
+cat /etc/ssh/sshd_config | grep -i MaxAuthTries
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/MaxAuthTries
++-------------------------------------------------------------------------------------+
+---AV.1.4.14 System Settings	AuthKbdInt.Retries
+
+#"N/A OpenSSH"
++-------------------------------------------------------------------------------------+
+---AV.1.5.1 Network Settings	
+"KeyRegenerationInterval"	3600 or less, and must not be 0
+
+cat /etc/ssh/sshd_config | grep -i KeyRegenerationInterval
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/KeyRegenerationInterval
++-------------------------------------------------------------------------------------+
+---AV.1.5.2 Network Settings	"Protocol" = "2", 2,1 or "1,2"
+
+/usr/sbin/sshd -tT | grep -i protocol
+
+#Debe volver vacío, para las versiones de OpenSSH después de v6.8, o debe informar de ello: protocolo 2#
++-------------------------------------------------------------------------------------+
+---AV.1.5.5 Network Settings	"GatewayPorts" = NO
+
+grep -i GatewayPorts /etc/ssh/sshd_config
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/GatewayPorts
++-------------------------------------------------------------------------------------+
+---AV.1.7.1.1 Identify and Authenticate Users	"PermitRootLogin" = NO
+
+cat /etc/ssh/sshd_config | grep -i PermitRootLogin
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/PermitRootLogin
+####################################################################################
+---AV.1.7.1.2 Identify and Authenticate Users
+
+#"N/A PermitRootLogin no"
++-------------------------------------------------------------------------------------+
+---AV.1.7.2 Identify and Authenticate Users	
+Public Key Authentication = YES
+
+cat /etc/ssh/sshd_config | grep -i PubkeyAuthentication
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/PubkeyAuthentication
++-------------------------------------------------------------------------------------+
+---AV.1.7.2.1 Identify and Authenticate Users	
+
+"Public Key Authentication Key Label for Private Key Ownership Identification
+
+"Una clave pública configurada en un ID de usuario puede pertenecer a otro individuo que no posee el ID de destino, utilizar 
+"el campo "comentario" en las claves públicas para establecer una etiqueta que indique el propietario del par de claves."
+
+
+ls -la /home/*/.ssh/* | grep -i "authorized"
+
+#*/
+"NOTA
+// SI HAY ARCHICOS 'AUTHORIZED_KEYS' CON OWNER HUERFANOS o OWNER DIFERENTES, deben tener un "comentario", ademas de cada fichero authorized_keys debe tener un comentario entre !!, por ejemplo el "!!GECOS!!"
+
+// Por cada fichero authorized_keys, se debe hacer un CAT y ver si tiene un comentario (!!GECOS!!)
+
+" El siguiente comando saca, por cada clave el fichero authorized_keys que no tiene un comentario, y lo saca listo para poner como un NO en la extracion.
+
+find /home/*/.ssh -name authorized_keys|while read kfil; do cat $kfil|grep -vEe '\!!$|^$' | awk -v var=$kfil 'BEGIN {FS=" "} {print "SSH authorized_keys file: " var "; Some of the keys have no identifying label"}';done
+
+Ejemplo:
+
+// Este clave no tiene !!COMENTARIO!!    ---> /home/ES082009/.ssh/authorized_keys
+
+
+/*  CONTESTAR YES */ : "Si todas las claves publicas pertenecen a su owner o no hay claves publicas, y tienen un comentario"
+/* CONTESTAR NO  */ : "Si las claves publicas no tienen un comentario"
+
+/* NO */ : "SSH authorized_keys file: /home/ES082009/.ssh/authorized_keys; Some of the keys have no identifying label"
++-------------------------------------------------------------------------------------+
+---AV.1.7.3.2 Identify and Authenticate Users
+---AV.1.7.3.3 Identify and Authenticate Users
+HostbasedAuthentication = NO 
+
+grep HostbasedAuthentication /etc/ssh/sshd_config
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/HostbasedAuthentication
++-------------------------------------------------------------------------------------+
+---AV.1.8.2.1 Protecting Resources  OSRs
+---AV.1.8.2.2 Protecting Resources  OSRs
+---AV.1.8.2.3 Protecting Resources  OSRs
+---AV.1.8.2.4 Protecting Resources  OSRs
+---AV.1.8.2.5 Protecting Resources  OSRs
+---AV.1.8.2.6 Protecting Resources  OSRs
+---AV.1.8.2.7 Protecting Resources  OSRs
+---AV.1.8.2.8 Protecting Resources  OSRs
+---AV.1.8.2.9 Protecting Resources  OSRs
+---AV.1.8.2.10 Protecting Resources  OSRs
+---AV.1.8.2.11 Protecting Resources  OSRs
+---AV.1.8.2.12 Protecting Resources  OSRs
+---AV.1.8.2.13 Protecting Resources  OSRs
+---AV.1.8.2.14 Protecting Resources  OSRs
+---AV.1.8.2.15 Protecting Resources  OSRs
+---AV.1.8.2.16 Protecting Resources  OSRs
+---AV.1.8.2.17 Protecting Resources  OSRs
+---AV.1.8.2.18 Protecting Resources  OSRs
+---AV.1.8.2.19 Protecting Resources  OSRs
+---AV.1.8.2.20 Protecting Resources  OSRs
+---AV.1.8.2.21 Protecting Resources  OSRs
+---AV.1.8.2.22 Protecting Resources  OSRs
+---AV.1.8.2.23 Protecting Resources  OSRs
+---AV.1.8.2.24 Protecting Resources  OSRs
+---AV.1.8.2.25 Protecting Resources  OSRs
+---AV.1.8.2.26 Protecting Resources  OSRs
+---AV.1.8.2.27 Protecting Resources  OSRs
+---AV.1.8.2.28 Protecting Resources  OSRs
+
+#"Comprobar que no tenga escrituras en other, si el fichero o directorio existe#
+
+find /bin/ -type f -perm -o=w | wc -l
+find /bin/ -type d -perm -o=w | wc -l
+
+/*  CONTESTAR YES*/ "Si el resultado es 0
+
+---AV.1.8.2.29 Protecting Resources  OSRs
+---AV.1.8.2.30 Protecting Resources  OSRs
+---AV.1.8.2.31 Protecting Resources  OSRs
+---AV.1.8.2.32 Protecting Resources  OSRs
+---AV.1.8.2.33 Protecting Resources  OSRs
+---AV.1.8.2.34 Protecting Resources  OSRs
+---AV.1.8.2.35 Protecting Resources  OSRs
+---AV.1.8.2.36 Protecting Resources  OSRs
+---AV.1.8.2.37 Protecting Resources  OSRs
+---AV.1.8.2.38 Protecting Resources  OSRs
+---AV.1.8.2.39 Protecting Resources  OSRs
+---AV.1.8.2.40 Protecting Resources  OSRs
+---AV.1.8.2.41 Protecting Resources  OSRs
+---AV.1.8.2.42 Protecting Resources  OSRs
+---AV.1.8.2.43 Protecting Resources  OSRs
+---AV.1.8.2.44 Protecting Resources  OSRs
+
+"#Comprobar que no tenga escrituras en other, si el fichero o directorio existe#
+
+find /lib* -type f -perm -o=w | wc -l
+find /lib* -type d -perm -o=w | wc -l
+
+/*  CONTESTAR YES*/ "Si el resultado es 0
+
+---AV.1.8.2.45 Protecting Resources  OSRs
+---AV.1.8.2.46 Protecting Resources  OSRs
+---AV.1.8.2.47 Protecting Resources  OSRs
+---AV.1.8.2.49 Protecting Resources  OSRs
+---AV.1.8.2.50 Protecting Resources  OSRs
+---AV.1.8.3.1 Protecting Resources  OSRs
+---AV.1.8.3.2 Protecting Resources  OSRs
+---AV.1.8.3.3 Protecting Resources  OSRs
+---AV.1.8.3.4 Protecting Resources  OSRs
+---AV.1.8.3.5 Protecting Resources  OSRs
+---AV.1.8.3.6 Protecting Resources  OSRs
+---AV.1.8.3.7 Protecting Resources  OSRs
+---AV.1.8.3.8 Protecting Resources  OSRs
+---AV.1.8.3.9 Protecting Resources  OSRs
+---AV.1.8.3.10 Protecting Resources  OSRs
+
+
+"#Comprobar que no tenga escrituras en other, si el fichero o directorio existe#
+
+ls -la /sbin/sshd
+ls -la /sbin/sshd2
+ls -la /sbin/sshd-check-conf
+ls -la /lib/svc/method/sshd
+ls -la /usr/lib/ssh/sshd
+ls -la /etc/openssh/sshd_config
+ls -la /etc/ssh/sshd_config
+ls -la /etc/ssh/sshd2_config
+ls -la /etc/ssh2/sshd_config
+ls -la /etc/ssh2/sshd2_config
+ls -la /etc/sshd_config
+ls -la /etc/sshd2_config
+ls -la /usr/local/etc/sshd_config
+ls -la /usr/local/etc/sshd2_config
+ls -la /usr/lib/ssh/ssh-keysign
+
+/* CONTESTAR YES*/ "Si existe el fichero y no tiene escritura en other
+/* CONTESTAR N/A*/ "File does not exist.
++-------------------------------------------------------------------------------------+
+---AV.1.9.1 Protecting Resources - User Resources	"PermitUserEnvironment"
+
+#Aplica a la version del ssh 3.5#
+
+ssh -V
+
+#"N/A OpeSSH#
++-------------------------------------------------------------------------------------+
+---AV.1.9.2 Protecting Resources - User Resources	"StrictModes" = YES
+
+grep StrictModes /etc/ssh/sshd_config
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/StrictModes
++-------------------------------------------------------------------------------------+
+---AV.1.9.3 Protecting Resources - User Resources	"AcceptEnv" = TODO COMENTADO
+"No debe contener variables que coincidan con ninguno de los patrones siguientes: TERM, PATH, HOME, MAIL, SHELL, LOGNAME, USER, USERNAME, _RLD*, DYLD_ *, LD_ *, LDR_ *, LIBPATH, SHLIB_PATH
+
+grep AcceptEnv /etc/ssh/sshd_config
+
+/*  CONTESTAR YES*/ "si sale todo sobre AcceptEnv comentado, no debe mostrar ninguno de los valores mencionados en los valores acordados o vacio.
++-------------------------------------------------------------------------------------+
+---AV.2.0.1.1 Business Use Notice	Business Use Notice / PrintMotd = yes
+---AV.2.0.1.4 Business Use Notice
+
+grep -i PrintMotd /etc/ssh/sshd_config
++-------------------------------------------------------------------------------------+
+---AV.2.1.1.1 Encryption 
+---AV.2.1.1.2 Encryption
+---AV.2.1.1.3 Encryption
+---AV.2.1.1.4 Encryption
+
+sshd -T|grep protocol
+grep -i protocol /etc/ssh/sshd_config
+grep -i ServerKeyBits /etc/ssh/sshd_config
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/ServerKeyBits
+
+## el ssh a partir de la la versión OpenSSH_7.4p1 ya no utiliza protocolo 1.##
++-------------------------------------------------------------------------------------+
+---AV.2.2.1.1 Passphrases	Private Key Passphrases
+
+#"lo mismo que ---AV.1.1.4"
++-------------------------------------------------------------------------------------+
+##---AV.1.1.5 Password Requirements	Private Key Passphrases
+##---AV.1.1.6 Password Requirements
+# YES Informativo
+#SIMILAR 
+##---AV.2.2.1.2 Passphrases
+##---AV.2.2.1.3 Passphrases
++-------------------------------------------------------------------------------------+
+---AV.2.2.1.4 Passphrases	Private Key Passphrases - security administrative and system authority
+
+#"lo mismo que ---AV.1.1.7"
++-------------------------------------------------------------------------------------+

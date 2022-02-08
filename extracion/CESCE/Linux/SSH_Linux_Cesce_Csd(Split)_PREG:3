@@ -1,0 +1,228 @@
+////////////////////////////////////////////////////////////////////////////////////////////
+SSH LINUX CESCE CSD(split) - Issue REF : 742474 / PRE 13
+/**************************************************************************************************************************************************************************************************/
+---AV.1.1.1 Password Requirements	
+"PermitEmptyPasswords 
+
+cat /etc/ssh/sshd_config | grep -i PermitEmptypassword
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/PermitEmptyPasswords
+
+/*  CONTESTAR YES */ : "Si PermitEmptyPasswords es NO"
+/* CONTESTAR NO  */ : "Si PermitEmptyPasswords es diferente a NO"
+/* CONTESTAR N/A */ : ""
+/**************************************************************************************************************************************************************************************************/
+##---AV.1.1.5 Password Requirements "Informacion de reglas de contraseña
+# YES Informativo
+#SIMILAR 
+##---AV.2.2.1.2 Passphrases
+/**************************************************************************************************************************************************************************************************/
+---AV.1.1.6 Password Requirements
+" HABLA DE usuarios/grupos de aplicaciones y sistemas" Private Key Passphrases - system-to-system authentication
+
+---AV.1.1.7 Password Requirements
+"HABLA DE acceso a un ID que tenga autorización administrativa o del sistema de seguridad" Private Key Passphrases - security administrative and system authority
+
+//Private Key Passphrases - security administrative and systemauthority
+
+ "Las claves privadas que se utilizan para obtener acceso a los ID que tienen autorización administrativa o del sistema de seguridad deben ser accesibles únicamente por los usuarios que tengan autorización administrativa o del sistema. Cualquier archivo authorized_keys o authorized_keys2 que otorgue acceso a un ID que tenga autorización administrativa o del sistema de seguridad debe limitar el acceso sólo de hosts específicos especificando la opción "from" con el valor adecuado.. 
+
+ "Se puede utilizar una frase de contraseña nula siempre que el archivo authorized_keys limite el acceso sólo de hosts específicos especificando la opción "from" con el valor adecuado. Para evitar que las cl---AVes se utilicen para los inicios de sesión de usuario interactivos, el archivo de cl---AVes privadas en los hosts de origen debe ser propiedad de usuarios/grupos de aplicaciones y sistemas, que no tienen capacidad de inicio de sesión autenticada por contraseña remota y que el propietario del archivo sólo puede leer y escribir en ellos.
+
+
+#Comprobar
+ls -la /home/*/.ssh/* | grep -i authorized_keys
+
+/*en el caso de existir ficheros authorized_keys o authorized_keys2  ,hay que realizar un cat de los ficheros  y ver que tiene entradas del estilo:
+
+"from=*HOSTNAME*", esto se supone que el from limita desde que ip's se puede acceder al usuario usando clave RSA.*/
+
+- "El siguiente comando te saca todos los ficheros authorized_keys o authorized_keys2.
+- "Debajo de cada fichero si te sale ssh-rsa, entonces es que tiene una línea que no es compliance, en la extracion es un NO.
+- "Si no saca informacion, signfica que no hay ficheros "authorized_keys o authorized_keys2"	es un YES."
+- "Si no salen lineas debajo de los ficheros es un YES, puede que este vacio o tenga un FROM.
+- "Si salen lineas vacias es compliance, es un YES.
+
+find /home/*/.ssh -name authorized_keys|while read kfil; do echo $kfil; cat $kfil|grep -v "from="|awk '{print $1}'; done
+
+find /home/*/.ssh -name authorized_keys2|while read kfil; do echo $kfil; cat $kfil|grep -v "from="|awk '{print $1}'; done
+
+/*Si no tiene el FROM tenemos que contestar NO y preguntar al técnico correspondiente cuando llegue la desviación.*/
+
+//Hemos encontrado algún caso que el contenido está comentado,eso también es YES.
+ "Ejemplo
+ #ssh-rsa AAAAB3NzaC1yc2EAAAADA"
+
+ "NOTA
+ //SI HAY FICHEROS authorized_keys, authorized_keys2 CON OWNER HUERFANOS, SE PUEDE COMPROBAR QUE N O EXISTE EL OWNER Y tambien es un NO.
+
+
+/*  CONTESTAR YES */ : "Si todos los ficheros authorize_keys y/o authorized_keys2, tienen un FROM "
+/* CONTESTAR NO  */ : "Si hay fichero autorize_keys, sin un FROM
+The following authorized_keys or authorized_keys2 files do not have the FROM option:
+ACCOUNT CUSTOMER --> /home/apps/.ssh/authorized_keys 
+ACCOUNT IBM      --> /home/cesuxat1/.ssh/authorized_keys 
+                     /home/cesuxat2/.ssh/authorized_keys 
+                     /home/ESY9CBSK/.ssh/authorized_keys
+                     /home/ESY9CAKU/.ssh/authorized_keys
+/* CONTESTAR N/A */ : ""
+/**************************************************************************************************************************************************************************************************/
+---AV.1.2.2 Logging 	"QuietMode"
+
+"Specifies that only fatal errors should be logged.
+(F-Secure/SSH Communications Only - OS: Unix, Linux)"
+
+#"N/A OpenSSH"
+/**************************************************************************************************************************************************************************************************/			   📢⚙⚙⚙⚙⚙/* POLITICA SSH - Linux */⚙⚙⚙⚙⚙📢 
+
+---AV.1.2.4 Logging
+Retain Log Files = 90 days
+
+ "Para la rotacion de SSH se revisa 3 cosas.
+ 1.- La rotacion que debe ser 90 dias, en cualqueira de los 3 sistemas de rotado.
+ 2.- Rotacion de fichero en sistemas Linux en politica SSH
+ 3.- Revisar que los ficheros de segurida debe estar rotando a 90 dias.
+
+ 
+ #COMPROBACIONES
+
+➡ 1. - "La rotacion que debe ser 90 dias."#
+ //Saber que sistema de rotado utiliza.
+
+# ➡ /* si no funciona mirar --> */"Logrotate" <--#
+/usr/util/seguridad/logkeeper -s
+
+# ➡ /* si no funciona mirar --> */"sinLOGKEEPE & sinLOGROTATE" <--#
+cat /etc/logrotate.conf
+
+# ➡ /*--> sinLOGKEEPE & sinLOGROTATE <--*/#
+cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+
+➡ 2.- "Rotacion de fichero en sistemas Aix."#
+ //Saber que SO estamos revisando "dependeran los ficheros de seguridad", ya sea Linux o Aix
+
+ |*******************************************|
+ |	    - OpenSSH / Linux -              |  
+ |-------------------------------------------|
+ |      "Fichero de configuracion "          |
+ |	 /etc/rsyslog.conf                   |
+ |	                                     |
+ |      "Ficheros de rotacion para SSH"      |
+ |	 /var/log/messages                   |
+ |	 /var/log/secure                     |
+ |                                           |
+ |*******************************************|
+
+➡ 3.- "Revisar que los ficheros de segurida deben estar rotando a 90 dias y configurados."
+#//Configuracion
+cat /etc/rsyslog.conf |grep -v "#" |egrep -i "messages|secure"
+  //debe salir algo como  auth.info /var/adm/messages 
+  //*.info;mail.none;authpriv.none;cron.none                /var/log/messages
+  //authpriv.*                                              /var/log/secure
+
+#//Rotacion
+"El fichero de sudo.log, debe estar implementado en el sistema de rotado".
+(/* ya sea --> logrotate.conf, loogkeeper o sinLogrotate&sinLogkeeper <-- */).
+
+"Si la rotacion se basa en el sistema de rotado "Logrotate," deben existir los ficheros de seguridad dentro de la configuracion de logrotate.conf".
+
+cat /etc/logrotate.conf | egrep -i "messages|secure"
+
+"- Si no esta dentro de logrotate.conf, hay que revisar si esta incluido en."
+(// include /etc/logrotate.d )
+
+ls -la /etc/logrotate.d
+
+"Debe existir un fichero llamado "messages o secure"
+"Si no existe buscar si esta implementado en "/etc/logrotate.d/syslog"
+
+cat /etc/logrotate.d/syslog | egrep -i "messages|secure"
+
+/*  CONTESTAR YES*/: "Si esta rotando a 90 y existen los fichero "SECURE / MESSAGES", y configurado en la rotacion"
+/* CONTESTAR NO*/ : "Si no esta rotando a 90 dias o no existen los fichero "SECURE / MESSAGES", o no estan configurado en la rotacion.".
+
+ /*NO*/    "The rotation is based on logrotate, and is configured in 45 days, it is recommended 90 days in the configuration."
+/**************************************************************************************************************************************************************************************************/
+---AV.1.4.4 System Settings
+MaxConnections
+
+#"N/A OpenSSH"
+/**************************************************************************************************************************************************************************************************/
+---AV.1.7.1.2 Identify and Authenticate Users	
+PermitRootLogin forced-commands 
+PermitRootLogin without-password 
+PermitRootLogin yes
+
+#//Yes si PermitRootLogin = YES
+#//N/A PermitRootLogin = no"
+
+cat /etc/ssh/sshd_config | grep -i PermitRootLogin
+
+/*  CONTESTAR YES */ : "Si PermitRootLogin es YES"
+/* CONTESTAR N/A */ : "Si PermitRootLogin es NO"
+/**************************************************************************************************************************************************************************************************/
+---AV.1.7.3.2 Identify and Authenticate Users
+---AV.1.7.3.3 Identify and Authenticate Users
+"Host-Based Authentication /etc/hosts.equiv file
+
+grep HostbasedAuthentication /etc/ssh/sshd_config
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/HostbasedAuthentication
+
+/*  CONTESTAR YES */ : "Si HostbasedAuthentication es NO"
+/* CONTESTAR NO*/ : "Si HostbasedAuthentication es distinto a NO"
+/**************************************************************************************************************************************************************************************************/
+---AV.2.1.1.2 Data Transmission - All native encryption ciphers "HABLA del cifrado de claves compartidas.
+
+REF : "https://pages.github.ibm.com/ciso-psg/main/supplemental/acceptable_encryption.html"
+
+"AES (Advanced Encryption Standard)
+"La longitud de clve mínima para RSA que se debe utilizar es 128-bit"
+
+#"Se debe mirar que esten los cifrados aprobados o por defecto"#
+sshd -tT | grep ciphers
+grep Ciphers /etc/ssh/sshd_config
+
+#---Ejemplo:
+Ciphers *,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+
+#"Si sale comentado mirar el MAN y ver el default"
+man sshd_config
+/Ciphers
+
+/*  CONTESTAR YES */ : "Si Ciphers tiene los algoritmo de cifrados aprobados"
+/* CONTESTAR NO*/ : "Si Ciphers no tiene los algoritmo de cifrados aprobados"
+/**************************************************************************************************************************************************************************************************/
+---AV.2.1.1.3 Encryption "HABLA del algoritmo de cifrado DES, este algoritmo no se usa. 
+
+/* CONTESTAR N/A */ : "The DES algorithm is not used"
+/**************************************************************************************************************************************************************************************************/
+---AV.2.1.1.4 Encryption "HABLA de la longitud mínima de bits para los algoritmos de clave pública
+
+REF : "https://pages.github.ibm.com/ciso-psg/main/supplemental/acceptable_encryption.html"
+
+"RSA (Rivest-Shamir-Aldeman)
+"La longitud de clve mínima para RSA que se debe utilizar es 2048-bit"
+
+#"Se debe mirar el protocol que sea 2 o serverkey sea 2048, y RSA activo."#
+cat /etc/ssh/sshd_config | egrep -wi "protocol|ServerKeyBits|RSAAuthentication"
+
+//Si sale comentado mirar en el MAN
+man sshd_config
+
+//Si no muestra resultado en el MAN, mirar que exista uno de estos 2 ficheros.
+
+rpm -q coreutils
+rpm -q openssl
+
+##"el ssh a partir de la la versión OpenSSH_7.4p1 ya no utiliza protocolo 1."##
+##"y en RHEL 7.8 o > ambos están deprecated (obsoletos)"##
+
+cat /etc/*release
+/**************************************************************************************************************************************************************************************************/

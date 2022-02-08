@@ -1,0 +1,538 @@
+////////////////////////////////////////////////////////////////////////////////////////////
+SSH Aix Enel_Csd - Issue REF : 726421 / PRE 145
+
+
+/************************************************************************************************************************/
+"Preguntas que N/A por politica.
+AV.1.1.2 Password Requirements	Disallow Blank Passwords
+AV.1.1.3 Password Requirements	Authentication - Password - Permit empty passwords
+AV.1.2.2 Logging	QuietMode  
+AV.1.2.3.1 Logging	Log Topic Authentication   
+AV.1.2.3.2 Logging	Log Topic Error   
+AV.1.2.3.3 Logging	Log Topic Forward   
+AV.1.2.3.4 Logging	Log Topic Info   
+AV.1.2.3.5 Logging	Log Topic SFTP   
+AV.1.2.3.6 Logging	Log Topic Warning  
+AV.1.2.4.1 Logging	Server - Logging - Log to Windows Event Log
+AV.1.2.4.2 Logging	Server - Logging - Log to textual log file
+AV.1.2.4.3 Logging	Event Logging - Enable logging to Windows Event Viewer
+AV.1.2.4.4 Logging	Debug Logging - Enable debug logging to log file
+AV.1.4.4 System Settings	MaxConnections  
+AV.1.4.6 System Settings	Keep Alive  
+AV.1.4.7 System Settings	Authentication Timeout  
+AV.1.4.9 System Settings	Maximum Authentication Retries
+AV.1.4.10 System Settings	Session - Keep-alive / broken session detection
+AV.1.4.11 System Settings	Session - Login timeout
+AV.1.4.12 System Settings	Session - Maximum login attempts
+AV.1.4.13 System Settings	Session - Maximum total sessions
+AV.1.4.14 System Settings	AuthKbdInt.Retries
+AV.1.4.15 System Settings	Network - Client keep alive
+AV.1.4.16 System Settings	Authentication - Grace time for completion of authentication process
+AV.1.4.17 System Settings	Authentication - Password - Number of password attempts
+AV.1.4.18 System Settings	General - Maximum number of connections
+AV.1.5.3 Network Settings	SSH1ServerKeyTime  
+AV.1.5.4 Network Settings	SSH2  
+AV.1.5.6 Network Settings	Access control - Windows groups Access control - Windows accounts Access control - Virtual groups Access control - Virtual accounts  
+AV.1.5.7 Network Settings	Permissions - Allow server to client (remote) port forwarding  
+AV.2.0.1.3 Business Use Notice	Business use Notice - Bitvise WinSSHD
+AV.2.0.1.4 Business Use Notice	Business use Notice - Attachmate RSIT Windows Server
+AV.2.1.1.1 Encryption	Data Transmission
+AV.2.1.1.5 Encryption	Algorithms - Encryption
+AV.2.1.1.6 Encryption	Encryption - Ciphers
+AV.2.1.1.7 Encryption	Authentication - Public Key - Public key minimum length
+AV.1.9.1 Protecting Resources - User Resources	PermitUserEnvironment  
+AV.2.0.1.2 Business Use Notice	Business use Notice - VanDyke Vshell
+
+
+"Preguntas que N/A por Sistema Operativo.
+AV.1.8.4.1 Protecting Resources – OSRs	C:\Program Files\F-Secure\
+AV.1.8.4.2 Protecting Resources – OSRs	C:\Program Files\OpenSSH\
+AV.1.8.4.3 Protecting Resources – OSRs	C:\Program Files\SSH Communications Security\
+AV.1.8.4.4 Protecting Resources – OSRs	C:\Program Files\VShell\
+AV.1.8.4.5 Protecting Resources – OSRs	C:\Program Files\ RemotelyAnywhere\
+AV.1.8.4.6 Protecting Resources – OSRs	C:\Program Files\Bitvise WinSSHD\
+AV.1.8.4.7 Protecting Resources – OSRs	C:\Program Files\Attachmate\RSecure\
+AV.1.8.5.1 Protecting Resources – OSRs	C:\Cygwin\bin\scp.exe
+AV.1.8.5.2 Protecting Resources – OSRs	C:\Cygwin\bin\ssh.exe
+AV.1.8.5.3 Protecting Resources – OSRs	C:\Cygwin\bin\ssh-add.exe
+AV.1.8.5.4 Protecting Resources – OSRs	C:\Cygwin\bin\ssh-agent.exe
+AV.1.8.5.5 Protecting Resources – OSRs	C:\Cygwin\bin\ssh-host-config
+AV.1.8.5.6 Protecting Resources – OSRs	C:\Cygwin\bin\ssh-keygen.exe
+AV.1.8.5.7 Protecting Resources – OSRs	C:\Cygwin\bin\ssh-keyscan.exe
+AV.1.8.5.8 Protecting Resources – OSRs	C:\Cygwin\bin\ssh-user-config
+AV.1.8.5.10 Protecting Resources – OSRs	C:\Cygwin\etc\defaults\etc\sshd_config
+AV.1.8.5.11 Protecting Resources – OSRs	C:\Cygwin\etc\sshd_config
+AV.1.8.5.12 Protecting Resources – OSRs	C:\Cygwin\usr\sbin\ssh-keysign.exe
+AV.1.8.5.13 Protecting Resources – OSRs	C:\Cygwin\usr\sbin\sshd.exe
+AV.1.8.5.14 Protecting Resources – OSRs	C:\Cygwin\usr\sbin\sftp-server.exe
+AV.1.8.6.1 Protecting Resources – OSRs	/QOpenSys/QIBM/ProdData/SC1/OpenSSH/
+/************************************************************************************************************************/
+AV.1.1.1 Password Requirements	PermitEmptyPasswords  
+
+
+#"Comprobar
+cat /etc/ssh/sshd_config | grep -i PermitEmptypassword
+
+#"Si sale comentado mirar el MAN y ver el default, por defecto es NO"
+
+man sshd_config
+/PermitEmptyPasswords
+
+/* CONTESTAR YES */ : "SI PermitEmptypassword es NO"
+/* CONTESTAR NO  */ : ""
+/* CONTESTAR N/A */ : ""
+/************************************************************************************************************************/
+AV.1.1.4 Password Requirements	Private Key Passphrases
+
+#"Debe asignarse una frase de contraseña a todas las claves privadas que se utilizan para la autenticación de usuario y no deben compartirse."#
+
+#"Comprobar
+ls -l $HOME/.ssh/*
+ls -la /home/*/.ssh/* | grep -i "id_rsa"
+"*/
+"Todo las claves privadas (id_rsa), deben tener una frase de paso "Proc-Type: 4,ENCRYPTED""
+"El siguiente comando, saca el path de fichero y su contenido si encuentra "Proc-Type: 4,ENCRYPTED", por debajo de cada fichero, si no tiene ENCRYPTED  es un NO, si no salen archivos es que no hay es un YES 
+
+find /home/*/.ssh -name id_rsa|while read fil; do echo $fil; head $fil|grep ENCRYPTED; done
+#*/
+
+"NOTA
+"//SI HAY ARCHICOS ID_RSA CON OWNER HUERFANOS, SE PUEDE COMPROBAR QUE NO EXISTE EL OWNER Y SE PUEDEN BORRAR
+
+/*  CONTESTAR YES */ : "Si todas las claves privadas tiene frase de contraseña (passphrase)"
+/* CONTESTAR NO  */ : "The following files do not have Passphrases: 
+/home/es083817/.ssh/id_rsa
+/home/es083817/.ssh/id_rsa.pub
+/home/esy9a3wa/.ssh/id_rsa
+/home/esy9a3wa/.ssh/id_rsa.pub
+/home/esy9aykc/.ssh/id_rsa
+/home/esy9aykc/.ssh/id_rsa.pub
+"
+/* CONTESTAR N/A */ : ""
+/************************************************************************************************************************/
+##AV.1.1.5 Password Requirements	Private Key Passphrases
+##AV.1.1.6 Password Requirements
+#" YES Informativo del uso de las Passphrases
+#"SIMILAR 
+##AV.2.2.1.2 Passphrases
+##AV.2.2.1.3 Passphrases
+/************************************************************************************************************************/
+AV.1.1.7 Password Requirements	Private Key Passphrases - security administrative and system authority
+
+"Las claves privadas que se utilizan para obtener acceso a los ID que tienen autorización administrativa o del sistema de seguridad deben ser accesibles únicamente por los usuarios que tengan autorización administrativa o del sistema. 
+
+"Cualquier archivo authorized_keys o authorized_keys2 que otorgue acceso a un ID que tenga autorización administrativa o del sistema de seguridad debe limitar el acceso sólo de hosts específicos especificando la opción "from" con el valor adecuado.
+
+
+#Comprobar
+ls -la /home/*/.ssh/* | grep -i authorized_keys
+
+"*/
+"en el caso de existir ficheros authorized_keys o authorized_keys2  ,hay que realizar un cat de los ficheros  y ver que tiene entradas del estilo:
+
+'from=*HOSTNAME*', "esto se supone que es para limitar el acceso sólo desde sistemas principales específicos .
+
+"El siguiente comando te saca todos los ficheros authorized_keys o authorized_keys2, y dejabo de cada archivo si tiene FROM, si no tiene un FROM es un NO, si no salen archivos, signfica que no hay es un YES.
+
+find /home/*/.ssh -name authorized_keys|while read kfil; do echo $kfil; head $kfil|grep from=; done
+find /home/*/.ssh -name authorized_keys2|while read kfil; do echo $kfil; head $kfil|grep from=; done
+
+"Ejemplo
+from="emadlsmall.endesa.es
+
+/*Si no tiene esto tenemos que contestar NO y preguntar al técnico correspondiente cuando llegue la desviación.*/
+
+//Hemos encontrado algún caso que el contenido está comentado,eso también es correcto.
+"Ejemplo
+#ssh-rsa AAAAB3NzaC1yc2EAAAADA"
+
+//Otro caso correcto:
+"Ejemplo
+Jw== esy9btvn@EMREPL801 !!ES/E/Y9BTVN/PSS/Marquez Sanchez, Ignacio!!
+
+//se supone que esta bien porque al final tiene usuario y maquina desde la que se puede hacer login*/
+
+"NOTA
+//SI HAY ARCHICOS authorized_keys CON OWNER HUERFANOS, SE PUEDE COMPROBAR QUE NO EXISTE EL OWNER Y SE PUEDEN BORRAR
+
+
+/*  CONTESTAR YES */ : "Si los archivos authorized son accesibles solo al owner del archivo y si son de adminitracion deben tener un from"
+/* CONTESTAR NO  */ : ""
+/* CONTESTAR N/A */ : ""
+/************************************************************************************************************************/
+AV.1.2.1.2 Logging	LogLevel  
+AV.1.2.1.3 Logging	LogLevel  
+
+
+#Comprobar
+cat /etc/ssh/sshd_config | grep -i logLevel
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/LogLevel
+
+/*  CONTESTAR YES */ : "Si LogLevel es INFO o si esta comentado coge valor por defecto"
+/* CONTESTAR NO  */ : ""
+/* CONTESTAR N/A */ : ""
+/************************************************************************************************************************/
+			  /* POLITICA SSH - SSH AIX*/ 
+
+AV.1.2.4 Logging	Retain Log Files
+
+#"Para la rotacion de log`s se revisa 2 cosas.
+1.- La rotacion que debe ser 180 dias.
+2.- El fichero del sudo.log debe estar rotando."#
+
+
+#COMPROBACIONES
+#1. - "La rotacion que debe ser 180 dias."#
+//Saber que sistema de rotacion USA
+
+"Si esta definido en el crontab
+crontab -l|grep -v ^#|grep logkeeper
+"Ejecutamos un -s del comando que nos devuelve
+//Ejmplo
+/end/bin/logkeeper/logkeeper -s
+
+"Mirar que los valores "$trim_retention_days, $backups_retention_days, " sean 180
+//Mirar el fichero de configuracion.
+cat /end/bin/logkeeper/logkeeper.cfg | egrep -i "trim_retention_days|backups_retention_days"
+
+#->sinofunciona mirar,Logrotate<-#
+
+cat /etc/logrotate.conf
+#->sinofunciona mirar sinLOGKEEPE&&&sinLOGROTATE<-#
+
+#->sinLOGKEEPE&&&sinLOGROTATE<-#
+cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+
+
+#2.- "Los ficheros del sistema que deben estar rotando a 180 dias."#
+//Saber que SO estamos revisando "dependeran los ficheros", ya sea Linux o Aix
+
+				 |
+- OpenSSH / Linux		 |	      - OpenSSH / Aix
+-------------------------------	 |      ----------------------------------
+"Fichero de configuracion "	 | 	 "Fichero de configuracion "
+/etc/rsyslog.conf		 |	 /etc/syslog.conf
+				 |	
+"Ficheros de rotacion para SSH"	 |	 "Ficheros de rotacion para SSH"
+/var/log/secure			 |	 /var/log/messages
+/var/log/messages		 |	 /var/log/secure
+				 |
+
+
+#3.- "Revisar si esta OK: "CONFIGURACION Y ROTACION PARA OpenSSH / Aix
+"Para sistemas Aix y politica SSH, debe estar rotando, configurado"
+#//Configuracion
+cat /etc/syslog.conf |grep -v "#" |egrep "auth|messages|secure"
+
+#//Rotacion
+"Los ficheros de "SECURE / MESSAGES" deben estar implementados en el fichero de rotacion("ya sea logrotate.conf, loogkeeper").
+
+"Si no esta implementado en ninguno de los anteriores:
+	"- hay que revisar si esta incluido en "/etc/logrotate.d/syslog"
+
+cat /etc/logrotate.d/syslog | egrep -i "secure|messages"
+
+/*  CONTESTAR YES*/: "Si esta rotando a 180 y existe el fichero de sudo.log configurado en la rotacion"
+/* CONTESTAR NO*/ : "Si no esta rotando a 180 dias o no existe el fichero de log configurado en la rotacion.".#
+#"NO : "The rotation is configured in 7 days, it should be 180 days."
+#"NO : "The log file is not well implemented in the rotation configuration."
+/************************************************************************************************************************/
+AV.1.4.2 System Settings	TCPKeepAlive  
+
+
+#Comprobar
+cat /etc/ssh/sshd_config | grep -i TCPKeepAlive
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/TCPKeepAlive
+
+/*  CONTESTAR YES */ : "Si TCPKeepAlive es YES o si esta comentado por defecto sea YES"
+/* CONTESTAR NO  */ : ""
+/* CONTESTAR N/A */ : ""
+/************************************************************************************************************************/
+AV.1.4.3 System Settings	"LoginGraceTime" = 120 or less and must not be 0   
+
+
+#Comprobar
+cat /etc/ssh/sshd_config | grep -i LoginGraceTime
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/LoginGraceTime
+
+/*  CONTESTAR YES */ : "Si LoginGraceTime" = 120 or less and must not be 0"
+/* CONTESTAR NO  */ : ""
+/* CONTESTAR N/A */ : ""
+/************************************************************************************************************************/
+AV.1.4.5 System Settings	MaxStartups  100 or less
+
+
+#Comprobar
+cat /etc/ssh/sshd_config | grep -i MaxStartups
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/MaxStartups
+
+/*  CONTESTAR YES */ : "Si MaxStartups  =100 or less"
+/* CONTESTAR NO  */ : ""
+/* CONTESTAR N/A */ : ""
+/************************************************************************************************************************/
+AV.1.4.8 System Settings	MaxAuthTries  =	5 or less
+
+
+#Comprobar
+cat /etc/ssh/sshd_config | grep -i MaxAuthTries
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/MaxAuthTries
+
+/*  CONTESTAR YES */ : "Si MaxAuthTries  = 5 or less"
+/* CONTESTAR NO  */ : ""
+/* CONTESTAR N/A */ : ""
+/************************************************************************************************************************/
+AV.1.5.1 Network Settings	KeyRegenerationInterval=3600 or less, and must not be 0
+
+
+#Comprobar
+cat /etc/ssh/sshd_config | grep -i KeyRegenerationInterval
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/KeyRegenerationInterval
+
+/*  CONTESTAR YES */ : "Si KeyRegenerationInterval=3600 or less, and must not be 0"
+/* CONTESTAR NO  */ : ""
+/* CONTESTAR N/A */ : ""
+/************************************************************************************************************************/
+AV.1.5.2 Network Settings	Protocol  	"2", “2,1” or "1,2"
+
+
+#Comprobar
+sshd -T|grep protocol
+grep -i protocol /etc/ssh/sshd_config
+grep -i ServerKeyBits /etc/ssh/sshd_config /usr/local/etc/sshd_config
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/ServerKeyBits
+
+/*  CONTESTAR YES */ : "Si Protocol = 2"
+/* CONTESTAR NO  */ : ""
+/* CONTESTAR N/A */ : ""
+
+/************************************************************************************************************************/
+AV.1.7.1.1 Identify and Authenticate Users	PermitRootLogin   = no
+
+
+#Comprobar
+cat /etc/ssh/sshd_config | grep -i PermitRootLogin
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/PermitRootLogin
+
+/*  CONTESTAR YES */ : "Si PermitRootLogin  = no"
+/* CONTESTAR NO  */ : ""
+/* CONTESTAR N/A */ : ""
+/************************************************************************************************************************/
+AV.1.7.1.2 Identify and Authenticate Users
+
+#"N/A PermitRootLogin = no"
+/************************************************************************************************************************/
+AV.1.7.2 Identify and Authenticate Users	Public Key Authentication = YES
+
+
+
+#Comprobar
+cat /etc/ssh/sshd_config | grep -i PubkeyAuthentication
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/PubkeyAuthentication
+
+/*  CONTESTAR YES */ : "Si PubkeyAuthentication  = YES"
+/* CONTESTAR NO  */ : ""
+/* CONTESTAR N/A */ : ""
+/************************************************************************************************************************/
+AV.1.7.3.2 Identify and Authenticate Users	Host-Based Authentication /etc/hosts.equiv file
+AV.1.7.3.3 Identify and Authenticate Users	Host-Based Authentication /etc/shosts.equiv file
+
+
+#Comprobar
+grep HostbasedAuthentication /etc/ssh/sshd_config
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/HostbasedAuthentication
+
+/*  CONTESTAR YES */ : "Si HostbasedAuthentication  = NO o si esta comentado por defecto es NO"
+/* CONTESTAR NO  */ : ""
+/* CONTESTAR N/A */ : ""
+
+
+/************************************************************************************************************************/
+AV.1.9.2 Protecting Resources - User Resources	StrictModes  = yes
+
+
+#Comprobar
+cat /etc/ssh/sshd_config | grep -i StrictModes
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/StrictModes
+
+/*  CONTESTAR YES */ : "Si StrictModes  = YES, o si esta comentado por defecto es YES"
+/* CONTESTAR NO  */ : ""
+/* CONTESTAR N/A */ : ""
+/************************************************************************************************************************/
+AV.1.8.2.1 Protecting Resources  OSRs
+AV.1.8.2.2 Protecting Resources  OSRs
+AV.1.8.2.3 Protecting Resources  OSRs
+AV.1.8.2.4 Protecting Resources  OSRs
+AV.1.8.2.5 Protecting Resources  OSRs
+AV.1.8.2.6 Protecting Resources  OSRs
+AV.1.8.2.7 Protecting Resources  OSRs
+AV.1.8.2.8 Protecting Resources  OSRs
+AV.1.8.2.9 Protecting Resources  OSRs
+AV.1.8.2.10 Protecting Resources  OSRs
+AV.1.8.2.11 Protecting Resources  OSRs
+AV.1.8.2.12 Protecting Resources  OSRs
+AV.1.8.2.13 Protecting Resources  OSRs
+AV.1.8.2.14 Protecting Resources  OSRs
+AV.1.8.2.15 Protecting Resources  OSRs
+AV.1.8.2.16 Protecting Resources  OSRs
+AV.1.8.2.17 Protecting Resources  OSRs
+AV.1.8.2.18 Protecting Resources  OSRs
+AV.1.8.2.19 Protecting Resources  OSRs
+AV.1.8.2.20 Protecting Resources  OSRs
+AV.1.8.2.21 Protecting Resources  OSRs
+AV.1.8.2.22 Protecting Resources  OSRs
+AV.1.8.2.23 Protecting Resources  OSRs
+AV.1.8.2.24 Protecting Resources  OSRs
+AV.1.8.2.25 Protecting Resources  OSRs
+AV.1.8.2.26 Protecting Resources  OSRs
+AV.1.8.2.27 Protecting Resources  OSRs
+AV.1.8.2.28 Protecting Resources  OSRs
+AV.1.8.2.29 Protecting Resources  OSRs
+AV.1.8.2.30 Protecting Resources  OSRs
+AV.1.8.2.31 Protecting Resources  OSRs
+AV.1.8.2.32 Protecting Resources  OSRs
+AV.1.8.2.33 Protecting Resources  OSRs
+AV.1.8.2.34 Protecting Resources  OSRs
+AV.1.8.2.35 Protecting Resources  OSRs
+AV.1.8.2.36 Protecting Resources  OSRs
+AV.1.8.2.37 Protecting Resources  OSRs
+AV.1.8.2.38 Protecting Resources  OSRs
+AV.1.8.2.39 Protecting Resources  OSRs
+AV.1.8.2.40 Protecting Resources  OSRs
+AV.1.8.2.41 Protecting Resources  OSRs
+AV.1.8.2.42 Protecting Resources  OSRs
+AV.1.8.2.43 Protecting Resources  OSRs
+AV.1.8.2.44 Protecting Resources  OSRs
+AV.1.8.2.45 Protecting Resources  OSRs
+AV.1.8.2.46 Protecting Resources  OSRs
+AV.1.8.2.47 Protecting Resources  OSRs
+AV.1.8.2.49 Protecting Resources  OSRs
+AV.1.8.2.50 Protecting Resources  OSRs
+AV.1.8.3.1 Protecting Resources  OSRs
+AV.1.8.3.2 Protecting Resources  OSRs
+AV.1.8.3.3 Protecting Resources  OSRs
+AV.1.8.3.4 Protecting Resources  OSRs
+AV.1.8.3.5 Protecting Resources  OSRs
+AV.1.8.3.6 Protecting Resources  OSRs
+AV.1.8.3.7 Protecting Resources  OSRs
+AV.1.8.3.8 Protecting Resources  OSRs
+AV.1.8.3.9 Protecting Resources  OSRs
+AV.1.8.3.10 Protecting Resources  OSRs
+
+
+#Comprobar que no tenga escrituras en other, si el fichero o directorio existe#
+
+
+find /bin/ -type f -perm -o=w | wc -l
+find /bin/ -type d -perm -o=w | wc -l
+
+find /lib* -type f -perm -o=w | wc -l
+find /lib* -type d -perm -o=w | wc -l
+
+ls -la /sbin/sshd
+ls -la /sbin/sshd2
+ls -la /sbin/sshd-check-conf
+ls -la /lib/svc/method/sshd
+ls -la /usr/lib/ssh/sshd
+ls -la /etc/openssh/sshd_config
+ls -la /etc/ssh/sshd_config
+ls -la /etc/ssh/sshd2_config
+ls -la /etc/ssh2/sshd_config
+ls -la /etc/ssh2/sshd2_config
+ls -la /etc/sshd_config
+ls -la /etc/sshd2_config
+ls -la /usr/local/etc/sshd_config
+ls -la /usr/local/etc/sshd2_config
+ls -la /usr/lib/ssh/ssh-keysign
+/************************************************************************************************************************/
+AV.1.9.3 Protecting Resources - User Resources	AcceptEnv  = TODO COMENTADO
+
+
+#Comprobar
+grep AcceptEnv /etc/ssh/sshd_config
+
+/*  CONTESTAR YES */ : "Si AcceptEnv sale todo comentado o nada"
+/* CONTESTAR NO  */ : ""
+/* CONTESTAR N/A */ : ""
+
+/************************************************************************************************************************/
+AV.2.0.1.1 Business Use Notice	Business Use Notice = YES
+
+
+
+#Comprobar
+grep PrintMotd /etc/ssh/sshd_config
+
+/*  CONTESTAR YES */ : "Si PrintMotd = YES"
+/* CONTESTAR NO  */ : ""
+/* CONTESTAR N/A */ : ""
+/************************************************************************************************************************/
+AV.2.1.1.2 Encryption
+AV.2.1.1.3 Encryption
+AV.2.1.1.4 Encryption
+
+sshd -T|grep protocol
+grep -i protocol /etc/ssh/sshd_config
+grep -i ServerKeyBits /etc/ssh/sshd_config
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/ServerKeyBits
+
+## el ssh a partir de la la versión OpenSSH_7.4p1 ya no utiliza protocolo 1.##
+/************************************************************************************************************************/
+##AV.1.1.5 Password Requirements	Private Key Passphrases
+##AV.1.1.6 Password Requirements
+# YES Informativo
+#SIMILAR 
+##AV.2.2.1.2 Passphrases
+##AV.2.2.1.3 Passphrases
+/--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------/
+AV.2.2.1.4 Passphrases	Private Key Passphrases - security administrative and system authority
+
+#"lo mismo que AV.1.1.7"
+/************************************************************************************************************************/

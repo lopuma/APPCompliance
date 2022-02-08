@@ -1,0 +1,88 @@
+IGS - AIX / OS BASE
+*---------------------------------------------------------------------------------*
+####################################################
+*---------------------------------------------------------------------------------*
+E.1.2.4 Logging	Log record retention time frame.
+
+#VERIFICAR LA ROTACION en cualquiera de los 3 sistemas#
+
+#->Logrotate<-#
+cat /etc/logrotate.conf
+
+#->sinofunciona,mirar,logkeeper<-#
+/usr/util/seguridad/logkeeper -s
+
+#->sinLOGKEEPE&&&sinLOGROTATE<-#
+cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+*---------------------------------------------------------------------------------*
+####################################################
+*---------------------------------------------------------------------------------*
+E.1.5.2.3 Network Settings
+E.1.5.2.6 Network Settings
+ validate that VSM is able to determine AFS/DFS as remote File Systems.	Configuration of bin subdirectory of the ftp account home directory.
+
+"verificar permisos"
+Comando:
+ls -la /home/ftp
+*---------------------------------------------------------------------------------*
+####################################################
+*---------------------------------------------------------------------------------*
+E.1.5.9 Network Settings NNTP authentication and identification
+
+"El fichero debe estar VACIO, si no lo esta debe tener restrinciones como ejemplo -sec"
+"VACIO"
+cat /etc/exports
+*---------------------------------------------------------------------------------*
+####################################################
+*---------------------------------------------------------------------------------*
+E.1.5.11 Network Settings	X-server access control
+
+N/A FOR red hat linux
+*---------------------------------------------------------------------------------*
+####################################################
+*---------------------------------------------------------------------------------*
+A.8.2.1 Network Settings - Anonymous FTP	Directories enabled for anonymous FTP access.
+
+#sI ftp ESTA HABILITADO probar que no entramos con ANONYMOUS#
+ftp localhost
+
+> anonymous
+*---------------------------------------------------------------------------------*
+####################################################
+*---------------------------------------------------------------------------------*
+E.1.5.17 Network Settings	Directories enabled for tftp access.
+
+Comando:
+grep -i 'tftp' /etc/passwd
+ls -l /home/tftp
+"Si con esto no queda claro si el servicio está habilitado ,también podemos mirar lo siguiente":
+
+DE FORMA GENERAL PARA SABER EN UNIX SI UN SERVICIO ESTÁ CONFIGURADO Y HABILITADO.
+
+En el caso del tftp:
+
+grep ftp /etc/inetd.conf
+*---------------------------------------------------------------------------------*
+####################################################
+*---------------------------------------------------------------------------------*
+E.1.5.18.1 Network Settings
+E.1.5.18.2 Network Settings
+E.1.5.18.3 Network Settings
+E.1.5.18.4 Network Settings
+E.1.5.18.5 Network Settings
+
+
+"El fichero debe estar VACIO, si no lo esta debe tener restrinciones como ejemplo -sec"
+cat /etc/exports
+*---------------------------------------------------------------------------------*
+####################################################
+*---------------------------------------------------------------------------------*
+A.8.9.1 Network Settings - Network Information Services (NIS) (including NIS+ in NIS compatibility mode)	NIS maps
+A.8.11.1 Network Settings - Network Information Services Plus (NIS+)	NIS+ maps
+
+"Nada referente a NIS, 	en los grupos o usuarios"
+
+cat /etc/rc.nfs|grep -i nis
+*---------------------------------------------------------------------------------*
+###################################################################################
+*---------------------------------------------------------------------------------*

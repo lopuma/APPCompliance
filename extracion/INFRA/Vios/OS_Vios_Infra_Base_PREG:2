@@ -1,0 +1,18 @@
+/********************************************************************************************************************************************************************/
+BV.1.2.0 Logging 	Retain Log files	90 days
+
+#->Logrotate<-#
+cat /etc/logrotate.conf
+
+#->sinofunciona,mirar,logkeeper<-#
+/usr/util/seguridad/logkeeper -s
+
+#->sinLOGKEEPE&&&sinLOGROTATE<-#
+cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+/********************************************************************************************************************************************************************/
+BV.2.1.1 Encryption	"Data Transmission"	
+
+"SSH(PermitUserEnvironment requirement in SSH techspec is not applicable due to VIO server technical feasibility)"
+
+
+N/A "is not applicable due to VIO server"
