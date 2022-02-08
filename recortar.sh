@@ -14,6 +14,7 @@ miLista=(
     'Salir'
 )
 
+
 user=$(logname)
 home="/home/${user}/Compliance/"
 
