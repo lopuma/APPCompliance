@@ -2158,7 +2158,6 @@ class Aplicacion():
                             borderwidth=[("active",1)],
                             )
 
-                            ##
         self.style.configure( 
             'DESV.TButton',
             background = "#D4ECDD",
