@@ -2157,7 +2157,7 @@ class Aplicacion():
                             relief=[("active",'ridge'),("pressed",'groove')],
                             borderwidth=[("active",1)],
                             )
-        self.style.configure(
+        self.style.configure( 
             'DESV.TButton',
             background = "#D4ECDD",
             relief='sunke',
