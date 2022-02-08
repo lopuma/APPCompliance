@@ -1,11 +1,8 @@
-/*
-cat /etc/passwd | while read line; do cut -d: -f 1,7 | egrep -v "/bin/false|/sbin/nologin" |cut -d: -f1 | while read sline; do echo -n "$sline|" | read variable;done|cat /etc/shadow | egrep --color=always "$variable" |cut -d: -f1,2,5 | grep -v 90;done
-*/
-
 COPIAS
 /*
 - copiar a un servidor
 	scp -r /home/esy9d7l1/packages/ESY9D7L1  esy9d7l1@158.98.41.236:/home/ESY9D7L1/pack
+
 - copiar desde un servidor	
 	scp -r -P 22 esy9d7l1@129.39.137.82:/home/ESY9D7L1 .
 */

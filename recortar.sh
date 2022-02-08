@@ -13,6 +13,7 @@ miLista=(
     'LIstar MINLEN Sistemas Aix'
     'Salir'
 )
+
 user=$(logname)
 home="/home/${user}/Compliance/"
 
