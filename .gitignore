@@ -6,3 +6,12 @@ compliance.spec
 build/
 extracion/
 GUI.code-workspace
+.gitconfig
+.gitignore
+*.py
+*.spec
+GUI.code-workspace
+descripciones.txt
+nohup.err
+nohup.out
+resultado.txt
