@@ -399,6 +399,24 @@
       ]
     },
     {
+      "object": "ctmagent",
+      "owner": "ctmagent",
+      "tipo": "/F/",
+      "ownerGroup": "Group FT Linux",
+      "user": [
+        "Group FT Linux"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL servers"
+      ],
+      "risk": "GENERICO / MAXAGE / KYNDRYL",
+      "impact": "GENERICO / MAXAGE / KYNDRYL",
+      "variable": [
+        "Usuario para el proceso de Compliance"
+      ]
+    },
+    {
       "object": "root",
       "owner": "root",
       "tipo": "/F/",

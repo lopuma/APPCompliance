@@ -839,9 +839,13 @@ ls -ld $wdir
 ---E.1.5.18.0 Network Settings	
 "NFS
 
-lslpp -L | grep bos.sysmgt.nim.master
+//Inhabilitar servidor NFS a menos que sea necesario.
 
-/* CONTESTAR YES */ : " Si el resultado anterior no muestra nada (no es un maestro de nim, no requiere más comprobación)
+lslpp -L |grep bos.net.nfs.server
+
+/* CONTESTAR YES */ : " Si el comando anterior no muestra nada (no es un maestro de nim, no requiere más comprobación)
+
+/* CONTESTAR NO */ : " Fileset bos.net.nfs.server installed. NFS client enabled, it must be disabled.
 +-------------------------------------------------------------------------------------+
 ---E.1.5.18.1 Network Settings	
 "/etc/exports
