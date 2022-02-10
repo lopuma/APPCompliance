@@ -696,7 +696,7 @@
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "",
+            "risk": "el usuario \"esy9e0rn\" desaparecerá, se va activar el usuario de Kyndryl en vez del de IBM.",
             "impact": "",
             "variable": [
                 "file_authorized=\"/home/ESY9E0RN/.ssh/authorized_keys\"",

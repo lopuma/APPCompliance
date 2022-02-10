@@ -45,11 +45,22 @@
     },
     {
         "modulo": "Password Requirements/Password MIN Length - System Default",
-        "clave": "MINLENGTH",
-        "descripcion": "Invalid Password Min Length setting of 8, should be not less than 14\nInvalid system ACCOUNTS Min Length",
-        "comprobacion": "+-------------------------------------------------------------------------------------+\n## El parametro minlen, debe ser 14, por defecto y por usuario.\n## Una vez cambiado a default, se corrigen para las demas cuentas, puede quedar root o alguna cuenta sin cambiar, por lo que se puede cambiar manual.\n+-------------------------------------------------------------------------------------+\n\nlssec -f /etc/security/user -s default -a minlen",
+        "clave": "MINLENGTH DEFAULT",
+        "descripcion": "Invalid Password Min Length setting of 8, should be not less than 14\nInvalid system DEFAUTL Min Length",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## El parametro minlen en los sistemas AIX, debe ser 14, por defecto y por usuario.\n\n## Una vez cambiado a default, se corrigen para las demas cuentas, puede quedar root o alguna cuenta sin cambiar, por lo que se puede cambiar manual \n\n## (MODULO : Password Requirements/Password MIN Length).\n+-------------------------------------------------------------------------------------+\n\nlssec -f /etc/security/user -s default -a minlen",
         "copia": null,
         "editar": "chsec -f /etc/security/user -s default -a minlen=14\nchsec -f /etc/security/user -s root -a minlen=14",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nhostname\nlssec -f /etc/security/user -s default -a minlen\nlssec -f /etc/security/user -s root -a minlen",
+        "SO": "Aix"
+    },
+    {
+        "modulo": "Password Requirements/Password MIN Length",
+        "clave": "MINLENGTH",
+        "descripcion": "Invalid Password Min Length setting of 8, should be not less than 14\nInvalid system ACCOUNTS Min Length",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## El parametro minlen en los sistemas AIX, debe ser 14, por defecto y por usuario.\n\n## Una vez cambiado a default, se corrigen para las demas cuentas, puede quedar root o alguna cuenta sin cambiar, por lo que se puede cambiar manual \n\n## (MODULO : Password Requirements/Password MIN Length).\n+-------------------------------------------------------------------------------------+\n\nlssec -f /etc/security/user -s default -a minlen",
+        "copia": null,
+        "editar": "chsec -f /etc/security/user -s $ACCOUNT -a minlen=14\nchsec -f /etc/security/user -s root -a minlen=14",
         "refrescar": null,
         "evidencia": "clear\ndate\nhostname\nlssec -f /etc/security/user -s default -a minlen\nlssec -f /etc/security/user -s root -a minlen",
         "SO": "Aix"

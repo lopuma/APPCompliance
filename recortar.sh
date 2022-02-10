@@ -140,8 +140,8 @@ function minlen () {
 
 function listar_minlen () {
     command_sed
-    cat  ${home}'descripciones.txt' | awk '{print "chsec -f /etc/security/user -s "$2 " -a minlen"}'
-    cat  ${home}'descripciones.txt' | awk '{print "chsec -f /etc/security/user -s "$2 " -a minlen"}' > ${home}'resultado.txt'
+    cat  ${home}'descripciones.txt' | awk '{print "lssec -f /etc/security/user -s "$2 " -a minlen"}'
+    cat  ${home}'descripciones.txt' | awk '{print "lssec -f /etc/security/user -s "$2 " -a minlen"}' > ${home}'resultado.txt'
     gedit ${home}'resultado.txt'
 }
 
