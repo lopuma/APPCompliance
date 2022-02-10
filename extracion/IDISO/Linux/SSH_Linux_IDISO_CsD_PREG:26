@@ -11,14 +11,58 @@ cat /etc/ssh/sshd_config | grep -i PermitEmptypassword
 man sshd_config
 /PermitEmptyPasswords
 
-/***********************************************************************************************************************************/
-##AV.1.1.5 Password Requirements	Private Key Passphrases
-##AV.1.1.6 Password Requirements
-" YES Informativo
-#SIMILAR 
-##AV.2.2.1.2 Passphrases
-##AV.2.2.1.3 Passphrases
-/***********************************************************************************************************************************/
++-------------------------------------------------------------------------------------+
+---AV.1.1.5 Password Requirements	
+"Private Key Passphrases
+// Nos habla de la caracteristicas de la Passphrases
+// Las frases de contraseña deben tener un número mínimo de 15 caracteres. Todas las demás reglas de contraseña son aplicables.
++-------------------------------------------------------------------------------------+
+---AV.1.1.6 Password Requirements	
+"Restrict Private Keys access using  "from=" parameter on Public Keys.
+
+// Nos habla de los valores adecuados que debe tener un FROM=
+
+/*
+La entrada "authorized_keys" (o archivo configurado equivalente) del usuario para una clave pública debe contener el parámetro "from =" con los valores adecuados.
+
+"*" o "*. *. *. *" o "0/0" o "0.0.0.0/0" son valores prohibidos en el parámetro "from =", ya que permiten el acceso sin restricciones de todos/todos los hosts.
+*/
+
+
+/* CONTESTAR YES */ : " ES INFORMACION
++-------------------------------------------------------------------------------------+
+---AV.1.1.7 Password Requirements	
+"Private Key Passphrases - security administrative and system authority
+
+// Nos habla de que la clave privada(id_rsa), puede no tener un passphrase, siempre que la clave_publica(authorized_keys), tenga un FROM.
+
+/*
+Las claves publicas que se utilizan para obtener acceso a los ID que tienen autorización administrativa o del sistema de seguridad deben ser accesibles únicamente por los usuarios que tengan autorización administrativa o del sistema. 
+
+Cualquier archivo authorized_keys o authorized_keys2 que otorgue acceso a un ID que tenga autorización administrativa o del sistema de seguridad debe limitar el acceso sólo de hosts específicos especificando la opción "from" con el valor adecuado.
+*/
+
+ls -la /home/*/.ssh/* | grep -i authorized_keys
+
+"*/
+// En el caso de existir ficheros authorized_keys o authorized_keys2  ,hay que realizar un cat de los ficheros  y ver que tiene entradas del estilo:
+
+'from=*HOSTNAME*' // Esto se supone que es para limitar el acceso sólo desde sistemas principales específicos.
+
+// El siguiente comando saca, por cada fichero authorized_keys y authorized_keys2, aquellos que no tengan un FROM y los saca directo para poner NO en la extracion.
+
+find /home/*/.ssh -name authorized_keys|while read kfil; do cat $kfil|grep -vEe '^from=|^$'|awk -v var=$kfil '{print "SSH authorized_keys file: " var "; Invalid from section: *º or *.*.*.* or 0/0 or 0.0.0.0/0.  or empty are forbidden values in the `from=` parameter"}'; done
+
+find /home/*/.ssh -name authorized_keys2|while read kfil; do cat $kfil|grep -vEe '^from=|^$'|awk -v var=$kfil '{print "SSH authorized_keys file: " var "; Invalid from section: *º or *.*.*.* or 0/0 or 0.0.0.0/0.  or empty are forbidden values in the `from=` parameter"}'; done
+
+## NOTA
+// SI HAY ARCHIVOS authorized_keys CON OWNER HUERFANOS, SE PUEDE COMPROBAR QUE NO EXISTE EL OWNER Y SE PUEDEN BORRAR (" en la DESVIACION ")
+
+
+/* CONTESTAR YES */ : " Si los archivos authorized_keys son accesibles solo al owner del archivo y debe contener un FROM"
+
+/* CONTESTAR NO  */ : " SSH authorized_keys file: $file_authorized_keys; Invalid from section: *º or *.*.*.* or 0/0 or 0.0.0.0/0.  or empty are forbidden values in the `from=` parameter
++-------------------------------------------------------------------------------------+
 AV.1.2.1.3 Logging 	"LogLevel" =INFO
 
 cat /etc/ssh/sshd_config | grep -i logLevel
@@ -181,32 +225,4 @@ man sshd_config
 AV.2.2.1.4 Passphrases	Private Key Passphrases - security administrative and system authority
 
 "lo mismo que AV.1.1.7"
-/***********************************************************************************************************************************/
-AV.1.1.7 Password Requirements	Private Key Passphrases - security administrative and system authority
-
-"Cualquier archivo authorized_keys o authorized_keys2 que otorga acceso a un ID que tenga autoridad administrativa o de sistema de seguridad debe limitar el acceso sólo desde hosts específicos especificando la opción "from" con el valor adecuado."
-
-ls -l $HOME/.ssh/*
-ls -la /home/*/.ssh/* | grep -i authorized
-
-"*/
-#"Ejemplo de ficheros uthorized_keys o authorized_keys2"
--rw-------    1 ES083125 ibmldtiv        269 Oct 07 2015 /home/ES083125/.ssh/authorized_keys
-
-#"Comprobar que el owner sea el mismo y que solo tenga permisos para el owner, si aun seguimos con dudas, al hacer un CAT"
-
-[es06ram03sr01xg:root:/home/root:] cat /home/ES083125/.ssh/authorized_keys
-ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAIEAhN/z50XN5W8hbqEsU6mUts6DZ8iuIP7xNexvMYsYo6Ebx+WMST1q0lDKG6W3zruNeAlfZ4sY2bixNGQnZtXcj/wdQl9Bd9XhsvAm+P5D4V1GiZRpdqTxGIg6IM4ws+S1NZCvx/JgzrMU7s/TiozgdKlTISdyAL2KywTo40tfFDE= rsa-key-20101124 !!ES/I/083125/IBM/Marco.Hermosilla.Beraz!!
-
-
-#"Vemos que al final esta limitado solo el acceso a esa clave para el owner o bien podria tener un FROM al principio que lo limita"
-
-
-#"Comprobar que el usuario que salte para desvio no exista"#
-cat /etc/passwd | grep -i ES080766
-cat /etc/shadow | grep -i ES080766
-getent passwd ES080766
-
-Incorrect the user in the file: -rw-r--r--. 1     7210 ibmldadm   423 Mar 13  2015 /home/ES080766/.ssh/authorized_keys
-
 /***********************************************************************************************************************************/

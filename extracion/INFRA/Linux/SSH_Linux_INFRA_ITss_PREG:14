@@ -9,61 +9,58 @@ cat /etc/ssh/sshd_config | grep -i PermitEmptypassword
 
 man sshd_config
 /PermitEmptyPasswords
-/**************************************************************************************************************************************************************************************/
-##AV.1.1.5 Password Requirements	Private Key Passphrases
-##AV.1.1.6 Password Requirements
-# YES Informativo
-#SIMILAR 
-##AV.2.2.1.2 Passphrases
-##AV.2.2.1.3 Passphrases
-/**************************************************************************************************************************************************************************************/
-AV.1.1.7 Password Requirements	Private Key Passphrases - security administrative and systemauthority
-AV.2.2.1.4 Passphrases	Private Key Passphrases - security administrative and system authority
++-------------------------------------------------------------------------------------+
+---AV.1.1.5 Password Requirements	
+"Private Key Passphrases
+// Nos habla de la caracteristicas de la Passphrases
+// Las frases de contraseña deben tener un número mínimo de 15 caracteres. Todas las demás reglas de contraseña son aplicables.
++-------------------------------------------------------------------------------------+
+---AV.1.1.6 Password Requirements	
+"Restrict Private Keys access using  "from=" parameter on Public Keys.
 
-"Las claves privadas que se utilizan para obtener acceso a los ID que tienen autorización administrativa o del sistema de seguridad deben ser accesibles únicamente por los usuarios que tengan autorización administrativa o del sistema. 
+// Nos habla de los valores adecuados que debe tener un FROM=
 
-"Cualquier archivo authorized_keys o authorized_keys2 que otorgue acceso a un ID que tenga autorización administrativa o del sistema de seguridad debe limitar el acceso sólo de hosts específicos especificando la opción "from" con el valor adecuado.
+/*
+La entrada "authorized_keys" (o archivo configurado equivalente) del usuario para una clave pública debe contener el parámetro "from =" con los valores adecuados.
 
-🔎🔎🔎🔎🔎
-#Comprobar
+"*" o "*. *. *. *" o "0/0" o "0.0.0.0/0" son valores prohibidos en el parámetro "from =", ya que permiten el acceso sin restricciones de todos/todos los hosts.
+*/
+
+
+/* CONTESTAR YES */ : " ES INFORMACION
++-------------------------------------------------------------------------------------+
+---AV.1.1.7 Password Requirements	
+"Private Key Passphrases - security administrative and system authority
+
+// Nos habla de que la clave privada(id_rsa), puede no tener un passphrase, siempre que la clave_publica(authorized_keys), tenga un FROM.
+
+/*
+Las claves publicas que se utilizan para obtener acceso a los ID que tienen autorización administrativa o del sistema de seguridad deben ser accesibles únicamente por los usuarios que tengan autorización administrativa o del sistema. 
+
+Cualquier archivo authorized_keys o authorized_keys2 que otorgue acceso a un ID que tenga autorización administrativa o del sistema de seguridad debe limitar el acceso sólo de hosts específicos especificando la opción "from" con el valor adecuado.
+*/
+
 ls -la /home/*/.ssh/* | grep -i authorized_keys
 
-/*en el caso de existir ficheros authorized_keys o authorized_keys2  ,hay que realizar un cat de los ficheros  y ver que tiene entradas del estilo:
+"*/
+// En el caso de existir ficheros authorized_keys o authorized_keys2  ,hay que realizar un cat de los ficheros  y ver que tiene entradas del estilo:
 
-"from=*HOSTNAME*", esto se supone que el from limita desde que ips se puede acceder al usuario usando clave RSA.*/
+'from=*HOSTNAME*' // Esto se supone que es para limitar el acceso sólo desde sistemas principales específicos.
 
-- "El siguiente comando te saca todos los ficheros authorized_keys o authorized_keys2.
-- "Debajo de cada fichero si te sale ssh-rsa, entonces es que tiene una línea que no es comp	liance, en la extracion es un NO.
-- "Si no saca informacion, signfica que no hay ficheros "authorized_keys o authorized_keys2"	es un YES."
-- "Si no salen lineas debajo de los ficheros es un YES.
-- "Si salen lineas vacias es compliance, es un YES.
+// El siguiente comando saca, por cada fichero authorized_keys y authorized_keys2, aquellos que no tengan un FROM y los saca directo para poner NO en la extracion.
 
-find /home/*/.ssh -name authorized_keys|while read kfil; do echo $kfil; cat $kfil|grep -v "from="|awk '{print $1}'; done
+find /home/*/.ssh -name authorized_keys|while read kfil; do cat $kfil|grep -vEe '^from=|^$'|awk -v var=$kfil '{print "SSH authorized_keys file: " var "; Invalid from section: *º or *.*.*.* or 0/0 or 0.0.0.0/0.  or empty are forbidden values in the `from=` parameter"}'; done
 
-find /home/*/.ssh -name authorized_keys2|while read kfil; do echo $kfil; cat $kfil|grep -v "from="|awk '{print $1}'; done
+find /home/*/.ssh -name authorized_keys2|while read kfil; do cat $kfil|grep -vEe '^from=|^$'|awk -v var=$kfil '{print "SSH authorized_keys file: " var "; Invalid from section: *º or *.*.*.* or 0/0 or 0.0.0.0/0.  or empty are forbidden values in the `from=` parameter"}'; done
 
-"Ejemplo
-from="129.39.137.5"
-
-/*Si no tiene esto tenemos que contestar NO y preguntar al técnico correspondiente cuando llegue la desviación.*/
-
-//Hemos encontrado algún caso que el contenido está comentado,eso también es correcto.
-"Ejemplo
-#ssh-rsa AAAAB3NzaC1yc2EAAAADA"
-
-"NOTA
-//SI HAY FICHEROS authorized_keys, authorized_keys2 CON OWNER HUERFANOS, SE PUEDE COMPROBAR QUE NO EXISTE EL OWNER Y tambien es un NO.
+## NOTA
+// SI HAY ARCHIVOS authorized_keys CON OWNER HUERFANOS, SE PUEDE COMPROBAR QUE NO EXISTE EL OWNER Y SE PUEDEN BORRAR (" en la DESVIACION ")
 
 
-/*🗒✔  CONTESTAR YES */ : "Si todos los ficheros authorize_keys y/o authorized_keys2, tienen un FROM "
-/*🗒⛔ CONTESTAR NO  */ : "Si hay fichero autorize_keys, sin un FROM
-The following authorized_keys or authorized_keys2 files do not have the FROM option:
-ACCOUNT CUSTOMER --> /home/apps/.ssh/authorized_keys 
-ACCOUNT IBM      --> /home/cesuxat1/.ssh/authorized_keys 
-                     /home/cesuxat2/.ssh/authorized_keys 
-                     /home/ESY9CBSK/.ssh/authorized_keys
-/*🗒🔁 CONTESTAR N/A */ : ""
-/**************************************************************************************************************************************************************************************/
+/* CONTESTAR YES */ : " Si los archivos authorized_keys son accesibles solo al owner del archivo y debe contener un FROM"
+
+/* CONTESTAR NO  */ : " SSH authorized_keys file: $file_authorized_keys; Invalid from section: *º or *.*.*.* or 0/0 or 0.0.0.0/0.  or empty are forbidden values in the `from=` parameter
++-------------------------------------------------------------------------------------+
 AV.1.2.2 Logging	"QuietMode
 "	no
 N/A OpenSSH

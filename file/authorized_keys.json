@@ -202,7 +202,7 @@
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "Cuenta de aplicativo : IPC automation",
+            "risk": "Se puede añadir el FROM",
             "impact": "Cuenta de aplicativo : IPC automation",
             "variable": [
                 "file_authorized=\"/home/assuxat1/.ssh/authorized_keys\"",
@@ -222,7 +222,7 @@
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "Cuenta de aplicativo : IPC automation",
+            "risk": "Se puede añadir el FROM",
             "impact": "Cuenta de aplicativo : IPC automation",
             "variable": [
                 "file_authorized=\"/home/assuxat2/.ssh/authorized_keys\"",
@@ -517,7 +517,7 @@
             "servers": [
                 "ALL servers"
             ],
-            "risk": "",
+            "risk": "Se puede añadir el FROM",
             "impact": "",
             "variable": [
                 "file_authorized=\"/home/icouxat2/.ssh/authorized_keys\"",
@@ -537,7 +537,7 @@
             "servers": [
                 "ALL servers"
             ],
-            "risk": "",
+            "risk": "Se puede añadir el FROM",
             "impact": "",
             "variable": [
                 "file_authorized=\"/home/icouxat1/.ssh/authorized_keys\"",
@@ -576,7 +576,7 @@
                 "ES012SK09SR01NG",
                 "ES052SK09SR01NG"
             ],
-            "risk": "",
+            "risk": "Se puede añadir el FROM",
             "impact": "",
             "variable": [
                 "file_authorized=\"/home/itimagt/.ssh/authorized_keys\"",
@@ -596,7 +596,7 @@
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "",
+            "risk": "Se puede añadir el FROM",
             "impact": "",
             "variable": [
                 "file_authorized=\"/home/czy54480/.ssh/authorized_keys\"",
@@ -616,7 +616,7 @@
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "",
+            "risk": "Se puede añadir el FROM",
             "impact": "",
             "variable": [
                 "file_authorized=\"/home/czz61942/.ssh/authorized_keys\"",
@@ -696,8 +696,8 @@
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "el usuario \"esy9e0rn\" desaparecerá, se va activar el usuario de Kyndryl en vez del de IBM.",
-            "impact": "",
+            "risk": "Se puede renombrar",
+            "impact": "El usuario \"esy9e0rn\" desaparecerá, se va activar el usuario de Kyndryl en vez del de IBM.",
             "variable": [
                 "file_authorized=\"/home/ESY9E0RN/.ssh/authorized_keys\"",
                 "gecos=\"!!ES/E/Y9F5E4/TUYU TEC/LECH BARTLOMIEJ!!\""
@@ -735,8 +735,8 @@
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "",
-            "impact": "",
+            "risk": "Se puede añadir el FROM",
+            "impact": "Cuenta para el grupo de  : EBH",
             "variable": [
                 "file_authorized=\"/home/tws/.ssh/authorized_keys\"",
                 "from=\"129.39.137.114\""
