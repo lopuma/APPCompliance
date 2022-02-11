@@ -26,9 +26,6 @@ La entrada "authorized_keys" (o archivo configurado equivalente) del usuario par
 "*" o "*. *. *. *" o "0/0" o "0.0.0.0/0" son valores prohibidos en el parámetro "from =", ya que permiten el acceso sin restricciones de todos/todos los hosts.
 */
 
-
-/* CONTESTAR YES */ : " ES INFORMACION
-+-------------------------------------------------------------------------------------+
 ---AV.1.1.7 Password Requirements	
 "Private Key Passphrases - security administrative and system authority
 
@@ -65,7 +62,7 @@ AV.1.2.2 Logging	"QuietMode
 "	no
 N/A OpenSSH
 /**************************************************************************************************************************************************************************************/
-			  📢⚙⚙⚙⚙⚙/* POLITICA SSH - AIX*/⚙⚙⚙⚙⚙📢 
+			  ⚙⚙⚙⚙⚙/* POLITICA SSH - AIX*/⚙⚙⚙⚙⚙ 
 
 AV.1.2.4 Logging 	
 Retain Log Files = 180 days
@@ -75,21 +72,21 @@ Retain Log Files = 180 days
 2.- Saber que sistema operativo es Linux o Aix
 3.- Revisar que los ficheros de segurida debe estar rotando a 180 dias."#
 
-🔎🔎🔎🔎🔎🔎🔎
+
 #COMPROBACIONES
 
 ➡ 1. - "La rotacion que debe ser 180 dias."#
 //Saber que sistema de rotado utiliza.
 
-📌# ➡ /* si no funciona mirar --> */"Logrotate" <--#
+# ➡ /* si no funciona mirar --> */"Logrotate" <--#
 /usr/util/seguridad/logkeeper -s
 crontab -l | grep -i log
 cat /usr/util/seguridad/logkeeper.cfg | egrep -i "messages|secure"
 
-📌# ➡ /* si no funciona mirar --> */"sinLOGKEEPE & sinLOGROTATE" <--#
+# ➡ /* si no funciona mirar --> */"sinLOGKEEPE & sinLOGROTATE" <--#
 cat /etc/logrotate.conf
 
-📌# ➡ /*--> sinLOGKEEPE & sinLOGROTATE <--*/#
+# ➡ /*--> sinLOGKEEPE & sinLOGROTATE <--*/#
 cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
 
 ➡ 2.- "Saber que sistema operativo es Linux o Aix."#
@@ -137,7 +134,7 @@ Public Key Authentication Key Label for Private Key Ownership Identification
 
 "Una clave pública configurada en un ID de usuario puede pertenecer a otro individuo que no posee el ID de destino, utilizar el campo "comentario" en Claves públicas para establecer una etiqueta que indique el propietario del par de claves."
 
-🔎🔎🔎🔎🔎
+
 #Comprobar
 ls -l $HOME/.ssh/*
 ls -la /home/*/.ssh/* | grep -i "id_rsa.pub"

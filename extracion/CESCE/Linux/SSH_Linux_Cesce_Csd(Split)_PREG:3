@@ -31,9 +31,6 @@ La entrada "authorized_keys" (o archivo configurado equivalente) del usuario par
 "*" o "*. *. *. *" o "0/0" o "0.0.0.0/0" son valores prohibidos en el parámetro "from =", ya que permiten el acceso sin restricciones de todos/todos los hosts.
 */
 
-
-/* CONTESTAR YES */ : " ES INFORMACION
-+-------------------------------------------------------------------------------------+
 ---AV.1.1.7 Password Requirements	
 "Private Key Passphrases - security administrative and system authority
 
@@ -72,7 +69,8 @@ find /home/*/.ssh -name authorized_keys2|while read kfil; do cat $kfil|grep -vEe
 (F-Secure/SSH Communications Only - OS: Unix, Linux)"
 
 #"N/A OpenSSH"
-/**************************************************************************************************************************************************************************************************/			   📢⚙⚙⚙⚙⚙/* POLITICA SSH - Linux */⚙⚙⚙⚙⚙📢 
+/**************************************************************************************************************************************************************************************************/			   
+⚙⚙⚙⚙⚙/* POLITICA SSH - Linux */⚙⚙⚙⚙⚙ 
 
 ---AV.1.2.4 Logging
 Retain Log Files = 90 days

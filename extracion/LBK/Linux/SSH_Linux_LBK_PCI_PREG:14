@@ -29,8 +29,6 @@ La entrada "authorized_keys" (o archivo configurado equivalente) del usuario par
 "*" o "*. *. *. *" o "0/0" o "0.0.0.0/0" son valores prohibidos en el parámetro "from =", ya que permiten el acceso sin restricciones de todos/todos los hosts.
 */
 
-
-/* CONTESTAR YES */ : " ES INFORMACION
 +-------------------------------------------------------------------------------------+
 ---AV.1.1.7 Password Requirements	
 "Private Key Passphrases - security administrative and system authority

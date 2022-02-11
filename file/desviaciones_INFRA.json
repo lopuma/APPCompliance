@@ -729,5 +729,16 @@
         "refrescar": "refresh -s syslogd",
         "evidencia": "clear\ndate\nuname -a\ncrontab -l|grep -v ^#|grep logkeeper\n/usr/util/seguridad/logkeeper --trim 180 --keep 180 -s|egrep \"retention|messages\"\ncat /etc/syslog.conf |grep -v \"#\" |grep \"messages\"\nls -la /var/adm/messages",
         "SO": "Aix"
+    },
+    {
+        "modulo": "BV.1.2.1 Logging",
+        "clave": "ROTACION OS VIOS",
+        "descripcion": "Retain Logging for a period of time - either online or backups, Minimum of 180 days",
+        "comprobacion": null,
+        "copia": null,
+        "editar": null,
+        "refrescar": null,
+        "evidencia": "clear\ndate\nuname -a\ncrontab -l|grep -v ^#|grep logkeeper\n/usr/util/seguridad/logkeeper --trim 180 --keep 180 -s|egrep \"sulog|messages|cron|wtmp|failedlogin|backup|sudo|config_file\"\nls -la /var/adm/sulog /var/log/sudo.log /var/adm/messages /var/adm/cron/log /var/adm/wtmp /etc/security/failedlogin",
+        "SO": "Vios"
     }
 ]
