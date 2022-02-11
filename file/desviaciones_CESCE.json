@@ -11,6 +11,17 @@
         "SO": "Linux"
     },
     {
+        "modulo": "AD.1.8.7.2 Protecting Resources - OSRs",
+        "clave": "",
+        "descripcion": "Invalid Permissions or Ownership for log file: /var/log/wtmp;   -rw-rw-r--.;  owner:  root;   group:  utmp. For more information see rule description.",
+        "comprobacion": "## Se le debe quitar W al grupo.\n\n+-------------------------------------------------------------------------------------+\n## Comprobar que en logrotate.conf, tenga permisosa 0644\n+-------------------------------------------------------------------------------------+\n\ncat /etc/logrotate.conf | grep -w wtmp -A4\n\ncat /etc/logrotate.d/* | grep -w wtmp -A4",
+        "copia": "+-------------------------------------------------------------------------------------+\n## Obtener usuario logueado:\n+-------------------------------------------------------------------------------------+\n\nuser=$(logname)\n\n+-------------------------------------------------------------------------------------+\n## Backup con HOME en MAYÚSCULAS\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/logrotate.conf /home/${user^^}/logrotate.conf_`date +%d%m%y`\ncp -p /etc/logrotate.d/wtmp /home/${user^^}/logrotate_wtmp_`date +%d%m%y`\n\n+-------------------------------------------------------------------------------------+\n## Backup con HOME en minúsculas\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/logrotate.conf /home/${user,,}/logrotate.conf_`date +%d%m%y`\ncp -p /etc/logrotate.d/wtmp /home/${user,,}/logrotate_wtmp_`date +%d%m%y`",
+        "editar": "+-------------------------------------------------------------------------------------+\n## Quitar permisos\n+-------------------------------------------------------------------------------------+\n\nchmod g-w /var/log/wtmp\n\n+-------------------------------------------------------------------------------------+\n## Dejar esta linea para REHL 7 / DEBIAN:\n+-------------------------------------------------------------------------------------+\n\n## Editar:\n\nvi /lib/tmpfiles.d/var.conf\n\n## Debe quedar la linea asi:\n\nf /var/log/wtmp 0644 root utmp -\n\n+-------------------------------------------------------------------------------------+\n## Dejar esta linea para REHL 6\n+-------------------------------------------------------------------------------------+\n\n## Editar:\n\nvi /etc/rc.sysinit\n\n## Dejar la linea asi:\n\nchmod 0644 /var/run/utmp /var/log/wtmp\n\n+-------------------------------------------------------------------------------------+\n## Corregir los permisos en logrotate.conf O en /etc/logrotate.d/wtmp, en create de wtmp\n+-------------------------------------------------------------------------------------+\n\nvi /etc/logrotate.conf\n\nvi /etc/logrotate.d/wtmp\n\n+-------------------------------------------------------------------------------------+\n## Modificar los permisos de 0664, a 0644, al fichero /var/log/wtmp\n+-------------------------------------------------------------------------------------+",
+        "refrescar": null,
+        "evidencia": "+-------------------------------------------------------------------------------------+\n## RHEL\n+-------------------------------------------------------------------------------------+\n\nclear\ndate\nhostname\nls -la /var/log/wtmp\ncat /lib/tmpfiles.d/var.conf | grep -w wtmp\ncat /etc/logrotate.conf | grep -w wtmp -A4\n\n+-------------------------------------------------------------------------------------+\n## DEBIAN\n+-------------------------------------------------------------------------------------+\n\nclear\ndate\nhostname\nls -la /var/log/wtmp\ncat /lib/tmpfiles.d/var.conf | grep -w wtmp\ncat /etc/logrotate.d/wtmp | grep -w wtmp -A4\n",
+        "SO": "Debian"
+    },
+    {
         "modulo": "Password Requirements/Private Key File Restriction",
         "clave": "AUTHORIZED_KEY",
         "descripcion": "SSH authorized_keys file: \"FICHERO AUTHORIZED KEYS\"; Invalid from section: . \"*º\" or \"*.*.*.*\" or \"0/0\" or \"0.0.0.0/0\" or empty are forbidden values in the \"from=\" parameter",
@@ -79,10 +90,10 @@
     {
         "modulo": "Password Requirements/Password MAX Age /etc/shadow",
         "clave": "MAXAGE",
-        "descripcion": null,
-        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Para aplicar un correcto MAXAGE, hay que tener en cuenta el tipo de cuenta que es:\n## Ya sea tipo /C/F/S/.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /C/, --> se pasa a excepcionar con RISK e IMPACT.\n(por favor revisar el fichero de RISK e IMPACT)\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /F/, --> se cambia a 90 dias, ejemplo de cuentas aplicable MAXAGE : root, emer, cyberark.\n## Dependiendo el cliente, alguna cuentas de TIPO F, se exepcionan con RISK e IMPACT, si fuera el caso se debe hablar con el owner de la cuenta, y que nos indique un RISK e IMPACT, o si se puede aplicar MAXAGE.\n(Antes de cualquier cambio, por favor revisar \" * ACCOUNT * \")\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /S/, aplicativos, por lo normal no llevan una password asignada, si ese fuera el caso, se debe preguntar al owner de la cuenta, si se le puede aplicar expiracion de password a la cuenta.\n(Antes de cualquier cambio, por favor revisar \" * ACCOUNT * \")\n+-------------------------------------------------------------------------------------+",
+        "descripcion": "Account $account has invalid Password Max Age setting of 99999  should be set to Customer Required Setting: 90. More secure value can be set.",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Para aplicar un correcto MAXAGE, hay que tener en cuenta el tipo de cuenta que es:\n## Ya sea tipo /C/F/S/.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /C/, --> se pasa a excepcionar con RISK e IMPACT.\n\n## (Revisar el fichero de RISK e IMPACT)\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /F/ --> se cambia a 90 dias, ejemplo de cuentas aplicable MAXAGE : root, emer, cyberark.\n\n## Dependiendo el cliente, alguna cuentas de TIPO F, se exepcionan con RISK e IMPACT, si fuera el caso se debe hablar con el owner de la cuenta, y que nos indique un RISK e IMPACT, o del contrario si se puede aplicar MAXAGE.\n\n## (Revisar \" * ACCOUNT * \", antes de cualquier cambio)\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /S/ aplicativos, por lo normal no llevan una password asignada, si ese fuera el caso, se debe preguntar al owner de la cuenta, si se le puede aplicar expiracion de passwor o bien se pasa a excepcionar\n+-------------------------------------------------------------------------------------+",
         "copia": null,
-        "editar": "+-------------------------------------------------------------------------------------+\n## Guardamos en la variable, la cuenta a aplicar MAXAGE\n## Copiar la cuenta(entre las \"\")\n+-------------------------------------------------------------------------------------+\n\naccount=\"\"\n\ncat /etc/passwd | grep -i $account\n\n+-------------------------------------------------------------------------------------+\n## Cambiar MAXAGE a 90\n+-------------------------------------------------------------------------------------+\n\nchage -M 90 $account",
+        "editar": "+-------------------------------------------------------------------------------------+\n## Cambiar MAXAGE a 90\n+-------------------------------------------------------------------------------------+\n\nchage -M 90 $account",
         "refrescar": null,
         "evidencia": "clear\ndate\nhostname\nchage -l $account\ncat /etc/passwd | grep -i $account",
         "SO": "Linux"
@@ -196,5 +207,93 @@
         "refrescar": "sysctl -p",
         "evidencia": "clear\ndate\nhostname\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.all.accept_source_route\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.all.secure_redirects\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.default.secure_redirects\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.all.log_martians\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.default.log_martians\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.all.rp_filter\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.default.rp_filter\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.default.accept_source_route\"\n/sbin/sysctl -a |grep -i \"net.ipv6.conf.all.accept_ra\"\n/sbin/sysctl -a |grep -i \"net.ipv6.conf.default.accept_ra\"\n/sbin/sysctl -a |grep -i \"net.ipv6.conf.all.accept_redirects\"\n/sbin/sysctl -a |grep -i \"net.ipv6.conf.default.accept_redirects\"\n/sbin/sysctl -a |grep -i \"net.ipv4.ip_forward\"\n/sbin/sysctl -a |grep -i \"net.ipv4.conf.all.accept_redirects\"",
         "SO": "Linux"
+    },
+    {
+        "modulo": "AD.1.1.1.2 Password Requirements",
+        "clave": "",
+        "descripcion": "Account $account has invalid Password Max Age setting of 99999  should be set to Customer Required Setting: 90. More secure value can be set.",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Para aplicar un correcto MAXAGE, hay que tener en cuenta el tipo de cuenta que es:\n## Ya sea tipo /C/F/S/.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /C/, --> se pasa a excepcionar con RISK e IMPACT.\n\n## (Revisar el fichero de RISK e IMPACT)\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /F/ --> se cambia a 90 dias, ejemplo de cuentas aplicable MAXAGE : root, emer, cyberark.\n\n## Dependiendo el cliente, alguna cuentas de TIPO F, se exepcionan con RISK e IMPACT, si fuera el caso se debe hablar con el owner de la cuenta, y que nos indique un RISK e IMPACT, o del contrario si se puede aplicar MAXAGE.\n\n## (Revisar \" * ACCOUNT * \", antes de cualquier cambio)\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /S/ aplicativos, por lo normal no llevan una password asignada, si ese fuera el caso, se debe preguntar al owner de la cuenta, si se le puede aplicar expiracion de passwor o bien se pasa a excepcionar\n+-------------------------------------------------------------------------------------+",
+        "copia": null,
+        "editar": "+-------------------------------------------------------------------------------------+\n## Cambiar MAXAGE a 90\n+-------------------------------------------------------------------------------------+\n\nchage -M 90 $account",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nhostname\nchage -l $account\ncat /etc/passwd | grep -i $account",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "AD.1.1.2.0 Password Requirements",
+        "clave": "MINLEN DEBIAN",
+        "descripcion": "Incorrect System Default minimum password length or password complexity rules. Minimum password length should be set to 14 or more secure, in file \n/etc/pam.d/common-password\nIt should be set through pam_cracklib.so or pam_pwquality.so. For more information about password length or password complexity rules see matrix coverage document.",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Hace referencia al 'minlen' en Linux Debian.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Los ficheros del PAM para DEBIAN, deben tener en el modulo 'password    required      pam_cracklib.so', el parámetro 'minlen=14'\n+-------------------------------------------------------------------------------------+\n\ngrep -i minlen /etc/pam.d/common-password\n\n",
+        "copia": "+-------------------------------------------------------------------------------------+\n## Obtener usuario logueado:\n+-------------------------------------------------------------------------------------+\n\nuser=$(logname)\n\n## LINUX\n+-------------------------------------------------------------------------------------+\n## Backup con HOME en MAYÚSCULAS\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/pam.d/common-password /home/${user^^}/common-password_`date +%d%m%y_%T`\n\n+-------------------------------------------------------------------------------------+\n## Backup con HOME en minúsculas\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/pam.d/common-password /home/${user,,}/common-password_`date +%d%m%y_%T`\n",
+        "editar" : "+-------------------------------------------------------------------------------------+\n##--- DEBIAN ('common-password')\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Añadir en el modulo 'password    required      pam_cracklib.so', el parámetro 'minlen=14'\n## ('se aconseja remplazar toda la linea, del modulo 'password    required      pam_cracklib.so', por encima de un modulo ' password    sufficient pam_unix.so')\n+-------------------------------------------------------------------------------------+\n\nvi /etc/pam.d/common-password\n\npassword        required        pam_cracklib.so minlen=14 dcredit=-1 ucredit=0 lcredit=-1 ocredit=0 reject_username\n\n",
+        "refrescar": null,
+        "evidencia": "clear\ndate;hostname\ncat /etc/*release | grep -i release\ncat /etc/pam.d/common-password | egrep \"minlen\"",
+        "SO": "Debian"
+    },
+    {
+        "modulo": "AD.1.1.6.1 Password Requirements",
+        "clave": "PAM_TALLY DEBIAN",
+        "descripcion": "Non of the Login Retrie options was found in file:\n/etc/pam.d/common-auth\n/etc/pam.d/common-account",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Hace referencia al 'PAM_TALLY' en Linux Debian.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Los ficheros del PAM para DEBIAN, deben tener el modulo\n\n## `auth        required        pam_tally.so`, los parámetros `deny=5 onerr=fail per_user no_lock_time`\n\n## `account        required        pam_tally.so`\n+-------------------------------------------------------------------------------------+\n\ncat /etc/pam.d/common-auth | grep pam_tally\ncat /etc/pam.d/common-account| grep pam_tally\n\n",
+        "copia": "+-------------------------------------------------------------------------------------+\n## Obtener usuario logueado:\n+-------------------------------------------------------------------------------------+\n\nuser=$(logname)\n\n## LINUX\n+-------------------------------------------------------------------------------------+\n## Backup con HOME en MAYÚSCULAS\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/pam.d/common-account /home/${user^^}/common-account_`date +%d%m%y_%T`\ncp -p /etc/pam.d/common-auth /home/${user^^}/common-auth_`date +%d%m%y_%T`\n\n+-------------------------------------------------------------------------------------+\n## Backup con HOME en minúsculas\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/pam.d/common-auth /home/${user,,}/common-auth_`date +%d%m%y_%T`\ncp -p /etc/pam.d/common-account /home/${user,,}/common-account_`date +%d%m%y_%T`\n",
+        "editar" : "+-------------------------------------------------------------------------------------+\n##--- DEBIAN ('common-auth')\n+-------------------------------------------------------------------------------------+\n\n## Añadir en el modulo 'auth        required        pam_tally2.so', los parámetro 'deny=5 onerr=fail per_user no_lock_time'\n## ('se aconseja remplazar toda la linea, del modulo).\n+-------------------------------------------------------------------------------------+\n\nvi /etc/pam.d/common-auth\n\nauth        required        pam_tally2.so        deny=5 onerr=fail per_user no_lock_time\n\n+-------------------------------------------------------------------------------------+\n##--- DEBIAN ('common-account')\n+-------------------------------------------------------------------------------------+\n\n## Añadir en el modulo 'account        required        pam_tally2.so'\n## ('se aconseja remplazar toda la linea, del modulo).\n+-------------------------------------------------------------------------------------+\n\nvi /etc/pam.d/common-account\n\naccount        required        pam_tally2.so\n\n",
+        "refrescar": null,
+        "evidencia": "clear\ndate;hostname\ncat /etc/pam.d/common-auth | grep pam_tally\ncat /etc/pam.d/common-account| grep pam_tally",
+        "SO": "Debian"
+    },
+    {
+        "modulo": "AD.1.1.3.2 Password Requirements",
+        "clave": "",
+        "descripcion": "Account $account has invalid Password Min Age setting of null  should be set to Customer Required Setting: 1. Account Type: Customer",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Todas las cuentas, ya sean /C/F/S, deben tener el MINAGE a 1.\n+-------------------------------------------------------------------------------------+",        
+        "copia": null,
+        "editar": "+-------------------------------------------------------------------------------------+\n## Cambiar MIANGE a 1\n+-------------------------------------------------------------------------------------+\n\nchage -m 1 $account",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nhostname\nchage -l $account\ncat /etc/passwd | grep -i $account",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Business Use Notice/Business Use Notice Required",
+        "clave": "BUN",
+        "descripcion": "Missing or Incorrect Business Use Notice. It should be set in /etc/motd",
+        "comprobacion": "##Debe tener el BUN actual.",
+        "copia": null,
+        "editar": "+-------------------------------------------------------------------------------------+\n##añadir / remplazar\n+-------------------------------------------------------------------------------------+\n\nvi /etc/motd\n\nKyndryl's internal systems must only be used for conducting Kyndryl's business or for purposes authorized by Kyndryl management.. Use is subject to audit at any time by Kyndryl management.",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nhostname\ncat /etc/motd",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "AD.2.0.1.0 Business Use Notice",
+        "clave": "",
+        "descripcion": "Missing or Incorrect Business Use Notice. It should be set in /etc/motd",
+        "comprobacion": "##Debe tener el BUN actual.",
+        "copia": null,
+        "editar": "+-------------------------------------------------------------------------------------+\n##añadir / remplazar\n+-------------------------------------------------------------------------------------+\n\nvi /etc/motd\n\n|                                                                             |\n|Kyndryl's internal systems must only be used for conducting Kyndryl's        |\n|business or for purposes authorized by Kyndryl management.. Use is subject to|\n|audit at any time by Kyndryl management.                                     |  \n+-----------------------------------------------------------------------------+",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nhostname\ncat /etc/motd",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "AD.1.8.4.2.3 Protecting Resources - OSRs",
+        "clave": "/etc/shadow",
+        "descripcion": "Ensure permissions on /etc/shadow- are configured 000 permissive",
+        "comprobacion": null,
+        "copia": null,
+        "editar": null,
+        "refrescar": null,
+        "evidencia": null,
+        "SO": "Debian"
+    },
+    {
+        "modulo": "AD.1.2.6 Logging",
+        "clave": "ROTACION",
+        "descripcion": "Retain Log files = 180 DIAS (26 semanas)",
+        "comprobacion": null,
+        "copia": null,
+        "editar": null,
+        "refrescar": null,
+        "evidencia": null,
+        "SO": "Debian"
     }
 ]

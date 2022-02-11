@@ -31,7 +31,7 @@ OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
 	ls -la /etc/logrotate.conf
 
 	// La rotacion debe esta definida en semanas 'weekly' a 26:
-	cat /etc/logrotate.conf | head -10
+	head -10 /etc/logrotate.conf
 
 	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
@@ -131,7 +131,7 @@ OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
 	ls -la /etc/logrotate.conf
 
 	// La rotacion debe esta definida en semanas 'weekly' a 26:
-	cat /etc/logrotate.conf | head -10
+	head -10 /etc/logrotate.conf
 
 	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
@@ -224,7 +224,7 @@ OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
 	ls -la /etc/logrotate.conf
 
 	// La rotacion debe esta definida en semanas 'weekly' a 13:
-	cat /etc/logrotate.conf | head -10
+	head -10 /etc/logrotate.conf
 
 	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
@@ -325,7 +325,7 @@ OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
 	ls -la /etc/logrotate.conf
 
 	// La rotacion debe esta definida en semanas 'weekly' a 13:
-	cat /etc/logrotate.conf | head -10
+	head -10 /etc/logrotate.conf
 
 	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
@@ -419,7 +419,7 @@ OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
 	ls -la /etc/logrotate.conf
 
 	// La rotacion debe esta definida en semanas 'weekly' a 13:
-	cat /etc/logrotate.conf | head -10
+	head -10 /etc/logrotate.conf
 
 	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
@@ -516,7 +516,7 @@ OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
 	ls -la /etc/logrotate.conf
 
 	// La rotacion debe esta definida en semanas 'weekly' a 26:
-	cat /etc/logrotate.conf | head -10
+	head -10 /etc/logrotate.conf
 
 	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
@@ -617,7 +617,7 @@ OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
 	ls -la /etc/logrotate.conf
 
 	// La rotacion debe esta definida en semanas 'weekly' a 26:
-	cat /etc/logrotate.conf | head -10
+	head -10 /etc/logrotate.conf
 
 	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
@@ -711,7 +711,7 @@ OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
 	ls -la /etc/logrotate.conf
 
 	// La rotacion debe esta definida en semanas 'weekly' a 26:
-	cat /etc/logrotate.conf | head -10
+	head -10 /etc/logrotate.conf
 
 	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
@@ -780,7 +780,7 @@ ls -la /var/adm/messages
 +-------------------------------------------------------------------------------------+
 SISTENAS DEBIAN / POLITICA OS / 180 DIAS
 +-------------------------------------------------------------------------------------+	
-			/* POLITICA OS - OS LINUX (Debian) */ 
+			/* POLITICA OS - OS LINUX (Debian)*/ 
 
 ---AD.1.2.6 Logging
 
@@ -800,16 +800,21 @@ OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
 	crontab -l|grep -v ^#|grep logkeeper
 
-	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper --trim 180 --keep 180
+	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper
+
+	//Ejecutamos un -s del comando que nos devuelve
+
+	/usr/util/seguridad/logkeeper -s
 
 	// -> si no funciona "LOGKEEPER" mirar Logrotate<-#
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
 	OPCION ➡ 2. "#-> LOGROTATE <-#
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
 	ls -la /etc/logrotate.conf
 
 	// La rotacion debe esta definida en semanas 'weekly' a 26:
-	cat /etc/logrotate.conf | head -10
+	head -10 /etc/logrotate.conf
 
 	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
@@ -819,7 +824,7 @@ OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
 	
 	// Lo rotacion por rotalogs, la primera columna el fichero y la cuarta columna el valor a rotar:
 		
-	// EJEMPLO -> /var/adm/sudo.log:0:13:180:HP-UX,OSF1,SunOS
+	// EJEMPLO -> /var/log/secure.log:0:13:90:HP-UX,OSF1,SunOS
 
 OPCION ➡ 2. //Los ficheros de OS deben estar rotando.
 
@@ -836,32 +841,34 @@ OPCION ➡ 2. //Los ficheros de OS deben estar rotando.
           | /var/log/wtmp "*INF. DE LOS LOGUEOS"                                 |
          ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
 
-// Debe existir
+// Si existen deben estar rotando.
+
 # Debian : 
-ls -la /var/log/auth.log /var/adm/sudo.log /var/log/messages /var/log/cron.log /var/log/wtmp
 
-// Debe existir una entrada de los ficheros del sistema en la rotacion (OPCION ➡ 1. LOGKEEPER):
+ls -la /var/log/auth.log /var/adm/sudo.log /var/log/messages /var/log/wtmp /var/log/cron.log
 
-	// Muestra resumen en la configuracion del SCRIPT de LOGKEEPER	
-	/usr/util/seguridad/logkeeper -s | egrep "backup|sudo|auth.og|messages|cron|wtmp|config_file"
+// Debe existir una entrada de los ficheros de OS en la rotacion (OPCION ➡ 1. LOGKEEPER):
+
+	//Muestra resumen de la configuracion en LOGKEEPER	
+	/usr/util/seguridad/logkeeper -s | "trim|backup|auth|sudo|messages|wtmp|cron|config_fil"
 
 	
-	// Si la rotacion se define en el fichero de configuracion de LOGKEEPER
-	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim|backup|sudo|auth.og|messages|cron|wtmp"
+	//Si La rotacion de log se define en el fichero de configuracion
+	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim|backup|auth|sudo|messages|wtmp|cron"
 
-// Debe existir una entrada del fichero de sudo en la rotacion (OPCION ➡ 2. LOGROTATE):
+// Debe existir una entrada de los ficheros de OS en la rotacion (OPCION ➡ 2. LOGROTATE):
 
-	cat /etc/logrotate.conf | egrep -i "sudo|auth.og|messages|cron|wtmp" -A5 --color=always
+	cat /etc/logrotate.conf | egrep -i "auth|sudo|messages|wtmp|cron" -A5 --color=always
 
-	//Si la configuracion de rotado para SUDO, no existe en logrotate.conf, debe estar implementado en logrotate.d
+	//Si los ficheros no existen en logrotate.conf, debe estar implementado en logrotate.d
 
-	cat /etc/logrotate.d/* | egrep -i "sudo|auth.og|messages|cron|wtmp" -A7 --color=always
+	cat /etc/logrotate.d/* | egrep -i "auth|sudo|messages|wtmp|cron" -A7 --color=always
 
 // Debe existir una entrada del/los fichero(s) de registro en la rotacion (OPCION ➡ 3. ROTALOGS):
 
 	// Si ejecuta en rotalogs con job de control.
 
-	cat /usr/local/bin/tareas/rotalogs.ksh | grep -v "^#"|grep -i logkee
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -v "^#"| egrep -i "auth|sudo|messages|wtmp|cron|logke"
 
 	//Debe existir /usr/local/bin/tareas/logkeeperalt.cfg en el codigo que se ejecuta.
 
@@ -872,7 +879,6 @@ ls -la /var/log/auth.log /var/adm/sudo.log /var/log/messages /var/log/cron.log /
 		       " Current rotation is '4' 'weeks' should be set to '26' 'weeks'.
 		       " The file: '/var/log/cron.log', does not exist.
 		       " The file: '/var/adm/sudo.log', exists, but is not rotating in '/etc/logrotate.conf'.
-
 +-------------------------------------------------------------------------------------+
 SISTENAS LINUX / POLITICA OS / 90 DIAS
 +-------------------------------------------------------------------------------------+	
@@ -908,7 +914,7 @@ OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
 	ls -la /etc/logrotate.conf
 
 	// La rotacion debe esta definida en semanas 'weekly' a 13:
-	cat /etc/logrotate.conf | head -10
+	head -10 /etc/logrotate.conf
 
 	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
@@ -1009,7 +1015,7 @@ OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
 	ls -la /etc/logrotate.conf
 
 	// La rotacion debe esta definida en semanas 'weekly' a 26:
-	cat /etc/logrotate.conf | head -10
+	head -10 /etc/logrotate.conf
 
 	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
@@ -1111,7 +1117,7 @@ OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
 	ls -la /etc/logrotate.conf
 
 	// La rotacion debe esta definida en semanas 'weekly' a 26:
-	cat /etc/logrotate.conf | head -10
+	head -10 /etc/logrotate.conf
 
 	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
@@ -1213,7 +1219,7 @@ OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
 	ls -la /etc/logrotate.conf
 
 	// La rotacion debe esta definida en semanas 'weekly' a 13:
-	cat /etc/logrotate.conf | head -10
+	head -10 /etc/logrotate.conf
 
 	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
@@ -1315,7 +1321,7 @@ OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
 	ls -la /etc/logrotate.conf
 
 	// La rotacion debe esta definida en semanas 'weekly' a 13:
-	cat /etc/logrotate.conf | head -10
+	head -10 /etc/logrotate.conf
 
 	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
@@ -1423,7 +1429,7 @@ OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
 	ls -la /etc/logrotate.conf
 
 	// La rotacion debe esta definida en semanas 'weekly' a 26:
-	cat /etc/logrotate.conf | head -10
+	head -10 /etc/logrotate.conf
 
 	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏

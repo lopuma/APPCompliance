@@ -21,41 +21,22 @@
         },
         {
             "object": "/home/es082009/.ssh/authorized_keys",
-            "owner": "orphan",
-            "tipo": "orphan",
-            "ownerGroup": "orphan",
+            "owner": "es082009",
+            "tipo": "/E/",
+            "ownerGroup": "Soporte",
             "user": [
-                "orphan"
+                "Roser Carbonell"
             ],
             "code": "1-OK",
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "Fichero authorized_key con owner huerfano (orphan)",
-            "impact": "Fichero authorized_key con owner huerfano (orphan)",
+            "risk": "Se puede renombrar, es un cuenta de BS Linux",
+            "impact": "",
             "variable": [
                 "file_authorized=\"/home/es082009/.ssh/authorized_keys\""
             ],
-            "SO": "Aix"
-        },
-        {
-            "object": "/home/ESY9CEEF/.ssh/authorized_keys",
-            "owner": "ESY9CEEF",
-            "tipo": "/E/",
-            "ownerGroup": "ibmldadm",
-            "user": [
-                "ESY9CEEF no existe"
-            ],
-            "code": "1-OK",
-            "servers": [
-                "ALL Servers"
-            ],
-            "risk": "Fichero authorized_key con owner diferente",
-            "impact": "Fichero authorized_key con owner diferente",
-            "variable": [
-                "file_authorized=\"/home/ESY9CEEF/.ssh/authorized_keys\""
-            ],
-            "SO": "Aix"
+            "SO": "AIX"
         },
         {
             "object": "/home/ESY9CEEG/.ssh/authorized_keys",
@@ -158,7 +139,7 @@
             "tipo": "/E/",
             "ownerGroup": "ibmldadm",
             "user": [
-                "es082027"
+                "JOSE ANTONIO JIMENEZ BAENA"
             ],
             "code": "1-OK",
             "servers": [
@@ -206,7 +187,7 @@
             "impact": "Cuenta de aplicativo : IPC automation",
             "variable": [
                 "file_authorized=\"/home/assuxat1/.ssh/authorized_keys\"",
-                "from=\"129.39.41.*\""
+                "from=\"from=`129.39.41.*`\""
             ],
             "SO": "Aix"
         },
@@ -226,7 +207,7 @@
             "impact": "Cuenta de aplicativo : IPC automation",
             "variable": [
                 "file_authorized=\"/home/assuxat2/.ssh/authorized_keys\"",
-                "from=\"129.39.41.*\""
+                "from=\"from=`129.39.41.*`\""
             ],
             "SO": "Aix"
         }
@@ -368,7 +349,7 @@
                 "file_authorized=\"/home/cesuxat1/.ssh/authorized_keys\"",
                 "gecos=\"!!CZ/S/*ABJ83/IBM/Automation ID!!\""
             ],
-            "SO": "AIX"
+            "SO": "LINUX"
         },
         {
             "object": "/cescelink/017054736/home/017054736/.ssh/authorized_keys",
@@ -387,7 +368,7 @@
             "variable": [
                 "Cuenta de cliente"
             ],
-            "SO": "AIX"
+            "SO": "LINUX"
         },
         {
             "object": "/cescelink/028350732/home/028350732/.ssh/authorized_keys",
@@ -406,7 +387,7 @@
             "variable": [
                 "Cuenta de cliente"
             ],
-            "SO": "AIX"
+            "SO": "LINUX"
         },
         {
             "object": "/cescelink/IMFORTIA/home/IMFORTIA/.ssh/authorized_keys",
@@ -425,7 +406,7 @@
             "variable": [
                 "Cuenta de cliente"
             ],
-            "SO": "AIX"
+            "SO": "LINUX"
         },
         {
             "object": "/cescelink/prueba/home/prueba/.ssh/authorized_keys",
@@ -444,7 +425,7 @@
             "variable": [
                 "Cuenta de cliente para pruebas"
             ],
-            "SO": "AIX"
+            "SO": "LINUX"
         },
         {
             "object": "/cescelink/usuario1/home/usuario1/.ssh/authorized_keys",
@@ -463,7 +444,7 @@
             "variable": [
                 "Cuenta de cliente para pruebas"
             ],
-            "SO": "AIX"
+            "SO": "LINUX"
         }
     ],
     "INFRA": [
@@ -521,7 +502,7 @@
             "impact": "",
             "variable": [
                 "file_authorized=\"/home/icouxat2/.ssh/authorized_keys\"",
-                "from=\"129.39.41.5+129.39.41.6\""
+                "from=\"from=`129.39.41.5+129.39.41.6`\""
             ],
             "SO": "LINUX"
         },
@@ -541,7 +522,7 @@
             "impact": "",
             "variable": [
                 "file_authorized=\"/home/icouxat1/.ssh/authorized_keys\"",
-                "from=\"129.39.41.5+129.39.41.6\""
+                "from=\"from=`129.39.41.5+129.39.41.6`\""
             ],
             "SO": "LINUX"
         },
@@ -580,7 +561,7 @@
             "impact": "",
             "variable": [
                 "file_authorized=\"/home/itimagt/.ssh/authorized_keys\"",
-                "from=\"129.39.41.5\""
+                "from=\"from=`129.39.41.5`\""
             ],
             "SO": "LINUX"
         },
@@ -600,7 +581,7 @@
             "impact": "",
             "variable": [
                 "file_authorized=\"/home/czy54480/.ssh/authorized_keys\"",
-                "from=\"9.156.198.39+9.149.47.23\""
+                "from=\"from=`9.156.198.39+9.149.47.23`\""
             ],
             "SO": "LINUX"
         },
@@ -620,7 +601,7 @@
             "impact": "",
             "variable": [
                 "file_authorized=\"/home/czz61942/.ssh/authorized_keys\"",
-                "from=\"9.156.198.39+9.149.47.23\""
+                "from=\"from=`9.156.198.39+9.149.47.23`\""
             ],
             "SO": "LINUX"
         },
@@ -641,6 +622,27 @@
             "variable": [
                 "file_authorized=\"/home/ES082009/.ssh/authorized_keys\"",
                 "gecos=\"!!ES/K/K00458/KYNDRYL-SOD/Carbonell Santam, Roser!!\""
+            ],
+            "SO": "AIX"
+        },
+        {
+            "object": "/home/es082027/.ssh/authorized_keys",
+            "owner": "es082027",
+            "tipo": "/I/",
+            "ownerGroup": "Soporte",
+            "user": [
+                " José Antonio Jiménez Baena"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Servidor socks desde donde conecta",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/es082027/.ssh/authorized_keys\"",
+                "from=\"from=`129.39.136.5`\"",
+                "gecos=\"!!ES/I/082027/IBM/Jose.Antonio.Jimenez!!\""
             ],
             "SO": "AIX"
         },
@@ -705,6 +707,25 @@
             "SO": "AIX"
         },
         {
+            "object": "/home/es082009/.ssh/authorized_keys",
+            "owner": "es082009",
+            "tipo": "/E/",
+            "ownerGroup": "Soporte",
+            "user": [
+                "Roser Carbonell"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Se puede renombrar, es un cuenta de BS Linux",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/es082009/.ssh/authorized_keys\""
+            ],
+            "SO": "AIX"
+        },
+        {
             "object": "/home/ESY9AMMH/.ssh/authorized_keys",
             "owner": "ESY9AMMH",
             "tipo": "/E/",
@@ -739,7 +760,7 @@
             "impact": "Cuenta para el grupo de  : EBH",
             "variable": [
                 "file_authorized=\"/home/tws/.ssh/authorized_keys\"",
-                "from=\"129.39.137.114\""
+                "from=\"from=`129.39.137.114`\""
             ],
             "SO": "Aix"
         }

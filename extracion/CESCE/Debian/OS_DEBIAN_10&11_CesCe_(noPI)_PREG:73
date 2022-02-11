@@ -141,21 +141,21 @@ cat /etc/pam.d/su | grep -i remember
 /*
 For Debian
 
-Si PAM_TALLY2.so esta en USO:
+Si PAM_TALLY.so esta en USO:
 
 /etc/pam.d/common-auth debe existir e incluir estos valores:
-auth required pam_tally.so deny=5 onerr=fail per_user no_lock_time
+auth        required        pam_tally.so    deny=5 onerr=fail per_user no_lock_time
 
 /etc/pam.d/common-account debe existir e incluir estos valores:
-account required pam_tally.so
+account        required        pam_tally.so
 
-Si PAM_TALLY2 esta en USO:
+Si PAM_TALLY 2 esta en USO:
 
 /etc/pam.d/common-auth  debe existir e incluir estos valores:
-auth required pam_tally2.so deny=5 onerr=fail per_user no_lock_time
+auth        required        pam_tally2.so deny=5 onerr=fail per_user no_lock_time
 
 /etc/pam.d/common-account debe existir e incluir estos valores:
-account required pam_tally2.so
+account        required        pam_tally2.so
 */
 
 ## PAM_TALLY & PAM_TALLY2
@@ -484,9 +484,9 @@ SISTENAS DEBIAN / POLITICA OS / 180 DIAS
 
 "Retain Log files = 180 DIAS (26 semanas)
 
-#"Para la rotacion de OS se revisa 2 cosas.
-1.- La rotacion que debe ser 180 dias (26 semanas).
-2.- Los ficheros de rotacion a 180 dias (26 semanas)."#
+// Para la rotacion de OS se revisa 2 cosas.
+	OPCION ➡ 1.- La rotacion que debe ser 180 dias (26 semanas).
+	OPCION ➡ 2.- Los ficheros de rotacion a 180 dias (26 semanas)."#
 
 
 OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas). 
@@ -496,31 +496,33 @@ OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
 	OPCION ➡ 1. "#-> LOOGKEEPER <-#
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
-	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper --trim 180 --keep 180
 	crontab -l|grep -v ^#|grep logkeeper
 
+	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper
+
 	//Ejecutamos un -s del comando que nos devuelve
-	"Ejemplo
+
 	/usr/util/seguridad/logkeeper -s
 
-	//Mirar que los valores "$trim_retention_days, $backups_retention_days, " sean 180
-
 	// -> si no funciona "LOGKEEPER" mirar Logrotate<-#
-
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
 	OPCION ➡ 2. "#-> LOGROTATE <-#
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
 
-	cat /etc/logrotate.conf
+	ls -la /etc/logrotate.conf
 
 	// La rotacion debe esta definida en semanas 'weekly' a 26:
-	cat /etc/logrotate.conf | head -10
+	head -10 /etc/logrotate.conf
 
 	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
 	OPCION ➡ 3. "#-> sin LOGKEEPER && sin LOGROTATE <-#
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
 	cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+	
+	// Lo rotacion por rotalogs, la primera columna el fichero y la cuarta columna el valor a rotar:
+		
+	// EJEMPLO -> /var/log/secure.log:0:13:90:HP-UX,OSF1,SunOS
 
 OPCION ➡ 2. //Los ficheros de OS deben estar rotando.
 
@@ -537,18 +539,36 @@ OPCION ➡ 2. //Los ficheros de OS deben estar rotando.
           | /var/log/wtmp "*INF. DE LOS LOGUEOS"                                 |
          ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
 
-"Deben existir
-"Debian : 
-ls -la /var/log/auth.log /var/adm/sudo.log /var/log/messages /var/log/cron.log /var/log/wtmp
+// Si existen deben estar rotando.
 
-// Debe existir una entrada de los ficheros en la rotacion (OPCION ➡ 1. LOGKEEPER):
+# Debian : 
 
-// Debe existir una entrada de los ficheros en la rotacion Y rotando a 26 semanas (OPCION ➡ 2. LOGROTATE):
+ls -la /var/log/auth.log /var/adm/sudo.log /var/log/messages /var/log/wtmp /var/log/cron.log
 
-egrep -i "auth.log|sudo.log|messages|cron.log|wtmp" -A5 --color=always /etc/logrotate.conf
+// Debe existir una entrada de los ficheros de OS en la rotacion (OPCION ➡ 1. LOGKEEPER):
 
-	//Si algun fichero no existe en logrotate.conf, debe estar implementado en syslog
-	egrep -i "auth.log|sudo.log|messages|cron.log|wtmp" -A5 --color=always  /etc/logrotate.d/*
+	//Muestra resumen de la configuracion en LOGKEEPER	
+	/usr/util/seguridad/logkeeper -s | "trim|backup|auth|sudo|messages|wtmp|cron|config_fil"
+
+	
+	//Si La rotacion de log se define en el fichero de configuracion
+	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim|backup|auth|sudo|messages|wtmp|cron"
+
+// Debe existir una entrada de los ficheros de OS en la rotacion (OPCION ➡ 2. LOGROTATE):
+
+	cat /etc/logrotate.conf | egrep -i "auth|sudo|messages|wtmp|cron" -A5 --color=always
+
+	//Si los ficheros no existen en logrotate.conf, debe estar implementado en logrotate.d
+
+	cat /etc/logrotate.d/* | egrep -i "auth|sudo|messages|wtmp|cron" -A7 --color=always
+
+// Debe existir una entrada del/los fichero(s) de registro en la rotacion (OPCION ➡ 3. ROTALOGS):
+
+	// Si ejecuta en rotalogs con job de control.
+
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -v "^#"| egrep -i "auth|sudo|messages|wtmp|cron|logke"
+
+	//Debe existir /usr/local/bin/tareas/logkeeperalt.cfg en el codigo que se ejecuta.
 
 /* CONTESTAR YES  */ : " Si la rotacion es 180 dias (26 semanas), y exiten, estan rotando los ficheros en el sistema de rotado."
 
@@ -624,7 +644,7 @@ systemctl status apparmor
 
 //Ejecute el mandato siguiente y verifique que no se devuelve ninguna salida:
 
-rpm -qa xorg-x11*
+apt-cache search xorg-x11*
 
 /* CONTESTAR YES */ : " Si NO DEVUELVE nada referente a xorg
 +-------------------------------------------------------------------------------------+
@@ -784,7 +804,18 @@ ls -la /etc/gshadow
 
 /* CONTESTAR YES */ : " Si los permisos son los indicados"
 
-/* CONTESTAR NO  */ : " Invalid permissions for $FILE, Octal permissions: $PERMISSION, Text Permissions: $CORRECTO;  May not have execute permissions on any files and no write for others.
+/* CONTESTAR NO  */ : " Invalid permissions for /etc/gshadow, Octal permissions: rw----------, Text Permissions: 000;  May not have execute permissions on any files and no write for others.
++-------------------------------------------------------------------------------------+
+---AD.1.8.4.2.3 Protecting Resources - OSRs
+"Ensure permissions on /etc/shadow- are configured
+
+// Si el fichero existe y debe tener permisos File 000
+
+ls -la /etc/shadow
+
+/* CONTESTAR YES */ : " Si los permisos son los indicados"
+
+/* CONTESTAR NO  */ : " Invalid permissions for /etc/shadow, Octal permissions: rw----------, Text Permissions: 000;  May not have execute permissions on any files and no write for others.
 +-------------------------------------------------------------------------------------+
 ---AD.1.8.4.3.1 Protecting Resources - OSRs
 "Ensure permissions on /etc/crontab are configured
@@ -942,6 +973,14 @@ ls -ld /var/tmp
 "Business Use Notice
 
 cat /etc/motd
+
+// Debe tener Kyndryl en las ultimas 4 lineas, ya no es IBM
+
+|                                                                             |
+|Kyndryl's internal systems must only be used for conducting Kyndryl's        |
+|business or for purposes authorized by Kyndryl management.. Use is subject to|
+|audit at any time by Kyndryl management.                                     |  
++-----------------------------------------------------------------------------+
 
 /* CONTESTAR YES */ : " Si tiene el correcto mensaje de bienvenidad"
 

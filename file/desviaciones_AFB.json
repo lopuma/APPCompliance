@@ -69,13 +69,13 @@
     "modulo": "Password Requirements/Password MAX Age /etc/shadow",
     "clave": "MAXAGE",
     "descripcion": "Account $account has invalid Password Max Age setting of 99999  should be set to Customer Required Setting: 90. More secure value can be set.",
-    "comprobacion": "account=\"\"\n\n## Se debe comprobar que tipo de cuenta es /C/F/S",
+    "comprobacion": "+-------------------------------------------------------------------------------------+\n## Para aplicar un correcto MAXAGE, hay que tener en cuenta el tipo de cuenta que es:\n## Ya sea tipo /C/F/S/.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /C/, --> se pasa a excepcionar con RISK e IMPACT.\n\n## (Revisar el fichero de RISK e IMPACT)\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /F/ --> se cambia a 90 dias, ejemplo de cuentas aplicable MAXAGE : root, emer, cyberark.\n\n## Dependiendo el cliente, alguna cuentas de TIPO F, se exepcionan con RISK e IMPACT, si fuera el caso se debe hablar con el owner de la cuenta, y que nos indique un RISK e IMPACT, o del contrario si se puede aplicar MAXAGE.\n\n## (Revisar \" * ACCOUNT * \", antes de cualquier cambio)\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /S/ aplicativos, por lo normal no llevan una password asignada, si ese fuera el caso, se debe preguntar al owner de la cuenta, si se le puede aplicar expiracion de passwor o bien se pasa a excepcionar\n+-------------------------------------------------------------------------------------+",
     "copia": null,
-    "editar": null,
+    "editar": "+-------------------------------------------------------------------------------------+\n## Cambiar MAXAGE a 90\n+-------------------------------------------------------------------------------------+\n\nchage -M 90 $account",
     "refrescar": null,
-    "evidencia": null,
+    "evidencia": "clear\ndate\nhostname\nchage -l $account\ncat /etc/passwd | grep -i $account",
     "SO": "Linux"
-  },
+},
   {
     "modulo": "Password Requirements/Password History",
     "clave": "REMEMBER",

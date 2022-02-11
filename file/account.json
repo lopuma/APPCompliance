@@ -1,23 +1,23 @@
 {
   "AFB": [
     {
-      "object": "",
-      "owner": "",
-      "tipo": "",
-      "ownerGroup": "",
+      "object": "root",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
       "user": [
-        "",
-        ""
+        "Grupo de Soporte AFB Linux"
       ],
-      "code": "",
+      "code": "1-OK",
       "servers": [
-        ""
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
       "variable": [
-        "account=\"\""
-      ]
+        "account=\"root\""
+      ],
+      "SO" : "Linux"
     }
   ],
   "ASISA": [
@@ -31,13 +31,14 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "GENERICO / MAXAGE / CUSTOMER",
       "impact": "GENERICO / MAXAGE / CUSTOMER",
       "variable": [
         ""
-      ]
+      ],
+      "SO" : "AIX"
     },
     {
       "object": "archive",
@@ -49,7 +50,7 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "GENERICO / MAXAGE / CUSTOMER",
       "impact": "GENERICO / MAXAGE / CUSTOMER",
@@ -67,13 +68,14 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "GENERICO / MAXAGE / CUSTOMER",
       "impact": "GENERICO / MAXAGE / CUSTOMER",
       "variable": [
         ""
-      ]
+      ],
+      "SO" : "AIX"
     },
     {
       "object": "usaxwftp",
@@ -85,13 +87,14 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "GENERICO / MAXAGE / CUSTOMER",
       "impact": "GENERICO / MAXAGE / CUSTOMER",
       "variable": [
         ""
-      ]
+      ],
+      "SO" : "Aix"
     },
     {
       "object": "automate",
@@ -379,6 +382,27 @@
       "SO": "Aix"
     }
   ],
+  "CESCE": [
+    {
+      "object": "root",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Grupo de soporte CESCE - Linux"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"root\""
+      ],
+      "SO": "Linux"
+    }
+  ],
   "FT": [
     {
       "object": "aotipat1",
@@ -390,13 +414,14 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "GENERICO / MAXAGE / KYNDRYL",
       "impact": "GENERICO / MAXAGE / KYNDRYL",
       "variable": [
         "Usuario para el proceso de Compliance"
-      ]
+      ],
+      "SO" : "Linux"
     },
     {
       "object": "ctmagent",
@@ -408,13 +433,14 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "GENERICO / MAXAGE / KYNDRYL",
       "impact": "GENERICO / MAXAGE / KYNDRYL",
       "variable": [
         "Usuario para el proceso de Compliance"
-      ]
+      ],
+      "SO" : "Linux"
     },
     {
       "object": "root",
@@ -422,17 +448,18 @@
       "tipo": "/F/",
       "ownerGroup": "Sistemas",
       "user": [
-        "Group FT Linux - Sigifi"
+        "Grupo FT Linux - Sigifi"
       ],
       "code": "1-OK",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
       "variable": [
         "account=\"root\""
-      ]
+      ],
+      "SO" : "Linux"
     }
   ],
   "LBK": [
@@ -446,13 +473,14 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "GENERICO / MAXAGE / CUSTOMER",
       "impact": "GENERICO / MAXAGE / CUSTOMER",
       "variable": [
         ""
-      ]
+      ],
+      "SO" : "Linux"
     },
     {
       "object": "nodejs",
@@ -464,13 +492,14 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "GENERICO / MAXAGE / CUSTOMER",
       "impact": "GENERICO / MAXAGE / CUSTOMER",
       "variable": [
         ""
-      ]
+      ],
+      "SO" : "Linux"
     },
     {
       "object": "nodejsarq",
@@ -482,13 +511,14 @@
       ],
       "code": "2-DOC",
       "servers": [
-        "ALL servers"
+        "ALL Servers"
       ],
       "risk": "GENERICO / MAXAGE / CUSTOMER",
       "impact": "GENERICO / MAXAGE / CUSTOMER",
       "variable": [
         ""
-      ]
+      ],
+      "SO" : "Linux"
     },
     {
       "object": "ncosys",
@@ -509,6 +539,5 @@
       ],
       "SO": "Linux"
     }
-
   ]
 }
