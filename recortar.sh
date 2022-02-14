@@ -2,6 +2,7 @@
 # VARIABLES
 miLista=(
     'Añadir Descripcion.'
+    'Saber si es /C/S/F/ or /K/I/E/'
     "MINAGE - Linux"
     'MAXAGE - Linux'
     'Listar CUENTAS - Linux'
@@ -145,6 +146,13 @@ function listar_minlen () {
     gedit ${home}'resultado.txt'
 }
 
+function tipo_linux () {
+    command_sed
+    cat  ${home}'descripciones.txt' | awk '{print "cat /etc/passwd | grep -w "$2""}'
+    cat  ${home}'descripciones.txt' | awk '{print "cat /etc/passwd | grep -w "$2""}' > ${home}'resultado.txt'
+    gedit ${home}'resultado.txt'
+}
+
 # FUNCION MENU
 function menu() {
     while true; do
@@ -164,6 +172,15 @@ function menu() {
             ;;
         2)
             clear
+            logInfo "Saber si es /C/S/F/ or /K/I/E/!\n"
+            tipo_linux
+            log ""
+            menu
+            #continuar
+            break
+            ;;
+        3)
+            clear
             logInfo "MINAGE Sistemas Linux!\n"
             minage_linux
             log ""
@@ -171,7 +188,7 @@ function menu() {
             #continuar
             break
             ;;
-        3)
+        4)
             clear
             logInfo "MAXAGE Sistemas Linux!\n"
             maxage_linux
@@ -180,7 +197,7 @@ function menu() {
             #continuar
             break
             ;;
-        4)
+        5)
             clear
             logInfo "LISTAR CUENTAS para Sistemas Linux!\n"
             listar_linux
@@ -189,7 +206,7 @@ function menu() {
             #continuar
             break
             ;;
-        5)
+        6)
             clear
             logInfo "MINAGE para Sistemas Aix !\n"
             minage_aix
@@ -198,7 +215,7 @@ function menu() {
             #continuar
             break
             ;;
-        6)
+        7)
             clear
             logInfo "MAXAGE para Sistemas Aix !\n"
             maxage_aix
@@ -207,7 +224,7 @@ function menu() {
             #continuar
             break
             ;;
-        7)
+        8)
             clear
             logInfo "LISTAR CUENTAS de MINAGE para Sistemas Aix !\n"
             listarMinage_aix
@@ -216,7 +233,7 @@ function menu() {
             #continuar
             break
             ;;
-        8)
+        9)
             clear
             logInfo "LISTAR CUENTAS de MAXAGE para Sistemas Aix !\n"
             listarMaxage_aix
@@ -225,7 +242,7 @@ function menu() {
             #continuar
             break
             ;;
-        9)
+        10)
             clear
             logInfo "EDITAR CUENTAS para MINLEN para Sistemas Aix !\n"
             minlen
@@ -234,7 +251,7 @@ function menu() {
             #continuar
             break
             ;;
-        10)
+        11)
             clear
             logInfo "LISTAR CUENTAS para MINLEN para Sistemas Aix !\n"
             listar_minlen

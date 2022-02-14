@@ -59,7 +59,6 @@ account     required      pam_faillock.so
 // EJEMPLO REHL8
 auth        required      pam_faillock.so preauth silent deny=5 unlock_time=0
 auth        required      pam_env.so
-auth        required      pam_listfile.so item=user sense=deny file=/etc/security/$FILENAME onerr=succeed
 auth        sufficient    pam_unix.so try_first_pass
 auth  	    [default=die] pam_faillock.so authfail  deny=5 unlock_time=0
 auth        requisite     pam_succeed_if.so uid >= 1000 quiet_success

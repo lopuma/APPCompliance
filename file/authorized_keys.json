@@ -445,6 +445,62 @@
                 "Cuenta de cliente para pruebas"
             ],
             "SO": "LINUX"
+        },
+        {
+            "object": "/home/oracle/.ssh/authorized_keys",
+            "owner": "oracle",
+            "tipo": "/F/",
+            "ownerGroup": "Oracle DBA",
+            "user": [
+                "Daniel Castroverde",
+                "JUAN MANUEL RODRIGUEZ IGLESIAS",
+                "LUIS MIGUEL CALLES SANCHEZ"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers RAC Oracle", 
+                "INFLIORAPRE03",
+                "INFLIORAPRE01",
+                "INFLIORAPRE04",
+                "INFLIORAPRO01",
+                "INFLIORAPRE02",
+                "INFLIORAPRO02"
+            ],
+            "risk": "GENERICO / AUTHORIZED_KEYS / RAC Oracle",
+            "impact": "Public Key Label, se puede corregir el label en todas las claves ssh-rsa",
+            "variable": [
+                "file_authorized=\"/home/oracle/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/F/*EDDBA2/KYNDRYL/User Pool!!\""                
+            ],
+            "SO": "LINUX"
+        },
+        {
+            "object": "/home/grid/.ssh/authorized_keys",
+            "owner": "grid",
+            "tipo": "/F/",
+            "ownerGroup": "Oracle DBA",
+            "user": [
+                "Daniel Castroverde",
+                "JUAN MANUEL RODRIGUEZ IGLESIAS",
+                "LUIS MIGUEL CALLES SANCHEZ"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers RAC Oracle", 
+                "INFLIORAPRE03",
+                "INFLIORAPRE01",
+                "INFLIORAPRE04",
+                "INFLIORAPRO01",
+                "INFLIORAPRE02",
+                "INFLIORAPRO02"
+            ],
+            "risk": "GENERICO / AUTHORIZED_KEYS / RAC Oracle",
+            "impact": "Public Key Label, se puede corregir el label en todas las claves ssh-rsa",
+            "variable": [
+                "file_authorized=\"/home/grid/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/F/*EDDBA2/KYNDRYL/Usuario grid!!\""                
+            ],
+            "SO": "LINUX"
         }
     ],
     "INFRA": [

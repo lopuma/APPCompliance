@@ -759,7 +759,7 @@ lslpp -L |grep -i CDE
 /* CONTESTAR YES */ : "     : " Si no existe y Si existe y nos muestra nada.
 /* CONTESTAR N/A */ : "      :
 /* CONTESTAR NO     When running "lslpp -L |grep -i CDE", it shows us CDE results, verify for solution.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.12.1 Network Settings	ECHO
 ---E.1.5.12.2 Network Settings	CHARGEN
 ---E.1.5.12.3 Network Settings	RSTATD
@@ -778,7 +778,7 @@ lslpp -L |grep -i CDE
 ---E.1.5.12.16 Network Settings	DTSPCD
 ---E.1.5.12.17 Network Settings	TTDBSERVER
 ---E.1.5.12.22 Network Settings	SYSTAT
----E.1.5.12.26 Network Settings	SNMP Service
+---E.1.5.12.26 Network Settings	SNMP
 ---E.1.5.12.27 Network Settings	telnet
 ---E.1.5.12.28 Network Settings	ftp
 ---E.1.5.12.29 Network Settings	exec
@@ -786,11 +786,12 @@ lslpp -L |grep -i CDE
 
 "Entry in /etc/inetd.conf must be removed or disabled
 
-egrep -i "CHARGEN|DAYTIME|DISCARD|ECHO|FINGER|SYSTAT|WHO|NETSTAT|ECHO|CHARGEN|RSTATD|TFTP|RWALLD|RUSERSD|DISCARD|DAYTIME|BOOTPS|FINGER|SPRAYD|PCNFSD|NETSTAT|RWHO|CMSD|DTSPCD|TTDBSERVER|time" /etc/inetd.conf
+egrep -i "CHARGEN|DAYTIME|DISCARD|ECHO|FINGER|SYSTAT|WHO|NETSTAT|RSTATD|TFTP|RWALLD|RUSERSD|BOOTPS|SPRAYD|PCNFSD|RWHO|CMSD|DTSPCD|TTDBSERVER|time|exec|telnet|ftp|SNMP" /etc/inetd.conf
 
-/* CONTESTAR YES */ : "     : " Si el resultado sale comentado (#) o esta vacio.
-/* CONTESTAR NO     : " The entry : "ENTRADA" is not removed or disabled
-+--------------------------------------------------------------------------------------------------------------+
+/* CONTESTAR YES */ : " Si el resultado sale comentado (#) o esta vacio.
+
+/* CONTESTAR NO */ : " The entry : "CMSD " is not removed or disabled in the file /etc/inetd.conf
++-------------------------------------------------------------------------------------+
 ---E.1.5.12.30 Network Settings
 ---E.1.5.12.31 Network Settings
 "timed
@@ -877,17 +878,29 @@ grep -v "^[[:space:]]*#" /etc/exports | grep "root="
 grep -v "^[[:space:]]*#" /etc/exports | grep "anon" | grep -v 'anon=-[12]'
 
 /* CONTESTAR YES */ : "     : " Si /etc/exports esta vacio, o tenga datos con restrinciones.
-+--------------------------------------------------------------------------------------------------------------+
----E.1.5.22.2 Network Settings	rlogin
----E.1.5.22.3 Network Settings	rsh
++-------------------------------------------------------------------------------------+
+---E.1.5.22.2 Network Settings	
+"rlogin
 
-"Entry in /etc/inetd.conf must be removed or disabled
+// Entry in /etc/inetd.conf must be removed or disabled
 
-egrep -i "rlogin|rsh" /etc/inetd.conf
+egrep -i "rlogin" /etc/inetd.conf
 
-/* CONTESTAR YES */ : "     : " Si el resultado sale comentado (#) o esta vacio, o son redes seguras
-/* CONTESTAR NO     : " The entry is not removed or disabled
-+--------------------------------------------------------------------------------------------------------------+
+/* CONTESTAR YES  */ : " Si el resultado sale comentado (#) o esta vacio, o son redes seguras"
+
+/* CONTESTAR NO   */ : " The entry is not removed or disabled : entry rlogin
++-------------------------------------------------------------------------------------+
+---E.1.5.22.3 Network Settings	
+"rsh
+
+// Entry in /etc/inetd.conf must be removed or disabled
+
+egrep -i "rsh" /etc/inetd.conf
+
+/* CONTESTAR YES  */ : " Si el resultado sale comentado (#) o esta vacio, o son redes seguras"
+
+/* CONTESTAR NO   */ : " The entry is not removed or disabled : entry rsh
++-------------------------------------------------------------------------------------+
 ---E.1.5.22.4 Network Settings	
 "sendmail to be disabled.
 

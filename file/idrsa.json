@@ -39,6 +39,59 @@
                 "Usuario de prueba para el cliente"
             ],
             "SO": "Linux"
+        },
+        {
+            "object": "/home/grid/.ssh/id_rsa",
+            "owner": "grid",
+            "tipo": "/F/",
+            "ownerGroup": "Oracle DBA",
+            "user": [
+                "Daniel Castroverde",
+                "JUAN MANUEL RODRIGUEZ IGLESIAS",
+                "LUIS MIGUEL CALLES SANCHEZ"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers RAC Oracle", 
+                "INFLIORAPRE03",
+                "INFLIORAPRE01",
+                "INFLIORAPRE04",
+                "INFLIORAPRO01",
+                "INFLIORAPRE02",
+                "INFLIORAPRO02"
+            ],
+            "risk": "GENERICO / ID_RSA / RAC Oracle",
+            "impact": "GENERICO / ID_RSA / RAC Oracle",
+            "variable": [
+                "Cuenta para Oracle DBA"            ],
+            "SO": "LINUX"
+        },
+        {
+            "object": "/home/oracle/.ssh/id_rsa",
+            "owner": "oracle",
+            "tipo": "/F/",
+            "ownerGroup": "Oracle DBA",
+            "user": [
+                "Daniel Castroverde",
+                "JUAN MANUEL RODRIGUEZ IGLESIAS",
+                "LUIS MIGUEL CALLES SANCHEZ"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers RAC Oracle", 
+                "INFLIORAPRE03",
+                "INFLIORAPRE01",
+                "INFLIORAPRE04",
+                "INFLIORAPRO01",
+                "INFLIORAPRE02",
+                "INFLIORAPRO02"
+            ],
+            "risk": "GENERICO / ID_RSA / RAC Oracle",
+            "impact": "GENERICO / ID_RSA / RAC Oracle",
+            "variable": [
+                "Cuenta para Oracle DBA"
+            ],
+            "SO": "LINUX"
         }
     ],
     "INFRA": [

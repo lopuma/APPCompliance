@@ -261,12 +261,18 @@ OPTION D de las reglas de CONTRASEÑA.
 "Deny access file
 
 OPTION D de las reglas de CONTRASEÑA - PARTE 1
+
+// Se trata de si una cuenta no expira, debe estar añadida al fichero que contiene el modulo pam_listfile.so
+
+echo "";cat /etc/shadow | cut -d: -f1,2,5 | grep -v ':90' | egrep -v "\*|\!\!|\!";echo ""
+
 /*
 
 Este requisito concreto sólo debe cumplirse si se selecciona la opción D como mecanismo de excepción para un ID con caducidad de contraseña ampliada (365 dias). No es necesario configurarlo a menos que sea necesario para un ID específico.
 
-Para Debian y SLES:
-- En /etc/pam.d/system-auth y /etc/pam.d/password-auth debe existir e incluir estos valores
+Para Linux:
+
+- En /etc/pam.d/system-auth debe existir e incluir estos valores
 
 auth required pam_listfile.so item=user sense=deny file=/etc/security/$FILENAME onerr=succeed
 
@@ -275,12 +281,15 @@ auth required pam_listfile.so item=user sense=deny file=/etc/security/$FILENAME 
 Nota: Esta entrada debe preceder a las entradas de tipo auth cuyo campo de control esté establecido en el valor suficiente.
 */
 
-cat /etc/pam.d/system-auth | pam_listfile.so
-cat /etc/pam.d/password-auth | pam_listfile.so
+cat /etc/pam.d/system-auth | grep -i pam_listfile.so
 
-/* CONTESTAR YES */ : "Si hay cuentas no privilegiadas que tengan maxage de 365 dias y cumpla la OPCION D"
+// comprobar si las cuentas que no expiran estan añadidas en el fichero que nos marca pam_listfile.so, solo si utiliza la opcion D como mecanismo de excepcion de password
+
+/* CONTESTAR YES */ : " Si hay cuentas no privilegiadas que tengan maxage de 365 dias (o otro valor) y cumpla la OPCION D"
 
 /* CONTESTAR NO  */ : "Account $account has invalid Password Max Age setting of 99999, should be set to Customer Required Setting: 90. More secure value can be set."
+
+/* CONTESTAR N/A */ : " The operating system is not RHEL
 +-------------------------------------------------------------------------------------+
 ---AD.1.1.13.2 Password Requirements
 "/etc/security/$FILENAME
@@ -290,7 +299,12 @@ OPTION D de las reglas de CONTRASEÑA - PARTE 2
 // Archivo que contiene una lista de los ID de usuario, uno por línea, que no están permitidos para realizar un inicio de sesión interactivo en el sistema
 
 /*
-El ID debe existir en /etc/security/FILENAME Nota: el nombre de archivo real puede variar, pero debe colocarse en el directorio /etc/security y ser idéntico al nombre de archivo utilizado en la regla anterior (AD.1.1.13.1.1 Password Requirements).
+El ID debe existir en /etc/security/FILENAME 
+
+Nota: el nombre de archivo real puede variar, pero debe colocarse en el directorio /etc/security y ser idéntico al nombre de archivo utilizado en la regla anterior (AD.1.1.13.1.1 Password Requirements).
+
+## Donde $FILENAME, es la variable del fichero que contendra los usuarios que no deben loguear, como parte de la OPCION D de las reglas de contraseña.
+
 */
 
 //Esto se incluye en la validación indicada para AD.1.1.1.2; donde existe una cuenta con contraseña y no caduca, y cuempla la OPCION D como excepcion de regla de CONTRASEÑA.
@@ -640,11 +654,13 @@ telnet localhost 119
 ---AD.1.5.7 Network Settings	
 "X-server access control
 
-//Ejecute el mandato siguiente y verifique que no se devuelve ninguna salida:
+// No se debe inhabilitar a través de xhost +, forzar la instalación de xorg-x11.
 
 rpm -qa xorg-x11*
 
-/* CONTESTAR YES */ : " Si NO DEVUELVE nada referente a xorg
+/* CONTESTAR YES */ : " Si tiene instalado xorg-x11
+
+/* CONTESTAR N/A */ : " Si no devuelve nada
 +-------------------------------------------------------------------------------------+
 ---AD.1.5.8.1 Network Settings
 ---AD.1.5.8.2 Network Settings
@@ -672,9 +688,13 @@ rpm -qa xorg-x11*
 ---AD.1.5.9.16 Network Settings
 ---AD.1.5.9.17 Network Settings
 
-#"Deben estar disabled"#
+"Entry in /etc/inetd.conf must be removed or disabled
 
-netstat -na|egrep -i "CHARGEN|DAYTIME|DISCARD|ECHO|FINGER|SYSTAT|WHO|NETSTAT|ECHO|CHARGEN|RSTATD|TFTP|RWALLD|RUSERSD|DISCARD|DAYTIME|BOOTPS|FINGER|SPRAYD|PCNFSD|NETSTAT|RWHO|CMSD|DTSPCD|TTDBSERVER"
+egrep -i "CHARGEN|DAYTIME|DISCARD|ECHO|FINGER|SYSTAT|WHO|NETSTAT|RSTATD|TFTP|RWALLD|RUSERSD|BOOTPS|SPRAYD|PCNFSD|RWHO|CMSD|DTSPCD|TTDBSERVER|time|exec|telnet|ftp|SNMP" /etc/inetd.conf
+
+/* CONTESTAR YES */ : " Si el resultado sale comentado (#) o esta vacio.
+
+/* CONTESTAR NO */ : " The entry : "CMSD " is not removed or disabled in the file /etc/inetd.conf
 +-------------------------------------------------------------------------------------+
 ---AD.1.5.9.18 Network Settings	SNMP Service
 ---AD.1.5.9.19 Network Settings	

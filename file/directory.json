@@ -1347,6 +1347,25 @@
       "SO": "Linux"
     },
     {
+      "object": "/home/esy9e52y/",
+      "owner": "esy9e52y",
+      "tipo": "/E/",
+      "ownerGroup": "INFORTEC",
+      "user": [
+        "YANA TSETSOVA LISHKOVA"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/home/esy9e52y/\""
+      ],
+      "SO": "Linux"
+    },
+    {
       "object": "/opt/IBM/ITM/08_Silent_Config.txt",
       "owner": "root",
       "tipo": "/F/",

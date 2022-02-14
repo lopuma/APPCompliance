@@ -110,19 +110,29 @@ grep -v "^[[:space:]]*#" /etc/exports | egrep -v "sec=dh|sec=krb5|secure"
 
 /* CONTESTAR N/A  */ : " Si sale inoperative"
 /* N/A */              " the NFS serial is inoperative 
-+--------------------------------------------------------------------------------------------------------------+
----E.1.5.22.2 Network Settings	rlogin
----E.1.5.22.3 Network Settings	rsh
++-------------------------------------------------------------------------------------+
+---E.1.5.22.2 Network Settings	
+"rlogin
 
-"Entry in /etc/inetd.conf must be removed or disabled
+// Entry in /etc/inetd.conf must be removed or disabled
 
-egrep -i "rlogin|rsh" /etc/inetd.conf
+egrep -i "rlogin" /etc/inetd.conf
+
+/* CONTESTAR YES  */ : " Si el resultado sale comentado (#) o esta vacio, o son redes seguras"
+
+/* CONTESTAR NO   */ : " The entry is not removed or disabled : entry rlogin
++-------------------------------------------------------------------------------------+
+---E.1.5.22.3 Network Settings	
+"rsh
+
+// Entry in /etc/inetd.conf must be removed or disabled
+
+egrep -i "rsh" /etc/inetd.conf
 
 /* CONTESTAR YES  */ : " Si el resultado sale comentado (#) o esta vacio, o son redes seguras"
 
 /* CONTESTAR NO   */ : " The entry is not removed or disabled : entry rsh
-		       " The entry is not removed or disabled : entry rlogin
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.22.4 Network Settings	
 "sendmail to be disabled.
 

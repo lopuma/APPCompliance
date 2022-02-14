@@ -10,7 +10,8 @@ OS AIX ASISA CSD (SPLIT) - Issue REF : 759592 / PREG 9
 lssec -f /etc/security/user -s default -a minage
 
 /* CONTESTAR YES  */ : "Si default tiene minage a 1."
-/* CONTESTAR NO   */ : "En otro caso"
+
+/* CONTESTAR NO   */ : " Account root has invalid Password Min Age setting of 0, should be set to Customer Required Setting: 1. Account Type: IBM
 +-------------------------------------------------------------------------------------+
 ---E.1.2.4 Logging
 
@@ -132,17 +133,24 @@ grep -v "^[[:space:]]*#" /etc/exports | egrep -v "sec=dh|sec=krb5|secure"
 ---E.1.5.22.2 Network Settings	
 "rlogin
 
+// Entry in /etc/inetd.conf must be removed or disabled
+
+egrep -i "rlogin" /etc/inetd.conf
+
+/* CONTESTAR YES  */ : " Si el resultado sale comentado (#) o esta vacio, o son redes seguras"
+
+/* CONTESTAR NO   */ : " The entry is not removed or disabled : entry rlogin
++-------------------------------------------------------------------------------------+
 ---E.1.5.22.3 Network Settings	
 "rsh
 
-//Entry in /etc/inetd.conf must be removed or disabled
+// Entry in /etc/inetd.conf must be removed or disabled
 
-egrep -i "rlogin|rsh" /etc/inetd.conf
+egrep -i "rsh" /etc/inetd.conf
 
 /* CONTESTAR YES  */ : " Si el resultado sale comentado (#) o esta vacio, o son redes seguras"
 
 /* CONTESTAR NO   */ : " The entry is not removed or disabled : entry rsh
-		       " The entry is not removed or disabled : entry rlogin
 +-------------------------------------------------------------------------------------+
 ---E.1.5.22.4 Network Settings
 

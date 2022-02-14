@@ -140,6 +140,34 @@
       "SO": "Aix"
     }
   ],
+  "CESCE": [
+    {
+      "object": "PermitRootLogin",
+      "owner": "Sistemas",
+      "tipo": "/S/",
+      "ownerGroup": "Grupo de Sistemas",
+      "user": [
+        "GEMMA ESCAR APARICIO", 
+        "NINELA ELENA PAVEL MANCIU", 
+        "RAMON RUIZ GARCIA"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "INFLIORAPRE03",
+        "INFLIORAPRE01",
+        "INFLIORAPRE04",
+        "INFLIORAPRO01",
+        "INFLIORAPRE02",
+        "INFLIORAPRO02"
+      ],
+      "risk": "Poner PermitRootLogin a NO en la lista de servidores",
+      "impact": "",
+      "variable": [
+        "service=\"PermitRootLogin=no\""
+      ],
+      "SO": "Linux"
+    }
+  ],
   "FT": [
     {
       "object": "PermitRootLogin",
