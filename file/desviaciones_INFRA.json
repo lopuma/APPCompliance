@@ -687,8 +687,8 @@
         "SO": "Linux / Aix"
     },
     {
-        "modulo": "ZY.1.2.4 Logging - Aix / Logkeeper",
-        "clave": "AIX SUDO LOGKEEPER",
+        "modulo": "ZY.1.2.4 Logging  - Aix / LOGKEEPER",
+        "clave": "SUDO LOGKEEPER",
         "descripcion": "Retain Logging for a period of time - either online or backups, Minimum of 180 days",
         "comprobacion": "+-------------------------------------------------------------------------------------+\n## Rotación para SUDO - Aix, basada en LOGKEEPER\n+-------------------------------------------------------------------------------------+\n## Debe estar el parámetro --trim a 180 --keep a 180 en las tareas del CRONTAB\n+-------------------------------------------------------------------------------------+\n\ncrontab -l|grep -v ^#|grep logkeeper\n\n## Muestra la configuración que se esta ejecutando en el crontab.\n## Es OK, si parte del resultado del comando es \"/usr/util/seguridad/logkeeper --trim 180 --keep 180\"\n\n+-------------------------------------------------------------------------------------+\n## Comprobar la rotación por logkeeper, que los valores de trim_retention y backup_retention estén a 180.\n## Comprobar que el fichero de sudo.log, este en la rotación de la configuración de logkeeper.\n## Comprobar que el fichero sudo.log, sea el mismo de la rotación y exista.\n## No deben estar los valores comentados.\n## Para sistemas Aix, el fichero sudo.log es : /var/log/sudo.log y deben tener permisos 600.\n+-------------------------------------------------------------------------------------+\n\n/usr/util/seguridad/logkeeper -s | egrep -i \"trim_retention_days|backups_retention_days|sudo\"\ncat /etc/sudoers /etc/sudoers.d/* | grep sudo.log\nls -la /var/log/sudo.log",
         "copia": "+-------------------------------------------------------------------------------------+\n## Obtener usuario logueado:\n+-------------------------------------------------------------------------------------+\n\nuser=$(logname)\n\n+-------------------------------------------------------------------------------------+\n## Backup en el HOME\n+-------------------------------------------------------------------------------------+\n\ncd /var/spool/cron/crontabs\ncp -p root /home/$user/root_`date +%d%m%y`",
@@ -698,8 +698,8 @@
         "SO": "Aix"
     },
     {
-        "modulo": "ZY.1.2.4 Logging - Linux / Logkeeper",
-        "clave": "LINUX SUDO LOGKEEPER",
+        "modulo": "ZY.1.2.4 Logging - Linux / LOGKEEPER",
+        "clave": "SUDO LOGKEEPER",
         "descripcion": "Retain Logging for a period of time - either online or backups, Minimum of 180 days",
         "comprobacion": null,
         "copia": null,
@@ -710,7 +710,7 @@
     },
     {
         "modulo": "ZY.1.2.4 Logging - Linux / Logrotate.conf",
-        "clave": "LINUX SUDO LOGROTATE",
+        "clave": "SUDO LOGROTATE",
         "descripcion": "Retain Logging for a period of time - either online or backups, Minimum of 180 days",
         "comprobacion": null,
         "copia": null,
@@ -721,7 +721,7 @@
     },
     {
         "modulo": "AV.1.2.4 Logging",
-        "clave": "ROTACION SSH",
+        "clave": "SSH LOGKEEPER",
         "descripcion": "Retain Logging for a period of time - either online or backups, Minimum of 180 days",
         "comprobacion": "+-------------------------------------------------------------------------------------+\n## Rotación para SSH - Aix, basada en LOGKEEPER\n+-------------------------------------------------------------------------------------+\n## Debe estar el parámetro --trim a 180\n+-------------------------------------------------------------------------------------+\n\ncrontab -l|grep -v ^#|grep logkeeper\n\n## Muestra la configuración que se esta ejecutando en el crontab.\n## Es OK, si parte del resultado del comando es \"/usr/util/seguridad/logkeeper --trim 180 --keep 180\"\n\n+-------------------------------------------------------------------------------------+\n## Comprobar la rotación por logkeeper, que los valores de trim_retention y backup_retention estén a 180.\n## Comprobar que el fichero de seguridad, este en la rotación de la configuración de logkeeper.\n## Comprobar que el fichero de seguridad, sea el mismo de la rotación y exista.\n## No deben estar los valores comentados.\n## Para sistemas Aix, el fichero de seguridad : /var/adm/messages y deben tener permisos 770.\n+-------------------------------------------------------------------------------------+\n\n/usr/util/seguridad/logkeeper -s | egrep -i \"trim_retention_days|backups_retention_days|messages\"\ncat /etc/syslog.conf |grep -v \"#\" |grep \"messages\"\nls -la /var/adm/messages",
         "copia": "+-------------------------------------------------------------------------------------+\n## Obtener usuario logueado:\n+-------------------------------------------------------------------------------------+\n\nuser=$(logname)\n\n+-------------------------------------------------------------------------------------+\n## Backup en el HOME\n+-------------------------------------------------------------------------------------+\n\ncd /var/spool/cron/crontabs\ncp -p root /home/$user/root_`date +%d%m%y`\n\ncp -p /etc/syslog.conf /home/$user/syslog_`date +%d%m%y`",
@@ -732,7 +732,7 @@
     },
     {
         "modulo": "BV.1.2.1 Logging",
-        "clave": "ROTACION OS VIOS",
+        "clave": "OS LOGKEEPER",
         "descripcion": "Retain Logging for a period of time - either online or backups, Minimum of 180 days",
         "comprobacion": null,
         "copia": null,
@@ -743,7 +743,7 @@
     },
     {
         "modulo": "Password Requirements/Password MAX Age /etc/shadow - Aix",
-        "clave": "MAXAGE AIX",
+        "clave": "MAXAGE",
         "descripcion": "Account $account has invalid Password Max Age setting = 0, must be Customer Required Setting: 13; Account Type: IBM (Strictest Setting Validated). Direct login: 1      must be set to \"false\". Remote login:  1      must be set to \"false\". Id must exist in file. Value of login shell:  /usr/bin/ksh must be \"/bin/false\"",
         "comprobacion": "+-------------------------------------------------------------------------------------+\n## Para aplicar un correcto MAXAGE, hay que tener en cuenta el tipo de cuenta que es:\n## Ya sea tipo /C/F/S/.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /C/, --> se pasa a excepcionar con RISK e IMPACT.\n\n## (Revisar el fichero de RISK e IMPACT)\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /F/ --> se cambia a 90 dias (13 semanas), ejemplo de cuentas aplicable MAXAGE : root, emer, cyberark.\n\n## Dependiendo el cliente, alguna cuentas de TIPO F, se exepcionan con RISK e IMPACT, si fuera el caso se debe hablar con el owner de la cuenta, y que nos indique un RISK e IMPACT, o del contrario si se puede aplicar MAXAGE.\n\n## (Revisar \" * ACCOUNT * \", antes de cualquier cambio)\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /S/ aplicativos, por lo normal no llevan una password asignada, si ese fuera el caso, se debe preguntar al owner de la cuenta, si se le puede aplicar expiracion de passwor o bien se pasa a excepcionar\n+-------------------------------------------------------------------------------------+",
         "copia": null,
@@ -754,7 +754,7 @@
     },
     {
         "modulo": "Password Requirements/Password MAX Age /etc/shadow - Linux",
-        "clave": "MAXAGE LINUX",
+        "clave": "MAXAGE",
         "descripcion": "Account $account has invalid Password Max Age setting of 99999  should be set to Customer Required Setting: 90. More secure value can be set.",
         "comprobacion": "+-------------------------------------------------------------------------------------+\n## Para aplicar un correcto MAXAGE, hay que tener en cuenta el tipo de cuenta que es:\n## Ya sea tipo /C/F/S/.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /C/, --> se pasa a excepcionar con RISK e IMPACT.\n\n## (Revisar el fichero de RISK e IMPACT)\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /F/ --> se cambia a 90 dias, ejemplo de cuentas aplicable MAXAGE : root, emer, cyberark.\n\n## Dependiendo el cliente, alguna cuentas de TIPO F, se exepcionan con RISK e IMPACT, si fuera el caso se debe hablar con el owner de la cuenta, y que nos indique un RISK e IMPACT, o del contrario si se puede aplicar MAXAGE.\n\n## (Revisar \" * ACCOUNT * \", antes de cualquier cambio)\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /S/ aplicativos, por lo normal no llevan una password asignada, si ese fuera el caso, se debe preguntar al owner de la cuenta, si se le puede aplicar expiracion de passwor o bien se pasa a excepcionar\n+-------------------------------------------------------------------------------------+",
         "copia": null,
@@ -765,7 +765,7 @@
     },
     {
         "modulo": "AD.1.1.1.2 Password Requirements",
-        "clave": "",
+        "clave": "MAXAGE",
         "descripcion": "Account $account has invalid Password Max Age setting of 99999  should be set to Customer Required Setting: 90. More secure value can be set.",
         "comprobacion": "+-------------------------------------------------------------------------------------+\n## Para aplicar un correcto MAXAGE, hay que tener en cuenta el tipo de cuenta que es:\n## Ya sea tipo /C/F/S/.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /C/, --> se pasa a excepcionar con RISK e IMPACT.\n\n## (Revisar el fichero de RISK e IMPACT)\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /F/ --> se cambia a 90 dias, ejemplo de cuentas aplicable MAXAGE : root, emer, cyberark.\n\n## Dependiendo el cliente, alguna cuentas de TIPO F, se exepcionan con RISK e IMPACT, si fuera el caso se debe hablar con el owner de la cuenta, y que nos indique un RISK e IMPACT, o del contrario si se puede aplicar MAXAGE.\n\n## (Revisar \" * ACCOUNT * \", antes de cualquier cambio)\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /S/ aplicativos, por lo normal no llevan una password asignada, si ese fuera el caso, se debe preguntar al owner de la cuenta, si se le puede aplicar expiracion de passwor o bien se pasa a excepcionar\n+-------------------------------------------------------------------------------------+",
         "copia": null,

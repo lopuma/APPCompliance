@@ -503,6 +503,27 @@
             "SO": "LINUX"
         }
     ],
+    "CTTI": [
+        {
+            "object": "/home/gctuxat2/.ssh/authorized_keys",
+            "owner": "gctuxat2",
+            "tipo": "/F/",
+            "ownerGroup": "",
+            "user": [
+                ""
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"//home/gctuxat2/.ssh/authorized_keys\""
+            ],
+            "SO": "Linux"
+        }
+    ],
     "INFRA": [
         {
             "object": "/home/ncosftp/.ssh/authorized_keys",

@@ -441,6 +441,44 @@
         "account=\"root\""
       ],
       "SO" : "Linux"
+    },
+    {
+      "object": "ctmagent",
+      "owner": "ctmagent",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Grupo FT Linux - Sigifi"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"ctmagent\""
+      ],
+      "SO" : "Linux"
+    },
+    {
+      "object": "tivoli",
+      "owner": "tivoli",
+      "tipo": "/F/",
+      "ownerGroup": "MONITORING",
+      "user": [
+        "Grupo FT Linux - Sigifi"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"tivoli\""
+      ],
+      "SO" : "Linux"
     }
   ],
   "LBK": [
