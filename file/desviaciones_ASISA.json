@@ -1,6 +1,6 @@
 [
     {
-        "modulo": "Protecting Resources-OSRs/Log File Restrictions",
+        "modulo": "Pepo",
         "clave": "WTMP",
         "descripcion": "Invalid Permissions or Ownership for log file: /var/log/wtmp;   -rw-rw-r--.;  owner:  root;   group:  utmp. For more information see rule description.",
         "comprobacion": "## Se le debe quitar W al grupo.\n\n+-------------------------------------------------------------------------------------+\n## Comprobar que en logrotate.conf, tenga permisosa 0644\n+-------------------------------------------------------------------------------------+\n\ncat /etc/logrotate.conf | grep -w wtmp -A4",

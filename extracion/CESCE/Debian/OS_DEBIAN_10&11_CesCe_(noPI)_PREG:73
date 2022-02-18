@@ -21,18 +21,10 @@ cat /etc/shadow | cut -d: -f1,2,5 | grep  -v ':90' | egrep -v "\*|\!\!|\!" | awk
 
 
 "CONTESTAR YES */ : "Si para las cuentas que tienen passwd, expiran a 90 dias"
-
 "CONTESTAR NO  */ : "Account $Account has invalid Password Max Age setting of 99999, should be set to Customer Required Setting: 90. More secure value can be set."
 +-------------------------------------------------------------------------------------+
 ---AD.1.1.2.0 Password Requirements
 "PASS_MIN_LEN, password complexity = MINLEN a 14
-
-// Primero saber que version de debian es:
-
-cat /etc/*release
-
-#*/
-
 
 /*
 Una de estas tres opciones debe aplicarse::
@@ -61,10 +53,7 @@ grep -i minlen /etc/pam.d/common-password
 "password        required	pam_cracklib.so minlen=14 dcredit=-1 ucredit=0 lcredit=-1 ocredit=0 reject_username"
 
 "CONTESTAR YES */ : "Si esta implementado, ya sea pam_cracklib, o pam_pwquality con su configuracion"
-
 "CONTESTAR NO  */ : "Incorrect System Default minimum password length or password complexity rules. Minimum password length should be set to 14 or more secure, in file /etc/pam.d/common-password. It should be set through pam_cracklib.so or pam_pwquality.so. For more information about password length or password complexity rules see matrix coverage document."
-
-/* CONTESTAR N/A */ : " The operating system is not Debian
 +-------------------------------------------------------------------------------------+
 ---AD.1.1.2.1 Password Requirements	
 "password specification within /etc/shadow
@@ -113,12 +102,6 @@ cat /etc/shadow | cut -d: -f1,2,4 | grep  -v ':1' | egrep -v "\*|\!\!|\!" | awk 
 ---AD.1.1.4.4 Password Requirements
 "Password History - Remeber = 7
 
-// Primero saber que version de debian es:
-
-cat /etc/*release
-
-#*/
-
 /*
 Debian 5 y posteriores.
 /etc/pam.d/common-password debe existir e incluir estos dos valores de 'password sufficient pam_unix.so remember=7 use_authtok sha512 shadow'
@@ -151,25 +134,11 @@ cat /etc/pam.d/su | grep -i remember
 		      " PAM service file: /etc/pam.d/login must have ""password sufficient pam_unix.so"" stanza with ""remember=7"" parameter. ""sufficient"" can be replaced with ""required""
 		      " PAM service file: /etc/pam.d/sshd must have ""password sufficient pam_unix.so"" stanza with ""remember=7"" parameter. ""sufficient"" can be replaced with ""required""
 		      " PAM service file: /etc/pam.d/su must have ""password sufficient pam_unix.so"" stanza with ""remember=7"" parameter. ""sufficient"" can be replaced with ""required""
-
-
-/* CONTESTAR N/A */ : " The operating system is not Debiantra
 +-------------------------------------------------------------------------------------+
 ---AD.1.1.6.1 Password Requirements	
 "loginretries - PAM_TALLY
 
-// Primero saber que version de debian es:
-
-cat /etc/*release
-
-#*/
-
 /*
-
-For Debian 11
-
-Usa pam_faillock
-
 For Debian
 
 Si PAM_TALLY.so esta en USO:
@@ -197,10 +166,6 @@ cat /etc/pam.d/common-account| grep pam_tally
 
 /* CONTESTAR NO  */ : " Non of the Login Retrie options was found in file: /etc/pam.d/common-auth.
 		      " Non of the Login Retrie options was found in file: /etc/pam.d/common-account.
-
-/* CONTESTAR N/A */ : " The operating system is not Debian
-
-/* CONTESTAR N/A */ : " The operating system is Debian 11
 +-------------------------------------------------------------------------------------+
 ---AD.1.1.7.1 Password Requirements
 "ROOT
@@ -299,11 +264,6 @@ cut -d: -f 1,2 /etc/shadow
 "Deny access file
 
 OPTION D de las reglas de CONTRASEÑA - PARTE 1
-
-// Se trata de si una cuenta no expira, debe estar añadida al fichero que contiene el modulo pam_listfile.so
-
-echo "";cat /etc/shadow | cut -d: -f1,2,5 | grep -v ':90' | egrep -v "\*|\!\!|\!";echo ""
-
 /*
 
 Este requisito concreto sólo debe cumplirse si se selecciona la opción D como mecanismo de excepción para un ID con caducidad de contraseña ampliada (365 dias). No es necesario configurarlo a menos que sea necesario para un ID específico.
@@ -318,15 +278,11 @@ auth required pam_listfile.so item=user sense=deny file=/etc/security/$FILENAME 
 Nota: Esta entrada debe preceder a las entradas de tipo auth cuyo campo de control esté establecido en el valor suficiente.
 */
 
-cat /etc/pam.d/common-auth | grep -i pam_listfile.so
+cat /etc/pam.d/common-auth | pam_listfile.so
 
-// comprobar si las cuentas que no expiran estan añadidas en el fichero que nos marca pam_listfile.so, solo si utiliza la opcion D como mecanismo de excepcion de password
-
-/* CONTESTAR YES */ : " Si hay cuentas no privilegiadas que tengan maxage de 365 dias (o otro valor) y cumpla la OPCION D"
+/* CONTESTAR YES */ : " Si hay cuentas no privilegiadas que tengan maxage de 365 dias y cumpla la OPCION D"
 
 /* CONTESTAR NO  */ : "Account $account has invalid Password Max Age setting of 99999, should be set to Customer Required Setting: 90. More secure value can be set."
-
-/* CONTESTAR N/A */ : " The operating system is not Debian
 +-------------------------------------------------------------------------------------+
 ---AD.1.1.13.2 Password Requirements
 "/etc/security/$FILENAME
@@ -468,8 +424,6 @@ grep -i pam_faillock /etc/pam.d/common-auth
 /* CONTESTAR YES */ : " Si es debian 10 y tiene pam_tally2, O si es debian 11 y tiene pam_faillock"
 
 /* CONTESTAR NO */ : "En otro caso"
-
-/* CONTESTAR N/A */ : " The operating system is not Debian
 +-------------------------------------------------------------------------------------+
 ---AD.1.2.4.2 Logging	
 "/var/log/tallylog	
@@ -521,8 +475,6 @@ ls -la /var/log/secure
 ls -la /var/log/auth.log
 
 /* CONTESTAR YES */ : " Si es DEBIAN y existe /var/log/auth.log"
-
-/* CONTESTAR N/A */ : " The operating system is not Debian
 +-------------------------------------------------------------------------------------+
 SISTENAS DEBIAN / POLITICA OS / 180 DIAS
 +-------------------------------------------------------------------------------------+	
@@ -987,23 +939,13 @@ ls -la /var/log/wtmp
 ---AD.1.8.12.5 Protecting Resources - OSRs
 "/var/log/auth.log
 
-// Primero saber que version de DEBIAN es:
-
-cat /etc/*release
-
-#*/
-
-/* CONTESTAR N/A */ : " The operating system is not Debian
-
 // Debe existir /var/log/auth.log, con los permisos rwx r-- --- (or more restrictive)
 
 ls -la /var/log/auth.log
 
-/* CONTESTAR YES */ : " Si existe /var/log/auth.log con permisos 0760 para other o mas restrintivo"
+/* CONTESTAR YES */ : "Si existe /var/log/auth.log con permisos 0760 para other o mas restrintivo"
 
-/* CONTESTAR NO  */ : " Invalid Permissions or Ownership for log file: /var/log/secure;   -rw-rw-r--.;  owner:  root;   group:  adm. For more information see rule description.
-
-/* CONTESTAR N/A */ : " The operating system is not Debian
+/* CONTESTAR NO  */ : "Invalid Permissions or Ownership for log file: /var/log/secure;   -rw-rw-r--.;  owner:  root;   group:  adm. For more information see rule description.
 +-------------------------------------------------------------------------------------+
 ---AD.1.8.9 Protecting Resources - OSRs
 "/tmp
@@ -1049,12 +991,6 @@ cat /etc/motd
 ---AD.2.1.3.0 Encryption	
 "Storage of passwords (Passwords must be protected with 128-bit encryption)
 
-// Primero saber que version de DEBIAN es:
-
-cat /etc/*release
-
-#*/
-
 // Si es un BEDIAN  debe existir en /etc/pam.d/common-password"#
 // Hay que mirar el tipo de encryptacion de password, DEBE SER sha512"#
 
@@ -1063,8 +999,6 @@ cat /etc/pam.d/common-password | grep -i "pam_unix.so"
 /* CONTESTAR YES */ : " Si tiene el tipo de encryptacion sha512, en el modulo ""password sufficient pam_unix.so"""
 
 /* CONTESTAR NO  */ : " Any file in /etc/pam.d containing ""password sufficient pam_unix.so"" stanza must carry the ""sha512 shadow"" options.\n\nIncorrect or missing pam_unix.so module stanza. For more information see coverage matrix document
-
-/* CONTESTAR N/A */ : " The operating system is not Debian
 +-------------------------------------------------------------------------------------+
 ///////////////////////////////////////////////////////////////////////////////////////
 

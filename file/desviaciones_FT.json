@@ -36,7 +36,7 @@
         "modulo": "Encryption/Password Encryption Required",
         "clave": "SHA512",
         "descripcion": "/etc/pam.d/password-auth.\n/etc/pam.d/system-auth.\nAny file in /etc/pam.d containing \"password sufficient pam_unix.so\" stanza must carry the \"sha512 shadow\" options.\n\nIncorrect or missing pam_unix.so module stanza. For more information see coverage matrix document",
-        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Hace referencia al parametro 'sha512 shadow ' en RHEL 7 y RHEL 8.\n+-------------------------------------------------------------------------------------+\n\n## Saber que versión de RHEL es:\ncat /etc/*release\n\n#-*** Saber que PAM_TALLY USA (RHEL 7) (RHEL 7) ****-#\nls -ltr /lib64/security/pam_tally*\n\n#-*** Saber que PAM_FAILLOCK USA (RHEL 8) ****-#\nls -la /usr/sbin/faillock\n\n+-------------------------------------------------------------------------------------+\n##--- RHEL 7 & RHEL 8 ('system-auth','password-auth')\n## Los ficheros del PAM, deben tener en el modulo 'password    sufficient    pam_unix.so', el parámetro 'sha512 shadow '\n## Ademas deben ser LINK de 'system-auth-ac', 'password-auth-ac'.\n+-------------------------------------------------------------------------------------+\n\ncat /etc/pam.d/system-auth | egrep \"sha512|shadow\"\ncat /etc/pam.d/password-auth | egrep \"sha512|shadow\"\nls -la /etc/pam.d/system-auth\nls -la /etc/pam.d/password-auth\n\n+-------------------------------------------------------------------------------------+\n## Ficheros del pam.d, que no son editables, y se pueden mover al home.\n## Ficheros .ori, .bck, .backup, o todo aquel que sea una copia de, 'system-auth', 'password-auth', o de 'system-auth-ac', 'password-auth-ac'\n+-------------------------------------------------------------------------------------+\ncd /etc/pam.d/\nls -la system-*\nls -la password-*\n\n+-------------------------------------------------------------------------------------+\n## Mover los backups al home, y hacer link entre 'system-auth' y 'system-auth-ac', o 'password-auth' y 'password-auth-ac', si es necesario:\n+-------------------------------------------------------------------------------------+\n\nrm -r system-auth\nln -s system-auth-ac system-auth\n\nrm -r password-auth\nln -s password-auth-ac password-auth\n\n+-------------------------------------------------------------------------------------+\n## Modulo similiar : 'Password Requirements/Password History'\n+-------------------------------------------------------------------------------------+",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Hace referencia al parametro 'sha512 shadow ' en RHEL 7 y RHEL 8.\n+-------------------------------------------------------------------------------------+\n\n## Saber que versión de RHEL es:\n\ncat /etc/*release\n\n+-------------------------------------------------------------------------------------+\n##--- RHEL 7 & RHEL 8 ('system-auth','password-auth')\n## Los ficheros del PAM, deben tener en el modulo 'password    sufficient    pam_unix.so', el parámetro 'sha512 shadow '\n## Ademas deben ser LINK de 'system-auth-ac', 'password-auth-ac'.\n+-------------------------------------------------------------------------------------+\n\ncat /etc/pam.d/system-auth | egrep \"sha512|shadow\"\ncat /etc/pam.d/password-auth | egrep \"sha512|shadow\"\nls -la /etc/pam.d/system-auth\nls -la /etc/pam.d/password-auth\n\n+-------------------------------------------------------------------------------------+\n## Si la configuracion anterior es valida. revisar que no hayan BACKUPS de los ficheros del PAM\n\n## Ficheros .ori, .bck, .backup, -local, o todo aquel que sea una copia de, 'system-auth', 'password-auth', o de 'system-auth-ac', 'password-auth-ac'\n+-------------------------------------------------------------------------------------+\n\ncd /etc/pam.d/\nls -la system-*\nls -la password-*\n\n+-------------------------------------------------------------------------------------+\n## Mover los BACKUPS al home\n+-------------------------------------------------------------------------------------+\n## Hacer link entre 'system-auth' y 'system-auth-ac', o 'password-auth' y 'password-auth-ac', SI ES NECESARIO\n\n## El siguiente es para los ficheros del PAM, sean LINK.\n+-------------------------------------------------------------------------------------+\n\nrm -r system-auth\nln -s system-auth-ac system-auth\n\nrm -r password-auth\nln -s password-auth-ac password-auth\n\n+-------------------------------------------------------------------------------------+\n## Modulo similiar : 'Password Requirements/Password History'\n+-------------------------------------------------------------------------------------+",
         "copia": "+-------------------------------------------------------------------------------------+\n## Obtener usuario logueado:\n+-------------------------------------------------------------------------------------+\n\nuser=$(logname)\n\n+-------------------------------------------------------------------------------------+\n## Backup con HOME en MAYÚSCULAS\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/pam.d/system-auth /home/${user^^}/system-auth_`date +%d%m%y_%T`\n\ncp -p /etc/pam.d/password-auth /home/${user^^}/password-auth_`date +%d%m%y_%T`\n\n+-------------------------------------------------------------------------------------+\n## Backup con HOME en minúsculas\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/pam.d/system-auth /home/${user,,}/system-auth_`date +%d%m%y_%T`\n\ncp -p /etc/pam.d/password-auth /home/${user,,}/password-auth_`date +%d%m%y_%T`\n",
         "editar": "+-------------------------------------------------------------------------------------+\n##--- RHEL 7 & RHEL 8 ('system-auth','password-auth')\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Añadir en el modulo 'password    sufficient    pam_unix.so', el parámetro 'sha512 shadow'.\n## ('se aconseja remplazar toda la linea, del modulo 'password    sufficient    pam_unix.so').\n+-------------------------------------------------------------------------------------+\n\nvi /etc/pam.d/system-auth\n\npassword    sufficient    pam_unix.so remember=5 use_authtok sha512 shadow try_first_pass\n\n+-------------------------------------------------------------------------------------+\n## Lo mismo con 'password-auth'\n+-------------------------------------------------------------------------------------+\n\nvi /etc/pam.d/password-auth\n",
         "refrescar": null,
@@ -110,8 +110,8 @@
         "SO": "Linux / Aix"
     },
     {
-        "modulo": "Password Requirements/Password MAX Age /etc/shadow",
-        "clave": "MAXAGE AIX",
+        "modulo": "Password Requirements/Password MAX Age /etc/shadow - Aix",
+        "clave": "MAXAGE",
         "descripcion": "Account $account has invalid Password Max Age setting = 0, must be Customer Required Setting: 13; Account Type: IBM (Strictest Setting Validated). Direct login: 1      must be set to \"false\". Remote login:  1      must be set to \"false\". Id must exist in file. Value of login shell:  /usr/bin/ksh must be \"/bin/false\"",
         "comprobacion": "+-------------------------------------------------------------------------------------+\n## Para aplicar un correcto MAXAGE, hay que tener en cuenta el tipo de cuenta que es:\n## Ya sea tipo /C/F/S/.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /C/, --> se pasa a excepcionar con RISK e IMPACT.\n\n## (Revisar el fichero de RISK e IMPACT)\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /F/ --> se cambia a 90 dias (13 semanas), ejemplo de cuentas aplicable MAXAGE : root, emer, cyberark.\n\n## Dependiendo el cliente, alguna cuentas de TIPO F, se exepcionan con RISK e IMPACT, si fuera el caso se debe hablar con el owner de la cuenta, y que nos indique un RISK e IMPACT, o del contrario si se puede aplicar MAXAGE.\n\n## (Revisar \" * ACCOUNT * \", antes de cualquier cambio)\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /S/ aplicativos, por lo normal no llevan una password asignada, si ese fuera el caso, se debe preguntar al owner de la cuenta, si se le puede aplicar expiracion de passwor o bien se pasa a excepcionar\n+-------------------------------------------------------------------------------------+",
         "copia": null,
@@ -119,6 +119,28 @@
         "refrescar": null,
         "evidencia": "clear\ndate\nuname -a\nlsuser -a maxage $account",
         "SO": "Aix"
+    },
+    {
+        "modulo": "Password Requirements/Password MAX Age /etc/shadow - Linux",
+        "clave": "MAXAGE",
+        "descripcion": "Account $account has invalid Password Max Age setting of 99999  should be set to Customer Required Setting: 90. More secure value can be set.",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Para aplicar un correcto MAXAGE, hay que tener en cuenta el tipo de cuenta que es:\n## Ya sea tipo /C/F/S/.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /C/, --> se pasa a excepcionar con RISK e IMPACT.\n\n## (Revisar el fichero de RISK e IMPACT)\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /F/ --> se cambia a 90 dias, ejemplo de cuentas aplicable MAXAGE : root, emer, cyberark.\n\n## Dependiendo el cliente, alguna cuentas de TIPO F, se exepcionan con RISK e IMPACT, si fuera el caso se debe hablar con el owner de la cuenta, y que nos indique un RISK e IMPACT, o del contrario si se puede aplicar MAXAGE.\n\n## (Revisar \" * ACCOUNT * \", antes de cualquier cambio)\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /S/ aplicativos, por lo normal no llevan una password asignada, si ese fuera el caso, se debe preguntar al owner de la cuenta, si se le puede aplicar expiracion de passwor o bien se pasa a excepcionar\n+-------------------------------------------------------------------------------------+",
+        "copia": null,
+        "editar": "+-------------------------------------------------------------------------------------+\n## Cambiar MAXAGE a 90\n+-------------------------------------------------------------------------------------+\n\nchage -M 90 $account",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nhostname\nchage -l $account\ncat /etc/passwd | grep -i $account",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "AD.1.1.1.2 Password Requirements",
+        "clave": "MAXAGE",
+        "descripcion": "Account $account has invalid Password Max Age setting of 99999  should be set to Customer Required Setting: 90. More secure value can be set.",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Para aplicar un correcto MAXAGE, hay que tener en cuenta el tipo de cuenta que es:\n## Ya sea tipo /C/F/S/.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /C/, --> se pasa a excepcionar con RISK e IMPACT.\n\n## (Revisar el fichero de RISK e IMPACT)\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /F/ --> se cambia a 90 dias, ejemplo de cuentas aplicable MAXAGE : root, emer, cyberark.\n\n## Dependiendo el cliente, alguna cuentas de TIPO F, se exepcionan con RISK e IMPACT, si fuera el caso se debe hablar con el owner de la cuenta, y que nos indique un RISK e IMPACT, o del contrario si se puede aplicar MAXAGE.\n\n## (Revisar \" * ACCOUNT * \", antes de cualquier cambio)\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /S/ aplicativos, por lo normal no llevan una password asignada, si ese fuera el caso, se debe preguntar al owner de la cuenta, si se le puede aplicar expiracion de passwor o bien se pasa a excepcionar\n+-------------------------------------------------------------------------------------+",
+        "copia": null,
+        "editar": "+-------------------------------------------------------------------------------------+\n## Cambiar MAXAGE a 90\n+-------------------------------------------------------------------------------------+\n\nchage -M 90 $account",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nhostname\nchage -l $account\ncat /etc/passwd | grep -i $account",
+        "SO": "Linux"
     },
     {
         "modulo": "Password Requirements/Password MIN Age Shadow",
@@ -133,7 +155,7 @@
     },
     {
         "modulo": "Protecting Resources-OSRs/IBMsinit Permission Restriction",
-        "clave": "OSRIBMSINIT",
+        "clave": "OSR IBMSINIT.SH",
         "descripcion": "Invalid permissions for /etc/profile.d/IBMsinit.csh, /etc/profile.d/IBMsinit.sh\nOwner: root, Group: root, Permissions: -rw-r--r--. should be for  \"other\"  of r-x, for \"group\"  of r-x",
         "comprobacion": "+-------------------------------------------------------------------------------------+\n## Deben existir /etc/profile.d/IBMsinit.sh, /etc/profile.d/IBMsinit.csh y con permisos 755.\n+-------------------------------------------------------------------------------------+\n\nls -l /etc/profile.d/IBMsinit.sh\nls -l /etc/profile.d/IBMsinit.csh\n\n+-------------------------------------------------------------------------------------+\n## Relacionado con :\n+-------------------------------------------------------------------------------------+\n\nAD.1.9.1.3 Protecting Resources - User Resources\nAD.1.9.1.4 Protecting Resources - User Resources\nProtecting Resources-User Resources//etc/profile File Restriction",
         "copia": null,
@@ -221,12 +243,12 @@
         "modulo": "Protecting Resources-OSRs/OSR /TMP Files Restrictions",
         "clave": "OSRTMP",
         "descripcion": "Invalid permissions for $fileTMP  Octal permissions: 0777  Text Permissions: -rwxrwxrwx-;  May not have execute permissions on any files and no write for others.",
-        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Aplica a ficheros del directorio /TMP\n+-------------------------------------------------------------------------------------+\n\n## El desvio trata de quitarle escritura a OTHER, a ficheros que tienen escritura y ejecucion que cuelgan en el directorio /TMP y sub-directorios.\n\n+-------------------------------------------------------------------------------------+\n## Hay que tener en cuenta el tipo de owner que pertenece, cada fichero o directorio BASE.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Ya sea de tipo '/C/F/S/'\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es /C/, se pasa a excepcion con RISK e IMPACT\n(Por favor revisar la seccion de RISK e IMPACT)\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /F/S/, si podemos modificar los permisos de W a OTHER\n## Revisar ('PERMISSIONS'), antes de cualquier cambio.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Buscar y comprobar los fichero a cambiar permisos.\n+-------------------------------------------------------------------------------------+\n\n## FICHEROS FORMA RECURVISA:\n---\necho \"ficheros con permisos W en OTHER : \";find /tmp/ -type f -perm -o=wx | wc -l\n\n##Listar\n\nfind /tmp/ -type f -perm -o=wx | xargs -l ls -l\n\n## FICHERO INDIVIDUAL\n---\nls -l /tmp/$fichero\n\n+-------------------------------------------------------------------------------------+\n## Pregunta RELACIONADAS\n+-------------------------------------------------------------------------------------+\n\nProtecting Resources-mixed/Ensure sticky bit is set on all world-writable directories",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Aplica a ficheros del directorio /TMP\n+-------------------------------------------------------------------------------------+\n\n## 2-DOC, ya que no sabemos el alcance de el fallo que pueda afectar, el quitarle permisos a ficheros e directorios dentro de /tmp/\n\n## GENERICO / OSR TMP / FT",
         "copia": null,
-        "editar": "+-------------------------------------------------------------------------------------+\n## Se puede quitar de forma 'RECURSIVA' o por 'INDIVIDUAL'\n\n## VARIABLES:\n## $fichero : es la variable, del fichero a cambiar permiso.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Asi quitamos de permisos de W a Other, en los ficheros('RECURSIVO'):\n+-------------------------------------------------------------------------------------+\n\nfind /tmp/ -type f -perm -o=wx -exec chmod o-w {} \\;\n\n+-------------------------------------------------------------------------------------+\n## Asi quitamos permisos, de W a other de forma('INDIVIDUAL'):\n+-------------------------------------------------------------------------------------+\n\nchmod o-w $fichero",        
+        "editar": null,
         "refrescar": null,
-        "evidencia": "+-------------------------------------------------------------------------------------+\n## De forma ('RECURSIVA'):\n+-------------------------------------------------------------------------------------+\n\nclear\ndate\nhostname\nfind /tmp/ -type f -perm -o=wx | wc -l\nls -ld /tmp/\n\n+-------------------------------------------------------------------------------------+\n## De forma('INDIVIDUAL'):\n+-------------------------------------------------------------------------------------+\n\nclear\ndate\nhostname\nls -l $fichero",
-        "SO": "Aix"
+        "evidencia": null,
+        "SO": "Linux / Aix"
     },
     {
         "modulo": "Protecting Resources-OSRs/OSR /OPT Files Restrictions",
@@ -382,7 +404,29 @@
         "SO": "Aix"
     },
     {
+        "modulo": "E.1.1.6.1 Password Requirements",
+        "clave": "PWD_ALGORITHM",
+        "descripcion": "Incorrect or missing value of \"pwd_algorithm\" in /etc/security/login.cfg. It Must be set to ssha512",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Cambiar el algoritmo a ssha512 en /etc/security/login.cfg\n+-------------------------------------------------------------------------------------+\n\nlssec -f /etc/security/login.cfg -s usw -a pwd_algorithm",
+        "copia": null,
+        "editar": "chsec -f /etc/security/login.cfg -s usw -a pwd_algorithm=ssha512",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nuname -a\nlssec -f /etc/security/login.cfg -s usw -a pwd_algorithm",
+        "SO": "Aix"
+    },
+    {
         "modulo": "Password Requirements/Password mindiff - System Default",
+        "clave": "MINDIFF",
+        "descripcion": "Invalid system default mindiff set to 1, must be not less than 4",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## El parametro mindiff, debe ser 4, por defecto y por usuario.\n## Una vez cambiado a default, se corrigen para las demas cuentas, puede quedar root o alguna cuenta sin cambiar, por lo que se puede cambiar manual.\n+-------------------------------------------------------------------------------------+\n\nlssec -f /etc/security/user -s default -a mindiff",
+        "copia": null,
+        "editar": "chsec -f /etc/security/user -s default -a mindiff=4\nchsec -f /etc/security/user -s root -a mindiff=4",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nhostname\nlssec -f /etc/security/user -s default -a mindiff\nlssec -f /etc/security/user -s root -a mindiff",
+        "SO": "Aix"
+    },
+    {
+        "modulo": "E.1.1.7.2 Password Requirements",
         "clave": "MINDIFF",
         "descripcion": "Invalid system default mindiff set to 1, must be not less than 4",
         "comprobacion": "+-------------------------------------------------------------------------------------+\n## El parametro mindiff, debe ser 4, por defecto y por usuario.\n## Una vez cambiado a default, se corrigen para las demas cuentas, puede quedar root o alguna cuenta sin cambiar, por lo que se puede cambiar manual.\n+-------------------------------------------------------------------------------------+\n\nlssec -f /etc/security/user -s default -a mindiff",
@@ -514,6 +558,17 @@
         "SO": "Aix"
     },
     {
+        "modulo": "E.1.5.12.31 Network Settings",
+        "clave": "ENTRY TIME",
+        "descripcion": "time entry must be removed or disabled in /etc/inetd.conf",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Debe no existir la entrada time en /etc/inetd.conf, o estar comentada.\n+-------------------------------------------------------------------------------------+\n\ncat /etc/inetd.conf | grep -i time\n\n+-------------------------------------------------------------------------------------+\n## Pregunta relacionada con :\n+-------------------------------------------------------------------------------------+\nNetwork Settings//etc/inetd.conf - ntalk\nNetwork Settings//etc/inetd.conf - exec\nNetwork Settings//etc/inetd.conf - kshell",
+        "copia": "+-------------------------------------------------------------------------------------+\n## Obtener usuario logueado:\n+-------------------------------------------------------------------------------------+\n\nuser=$(logname)\n\n## Aix\n+-------------------------------------------------------------------------------------+\n## Backup en HOME\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/inetd.conf /home/${user}/inetd.conf_`date +%d%m%y_%T`",
+        "editar": "+-------------------------------------------------------------------------------------+\n## Editar y comentar la linea.\n+-------------------------------------------------------------------------------------+\n\nvi /etc/inetd.conf\n\n+-------------------------------------------------------------------------------------+\n## Editar y comentar las relaciones:\n+-------------------------------------------------------------------------------------+\n\nexec entry must be removed or disabled in /etc/inetd.conf\nntalk entry must be removed or disabled in /etc/inetd.conf\nkshell entry must be removed or disabled in /etc/inetd.conf",
+        "refrescar": "refresh -s inetd",
+        "evidencia": "clear\ndate\nhostname\ncat /etc/inetd.conf | grep -i time\n\n+-------------------------------------------------------------------------------------+\n## Evidencia de las relaciones:\n+-------------------------------------------------------------------------------------+\nclear\ndate\nhostname\ncat /etc/inetd.conf | grep -i exec\ncat /etc/inetd.conf | grep -i time\ncat /etc/inetd.conf | grep -i ntalk\ncat /etc/inetd.conf | grep -i kshell",
+        "SO": "Aix"
+    },
+    {
         "modulo": "Network Settings//etc/inetd.conf - exec",
         "clave": "ENTRY EXEC",
         "descripcion": "exec entry must be removed or disabled in /etc/inetd.conf",
@@ -635,6 +690,17 @@
         "SO": "Aix"
     },
     {
+        "modulo": "E.1.5.11.1 Network Settings",
+        "clave": "X-SERVER",
+        "descripcion": "Fileset X11.apps.config must not own file /usr/lpp/X11/bin/xhost.",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## El fileset xhost no deberia instalarse.\n+-------------------------------------------------------------------------------------+\n\nlslpp -w /usr/lpp/X11/bin/xhost",
+        "copia": null,
+        "editar": "installp -g -u  X11.apps.config",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nuname -a\nlslpp -w /usr/lpp/X11/bin/xhost",
+        "SO": "Aix"
+    },
+    {
         "modulo": "Password Requirements/Automatic Logoff /etc/csh.login autologout",
         "clave": "AUTOLOGOUT",
         "descripcion": "/etc/csh.login Set systems to terminate a session after 360 minutes of inactivity. File must contain \"set autologout=360\". A shorter time frame may be specified.",
@@ -658,6 +724,17 @@
     },
     {
         "modulo": "Password Requirements/Password histexpire - System Default",
+        "clave": "HISTEXPIRE",
+        "descripcion": "Invalid system default histexpire set to 0, must be not less than 105",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## El parametro histexpire, debe ser 105, por defecto y por usuario.\n## Una vez cambiado a default, se corrigen para las demas cuentas, puede quedar root o alguna cuenta sin cambiar, por lo que se puede cambiar manual.\n+-------------------------------------------------------------------------------------+\n\nlssec -f /etc/security/user -s default -a histexpire",
+        "copia": null,
+        "editar": "chsec -f /etc/security/user -s default -a histexpire=105\nchsec -f /etc/security/user -s root -a histexpire=105",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nhostname\nlssec -f /etc/security/user -s default -a histexpire\nlssec -f /etc/security/user -s root -a histexpire",
+        "SO": "Aix"
+    },
+    {
+        "modulo": "E.1.1.3.2 Password Requirements",
         "clave": "HISTEXPIRE",
         "descripcion": "Invalid system default histexpire set to 0, must be not less than 105",
         "comprobacion": "+-------------------------------------------------------------------------------------+\n## El parametro histexpire, debe ser 105, por defecto y por usuario.\n## Una vez cambiado a default, se corrigen para las demas cuentas, puede quedar root o alguna cuenta sin cambiar, por lo que se puede cambiar manual.\n+-------------------------------------------------------------------------------------+\n\nlssec -f /etc/security/user -s default -a histexpire",
@@ -853,5 +930,16 @@
         "refrescar": "+-------------------------------------------------------------------------------------+\n## LINUX\n+-------------------------------------------------------------------------------------+\n\nsystemctl stop sshd\nsystemctl start sshd\n\n+-------------------------------------------------------------------------------------+\n## AIX\n+-------------------------------------------------------------------------------------+\n\nstopsrc -s sshd;sleep 2;startsrc -s sshd",
         "evidencia": "clear\ndate\nhostname\n/usr/sbin/sshd -T|grep -i loglevel\ncat /etc/ssh/sshd_config | grep -i loglevel",
         "SO": "Linux / Aix"
+    },
+    {
+        "modulo": "E.1.5.22.4 Network Settings",
+        "clave": "SENDMAIL",
+        "descripcion": "Entry in /etc/rc.tcpip must be removed or disabled. : service sendmail",
+        "comprobacion": "grep -i sendmail /etc/rc.tcpip|grep -v ^#",
+        "copia": null,
+        "editar": "chrctcp -d sendmail",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nhostname\ngrep -i sendmail /etc/rc.tcpip|grep -v ^#",
+        "SO": "Aix"
     }
 ]

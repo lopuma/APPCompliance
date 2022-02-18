@@ -403,6 +403,65 @@
       "SO": "Linux"
     }
   ],
+  "CTTI": [
+    {
+      "object": "root",
+      "owner": "Sistemas",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Soporte de CTTI "
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"root\""
+      ],
+      "SO" : "Linux"
+    },
+    {
+      "object": "emer",
+      "owner": "Sistemas",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Soporte de CTTI"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"emer\""
+      ],
+      "SO" : "Linux"
+    },
+    {
+      "object": "ibm-admin",
+      "owner": "Sistemas",
+      "tipo": "/S/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Soporte de CTTI"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "Usuario de extraccion COMPLIANCE (MEF3)",
+      "impact": "",
+      "variable": [
+        "account=\"ibm-admin\""
+      ],
+      "SO" : "Linux"
+    }
+  ],
   "FT": [
     {
       "object": "aotipat1",

@@ -1149,10 +1149,10 @@ ls -la /var/adm/sudo.log
 // Debe existir una entrada del fichero de sudo.log en la rotacion(OPCION ➡ 1. LOGKEEPER):
 
 	//Muestra resumen de la configuracion en LOGKEEPER	
-	/usr/util/seguridad/logkeeper -s | "trim|backup|sudo|config_fil"
+	/usr/util/seguridad/logkeeper -s | egrep -i "trim|backup|sudo|config_file"
 
 	
-	//Si La rotacion de log se define en el fichero de configuracion
+	//Si La rotacion de log se define en el fichero de configuracion, deben estar DESCOMENTADAS las variables
 	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim|backup|sudo"
 
 	//EJEMPLO debe estar implementado:
@@ -1251,10 +1251,10 @@ ls -la /var/adm/sudo.log
 // Debe existir una entrada del fichero de sudo.log en la rotacion(OPCION ➡ 1. LOGKEEPER):
 
 	//Muestra resumen de la configuracion en LOGKEEPER	
-	/usr/util/seguridad/logkeeper -s | "trim|backup|sudo|config_fil"
+	/usr/util/seguridad/logkeeper -s | egrep -i "trim|backup|sudo|config_file"
 
 	
-	//Si La rotacion de log se define en el fichero de configuracion
+	//Si La rotacion de log se define en el fichero de configuracion, deben estar DESCOMENTADAS las variables
 	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim|backup|sudo"
 
 	//EJEMPLO debe estar implementado:

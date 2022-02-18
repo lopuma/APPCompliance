@@ -730,7 +730,7 @@ oslevel -s
 grep 'DisableRemoteAdmin =' /var/ifor/i4ls.ini
 
 /* CONTESTAR YES */ : "     : " Si existe y nos muestra DisableRemoteAdmin = yes.
-/* CONTESTAR N/A */ : "     : " Si es una version de REHL 6.2 y posterior.
+/* CONTESTAR N/A */ : "     : " Si es una version 6.2 y posterior.
 +--------------------------------------------------------------------------------------------------------------+
 ---E.1.5.10.2 Network Settings
 ---E.1.5.10.3 Network Settings
@@ -739,8 +739,10 @@ grep 'DisableRemoteAdmin =' /var/ifor/i4ls.ini
 
 oslevel -s
 
-/* CONTESTAR YES */ : "      : " Si existe y nos muestra DisableRemoteAdmin = yes.
-/* CONTESTAR N/A */ : "      : " Si es una version de REHL 7.1 y posterior.
+cat /var/ifor/i4ls.ini | grep -i DisableRemoteAdmin
+
+/* CONTESTAR YES */ : "      : " Si existe y nos muestra DisableRemoteAdmin = yes, o si no existe YES.
+/* CONTESTAR N/A */ : "      : " Si es una version 7.1 y posterior.
 +--------------------------------------------------------------------------------------------------------------+
 ---E.1.5.11.1 Network Settings	
 "X-server access control
@@ -793,7 +795,6 @@ egrep -i "CHARGEN|DAYTIME|DISCARD|ECHO|FINGER|SYSTAT|WHO|NETSTAT|RSTATD|TFTP|RWA
 /* CONTESTAR NO */ : " The entry : "CMSD " is not removed or disabled in the file /etc/inetd.conf
 +-------------------------------------------------------------------------------------+
 ---E.1.5.12.30 Network Settings
----E.1.5.12.31 Network Settings
 "timed
 "Entry in /etc/rc.tcpip must be removed or disabled.
 

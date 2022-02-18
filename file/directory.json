@@ -405,21 +405,61 @@
   ],
   "CTTI": [
     {
-      "object": "",
-      "owner": "",
-      "tipo": "",
-      "ownerGroup": "",
+      "object": "/serveis/dades/pro/QIE/data/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "DBA",
       "user": [
-        ""
+        "Guillem Martinez Carrion",
+        "Joaquin Cotilla Feijo"
       ],
-      "code": "",
+      "code": "1-OK",
       "servers": [
-        ""
+        "ALL Servers"
       ],
       "risk": "",
       "impact": "",
       "variable": [
-        "directory=\"\""
+        "directory=\"/serveis/dades/pro/QIE/data/\""
+      ],
+      "SO": "Linux"
+    }, 
+    {
+      "object": "/serveis/dades/pre/QIE/data/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "DBA",
+      "user": [
+        "Guillem Martinez Carrion",
+        "Joaquin Cotilla Feijo"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/serveis/dades/pre/QIE/data/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/tmp/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Grupo de Sistemas"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / OSR TMP / CTTI",
+      "impact": "GENERICO / OSR TMP / CTTI",
+      "variable": [
+        "Directorios, sub-directorios y ficheros, no se pueden editar permisos, sin authorizacion"
       ],
       "SO": "Linux"
     }
