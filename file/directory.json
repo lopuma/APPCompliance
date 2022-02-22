@@ -527,6 +527,44 @@
       "SO": "Linux"
     },
     {
+      "object": "/home/ES083125/",
+      "owner": "es083125",
+      "tipo": "/K/",
+      "ownerGroup": "KYNDRYL",
+      "user": [
+        "Hermosilla Beraz, Marco"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/home/ES083125/\""
+      ],
+      "SO": "Linux"
+    },
+      {
+        "object": "/tmp/gts-ansible/",
+        "owner": "icouxat2",
+        "tipo": "/S/",
+        "ownerGroup": "Ansible",
+        "user": [
+          "Grupo de Sistemas"
+        ],
+        "code": "1-OK",
+        "servers": [
+          "ALL Servers"
+        ],
+        "risk": "",
+        "impact": "",
+        "variable": [
+          "directory=\"/tmp/gts-ansible/\""
+        ],
+        "SO": "Linux"
+      },
+    {
       "object": "/tmp/javasharedresources/",
       "owner": "was",
       "tipo": "/S/",

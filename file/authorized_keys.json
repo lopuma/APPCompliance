@@ -363,10 +363,30 @@
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "GENERICO / LABEL / CUSTOMER",
-            "impact": "GENERICO / LABEL / CUSTOMER",
+            "risk": "2-DOC para FROM\nGENERICO / AUTHORIZED_KEYS / CUSTOMER",
+            "impact": "1-OK para Public Key Label",
             "variable": [
-                "Cuenta de cliente"
+                ""
+            ],
+            "SO": "LINUX"
+        },
+        {
+            "object": "/home/explot/.ssh/authorized_keys",
+            "owner": "explot",
+            "tipo": "/C/",
+            "ownerGroup": "CUSTOMER",
+            "user": [
+                "Usuario cesce SD3219554"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "2-DOC para FROM\nGENERICO / AUTHORIZED_KEYS / CUSTOMER",
+            "impact": "1-OK para Public Key Label",
+            "variable": [
+                "file_authorized=\"/home/explot/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/C/SISTEMAS/CESCE/Usuario cesce SD3219554!!\"" 
             ],
             "SO": "LINUX"
         },
@@ -382,10 +402,10 @@
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "GENERICO / LABEL / CUSTOMER",
-            "impact": "GENERICO / LABEL / CUSTOMER",
+            "risk": "2-DOC para FROM\nGENERICO / AUTHORIZED_KEYS / CUSTOMER",
+            "impact": "1-OK para Public Key Label",
             "variable": [
-                "Cuenta de cliente"
+                ""
             ],
             "SO": "LINUX"
         },
@@ -404,7 +424,7 @@
             "risk": "GENERICO / LABEL / CUSTOMER",
             "impact": "GENERICO / LABEL / CUSTOMER",
             "variable": [
-                "Cuenta de cliente"
+                ""
             ],
             "SO": "LINUX"
         },
@@ -420,10 +440,10 @@
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "GENERICO / LABEL / CUSTOMER",
-            "impact": "GENERICO / LABEL / CUSTOMER",
+            "risk": "2-DOC para FROM\nGENERICO / AUTHORIZED_KEYS / CUSTOMER",
+            "impact": "1-OK para Public Key Label",
             "variable": [
-                "Cuenta de cliente para pruebas"
+                ""
             ],
             "SO": "LINUX"
         },
@@ -439,10 +459,10 @@
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "GENERICO / LABEL / CUSTOMER",
-            "impact": "GENERICO / LABEL / CUSTOMER",
+            "risk": "2-DOC para FROM\nGENERICO / AUTHORIZED_KEYS / CUSTOMER",
+            "impact": "1-OK para Public Key Label",
             "variable": [
-                "Cuenta de cliente para pruebas"
+                ""
             ],
             "SO": "LINUX"
         },
@@ -466,8 +486,8 @@
                 "INFLIORAPRE02",
                 "INFLIORAPRO02"
             ],
-            "risk": "GENERICO / AUTHORIZED_KEYS / RAC Oracle",
-            "impact": "Public Key Label, se puede corregir el label en todas las claves ssh-rsa",
+            "risk": "2-DOC para FROM\nGENERICO / AUTHORIZED_KEYS / RAC Oracle",
+            "impact": "1-OK para Public Key Label",
             "variable": [
                 "file_authorized=\"/home/oracle/.ssh/authorized_keys\"",
                 "gecos=\"!!ES/F/*EDDBA2/KYNDRYL/User Pool!!\""                
@@ -495,7 +515,7 @@
                 "INFLIORAPRO02"
             ],
             "risk": "GENERICO / AUTHORIZED_KEYS / RAC Oracle",
-            "impact": "Public Key Label, se puede corregir el label en todas las claves ssh-rsa",
+            "impact": "1-OK para Public Key Label",
             "variable": [
                 "file_authorized=\"/home/grid/.ssh/authorized_keys\"",
                 "gecos=\"!!ES/F/*EDDBA2/KYNDRYL/Usuario grid!!\""                
@@ -519,7 +539,7 @@
             "risk": "",
             "impact": "",
             "variable": [
-                "file_authorized=\"//home/gctuxat2/.ssh/authorized_keys\""
+                "file_authorized=\"/home/gctuxat2/.ssh/authorized_keys\""
             ],
             "SO": "Linux"
         }

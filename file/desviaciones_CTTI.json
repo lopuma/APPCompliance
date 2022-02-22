@@ -34,13 +34,13 @@
     },
     {
         "modulo": "Protecting Resources -OSRs/014 LISTENER.ORA",
-        "clave": "014",
+        "clave": "LISTENER.014",
         "descripcion": "Instance:$INSTANCE. File \"$filebdd\":-Wrong permission: rw-r--r--. Must be owned by oracle/dba and permissions \"rw-------\"",
-        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Donde $INSTANCE, es la instancia de la bases de datos a revisar.\n## Donde $filebdd, es el fichero a corregir los permisos.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Se debe cambiar el owner y el grupo a:\n+-------------------------------------------------------------------------------------+\n## Owner : oradb\n## Grupo : asmadmin\n\n# Quitar permisos de lectura a other\n\n+-------------------------------------------------------------------------------------+\n## Buscar y listar ficheros con grupo oinstall, y con permisos de lectura en grupo\n## - Guardar el directorio, de los ficheros a modificar permisos.\n+-------------------------------------------------------------------------------------+\n\n## Ejemplo\n\nfilebdd=\"/u01/app/oracle/product/19.0.0/db_1/network/admin/samples/\"\n\n## FORMA RECURSIVA\n+-------------------------------------------------------------------------------------+\n## Comprobar cuantos ficheros existen con grupo oinstall\n## Comprobar cuantos ficheros existen con permisos de lectura en grupo\n+-------------------------------------------------------------------------------------+\n\nfind $filebdd -type f -group oinstall | wc -l\nfind $filebdd -type f -perm -g=r | wc -l\n\n+-------------------------------------------------------------------------------------+\n## Listar los ficheros con grupo oinstall\n## Listar los ficheros con permisos de lectura en grupo\n+-------------------------------------------------------------------------------------+\n\nfind $filebdd -type f -group oinstall | xargs -l ls -la\nfind $filebdd -type f -perm -g=r | xargs -l ls -la\n\n\n## FORMA INDIVIDUAL\n+-------------------------------------------------------------------------------------+\n## Comprobar / Listar cuantos ficheros existen con grupo oinstall\n## Comprobar / Listar cuantos ficheros existen con permisos de lectura en grupo\n+-------------------------------------------------------------------------------------+\nls -la $filebdd\n",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Este tipo de desvios, tenemos que cambiarle permisos de 0640 a 600\n+-------------------------------------------------------------------------------------+\n\n## Ejemplo, espesifica la ruta donte estan los ficheros\n\nfilebdd=\"/u01/app/oracle/product/19.0.0/db_1/network/admin/samples/\"\n\n## Muestra todos los ficheros con permisos 0640\n\nfind $filebdd -type f -perm 0640 | xargs -l ls -ld",
         "copia": null,
-        "editar": "+-------------------------------------------------------------------------------------+\n## De forma INDIVIDUAL\n+-------------------------------------------------------------------------------------+\nchown oradb:asmadmin $filebdd\nchmod g-r $filebdd/*\n\n+-------------------------------------------------------------------------------------+\n## De forma RECURSIVA\n+-------------------------------------------------------------------------------------+\nfind  $filebdd -type f -group oinstall -exec chown oradb:asmadmin {} +\nfind  $filebdd -type f -perm -g=r -exec chmod g-r {} +",
+        "editar": "+-------------------------------------------------------------------------------------+\n## De forma RECURSIVA\n+-------------------------------------------------------------------------------------+\n\nfind  $filebdd -type f -perm 0640 -exec chmod 0600 {} +",
         "refrescar": null,
-        "evidencia": "+-------------------------------------------------------------------------------------+\n## De forma INDIVIDUAL\n+-------------------------------------------------------------------------------------+\nclear\ndate\nhostname\nls -la $filebdd\n\n+-------------------------------------------------------------------------------------+\n## De forma RECURSIVA\n+-------------------------------------------------------------------------------------+\nclear\ndate\nhostname\nfind $filebdd -type f -group oinstall | wc -l\nfind $filebdd -type f -perm -g=r | wc -l\nls -la $filebdd",
+        "evidencia": "clear\ndate\nhostname\nls -la $filebdd",
         "SO": "Bases de Datos"
     },
     {
@@ -294,6 +294,28 @@
         "editar": "+-------------------------------------------------------------------------------------+\n## Editar / Modificar PASS_MAX_DAYS   45\n+-------------------------------------------------------------------------------------+\n\nvi /etc/login.defs",
         "refrescar": null,
         "evidencia": "clear\ndate\nhostname\ncat /etc/login.defs | grep -i PASS_MAX_DAYS",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "ZY.1.2.1 Logging",
+        "clave": "LOGFILE",
+        "descripcion": "Logging/SUDO Logging Enabled",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "ZY.1.2.3 Logging",
+        "clave": "SECONDARY LOGGIN",
+        "descripcion": "Logging/SUDO Logging Enabled",
+        "comprobacion": "",
+        "copia": "",
+        "editar": "",
+        "refrescar": "",
+        "evidencia": "",
         "SO": "Linux"
     }
 ]

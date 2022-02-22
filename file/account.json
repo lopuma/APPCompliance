@@ -17,7 +17,7 @@
       "variable": [
         "account=\"root\""
       ],
-      "SO" : "Linux"
+      "SO": "Linux"
     }
   ],
   "ASISA": [
@@ -38,7 +38,7 @@
       "variable": [
         ""
       ],
-      "SO" : "AIX"
+      "SO": "AIX"
     },
     {
       "object": "archive",
@@ -75,7 +75,7 @@
       "variable": [
         ""
       ],
-      "SO" : "AIX"
+      "SO": "AIX"
     },
     {
       "object": "usaxwftp",
@@ -94,7 +94,7 @@
       "variable": [
         ""
       ],
-      "SO" : "Aix"
+      "SO": "Aix"
     },
     {
       "object": "automate",
@@ -421,7 +421,7 @@
       "variable": [
         "account=\"root\""
       ],
-      "SO" : "Linux"
+      "SO": "Linux"
     },
     {
       "object": "emer",
@@ -440,7 +440,7 @@
       "variable": [
         "account=\"emer\""
       ],
-      "SO" : "Linux"
+      "SO": "Linux"
     },
     {
       "object": "ibm-admin",
@@ -459,7 +459,7 @@
       "variable": [
         "account=\"ibm-admin\""
       ],
-      "SO" : "Linux"
+      "SO": "Linux"
     }
   ],
   "FT": [
@@ -480,7 +480,7 @@
       "variable": [
         "Usuario para el proceso de Compliance"
       ],
-      "SO" : "Linux"
+      "SO": "Linux"
     },
     {
       "object": "root",
@@ -499,7 +499,7 @@
       "variable": [
         "account=\"root\""
       ],
-      "SO" : "Linux"
+      "SO": "Linux"
     },
     {
       "object": "ctmagent",
@@ -518,7 +518,7 @@
       "variable": [
         "account=\"ctmagent\""
       ],
-      "SO" : "Linux"
+      "SO": "Linux"
     },
     {
       "object": "tivoli",
@@ -537,7 +537,71 @@
       "variable": [
         "account=\"tivoli\""
       ],
-      "SO" : "Linux"
+      "SO": "Linux"
+    },
+    {
+      "object": "sigaux",
+      "owner": "sigaux",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    }
+  ],
+  "INFRA": [
+    {
+      "object": "sklmdb40",
+      "owner": "sklmdb40",
+      "tipo": "S",
+      "ownerGroup": "es_sd04",
+      "user": [
+        "JOSE MANUEL VARGAS HUERCANO"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "es01isklm001",
+        "ES01ISKLM002",
+        "es01isklm003",
+        "es01isklm004",
+        "es01isklm005",
+        "es01isklm006"
+      ],
+      "risk": "Servidores son de infraestructura",
+      "impact": "",
+      "variable": [
+        "account=\"sklmdb40\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "TESAN",
+      "owner": "TESAN",
+      "tipo": "F",
+      "ownerGroup": "",
+      "user": [
+        ""
+      ],
+      "code": "",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"TESAN\""
+      ],
+      "SO": "Linux"
     }
   ],
   "LBK": [
@@ -558,7 +622,7 @@
       "variable": [
         ""
       ],
-      "SO" : "Linux"
+      "SO": "Linux"
     },
     {
       "object": "nodejs",
@@ -577,7 +641,7 @@
       "variable": [
         ""
       ],
-      "SO" : "Linux"
+      "SO": "Linux"
     },
     {
       "object": "nodejsarq",
@@ -596,7 +660,7 @@
       "variable": [
         ""
       ],
-      "SO" : "Linux"
+      "SO": "Linux"
     },
     {
       "object": "ncosys",
