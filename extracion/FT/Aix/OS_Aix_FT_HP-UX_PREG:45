@@ -1,0 +1,448 @@
+///////////////////////////////////////////////////////////////////////////////////////
+OS AIX FT HP-UX - Issue REF : 771174 / PREG 45
++-------------------------------------------------------------------------------------+
+---AA.1.1.1 Password Requirements
+
+"Trusted mode configuration, or HP-UX Standard Mode Security Extensions on 11i v2
+
+//Para saber si el sistema es trusted:
+/usr/lbin/getprdef -r
+
+## si no es trusted, la instruccion te pone: no trusted system
+
+//En los sistemas trusted, debe existir:
+ls -l /tcb/files/auth/system/default
+
+/* CONTESTAR YES  */ : "Si el sistema es Trusted"
+/* CONTESTAR N/A  */ : "Si no es un sistema Trusted"
++-------------------------------------------------------------------------------------+
+---AA.1.1.2 Password Requirements
+"All ids have unampassword set or block logins, on trusted systems
+
+//Buscar si tiene el parametro u_nullpw, para los sistemas Trusted
+
+cat /tcb/files/auth/system/default | grep u_nullpw
+
+/* CONTESTAR YES  */ : "Si tiene el paramtero u_nullpw"
+/* CONTESTAR N/A  */ : "Si no es un sistema Trusted"
++-------------------------------------------------------------------------------------+
+---AA.1.1.4 Password Requirements
+
+"Todos los ID tienen el conjunto de contraseñas o los inicios de sesión de bloque, en la no confianza (también llamada modalidad estándar), en los sistemas de 11i v3 y superior
+
+uname -a
+
+// Si la version es superior a 11i v3 o es un sistema NO TRUSTED
+
+grep -i 'ALLOW_NULL_PASSWORD' /etc/default/security
+
+
+/* CONTESTAR YES  */ : "Debe estar  ALLOW_NULL_PASSWORD=0"
+/* CONTESTAR NO   */ : "Si la version es superior y no esta ALLOW_NULL_PASSWORD=0"
+/* CONTESTAR N/A  */ : "Por la version de HP-UX o si es un SISTEMA TRUSTED"
++-------------------------------------------------------------------------------------+
+---AA.1.1.5 Password Requirements
+
+"Todos los ID tienen el conjunto de contraseñas o los inicios de sesión de bloque, en la no confianza (también llamada modalidad estándar), en los sistemas de 11i v2
+
+uname -a
+
+// Si la version es 11i v2
+
+grep -i 'ALLOW_NULL_PASSWORD' /etc/default/security
+
+
+/* CONTESTAR YES  */ : "Debe estar  ALLOW_NULL_PASSWORD=0"
+/* CONTESTAR NO   */ : "Si la version es 11i v2 y no esta ALLOW_NULL_PASSWORD=0"
+/* CONTESTAR N/A  */ : "Por la version de HP-UX o si es un SISTEMA TRUSTED"
++-------------------------------------------------------------------------------------+
+---AA.1.1.6 Password Requirements
+
+"Todos los ID tienen el conjunto de contraseñas o los inicios de sesión de bloque, en sistemas no TRUSTED por encima de 11i v1
+
+uname -a
+
+// Si la version es superior a 11i v1, debe tener * en la segunda fila
+
+cat /etc/passwd |  cut -d: -f1,2
+
+
+/* CONTESTAR YES  */ : "Si la version es superior a 11i v1, en la segunda fila en /etc/passwd, tiene *"
+/* CONTESTAR NO   */ : "Si tiene un campo null en la segunda fila en /etc/passwd"
+/* CONTESTAR N/A  */ : "Por la version de HP-UX o si es un SISTEMA TRUSTED"
++-------------------------------------------------------------------------------------+
+---AA.1.1.7 Password Requirements
+
+"Todos los ID tienen el conjunto de contraseñas o los inicios de sesión de bloque, en sistemas no TRUSTED por encima de 11i v1
+
+uname -a
+
+// En sistemas no TRUSTED de 11i v1 y superiores: No se pueden aplicar valores de contraseña válidos.
+// Debe tener una serie de contraseña inhabilitada como * para bloquear cualquier cuenta sin contraseña válida.
+
+cat /etc/passwd |  cut -d: -f1,2
+
+
+/* CONTESTAR YES  */ : "Si la version es superior a 11i v1, en la segunda fila en /etc/passwd, tiene *"
+/* CONTESTAR NO   */ : "Si tiene un campo null en la segunda fila en /etc/passwd"
+/* CONTESTAR N/A  */ : "Por la version de HP-UX o si es un SISTEMA TRUSTED"
++-------------------------------------------------------------------------------------+
+---AA.1.1.8 Password Requirements
+
+"Password maximum age, on trusted systems
+
+// Si es un sistema Trusted, debe tener el valor : u_exp#7776000 (equivalent to 90 days)
+
+grep -i 'u_exp' /tcb/files/auth/system/default
+
+/* CONTESTAR YES  */ : "Si es un sistema trusted y tiene el valor u_exp#7776000 (equivalent to 90 days)"
+/* CONTESTAR NO   */ : "Si es un sistema trusted y no tiene el valor u_exp#7776000 (equivalent to 90 days)"
+/* CONTESTAR N/A  */ : "System is not trusted"
++-------------------------------------------------------------------------------------+
+---AA.1.1.9 Password Requirements
+
+"Password maximum age, on untrusted systems of 11i v2 and higher
+
+uname -a
+
+// Para sistemas con version 11i v2 O SISTEMAS NO TRUSTED
+
+grep -i 'PASSWORD_MAXDAYS' /etc/default/security
+
+/* CONTESTAR YES  */ : "Si la version del sistema es 11i v2 o superior y el valor para MAXDAY es 90"
+/* CONTESTAR NO   */ : "Si la version del sistema es 11i v2 o superior y el valor para MAXDAY no es 90"
+/* CONTESTAR N/A  */ : "Por la version de HP-UX o si es un SISTEMA TRUSTED"
++-------------------------------------------------------------------------------------+
+---AA.1.1.10 Password Requirements
+
+"Password maximum age, on untrusted systems, with the ShadowPassword bundle installed
+
+//En sistemas no trusted con shadow instalado, deben tener los usuarios con contraseña, el maxage a 90 en el 5º campo de /etc/shadow
+
+cut -d ':' -f 1,5 /etc/shadow
+
+/* CONTESTAR YES  */ : "Si es un sistema no trusted y las cuentas en /ect/shadow estan a 90."
+/* CONTESTAR NO   */ : "En otro caso"
+/* CONTESTAR N/A  */ : "Por la version de HP-UX o si es un SISTEMA TRUSTED"
++-------------------------------------------------------------------------------------+
+---AA.1.1.11 Password Requirements
+
+"Password maximum age, per-userid, on untrusted systems
+
+//En sistemas no trusted con shadow instalado, deben tener los usuarios con contraseña, el maxage a 13 semanas en el 2º campo de /etc/shadow
+
+/*
+En ese segundo campo, esta la pass antes de la coma, despues está el maxage y minage con esta codificacion:
+. para 0
+/ para 1
+de 0 a 9 para 2 hasta el 11
+de A a Z para 12 hasta 37
+de a a z para 38 hasta 63
+- primer caracter es el maxage: B (equivale a 13) es lo correcto
+- segundo caracter es el minage: / (equivale a 1) es lo correcto.
+*/
+
+/* CONTESTAR YES  */ : "Si es un sistema no trusted y las cuentas en /ect/shadow estan a 13 semanas."
+/* CONTESTAR NO   */ : "En otro caso"
+/* CONTESTAR N/A  */ : "Por la version de HP-UX o si es un SISTEMA TRUSTED"
++-------------------------------------------------------------------------------------+
+---AA.1.1.12 Password Requirements
+
+"Password minimum age, on trusted systems
+
+// Si es un sistema Trusted, debe tener el valor : u_minchg#86400 (equivalent to 1 day)
+
+grep -i 'u_minchg' /tcb/files/auth/system/default
+
+/* CONTESTAR YES  */ : "Si es un sistema trusted y tiene el valor u_minchg#86400 (equivalent to 1 day)"
+/* CONTESTAR NO   */ : "Si es un sistema trusted y no tiene el valor u_minchg#86400 (equivalent to 1 day)"
+/* CONTESTAR N/A  */ : "System is not trusted"
++-------------------------------------------------------------------------------------+
+---AA.1.1.13 Password Requirements
+
+"Password minimum age, per-userid, on untrusted systems
+
+//En sistemas no trusted con shadow instalado, deben tener los usuarios con contraseña, el minage a 1 en el 2º campo de /etc/shadow
+
+/*
+En ese segundo campo, esta la pass antes de la coma, despues está el maxage y minage con esta codificacion:
+. para 0
+/ para 1
+de 0 a 9 para 2 hasta el 11
+de A a Z para 12 hasta 37
+de a a z para 38 hasta 63
+- primer caracter es el maxage: B (equivale a 13) es lo correcto
+- segundo caracter es el minage: / (equivale a 1) es lo correcto.
+*/
+
+/* CONTESTAR YES  */ : "Si es un sistema no trusted y las cuentas en /ect/shadow para minage esta a 1"
+/* CONTESTAR NO   */ : "En otro caso"
+/* CONTESTAR N/A  */ : "Por la version de HP-UX o si es un SISTEMA TRUSTED"
++-------------------------------------------------------------------------------------+
+---AA.1.1.14 Password Requirements
+
+"Default password minimum age, untrusted systems of 11i v2 and higher
+
+uname -a
+
+// Para sistemas con version 11i v2 O SISTEMAS NO TRUSTED
+
+grep -i 'PASSWORD_MINDAYS' /etc/default/security
+
+/* CONTESTAR YES  */ : "Si la version del sistema es 11i v2 o superior y el valor para MINDAY es 1"
+/* CONTESTAR NO   */ : "Si la version del sistema es 11i v2 o superior y el valor para MINDAY no es 1"
+/* CONTESTAR N/A  */ : "Por la version de HP-UX o si es un SISTEMA TRUSTED"
++-------------------------------------------------------------------------------------+
+---AA.1.1.15 Password Requirements
+
+"Default password minimum age, on untrusted systems with the ShadowPassword bundle installed
+
+uname -a
+
+//En sistemas no trusted con shadow instalado, deben tener los usuarios con contraseña, el MINAGE a 1 en el 4º campo de /etc/shadow
+
+cut -d ':' -f 1,4 /etc/shadow
+
+/* CONTESTAR YES  */ : "Si la version del sistema es 11i v2 o superior y el valor para MINDAY es 1"
+/* CONTESTAR NO   */ : "Si la version del sistema es 11i v2 o superior y el valor para MINDAY no es 1"
+/* CONTESTAR N/A  */ : "Por la version de HP-UX o si es un SISTEMA TRUSTED"
++-------------------------------------------------------------------------------------+
+---AA.1.1.16 Password Requirements
+
+"Password length, on untrusted systems, of 11i and higher
+
+uname -a
+
+// Para sistemas con version 11i v2 O SISTEMAS NO TRUSTED
+
+grep -i 'MIN_PASSWORD_ LENGTH' /etc/default/security
+
+/* CONTESTAR YES  */ : "Si la version del sistema es 11i v2 o superior y el valor para MINLEN es 8"
+/* CONTESTAR NO   */ : "Si la version del sistema es 11i v2 o superior y el valor para MINLEN no es 8"
+/* CONTESTAR N/A  */ : "Por la version de HP-UX o si es un SISTEMA TRUSTED"
++-------------------------------------------------------------------------------------+
+---AA.1.1.19 Password Requirements
+
+"Log in retries, on trusted systems, default consecutive failed login attempts
+
+// Si es un sistema Trusted, debe tener el valor : u_maxtries#4
+
+grep -i 'u_maxtries' /tcb/files/auth/system/default
+
+/* CONTESTAR YES  */ : "Si es un sistema trusted y tiene el valor u_maxtries#4"
+/* CONTESTAR NO   */ : "Si es un sistema trusted y no tiene el valor u_maxtries#4"
+/* CONTESTAR N/A  */ : "System is not trusted"
++-------------------------------------------------------------------------------------+
+---AA.1.1.20 Password Requirements
+
+"Log in retries, on untrusted systems at 11i v2 and higher, with Standard Mode Security Extensions product installed, default consecutive failed login attempts
+
+// Para sistemas con version 11i v2 O SISTEMAS NO TRUSTED
+
+grep -i 'AUTH_MAXTRIES' /etc/default/security
+
+/* CONTESTAR YES  */ : "Si la version del sistema es 11i v2 o superior y el valor para MAXTRIES es 4"
+/* CONTESTAR NO   */ : "Si la version del sistema es 11i v2 o superior y el valor para MAXTRIES no es 4"
+/* CONTESTAR N/A  */ : "Por la version de HP-UX o si es un SISTEMA TRUSTED"
++-------------------------------------------------------------------------------------+
+---AA.1.1.21 Password Requirements
+
+"Password history, on trusted systems at 11i v1 and higher
+
+// Para sistemas con version 11i v1 O SISTEMAS NO TRUSTED
+
+grep -i 'PASSWORD_HISTORY_DEPTH' /etc/default/security
+
+/* CONTESTAR YES  */ : "Si la version del sistema es 11i v2 o superior y el valor para PASSWORD_HISTORY_DEPTH es 6"
+/* CONTESTAR NO   */ : "Si la version del sistema es 11i v2 o superior y el valor para PASSWORD_HISTORY_DEPTH no es 6"
+/* CONTESTAR N/A  */ : "Por la version de HP-UX o si es un SISTEMA TRUSTED"
++-------------------------------------------------------------------------------------+
+---AA.1.1.22 Password Requirements
+
+"Password history, on 11iv3 untrusted systems and on 11i v2 untrusted systems with Standard Mode Security Extensions product installed
+
+// Para sistemas con version 11i v3 O SISTEMAS NO TRUSTED
+
+grep -i 'PASSWORD_HISTORY_DEPTH' /etc/default/security
+
+/* CONTESTAR YES  */ : "Si la version del sistema es 11i v2 o superior y el valor para PASSWORD_HISTORY_DEPTH es 6"
+/* CONTESTAR NO   */ : "Si la version del sistema es 11i v2 o superior y el valor para PASSWORD_HISTORY_DEPTH no es 6"
+/* CONTESTAR N/A  */ : "Por la version de HP-UX o si es un SISTEMA TRUSTED"
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+---
+"
+
+/* CONTESTAR YES  */ : ""
+/* CONTESTAR NO   */ : ""
+/* CONTESTAR N/A  */ : ""
++-------------------------------------------------------------------------------------+
+///////////////////////////////////////////////////////////////////////////////////////
+

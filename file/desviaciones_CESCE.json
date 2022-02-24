@@ -22,6 +22,17 @@
         "SO": "Debian"
     },
     {
+        "modulo": "Network Settings/Ensure nfs-utils is not enabled and active",
+        "clave": "NFS",
+        "descripcion": "Ensure nfs is not active. Command: systemctl is-active nfs\nEnsure nfs is not enabled. Command: systemctl is-enabled nfs",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## No es un servicio requerido, por lo que se puede deshabilitar.\n## Antes de nada comprobar que no tenga: shares/filesystem compartiendo.\n## Debe salir vacio\n+-------------------------------------------------------------------------------------+\n\ncat /etc/exports\n\n+-------------------------------------------------------------------------------------+\n## En el caso de tener shares/filesystem, contactar con el SOPORTE TECNICO.\n+-------------------------------------------------------------------------------------+\n\nsystemctl status nfs\n\n+-------------------------------------------------------------------------------------+\n## Debe salir disable en todo :\n(/usr/lib/systemd/system/nfs-server.service; disabled; vendor preset: disabled)\n+-------------------------------------------------------------------------------------+",
+        "copia": null,
+        "editar": "systemctl stop nfs.service\nsystemctl disable nfs.service",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nhostname\nsystemctl status nfs.service",
+        "SO": "Linux"
+    },
+    {
         "modulo": "Password Requirements/Private Key File Restriction",
         "clave": "AUTHORIZED_KEY",
         "descripcion": "SSH authorized_keys file: \"FICHERO AUTHORIZED KEYS\"; Invalid from section: . \"*º\" or \"*.*.*.*\" or \"0/0\" or \"0.0.0.0/0\" or empty are forbidden values in the \"from=\" parameter",
