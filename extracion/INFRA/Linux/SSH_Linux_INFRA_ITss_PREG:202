@@ -139,7 +139,7 @@ man sshd_config
 
 /* CONTESTAR YES */ : "Si LogLevel es INFO o VERBOSE, O si esta comentado coge valor por defecto"
 +-------------------------------------------------------------------------------------+
-			  ⚙⚙⚙⚙⚙/* POLITICA SSH - LINUX*/⚙⚙⚙⚙⚙ 
+			  /* POLITICA SSH - LINUX*/ 
 
 ---AV.1.2.4 Logging	
 "Retain Log Files

@@ -270,6 +270,44 @@
       "SO": "Linux"
     },
     {
+      "object": "/etc/sisips/",
+      "owner": "sisips",
+      "tipo": "/S/",
+      "ownerGroup": "SDCSS_User",
+      "user": [
+        "Soporte"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL server"
+      ],
+      "risk": "GENERICO / OSR ETC / IBM-KYNDRYL",
+      "impact": "GENERICO / OSR ETC / IBM-KYNDRYL",
+      "variable": [
+        "Archivos de configuración del antivirus"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/tmp/.messaging",
+      "owner": "bitdefender",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL server"
+      ],
+      "risk": "GENERICO / STICKY / CUSTOMER",
+      "impact": "GENERICO / STICKY / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    },
+    {
       "object": "/data2/caixa/",
       "owner": "caixa",
       "tipo": "/C/",
@@ -893,8 +931,8 @@
       "servers": [
         "ALL Servers"
       ],
-      "risk": "GENERICO / OSR ETC / LBK",
-      "impact": "GENERICO / OSR ETC / LBK",
+      "risk": "GENERICO / OSR ETC / CUSTOMER",
+      "impact": "GENERICO / OSR ETC / CUSTOMER",
       "variable": [
         "Aplica a sub-directorios y ficheros de /etc/universal/"
       ],
@@ -956,8 +994,8 @@
       "servers": [
         "ALL Servers"
       ],
-      "risk": "GENERICO / OSR ETC / LBK",
-      "impact": "GENERICO / OSR ETC / LBK",
+      "risk": "GENERICO / OSR ETC / CUSTOMER",
+      "impact": "GENERICO / OSR ETC / CUSTOMER",
       "variable": [
         ""
       ],

@@ -166,6 +166,8 @@ cat /etc/pam.d/common-account| grep pam_tally
 
 /* CONTESTAR NO  */ : " Non of the Login Retrie options was found in file: /etc/pam.d/common-auth.
 		      " Non of the Login Retrie options was found in file: /etc/pam.d/common-account.
+
+/* CONTESTAR N/A */ : "Si no usa pam_tally o pam_tally2"
 +-------------------------------------------------------------------------------------+
 ---AD.1.1.7.1 Password Requirements
 "ROOT

@@ -62,7 +62,7 @@ AV.1.2.2 Logging	"QuietMode
 "	no
 N/A OpenSSH
 /**************************************************************************************************************************************************************************************/
-			  ⚙⚙⚙⚙⚙/* POLITICA SSH - AIX*/⚙⚙⚙⚙⚙ 
+			  /* POLITICA SSH - AIX*/ 
 
 AV.1.2.4 Logging 	
 Retain Log Files = 180 days
@@ -102,7 +102,7 @@ cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
 /var/log/messages		 |
 *********************************|*************************************************
 
-🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗
+
 #3.- "Revisar que los ficheros de segurida debe estar rotando a 180 dias."
      "CONFIGURACION para OpenSSH / Linux
 
@@ -111,8 +111,8 @@ cat /etc/rsyslog.conf |grep -v "#" |egrep -i "secure|messages"
 //debe salir algo asi : *.info;mail.none;authpriv.none;cron.none                /var/log/messages
 //                      authpriv.*                                              /var/log/secure
 
-/*🗒✔  CONTESTAR YES*/: "Si esta rotando a 180 y existen los fichero " MESSAGES / SECURE ", y configurado en la rotacion"
-/*🗒⛔ CONTESTAR NO*/ : "Si no esta rotando a 180 dias o existen los fichero " MESSAGES / SECURE ", y configurado en la rotacion.".#
+/*  CONTESTAR YES*/: "Si esta rotando a 180 y existen los fichero " MESSAGES / SECURE ", y configurado en la rotacion"
+/* CONTESTAR NO*/ : "Si no esta rotando a 180 dias o existen los fichero " MESSAGES / SECURE ", y configurado en la rotacion.".#
 
 /*NO*/                  "The rotation is based on logkeeper, and is configured in 90 days, it is recommended 180 days in the configuration."
 /**************************************************************************************************************************************************************************************/
@@ -143,11 +143,11 @@ ls -la /home/*/.ssh/* | grep -i "id_rsa.pub"
 "NOTA
 //SI HAY ARCHICOS ID_RSA.pub CON OWNER HUERFANOS o OWNER DIFERENTES, deben tener un "comentario"
 
-/*🗒✔  CONTESTAR YES */ : "Si todas las claves publicas pertenecen a su owner o no hay claves publicas"
-/*🗒⛔ CONTESTAR NO  */ : "The following public keys do not belong to your UID and do not have a label "comment".: 
+/*  CONTESTAR YES */ : "Si todas las claves publicas pertenecen a su owner o no hay claves publicas"
+/* CONTESTAR NO  */ : "The following public keys do not belong to your UID and do not have a label "comment".: 
 
 "
-/*🗒🔁 CONTESTAR N/A */ : ""
+/* CONTESTAR N/A */ : ""
 /**************************************************************************************************************************************************************************************/
 AV.1.7.3.2 Identify and Authenticate Users	Host-Based Authentication    =NO
 
@@ -195,14 +195,14 @@ Ciphers aes128-ctr,aes192-ctr,aes256-ctr
 man sshd_config
 /Ciphers
 
-/*🗒✔  CONTESTAR YES */ : "Si Ciphers tiene los algoritmo de cifrados aprobados"
-/*🗒⛔ CONTESTAR NO*/ : "Si Ciphers no tiene los algoritmo de cifrados aprobados"
+/*  CONTESTAR YES */ : "Si Ciphers tiene los algoritmo de cifrados aprobados"
+/* CONTESTAR NO*/ : "Si Ciphers no tiene los algoritmo de cifrados aprobados"
 +--------------------------------------------------------------------------------------------------------------+
 ---AV.2.1.1.3 Encryption //HABLA del algoritmo de cifrado DES, este algoritmo no se usa. 
 "Data Transmission - DES algorithm
 
 
-/*🗒🔁 CONTESTAR N/A */ : "The DES algorithm is not used"
+/* CONTESTAR N/A */ : "The DES algorithm is not used"
 +--------------------------------------------------------------------------------------------------------------+
 ---AV.2.1.1.4 Encryption //HABLA de la longitud mínima de bits para los algoritmos de clave pública
 "Data Transmission - Server host keys

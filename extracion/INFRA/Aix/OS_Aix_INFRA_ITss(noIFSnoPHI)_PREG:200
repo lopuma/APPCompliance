@@ -31,8 +31,10 @@ lssec -f /etc/security/user -s default -a maxage
 +--------------------------------------------------------------------------------------------------------------+
 ---E.1.1.2.2 Password Requirements
 "maxage	13 
-"# Para los ID que califican para una excepción (véase ---E. 1.1.14.1 y ---E. 1.1.14.2), puede establecerse en 0.
-"#Lista de usuarios comunes en estas secciones (---E. 1.1.14.1 y ---E. 1.1.14.2):
+
+// Para los ID que tengan contraseña  y que califican para una excepción (véase ---E. 1.1.14.1 y ---E. 1.1.14.2), puede establecerse en maxage = 0.
+
+// Lista de usuarios comunes en estas secciones (---E. 1.1.14.1 y ---E. 1.1.14.2):
 /*
 
 adm
@@ -54,6 +56,7 @@ esaadmin
 srvproxy
 
 */
+
 "#Tambien quedan excluidas cuentas ya excepcionada, Mirar list excepciones.
 
 lsuser -a maxage SYSTEM registry ALL| egrep -v "maxage=13" | grep -v "registry=LDAP"
@@ -385,7 +388,7 @@ cat /etc/passwd | grep -i "$userid"
 "//El * impediría que se validara por contraseña(CONTESTAR YES SI TIENE *). 
 "//El ! se valida por contraseña.
 
-/* CONTESTAR YES */ : "   */ : "Si para las cuentas que no expiran, tiene * en el segundo campo O NO ESTA VACIO"
+/* CONTESTAR YES */ : "   */ : "Si para las cuentas que no expiran, tiene * o ! en el segundo campo O NO ESTA VACIO"
 
 ##IBM
 /* CONTESTAR NO   */ : "Account $account has invalid Password Max Age setting = 0, must be Customer Required Setting: 13; Account Type: IBM (Strictest Setting Validated). Direct login: 1      must be set to "false". Remote login:  1      must be set to "false". Id must exist in file. Value of login shell:  /usr/bin/ksh must be "/bin/false""

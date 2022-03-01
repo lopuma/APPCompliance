@@ -113,6 +113,26 @@
                 "file_idrsa=\"/home/dnsadmin/.ssh/id_rsa\""
             ],
             "SO": "LINUX"
+        },
+        {
+            "object": "/home/tevjmp15/.ssh/id_rsa",
+            "owner": "tevjmp15",
+            "tipo": "/S/",
+            "ownerGroup": "TEVA",
+            "user": [
+                "Rafal.Miskiewicz@kyndryl.com",
+                "Grzegorz.Mateja@kyndryl.com"
+            ],
+            "code": "NULL",
+            "servers": [
+                ""
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_idrsa=\"/home/tevjmp15/.ssh/id_rsa\""
+            ],
+            "SO": "LINUX"
         }
     ],
     "LBK": [

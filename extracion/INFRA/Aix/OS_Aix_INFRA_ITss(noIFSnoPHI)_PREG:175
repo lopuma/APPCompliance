@@ -29,8 +29,11 @@ lssec -f /etc/security/user -s default -a maxage
 +-------------------------------------------------------------------------------------+
 ---E.1.1.2.2 Password Requirements
 "maxage	13 
-"# Para los ID que califican para una excepción (véase ---E. 1.1.14.2 y ---E. 1.1.14.2), puede establecerse en 0.
-"#Lista de usuarios comunes en estas secciones:
+
+// Para los ID que tengan contraseña  y que califican para una excepción (véase ---E. 1.1.14.1 y ---E. 1.1.14.2), puede establecerse en maxage = 0.
+
+// Lista de usuarios comunes en estas secciones (---E. 1.1.14.1 y ---E. 1.1.14.2):
+
 /*
 adm
 bin

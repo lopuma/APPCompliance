@@ -486,7 +486,7 @@ cat /etc/logrotate.conf
 #->sinLOGKEEPE&&&sinLOGROTATE<-#
 cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
 
-🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗
+
 #2.- "Los ficheros del sistema que deben estar rotando a 180 dias."#
 //Saber que Sistema Operativo estamos revisando "dependeran los ficheros".
 //Ya sea Linux o Aix.
@@ -501,7 +501,7 @@ cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
  					    | /etc/security/failedlogin "*REG.INTENTOS FAIL"					            |
 		 |
 
-🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗🆗
+
 #3.- "Revisar si esta OK: "CONFIGURACION Y ROTACION PARA OS / Linux
 #"Deben existir "
 Linux: ls -la /var/log/secure /var/adm/sudo.log /var/log/messages /var/log/cron /var/log/wtmp

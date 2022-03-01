@@ -76,7 +76,7 @@ find /home/*/.ssh -name authorized_keys2|while read kfil; do cat $kfil|grep -vEe
  /* CONTESTAR NO*/  : "Si LogLevel es diferente a INFO".#
  /* CONTESTAR N/A*/ : "Si la version de SSH no aplica al sistema, o otro motivo".#
 /**************************************************************************************************************************************************************************************************/
-			   ⚙⚙⚙⚙⚙/* POLITICA SSH - AIX / VIOS */⚙⚙⚙⚙⚙ 
+			   /* POLITICA SSH - AIX / VIOS */ 
 
 ---AV.1.2.4 Logging
  Retain Log Files = 90 days

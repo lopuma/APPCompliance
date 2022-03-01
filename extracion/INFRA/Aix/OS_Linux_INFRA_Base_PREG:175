@@ -176,20 +176,18 @@ cut -d: -f 3 /etc/group | sort | uniq -c -d
 ---AD.1.1.9.0 Password Requirements	
 "Exemptions to password rules
 
-// Consulte la sección 5.0 para ver la lista de usuarios privilegiados QUE NO PUEDEN TENER UNA CONTRASEÑA SIN CADUCAR.
+// Ver los uid, para saber si es de la seccion 5.0, RESULTADO SALE ORDENADO POR UID"#
+// Las cuentas de la seccion 5.0, pueden tener maxage=0 si tiene contraseña y son privilegiadas.
 
-//"ver los uid, para saber si es de la seccion 5.0, RESULTADO SALE ORDENADO POR UID"#
 awk -F: '{ print $1,$3 }' /etc/passwd | sort -k2 -V
 
-//Consulte la sección 5.0 para ver la lista de usuarios privilegiados que no pueden tener una contraseña que no caduque.
-// Las cuentas de la seccion 5.0, van de UID 0 a 99
+// Mostrar las cuentas que tienen contraseña y no expiran, descartar las de la seccion 5.0 (UID del 0  al 99)
 
-//"Ahora esas cuentas no pueden si tienen contraseña deben caducar (POSIBLE CUENTAS).
-cat /etc/shadow | egrep -w "root:|bin:|daemon:|mail:|uucp:|sys:|sync:|games:|man:|lp:|news:|proxy:|www-data:|data:||irc:|gnats:|backup:|list:" --color=always | cut -d: -f1,2,5
+cat /etc/shadow | cut -d: -f1,2,5 | grep -v ':90' | egrep -v "\*|\!\!|\!"
 
-/* CONTESTAR YES */ : " Si las cuentas de la seccion 5.0, si tienen passwd asignada y caduca, o si no tienen passwd asignada"
+/* CONTESTAR YES  */ : " Si las cuentas que tienen contraseña y no expiran, son cuentas privilegiadas de la seccion 5.0"
 
-/* CONTESTAR NO  */ : " The following accounts in section 5.0, have passwd and do not expire: root
+/* CONTESTAR NO  */ : " En otro caso
 +-------------------------------------------------------------------------------------+
 ---AD.1.1.9.1 Password Requirements	
 "Exemptions to password rules
