@@ -1,8 +1,8 @@
-////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
 OS Aix INFRA ITSS(noIFSnoPHI) - Issue REF : 754874 / PRE 200
 
 ✍
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.1.0 Password Requirements	
 "UIDs must be unique
 "#Cada UID sólo debe utilizarse una vez en el archivo /etc/passwd.	
@@ -12,7 +12,7 @@ cut -d: -f 3 /etc/passwd | sort | uniq -c
 "#Opcion -c, indica cuantas veces se repite
 
 /* CONTESTAR YES */ : "   */ : "Si no se repiten los UID"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.1.1 Password Requirements
 "GIDs must be unique
 "#Cada GID sólo debe utilizarse una vez en el archivo /etc/group.
@@ -20,7 +20,7 @@ cut -d: -f 3 /etc/passwd | sort | uniq -c
 cut -d: -f 3 /etc/group | sort | uniq -c
 
 /* CONTESTAR YES */ : "   */ : "Si no se repiten los GID"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.2.1 Password Requirements	
 "maxage	13
 "#Antigüedad máxima de la contraseña (en semanas) en /etc/security/user. establecerse en 13.
@@ -28,7 +28,7 @@ cut -d: -f 3 /etc/group | sort | uniq -c
 lssec -f /etc/security/user -s default -a maxage
 
 /* CONTESTAR YES */ : "   */ : "Si por defecto el MAXAGE es 13"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.2.2 Password Requirements
 "maxage	13 
 
@@ -68,7 +68,7 @@ lsuser -a maxage SYSTEM registry ALL| egrep -v "maxage=13" | grep -v "registry=L
 /* CONTESTAR NO   */ : "Si alguna cuenta no tiene maxage a 13"
 
 /* NO */ 	       "Account $CUENTA has invalid Password Max Age setting = 0, must be Customer Required Setting: 13; Account Type: IBM (Strictest Setting Validated). Direct login: 1      must be set to ""false"". Remote login:  1      must be set to ""false"". Id must exist in file. Value of login shell:  /bin/csh must be ""/bin/false"""
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.3.2 Password Requirements
 "histexpire	105
 "#La reutilización de contraseñas antiguas puede permitir a alguien que ha tenido acceso a un id en el pasado volver 
@@ -84,7 +84,7 @@ a='histexpire';grep -v '^\*' /etc/security/user | grep -v "$a = 105[[:blank:]]*$
 
 * CONTESTAR NO   */ : "Si el valor no es 105"
 /* NO */ 		  "The default value is 0, a value for histexpire of 105 is recommended.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.4 Password Requirements	
 "minalpha	1
 "#Número mínimo de caracteres alfabéticos en /etc/security/user. establecerse en 1.
@@ -92,7 +92,7 @@ a='histexpire';grep -v '^\*' /etc/security/user | grep -v "$a = 105[[:blank:]]*$
 lssec -f /etc/security/user -s default -a minalpha
 
 /* CONTESTAR YES */ : "   */ : "Si minalpha esta por defecto a 1"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.5.0 Password Requirements	
 "minother	1
 "#Número de caracteres no alfabéticos en /etc/security/user. establecerse en 1.
@@ -100,7 +100,7 @@ lssec -f /etc/security/user -s default -a minalpha
 lssec -f /etc/security/user -s default -a minother
 
 /* CONTESTAR YES */ : "   */ : "si el MINOTHER por defecto es a 1"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.5.1 Password Requirements	
 "/usr/share/dict/words	File must contain: $USER
 "#En AIX 7.1 y superior.
@@ -110,7 +110,7 @@ oslevel -s
 tail /usr/share/dict/words
 
 /* CONTESTAR YES */ : "   */ : "si en la ultima linea, esta $USER"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.5.2 Password Requirements	
 "/etc/security/user
 "#En AIX 7.1 y superior.
@@ -118,7 +118,7 @@ tail /usr/share/dict/words
 lssec -f /etc/security/user -s default -a dictionlist
 
 /* CONTESTAR YES */ : "   */ : "por defecto esta asignado 'dictionlist=/usr/share/dict/words'"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.5.3 Password Requirements	
 "/usr/share/dict/words file	File must exist.
 "#En AIX 7.1 y superior.
@@ -126,7 +126,7 @@ lssec -f /etc/security/user -s default -a dictionlist
 ls -la /usr/share/dict/words
 
 /* CONTESTAR YES */ : "   */ : "si existe /usr/share/dict/words"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.6.0 Password Requirements	
 "minlen default	15
 
@@ -135,7 +135,7 @@ ls -la /usr/share/dict/words
 lssec -f /etc/security/user -s default -a minlen
 
 /* CONTESTAR YES */ : "   */ : "Si menlen por defecto es 15"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.6.1 Password Requirements	
 "Password hash strength.  	Use: ssha512 
 "#Razones por las que un cliente podría querer considerar un valor acordado diferente
@@ -157,7 +157,7 @@ lssec -f /etc/security/login.cfg -s usw -a pwd_algorithm
 /* CONTESTAR YES */ : "   */ : "Si el valor sha12, esta implementado"
 /* CONTESTAR NO   */ : "Si el valor sha512 no esta implementado"
 /* NO */	 	  "On this server you have implemented a value for smd5 usw, it is recommended Use: ssha512.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.6.2 Password Requirements
 "Password may not be null
 "#En /etc/security/passwd, la contraseña de atributo no se puede asignar al valor nulo
@@ -170,7 +170,7 @@ a='password = *$';grep -v '^\*' /etc/security/passwd | grep -p "$a" | egrep ":$|
 "#Should return nothing.
 
 /* CONTESTAR YES */ : "   */ : "Si el valor del parametro passwor no es nulo"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.6.3 Password Requirements
 "Second field of /etc/passwd may not be null.
 "#En /etc/passwd, la contraseña (segundo campo) no se puede asignar al valor nulo (::)
@@ -178,7 +178,7 @@ a='password = *$';grep -v '^\*' /etc/security/passwd | grep -p "$a" | egrep ":$|
 cat /etc/passwd | cut -d: -f 1,2
 
 /* CONTESTAR YES */ : "   */ : "Si el valor de la segunda columna no es nulo"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.7.2 Password Requirements
 "mindiff 4
 "#Define el número mínimo de caracteres que son necesarios en una nueva contraseña que no estaban en la contraseña antigua.
@@ -189,7 +189,7 @@ lssec -f /etc/security/user -s default -a mindiff
 /* CONTESTAR YES */ : "   */ : "Si mindiff por defecto es 4"
 /* CONTESTAR NO   */ : "Si mindiff no es 4"
 /* NO */		  "The default value is 1, a value for mindiff of 4 is recommended.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.8 Password Requirements
 "flags=NOCHECK
 "#no permitido en ningún ID de usuario, con contraseñas.
@@ -199,14 +199,14 @@ cat /etc/security/passwd
 
 /* CONTESTAR YES */ : "   */ : "si retorna vacio o no tiene asignado flags=NOCHECK, usuarios con password asignadas.
 * CONTESTAR NO   */ : ""
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.9 Password Requirements	
 "loginretries	5
 
 lssec -f /etc/security/user -s default -a loginretries
 
 /* CONTESTAR YES */ : "   */ : "Si por defecto loginretries es 5"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.10.2 Password Requirements	
 "Limit remote access to root.
 "#El acceso de inicio de sesión a la cuenta debe estar restringido a la consola física o a un método que proporcione 
@@ -218,7 +218,7 @@ lsuser -a rlogin root
 root rlogin=false
 
 /* CONTESTAR YES */ : "   */ : "Si retorna rlogin=false para root"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.10.3 Password Requirements	
 "Key system IDs to not be accessed via password.
 "en la medida de lo posible, estos ID no deben tener contraseñas utilizables
@@ -229,7 +229,7 @@ root rlogin=false
 cat /etc/security/passwd | egrep -p "daemon:|bin:|sys:|adm:|uucp:|nuucp:|lpd:|imnadm:|ipsec:|ldap:|lp:|snapp:|invscout:|pconsole:|nobody:|esaadmin:|sshd"
 
 /* CONTESTAR YES */ : "   */ : "Si no tienen passwd asignada"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.11 Password Requirements	
 "Block root ftp access.
 "El ID root debe existir en el archivo /etc/ftpusers si se ha instalado ftp.
@@ -247,7 +247,7 @@ grep "root" /etc/ftpusers
 CONTESTAR YES  si devuelve:" 
 root
 */
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.14.0 Password Requirements	
 "Exemption to password expiration rule, non-privileged ids.
 
@@ -286,7 +286,7 @@ cat /etc/passwd | egrep -i "icouxat1|icouxat2|icouxat3"
 
 SI NO CUMPLE LO ANTERIOR, REVISAR CUALQUIERA DE LAS 4 OPCIONES"
 
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 #Option A
 ---E. 1.1.15.0
 "Se divide en 3 partes"
@@ -298,7 +298,7 @@ SI NO CUMPLE LO ANTERIOR, REVISAR CUALQUIERA DE LAS 4 OPCIONES"
 		"Option A part 3 /etc/ftpusers
 
 /* CONTESTAR YES */ : "  */ : " Si en la pregunta ---E.1.1.14.0, se ha contestado a YES : "Si el usuario no tiene password asignada(o si el usuario no valida por contraseña) y/o el ID es privilegiado".
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 #Option B
 ---E. 1.1.16.0
 "Se revisa:
@@ -306,7 +306,7 @@ SI NO CUMPLE LO ANTERIOR, REVISAR CUALQUIERA DE LAS 4 OPCIONES"
 		"/etc/passwd
 
 /* CONTESTAR YES */ : "  */ : " Si en la pregunta ---E.1.1.14.0, se ha contestado a YES : "Si el usuario no tiene password asignada(o si el usuario no valida por contraseña) y/o el ID es privilegiado".
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 #Option C
 ---E. 1.1.17.0
 "Se revisa:
@@ -314,7 +314,7 @@ SI NO CUMPLE LO ANTERIOR, REVISAR CUALQUIERA DE LAS 4 OPCIONES"
 		"/etc/security/passwd
 
 /* CONTESTAR YES */ : "  */ : " Si en la pregunta ---E.1.1.14.0, se ha contestado a YES : "Si el usuario no tiene password asignada(o si el usuario no valida por contraseña) y/o el ID es privilegiado".
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 #Option D
 ---E. 1.1.18.0
 "Se revisa:
@@ -322,7 +322,7 @@ SI NO CUMPLE LO ANTERIOR, REVISAR CUALQUIERA DE LAS 4 OPCIONES"
 		"/etc/passwd
 
 /* CONTESTAR YES */ : "  */ : " Si en la pregunta ---E.1.1.14.0, se ha contestado a YES : "Si el usuario no tiene password asignada(o si el usuario no valida por contraseña) y/o el ID es privilegiado".
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.14.1 Password Requirements
 "Exemption to password expiration rule, all ids.
 
@@ -332,7 +332,7 @@ SI NO CUMPLE LO ANTERIOR, REVISAR CUALQUIERA DE LAS 4 OPCIONES"
 /* CONTESTAR YES */ : "  */ : " Si en la pregunta ---E.1.1.14.0, se ha contestado a YES : "Si el usuario no tiene password asignada(o si el usuario no valida por contraseña) y/o el ID es privilegiado".
 
 /* CONTESTAR N/A */ : "  */ : " The user is already authenticated, has an approved exception (LIST OF ALREADY APPROVED EXCEPTIONS)."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.15.0 - Exemption to maxage rule - Option A
 //Nota: Esta regla NO se aplica a todos los ID, es simplemente una opción para los ID que necesitan contraseñas que no caducan.
 
@@ -340,7 +340,7 @@ SI NO CUMPLE LO ANTERIOR, REVISAR CUALQUIERA DE LAS 4 OPCIONES"
 "subcondiciones: ---E.1.1.15.1 y ---E.1.1.15.2 y ---E.1.1.15.3
 
 /* CONTESTAR YES */ : "  */ : " Si cumple las 3 opciones siguientes, si no cumple una de las 3, pasar a la Exemption to maxage rule - Option B.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.15.1 Password Requirements	
 "Option A part 1 /etc/security/user
 
@@ -351,7 +351,7 @@ lsuser -a login $userid
 /* CONTESTAR YES */ : "   */ : "Si la cuenta que no tiene maxage a 13, tiene el login a False"
 
 /* CONTESTAR NO   */ : "En la pregunta E.1.1.14.0 Password Requirements"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.15.2 Password Requirements	
 "Option A part 2 /etc/security/user
 
@@ -362,7 +362,7 @@ lsuser -a rlogin $userid
 /* CONTESTAR YES */ : "   */ : "Si la cuenta no privilegiada, que no tenga maxage a 13, tiene el rlogin a False"
 
 /* CONTESTAR NO   */ : "En la pregunta E.1.1.14.0 Password Requirements"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.15.3 Password Requirements	
 "Option A part 3 /etc/ftpusers
 
@@ -373,12 +373,12 @@ grep "$userid" /etc/ftpusers
 /* CONTESTAR YES */ : "   */ : "Si la cuenta no privilegiada, que no tenga maxage a 13, esta añadido en el fichero /etc/ftpusers"
 
 /* CONTESTAR NO   */ : "En la pregunta E.1.1.14.0 Password Requirements"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.16.0 - Exemption to maxage rule - Option B
 "Opcion B, se revisa un ID específico si y sólo si el ID está configurado como requiere: ---E. 1.1.16.1
 
 /* CONTESTAR YES */ : "  */ : " Si cumple la siguiente OPCION E. 1.1.16.1, si no cumple pasar a la Exemption to maxage rule - Option C.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.16.1
 "Password Requirements	/etc/passwd
 //"*" specified in the password (2nd) field of the userID
@@ -395,12 +395,12 @@ cat /etc/passwd | grep -i "$userid"
 
 ##CUSTOMER
 /* CONTESTAR NO   */ : "Account $account has invalid Password Max Age setting = 0, must be Customer Required Setting: 13; Account Type: CUSTOMER (Strictest Setting Validated). Direct login: 1      must be set to "false". Remote login:  1      must be set to "false". Id must exist in file. Value of login shell:  /usr/bin/ksh must be "/bin/false""
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.17.0 - Exemption to maxage rule - Option C
 "Se cumple la opción C para un ID específico si y sólo si el ID está configurado como requiere: ---E. 1.1.17.1
 
 /* CONTESTAR YES */ : "  */ : " Si cumple la siguiente OPCION E. 1.1.17.1, si no cumple pasar a la Exemption to maxage rule - Option D.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.17.1	Password Requirements	
 "en /etc/security/passwd debe tener password = *
 
@@ -413,12 +413,12 @@ cat /etc/security/passwd | grep -p "$userid"
 
 ##CUSTOMER
 /* CONTESTAR NO   */ : "Account $account has invalid Password Max Age setting = 0, must be Customer Required Setting: 13; Account Type: CUSTOMER (Strictest Setting Validated). Direct login: 1      must be set to "false". Remote login:  1      must be set to "false". Id must exist in file. Value of login shell:  /usr/bin/ksh must be "/bin/false""
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.18.0 - Exemption to maxage rule - Option D
 "Se cumple la opción D para un ID específico si y sólo si el ID está configurado como requiere: ---E. 1.1.18.1
 
 /* CONTESTAR YES */ : "  */ : " Si cumple la siguiente OPCION E. 1.1.18.1.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.18.1
 "el valor del shell de inicio de sesión en /etc/passwd debe ser /bin/false
 
@@ -427,28 +427,28 @@ grep "$userid" /etc/passwd | grep "/bin/false *$"
 /* CONTESTAR YES */ : "   */ : "Si para las cuentas que tiene passwd asignada y no caducan, la shell es /bin/false"
 
 /* CONTESTAR NO   */ : "En la pregunta E.1.1.14.0 Password Requirements"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.2.1 Logging	
 "/var/adm/wtmp	
 
 ls -la /var/adm/wtmp
 
 /* CONTESTAR YES */ : "  */ Must exist
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.2.2 Logging	
 "/var/adm/sulog
 
 ls -la /var/adm/sulog
 
 /* CONTESTAR YES */ : "  */ Must exist
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.2.3 Logging	
 "/etc/security/failedlogin
 
 ls -la /etc/security/failedlogin
 
 /* CONTESTAR YES */ : "  */ Must exist
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.2.5.1 Logging	
 "/etc/syslog.conf
 
@@ -465,7 +465,7 @@ $1 is 'info' or 'debug'
 $2 is an OSR con los permisos adecuados, normalmente '/var/adm/messages'
 
 * CONTESTAR NO  : "in /etc/syslog.conf, there is auth.info /var/adm/auth.log, it is recommended that it be auth.info /var/adm/messages"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.2.5.2 Logging	/var/log/messages	
 "Debe existir Nota: /var/adm/messages se puede sustituir por un nombre de directorio/archivo alternativo, tal como se especifica 
 "como destino para el recurso auth en /etc/syslog.conf en la regla ---E. 1.2.5.1
@@ -477,7 +477,7 @@ ls -la /var/log/messages
 * CONTESTAR NO   */ : ""
 /* CONTESTAR N/A */ : "   */ : "For aix is not required /var/log/messages, it is required with /var/adm/messages, review rule ---E.1.2.5.1 Logging
 "
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.2.5.3 Logging	
 "/etc/syslog.conf	
 
@@ -497,7 +497,7 @@ cat /etc/syslog.conf|grep "authpriv"
 /* NO */ : 	: "in /etc/syslog.conf, there is authpriv.debug /var/log/secure, it is recommended that it be auth.info /authpriv.debug /var/adm/messages"
 "
 
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.2.5.4 Logging	
 "/var/log/secure
 
@@ -509,21 +509,21 @@ ls -l /var/log/secure
 /* CONTESTAR YES */ : "   */ : "Si existe /var/log/secure, y si no existe puede existir /var/adm/messages"
 /* CONTESTAR N/A */ : "   */: "For aix is not required /var/log/secure, it is required with /var/adm/messages, review rule ---E. 1.2.5.3"
 
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.2.6.1 Logging	
 "Synchronized clocks active service
 
 lssrc -s xntpd
    
 /* CONTESTAR YES */ : "  */ : " should return a status of 'active' for xntpd
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.2.6.2 Logging	
 "Synchronized clocks configured service
 
 lssrc -ls xntpd | grep -i insane
 
 /* CONTESTAR YES */ : "  */ : "  no debería devolver nada.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.4.1 System Settings
 "TMOUT environment variable in /etc/profile
 
@@ -547,7 +547,7 @@ TMOUT=$X
 "Si un servidor se ajusta a varias categorías, utilice el tiempo más breve aplicable. 
 
 /* CONTESTAR YES */ : "   */ : "Si tiene un TMOUT en /etc/profile"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.4.2 System Settings	
 "TMOUT environment variable in /etc/tsh_profile
 
@@ -558,7 +558,7 @@ cat /etc/profile | grep TMOUT
 
 /* CONTESTAR YES */ : "  */ " Si TMOUT esta en /etc/profile"
 /* CONTESTAR N/A */ : "   */ : "Si el fichero : /etc/tsh_profile, no existe "
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.4.3 System Settings	
 "autologout in /etc/csh.login.
 
@@ -579,7 +579,7 @@ grep '^[^#]*autologout' /etc/csh.login
 /* CONTESTAR NO    : "The server uses the csh shell and the file "/etc/csh.login." does not have "autologout" configured."
 
 /* CONTESTAR N/A */ : "    : "The server does not use the csh shell."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.4.4 System Settings	
 "Este archivo no necesita existir; pero si lo hace: No debe altera temporalmente el tiempo de espera para el usuario.*/
 
@@ -591,14 +591,14 @@ cat /etc/profile | grep TMOUT
 
 /* CONTESTAR YES */ : "  */ " Si TMOUT esta en /etc/profile"
 /* CONTESTAR N/A */ : "   */ : "Si el fichero "/etc/security/.profile" no existe "
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.1.0 Network Settings	
 "disable anonymous ftp
 
 grep "^ftp:" /etc/passwd
 
 /* CONTESTAR YES */ : "   " si no devuelve nada, la cuenta ftp anónimo no está habilitado.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.1.1 Network Settings	
 "ftpd daemon options
 "If ftpd is enabled, run:
@@ -614,7 +614,7 @@ lssrc -ls inetd
 // Si no muestra FTP no esta habilitado
 
 /* CONTESTAR N/A */ : "   " si Ftp esta disabled
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.1.2 Network Settings	
 ---E.1.5.2.2 Network Settings
 "Configuration of the ftp account home directory
@@ -626,7 +626,7 @@ grep "^ftp:" /etc/passwd
 ls -la /home/ftp
 
 /* CONTESTAR N/A */ : "   : " Si no existe la cuenta FTP
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.1.3 Network Settings
 ---E.1.5.2.3 Network Settings
 "Configuration of bin subdirectory of the ftp account home directory.
@@ -638,7 +638,7 @@ ls -l ~ftp/bin/*
 "*/
 /* CONTESTAR YES */ : "   : " Debe ser propiedad de root y otorgar acceso de escritura sólo al propietario o a nadie.
 /* CONTESTAR N/A */ : "   : " Si no existe una cuenta FTP, o no existe bin como subdirectorio de ftp
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.1.4 Network Settings
 ---E.1.5.2.4 Network Settings
 "Configuration of lib subdirectory of the ftp account home directory.
@@ -650,7 +650,7 @@ ls -l ~ftp/lib/*
 "*/
 /* CONTESTAR YES */ : "    : " Debe ser propiedad de root y otorgar acceso de escritura sólo al propietario o a nadie.
 /* CONTESTAR N/A */ : "   : " Si no existe una cuenta FTP, o no existe lib como subdirectorio de ftp
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.1.5 Network Settings	
 ---E.1.5.2.5 Network Settings	
 "Configuration of etc subdirectory of the ftp account home directory.
@@ -662,7 +662,7 @@ ls -l ~ftp/etc/*
 "*/
 /* CONTESTAR YES */ : "    : " Debe ser propiedad de root y otorgar acceso de escritura sólo al propietario o a nadie.
 /* CONTESTAR N/A */ : "   : " Si no existe una cuenta FTP, o no existe etc como subdirectorio de ftp
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.1.6 Network Settings	
 "Passwd files in etc subdirectory of the ftp account home directory
 
@@ -671,7 +671,7 @@ ls -l /home/ftp/etc/passwd
 
 /* CONTESTAR YES */ : "    : " Debe ser propiedad de root y otorgar acceso de escritura sólo al propietario o a nadie.
 /* CONTESTAR N/A */ : "   : " Si no existe una cuenta FTP, o no existe etc como subdirectorio de ftp
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.1.7 Network Settings
 ---E.1.5.2.6 Network Settings
 "Configuration of other subdirectories of the ftp account home directory
@@ -681,13 +681,13 @@ ls -l /home/ftp/
 
 /* CONTESTAR YES */ : "    : " Debe ser propiedad de root y otorgar acceso de escritura sólo al propietario o a nadie.
 /* CONTESTAR N/A */ : "   : " Si no existe una cuenta FTP, o no existen otros subdirectorio de ftp
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.1.8 Network Settings
 "Permission's of files and other directories descended from the ftp account home directory.
 
 /* CONTESTAR YES */ : "      : " Si existe una cuenta FTP, o si existe dentro del home de ftp subdirectorios y pertenece a root.
 /* CONTESTAR N/A */ : "   : " Si no existe una cuenta FTP, o no existe etc como subdirectorio de ftp
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.3.1 Network Settings	
 "tftp access control
 
@@ -695,7 +695,7 @@ ls /etc/tftpaccess.ctl
 
 /* CONTESTAR YES */ : "      : " Si el tftp esta enabled y el fichero exist---E.
 /* CONTESTAR N/A */ : "      : " tftp disabled, file does not exist.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.3.1 Network Settings	
 "tftp access control
 
@@ -703,7 +703,7 @@ grep 'deny:' /etc/tftpaccess.ctl
 
 /* CONTESTAR YES */ : "     : " Si el tftp esta enabled y el fichero existe Y NO DEVUELVE NADA.
 /* CONTESTAR N/A */ : "     : " tftp disabled, file does not exist.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.6 Network Settings	
 "/etc/hosts.equiv file
 
@@ -711,21 +711,21 @@ ls -l /etc/hosts.equiv
 cat /etc/hosts.equiv | grep -v '^#'
 
 /* CONTESTAR YES */ : "     :" Si el archivo no existe o SI EXISTE debe estár vacío(o no devuelve nada o simplemente líneas vacías. De lo contrario FALLA).
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.7 Network Settings	
 "rexd daemon
 
 grep "^#*rexd[[:blank:]]" /etc/inetd.conf
 
 /* CONTESTAR YES */ : "     : " Si la linea esta comentada o no devuelve nada.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.8 Network Settings	
 "bsh queue
 
 egrep '^[[:blank:]]*bsh:|^[[:blank:]]*bshdev:' /etc/qconfig
 
 /* CONTESTAR YES */ : "     : " Si la linea esta comentada o no devuelve nada.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.10.1 Network Settings	
 "/var/ifor/i4ls.ini
 
@@ -734,7 +734,7 @@ grep 'DisableRemoteAdmin =' /var/ifor/i4ls.ini
 
 /* CONTESTAR YES */ : "     : " Si existe y nos muestra DisableRemoteAdmin = yes.
 /* CONTESTAR N/A */ : "     : " Si es una version 6.2 y posterior.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.10.2 Network Settings
 ---E.1.5.10.3 Network Settings
 	
@@ -746,7 +746,7 @@ cat /var/ifor/i4ls.ini | grep -i DisableRemoteAdmin
 
 /* CONTESTAR YES */ : "      : " Si existe y nos muestra DisableRemoteAdmin = yes, o si no existe YES.
 /* CONTESTAR N/A */ : "      : " Si es una version 7.1 y posterior.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.11.1 Network Settings	
 "X-server access control
 
@@ -755,7 +755,7 @@ lslpp -w /usr/lpp/X11/bin/xhost
 /* CONTESTAR YES */ : "     : " Si no existe y Si existe y nos muestra nada.
 /* CONTESTAR NO     : " When running "lslpp -w /usr/lpp/X11/bin/xhost", it shows us XHOST results, verify for solution.
 /* CONTESTAR N/A */ : "      :
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.11.2 Network Settings	
 "CDE is not to be installed.
 
@@ -804,7 +804,7 @@ egrep -i "CHARGEN|DAYTIME|DISCARD|ECHO|FINGER|SYSTAT|WHO|NETSTAT|RSTATD|TFTP|RWA
 grep "^#*start[[:blank:]]/usr/sbin/time" /etc/rc.tcpip
 
 /* CONTESTAR YES */ : "     : " Si el resultado sale comentado (#) o esta vacio.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.13.1 Network Settings	
 "yppasswd daemon
 
@@ -812,7 +812,7 @@ lssrc -s yppasswdd
 
 /* CONTESTAR YES */ : "     si el resultado sale "0513-085 The yppasswdd Subsystem is not on file. 
 "o una indicación de ser "inoperante"'".
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.13.2 Network Settings	
 "Disable NIS client
 
@@ -820,7 +820,7 @@ lslpp -L |grep "bos.net.nis.client"
 
 /* CONTESTAR YES */ : "     : " Si no tiene entradas o esta deshabilitado NIS client
 /* CONTESTAR NO     : " Has NIS client enabled: "bos.net.nis.client"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.13.3 Network Settings	
 "Disable NIS server
 
@@ -829,7 +829,7 @@ lslpp -L |grep "bos.net.nis.server"
 /* CONTESTAR YES */ : "     : " Si no tiene entradas o esta deshabilitado NIS server
 /* CONTESTAR NO     : " Has NIS client enabled: "bos.net.nis.server"
 * CONTESTAR NO   */ : ""
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.14 Network Settings	
 "Access permission's for directories accessible via Anonymous FTP
 
@@ -841,11 +841,17 @@ lslpp -L |grep "bos.net.nis.server"
 ---E.1.5.18.0 Network Settings	
 "NFS
 
-//Inhabilitar servidor NFS a menos que sea necesario.
+// Inhabilitar excepto en los maestros NIM.
+
+## Ejecutar :
+
+lslpp -L | grep bos.sysmgt.nim.master
+
+// Si es un Master NIM, CONTESTAR YES, si no es Master NIM ejecutar:
 
 lslpp -L |grep bos.net.nfs.server
 
-/* CONTESTAR YES */ : "  */ : " Si el comando anterior no muestra nada (no es un maestro de nim, no requiere más comprobación)
+/* CONTESTAR YES */ : "  Si es un NIM Master, Si no es MASTER NIM y NFS server no ESTA ACTIVO.
 
 /* CONTESTAR NO */ : " Fileset bos.net.nfs.server installed. NFS client enabled, it must be disabled.
 +-------------------------------------------------------------------------------------+
@@ -866,7 +872,7 @@ grep -v "^[[:space:]]*#" /etc/exports | egrep -v "sec=dh|sec=krb5|secure"
 
 /* CONTESTAR YES */ : "   : " Si /etc/exports esta vacio, o tenga datos con restrinciones.
 /* CONTESTAR N/A */ : "   */ : " Si sale inoperative"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.18.6 Network Settings	
 "NFS:  Disallow no_root_squash / root= overrides
 "No se puede especificar ningún sistema de archivos exportado con la opción 'root ='.
@@ -874,7 +880,7 @@ grep -v "^[[:space:]]*#" /etc/exports | egrep -v "sec=dh|sec=krb5|secure"
 grep -v "^[[:space:]]*#" /etc/exports | grep "root="
 
 /* CONTESTAR YES */ : "     : " Si /etc/exports esta vacio, o tenga datos con restrinciones.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.18.7 Network Settings	
 "Disallow no_root_squash / anon= overrides
 "No se puede especificar ningún sistema de archivos exportado con la opción 'anon='.
@@ -913,7 +919,7 @@ egrep -i "rsh" /etc/inetd.conf
 grep "^#*start[[:blank:]]/usr/.*/sendmail" /etc/rc.tcpip
 
 /* CONTESTAR YES */ : "     : "Si sale comentado o vacio.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.23.1 Network Settings	/etc/inittab - qdaemon
 ---E.1.5.23.2 Network Settings	/etc/inittab - lpd
 ---E.1.5.23.3 Network Settings	/etc/inittab - piobe
@@ -929,7 +935,7 @@ lsitab dt
 /* CONTESTAR YES */ : "     : " Si no da resultado,o si el servidor no es de  internet facing systems(Servidores que tienen conexion a internet"
 			"(con hacer un ping www.google.es), si muestra resultado tiene conexion a internet).
 /* CONTESTAR NO     : " Si el servdior es de internet facing systems, hay que eliminar la entrada.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.23.5 Network Settings	/etc/rc.tcpip - snmpd
 ---E.1.5.23.6 Network Settings	/etc/rc.tcpip - dhcpcd
 ---E.1.5.23.7 Network Settings	/etc/rc.tcpip - dhcprd
@@ -964,7 +970,7 @@ grep "^#*start[[:blank:]]/usr/sbin/ndpd-router" /etc/rc.tcpip
 
 /* CONTESTAR YES */ : "     : " Si el resultado sale comentado (#) o esta vacio.
 /* CONTESTAR NO     : " The entry is not removed or disabled, en "/etc/rc.tcpip".
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.23.20 Network Settings	/etc/inetd.conf - uucp
 ---E.1.5.23.21 Network Settings	/etc/inetd.conf - talk
 ---E.1.5.23.22 Network Settings	/etc/inetd.conf - ntalk
@@ -987,7 +993,7 @@ grep "^#instsrv*[[:blank:]]" /etc/inetd.conf
 
 /* CONTESTAR YES */ : "     : " Si el resultado sale comentado (#) o esta vacio.
 /* CONTESTAR NO     The entry is not removed or disabled, en "/etc/inetd.conf".
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.24.1 Network Settings
 
 ps -ef |grep "syslogd"
@@ -999,7 +1005,7 @@ root 57758 70094 0 10:22:08 - 0:00 /usr/sbin/syslogd -r
 o
 "No es un servidor de internet facing systems (IFS)
 
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.25.1 Network Settings
 
 "En todos los servidores de Internet: En la stanza predeterminada en /etc/security/limits, 
@@ -1013,7 +1019,7 @@ lsattr -El sys0 -a fullcore
 
 /* CONTESTAR YES */ : "    : " Si core= 0 y core_hard=0, y/o fullcore en false.
 /* CONTESTAR NO    : " Core has no value 0, and core_hard has no value 0, plus fullcore is in TRUE "
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.26.1 Network Settings
 "For IFS, disable this service.
 
@@ -1025,7 +1031,7 @@ lsitab -a |grep "/etc/rc.ncs" | cut -f1 -d:
 o
 "Si no es un servidor de  internet facing systems(IFS)
 
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.26.2 Network Settings
 "Ensure that service is disabled:
 
@@ -1037,7 +1043,7 @@ lsitab httpdlite
 o
 "Si no es un servidor de  internet facing systems(IFS) 
 
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.26.3 Network Settings
 "Ensure that pmd is disabled:
 
@@ -1049,7 +1055,7 @@ lsitab pmd
 o
 "Si no es un servidor de  internet facing systems(IFS) 
 
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.5.26.4 Network Settings
 "Ensure that writesrv is now disabled:
 
@@ -1061,14 +1067,14 @@ lsitab writesrv
 o
 "Si no es un servidor de  internet facing systems(IFS) 
 
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.2 Protecting Resources - OSRs
 "Los valores para OTHER en este directorio deben ser r-x. - NO RECURSIVO
 
 ls -ld /
 
 /* CONTESTAR YES */ : "     : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.3.1 Protecting Resources - OSRs
 "Los valores para OTHER en estos directorios y todos los archivos y directorios que hay debajo de ellos deben ser r-x o más estrictos:
 
@@ -1078,7 +1084,7 @@ ls -la /etc | grep -v  "^l.........." | grep  "^........w.."
 //muestra todos aquellos ficheros que en other tengan W, solo se revisan lo que sean ficheros y directorios.
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.3.2 Protecting Resources - OSRs
 
 "Los valores para OTHER en estos directorios y todos los archivos y directorios que hay debajo de ellos deben ser r-x o más estrictos:
@@ -1089,7 +1095,7 @@ ls -la /bin | grep -v  "^l.........." | grep  "^........w.."
 //muestra todos aquellos ficheros que en other tengan W, solo se revisan lo que sean ficheros y directorios.
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.3.3 Protecting Resources - OSRs
 ---E.1.8.3.4 Protecting Resources - OSRs
 "Los valores para OTHER en estos directorios y todos los archivos y directorios que hay debajo de ellos deben ser r-x o más estrictos:
@@ -1100,7 +1106,7 @@ ls -la /usr/bin | grep -v  "^l.........." | grep  "^........w.."
 //muestra todos aquellos ficheros que en other tengan W, solo se revisan lo que sean ficheros y directorios.
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.3.5 Protecting Resources - OSRs
 "Los valores para OTHER en estos directorios y todos los archivos y directorios que hay debajo de ellos deben ser r-x o más estrictos:
 
@@ -1110,14 +1116,14 @@ ls -la /usr/etc | grep -v  "^l.........." | grep  "^........w.."
 //muestra todos aquellos ficheros que en other tengan W, solo se revisan lo que sean ficheros y directorios.
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.3.6 Protecting Resources - OSRs
 "Los valores para OTHER en estos directorios deben ser r-x o más estrictos: NO RECURSIVO
 
 ls -ld /usr
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.3.7 Protecting Resources - OSRs
 "Los valores para OTHER en estos directorios deben ser r-x o más estrictos:
 
@@ -1127,7 +1133,7 @@ ls -la /usr/share | grep -v  "^l.........." | grep  "^........w.."
 //muestra todos aquellos ficheros que en other tengan W, solo se revisan lo que sean ficheros y directorios.
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.3.8.1 Protecting Resources - OSRs
 "Los valores para OTHER en estos directorios deben ser r-x o más estrictos: NO RECURSIVO
 
@@ -1135,7 +1141,7 @@ ls -ld /usr/share/dict
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
 * CONTESTAR NO   */ : ""
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.3.8.2 Protecting Resources - OSRs
 "Los valores para OTHER en estos directorios deben ser r-x o más estrictos:
 
@@ -1162,14 +1168,14 @@ ls -la /var | grep -v  "^l.........." | grep  "^........w.."
 ls -ld /var/adm/
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.4.1.2 Protecting Resources - OSRs
 "Los valores para OTHER en estos directorios deben ser r-x o más estrictos:
 
 ls -ld /var/adm/cron
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.4.1.3 Protecting Resources - OSRs
 "Los valores para OTHER en estos directorios deben ser r-x o más estrictos:
 
@@ -1177,14 +1183,14 @@ ls -l /var/adm/cron/*
 
 "*/
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C(PERMISOS A 0640)."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.4.1.4 Protecting Resources - OSRs
 "Se debe establecer un bit pegajoso.(sticky):
 
 ls -ld /var/adm/ras
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.4.1.5 Protecting Resources - OSRs
 "Los valores para OTHER en estos directorios deben ser r-x o más estrictos:
 
@@ -1192,7 +1198,7 @@ ls -ld /var/adm/ras/*
 
 "*/
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.4.1.6 Protecting Resources - OSRs
 "Validate the permissions of /var/ct/RMstart.log:
 "Si el archivo existe, los valores para este archivo deben ser 640 o más estrictos.
@@ -1200,7 +1206,7 @@ ls -ld /var/adm/ras/*
 ls -l /var/ct/RMstart.log
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.4.1.7 Protecting Resources - OSRs
 "Validate the permissions of /var/tmp/dpid2.log:
 "Si el archivo existe, los valores para este archivo deben ser 640 o más estrictos.
@@ -1208,7 +1214,7 @@ ls -l /var/ct/RMstart.log
 ls -l /var/tmp/dpid2.log
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.4.1.8 Protecting Resources - OSRs
 "Validate the permissions of /var/tmp/hostmibd.log:
 "Si el archivo existe, los valores para este archivo deben ser 640 o más estrictos.
@@ -1216,7 +1222,7 @@ ls -l /var/tmp/dpid2.log
 ls -l /var/tmp/hostmibd.log
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.4.1.9 Protecting Resources - OSRs
 "Validate the permissions of /var/tmp/snmpd.log:
 "Si el archivo existe, los valores para este archivo deben ser 640 o más estrictos.
@@ -1224,7 +1230,7 @@ ls -l /var/tmp/hostmibd.log
 ls -l /var/tmp/snmpd.log
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.4.1.10 Protecting Resources - OSRs
 "Validate the permissions of /var/adm/sa:
 "Para other r-x o mas restrictivo
@@ -1232,7 +1238,7 @@ ls -l /var/tmp/snmpd.log
 ls -ld /var/adm/sa 
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.4.2.1 Protecting Resources - OSRs
 "For the indicated directory $dir run:
 "Para other r-x o mas restrictivo
@@ -1240,7 +1246,7 @@ ls -ld /var/adm/sa
 ls -ld /var/spool
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.4.2.2 Protecting Resources - OSRs
 "For the indicated directory $dir run:
 "Los valores de este directorio deben ser 755 o más estrictos : NO RECURSIVO
@@ -1248,7 +1254,7 @@ ls -ld /var/spool
 ls -ld /var/spool/cron
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.4.2.3 Protecting Resources - OSRs
 "For the indicated directory $dir run:
 "Los valores de este directorio deben ser 770 o más estrictos : NO RECURSIVO
@@ -1256,7 +1262,7 @@ ls -ld /var/spool/cron
 ls -ld /var/spool/cron/crontabs/
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.4.2.4 Protecting Resources - OSRs
 "Los valores para OTHER en estos directorios deben ser --- (0) o más estrictos:
 
@@ -1265,14 +1271,14 @@ ls -l /var/spool/cron/crontabs/* | grep -v ""^d""
 "*/
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
 /* CONTESTAR NO   */ : "The file: '/var/spool/cron/crontabs/uucp', must be for other ---"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.4.2.5 Protecting Resources - OSRs
 "Los valores para OTHER en estos directorios deben ser --- (0) o más estrictos:
 
 ls -ld /var/spool/mqueue
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.5.1 Protecting Resources - OSRs
 ---E.1.8.5.2 Protecting Resources - OSRs
 "Settings for this directory must be 750 or more stringent.
@@ -1281,13 +1287,13 @@ ls -ld /audit
 ls -la /audit/
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.6.1 Protecting Resources - OSRs : "NO RECURSIVO
 
 ls -ld /tmp
 
 /* CONTESTAR YES */ : "   */ : "Si los permisos son 1777"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.6.3.1 Protecting Resources - OSRs
 "Must have permission mode x50 or more stringent; this setting is not recursive.
 
@@ -1295,49 +1301,49 @@ ls -ld /etc/security/
 
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.6.3.2 Protecting Resources - OSRs
 "Para other r-x o mas restrictivo
 
 ls -la /etc/security/*
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.6.3.3 Protecting Resources - OSRs
 "Los valores para OTHER y GRUPO AUDIT deben ser r-x o más estrictos:
 
 ls -ld /etc/security/audit 
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.6.4.1 Protecting Resources - OSRs
 "For the directory  /var/tmp IS 1777:
 
 ls -ld /var/tmp
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 E.1.8.6.4.2 Protecting Resources - OSRs	
 "Los valores para OTHER en estos directorios deben ser --- (0) o más estrictos:
 
 ls -ld /var/tmp/hostmibd.log
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.6.4.3 Protecting Resources - OSRs
 "Los valores para OTHER en estos directorios deben ser --- (0) o más estrictos:
 
 ls -ld /var/tmp/snmpd.log
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.7.1 Protecting Resources - OSRs
 "Must be x40 or more restrictive
 
 ls -ld /etc/snmpdv3.conf
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.7.2 Protecting Resources - OSRs
 "Must be x40 or more restrictive
 
@@ -1345,7 +1351,7 @@ ls -ld /etc/snmpd.conf
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
 
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.8.1 Protecting Resources - OSRs
 ---E.1.8.8.2 Protecting Resources - OSRs
 ---E.1.8.8.3 Protecting Resources - non-OSRs
@@ -1364,7 +1370,7 @@ ls -l /tmp/*
 
 "*/
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.9.1 Protecting Resources - OSRs
 "Si el archivo existe, verifique el acceso de lectura sólo por root; escriba el acceso sólo por root
 
@@ -1372,40 +1378,40 @@ ls -ld ~root/smit.log
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
 * CONTESTAR NO   */ : ""
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.9.2 Protecting Resources - OSRs
 "Si el archivo existe, verifique el acceso de lectura sólo por root; escriba el acceso sólo por root
 
 ls -ld /var/log/hist/root/sh_history.*.smit.log
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.9.3 Protecting Resources - OSRs
 "Si el archivo existe, verifique el acceso de lectura sólo por root; escriba el acceso sólo por root
 
 ls -ld ~root/smit.script
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.9.4 Protecting Resources - OSRs
 "Si el archivo existe, verifique el acceso de lectura sólo por root; escriba el acceso sólo por root
 
 ls -ld /var/log/hist/root/sh_history.*.smit.script
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.9.5 Protecting Resources - OSRs
 "Si el archivo existe, verifique el acceso de lectura sólo por root; escriba el acceso sólo por root
 
 ls -ld ~root/smit.transaction
 
 /* CONTESTAR YES */ : "    : " Si los permisos corresponde a los que nos indican en al columna C."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.10 Protecting Resources - OSRs	userIDs
 ---E.1.8.11 Protecting Resources - OSRs	Groupids
 
 "Contestamo YES SIEMPRE
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.12.1.2 - AIX-ITSS_CSD2 ---E.1.8.12.3 Protecting Resources-OSRs/INITTAB Command WW Permiss
 "Para todas las instalaciones enumeradas en E. 1.8.12.0, debe ser propiedad de un ID/grupo tal como se identifica en la sección 5.0 u otro ID controlado como un ID que está sujeto a ser uno que tiene la Autoridad Administrativa de Seguridad y Sistema.
 
@@ -1430,7 +1436,7 @@ ls -ld /etc/rc.d/rc8.d
 ls -ld /etc/rc.d/rc9.d
 
 /* CONTESTAR YES */ : "    : " Si pertence a un UID o GID de la seccion 5.0
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.12.2 Protecting Resources - OSRs
 "Entradas con full path
 ---E.1.8.12.3 Protecting Resources - OSRs
@@ -1451,7 +1457,7 @@ cat /etc/inittab | grep -v '^#' | tr '\' ' '| tr ',' ' '| tr '\t' ' ' | tr ':' '
 /* CONTESTAR YES */ : "   : " si /etc/inittab contiene vías de acceso completas (FULL PATH) de scripts para ser ejecutado, ademas comprobar que los permisos para other sean r-x o mas restrintivos, lo mismo para grupo r-x o mas restrictivos 
 
 /* CONTESTAR NO  : " En otro caso.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.13.1 Protecting Resources - OSRs
 "Entradas con full path
 ---E.1.8.13.2 Protecting Resources - OSRs
@@ -1472,7 +1478,7 @@ cat /var/spool/cron/crontabs/root | grep -v '^#' | tr '\' ' '| tr ',' ' '| tr '\
 /* CONTESTAR YES */ : "   : " si /var/spool/cron/crontabs/root contiene vías de acceso completas (FULL PATH) de scripts para ser ejecutado, ademas comprobar que los permisos para other sean r-x o mas restrintivos, lo mismo para grupo r-x o mas restrictivos 
 
 /* CONTESTAR NO  : " En otro caso.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.14.1 Protecting Resources - OSRs
 "Entradas con full path
 ---E.1.8.14.2 Protecting Resources - OSRs
@@ -1493,7 +1499,7 @@ cat /etc/inetd.conf | grep -v '^#' | tr '\' ' '| tr ',' ' '| tr '\t' ' ' | tr ':
 /* CONTESTAR N/A */ : "   : " Si no existe /etc/inetd.conf
 /* CONTESTAR YES */ : "   : " Si /etc/inetd.conf contiene vías de acceso completas (FULL PATH) de scripts para ser ejecutado, ademas comprobar que los permisos para other sean r-x o mas restrintivos, lo mismo para grupo r-x o mas restrictivos 
 /* CONTESTAR NO  : " En otro caso.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.16.2 Protecting Resources - OSRs
 ---E.1.8.16.3 Protecting Resources - OSRs
 
@@ -1513,7 +1519,7 @@ ls -la /etc/rc.d/rc9.d
 /* CONTESTAR YES */ : "   : " Si los archivos o directorios, dentro de estos directorios, en grupo y other tienen r-x mas restrictivos.
 
 /* CONTESTAR NO  : " En otro caso.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.8.17 Protecting Resources - OSRs
 "System Default UMASK
 
@@ -1523,7 +1529,7 @@ lssec -f /etc/security/user -s default -a umask
 
 /* CONTESTAR NO  : " En otro caso.
 
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.2.0.2 Business Use Notice
 ---E.2.0.1 Business Use Notice
 
@@ -1543,7 +1549,7 @@ cat /etc/motd
 * *--------------------------------------------------------------* *
 
 * CONTESTAR NO   */ : ""
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.C.1.1.2 Permissions and Ownership
 "La escritura de grupo y a other no están permitidos en los directorios del ejecutable $PATH del usuario root.
 "Para todos los directorios, incluidos los directorios padre, listados en $PATH para root deben cumplir los siguientes controles: 
@@ -1587,5 +1593,5 @@ ls -ld /usr/util
 /* CONTESTAR NO   */ : "Si algun directorio que esta enlazado en el PATH de root, tenga permisos de escritura para other o grupo"
 /* NO */	       " The following directories, which are as executable in the root PATH, have write permissions for GROUP, cannot set stickibit for these directories::
 directory: /var/ifor, owner/group: bin bin, permission must r-x for group/other, assigned permission is: drwxrwxrwt 
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 

@@ -588,18 +588,18 @@
       "object": "TESAN",
       "owner": "TESAN",
       "tipo": "F",
-      "ownerGroup": "",
+      "ownerGroup": "*EPDSAN",
       "user": [
-        ""
+        "JUAN JOSE ROMERA DE FRUTOS"
       ],
-      "code": "",
+      "code": "2-DOC",
       "servers": [
         "ALL Server"
       ],
-      "risk": "",
-      "impact": "",
+      "risk": "The non-ability to access the Storage, Special, Emte, Hyperscale Manager software process startup console",
+      "impact": "Not posbilidade manage A9K and TPC cabins from multiple customers. Degradation of the service in case of high severity incident in clients with A9K.",
       "variable": [
-        "account=\"TESAN\""
+        ""
       ],
       "SO": "Linux"
     }

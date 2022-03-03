@@ -843,11 +843,17 @@ ls -ld $wdir
 ---E.1.5.18.0 Network Settings	
 "NFS
 
-//Inhabilitar servidor NFS a menos que sea necesario.
+// Inhabilitar excepto en los maestros NIM.
+
+## Ejecutar :
+
+lslpp -L | grep bos.sysmgt.nim.master
+
+// Si es un Master NIM, CONTESTAR YES, si no es Master NIM ejecutar:
 
 lslpp -L |grep bos.net.nfs.server
 
-/* CONTESTAR YES */ : " Si el comando anterior no muestra nada (no es un maestro de nim, no requiere más comprobación)
+/* CONTESTAR YES */ : "  Si es un NIM Master, Si no es MASTER NIM y NFS server no ESTA ACTIVO.
 
 /* CONTESTAR NO */ : " Fileset bos.net.nfs.server installed. NFS client enabled, it must be disabled.
 +-------------------------------------------------------------------------------------+

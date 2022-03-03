@@ -542,6 +542,66 @@
                 "file_authorized=\"/home/gctuxat2/.ssh/authorized_keys\""
             ],
             "SO": "Linux"
+        },
+        {
+            "object": "/home/ansible/.ssh/authorized_keys",
+            "owner": "ansible",
+            "tipo": "/S/",
+            "ownerGroup": "Soporte",
+            "user": [
+                "Soporte"
+            ],
+            "code": "NULL",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "1-OK para Public Key Label",
+            "impact": "1-OK para Public Key Label",
+            "variable": [
+                "file_authorized=\"/home/ansible/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/S/*EGCLIN/IBM-SO/Ansible!!\""                
+            ],
+            "SO": "LINUX"
+        },
+        {
+            "object": "/home/ora4g3nt/.ssh/authorized_keys",
+            "owner": "ora4g3nt",
+            "tipo": "/S/",
+            "ownerGroup": "Soporte",
+            "user": [
+                "Soporte"
+            ],
+            "code": "NULL",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "1-OK para Public Key Label",
+            "impact": "1-OK para Public Key Label",
+            "variable": [
+                "file_authorized=\"/home/ora4g3nt/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/S/*EGCDDB/IBM-SO/Usuario Proprietario de los binarios de Oracle!!\""                
+            ],
+            "SO": "LINUX"
+        },
+        {
+            "object": "/home/tomgc0/.ssh/authorized_keys",
+            "owner": "tomgc0",
+            "tipo": "/S/",
+            "ownerGroup": "Soporte",
+            "user": [
+                "Soporte"
+            ],
+            "code": "NULL",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "1-OK para Public Key Label",
+            "impact": "1-OK para Public Key Label",
+            "variable": [
+                "file_authorized=\"/home/tomgc0/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/S/EGCEBH/CTTI/Tomcat CATALINA_BASE 0!!\""                
+            ],
+            "SO": "LINUX"
         }
     ],
     "INFRA": [
@@ -860,6 +920,87 @@
                 "from=\"from=`129.39.137.114`\""
             ],
             "SO": "Aix"
+        },
+        {
+            "object": "/home/efxuxat1/.ssh/authorized_keys",
+            "owner": "efxuxat1",
+            "tipo": "/S/",
+            "ownerGroup": "*ABJ83",
+            "user": [
+                "Automations"
+            ],
+            "code": "NULL",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "",
+            "impact": "1-OK Para : Identify and Authenticate Users/Public Key Label",
+            "variable": [
+                "file_authorized=\"/home/efxuxat1/.ssh/authorized_keys\"",
+                "gecos=\"!!CZ/S/*ABJ83/IBM/Automation ID!!\","
+            ],
+            "SO": "Linux"
+        },
+        {
+            "object": "/home/efxuxat2/.ssh/authorized_keys",
+            "owner": "efxuxat1",
+            "tipo": "/S/",
+            "ownerGroup": "*ABJ83",
+            "user": [
+                "Automations"
+            ],
+            "code": "NULL",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "",
+            "impact": "1-OK Para : Identify and Authenticate Users/Public Key Label",
+            "variable": [
+                "file_authorized=\"/home/efxuxat2/.ssh/authorized_keys\"",
+                "gecos=\"!!CZ/S/*ABJ83/IBM/Automation ID!!\","
+            ],
+            "SO": "Linux"
+        },
+        {
+            "object": "/home/tevprxy1/.ssh/authorized_keys",
+            "owner": "tevprxy1",
+            "tipo": "/S/",
+            "ownerGroup": "*ILTEVA",
+            "user": [
+                "Rafal.Miskiewicz@kyndryl.com",
+                "Grzegorz.Mateja@kyndryl.com"
+            ],
+            "code": "NULL",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "",
+            "impact": "1-OK Para : Identify and Authenticate Users/Public Key Label",
+            "variable": [
+                "file_authorized=\"/home/tevprxy1/.ssh/authorized_keys\"",
+                "gecos=\"!!IL/F/*ILTEVA//-ES-20210115-009!!\","
+            ],
+            "SO": "Linux"
+        },
+        {
+            "object": "/home/cnpjbat1/.ssh/authorized_keys",
+            "owner": "cnpjbat1",
+            "tipo": "/S/",
+            "ownerGroup": "*ABJ83",
+            "user": [
+                "Automations"
+            ],
+            "code": "NULL",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "",
+            "impact": "1-OK Para : Identify and Authenticate Users/Public Key Label",
+            "variable": [
+                "file_authorized=\"/home/cnpjbat1/.ssh/authorized_keys\"",
+                "gecos=\"!!CZ/S/*ABJ83/IBM/IPC automation!!\","
+            ],
+            "SO": "Linux"
         }
     ],
     "FT": [
