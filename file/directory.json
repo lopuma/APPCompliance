@@ -500,6 +500,44 @@
         "Directorios, sub-directorios y ficheros, no se pueden editar permisos, sin authorizacion"
       ],
       "SO": "Linux"
+    },
+    {
+      "object": "/u03/export/33204768",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Mirtha Caballero Acosta"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "Directorios, sub-directorios y ficheros de Bases de datos",
+      "impact": "",
+      "variable": [
+        "directory=\"/u03/export/33204768\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/etc/oracle/maps",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Mirtha Caballero Acosta"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "Directorios, sub-directorios y ficheros de Bases de datos",
+      "impact": "",
+      "variable": [
+        "directoryETC=\"/etc/oracle/maps/\""
+      ],
+      "SO": "Linux"
     }
   ],
   "ENEL": [
@@ -955,7 +993,7 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "fileETC=\"/etc/adsm/Nodes/RESTORE/\"",
+        "directoryETC=\"/etc/adsm/Nodes/RESTORE/\"",
         "directory=\"/etc/adsm/Nodes/RESTORE/\""
       ],
       "SO": "Linux"
@@ -977,7 +1015,7 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "fileETC=\"/etc/adsm/\"",
+        "directoryETC=\"/etc/adsm/\"",
         "directory=\"/etc/adsm/\""
       ],
       "SO": "Linux"

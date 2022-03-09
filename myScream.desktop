@@ -1,19 +1,10 @@
 [Desktop Entry]
 Name[es]=Captura de Evidencia
-Name=Captura de Evidencia
 Comment[es]=Guarde imágenes de su pantalla o de ventanas individuales
 Keywords[es]=pantallazo;capturar;imprimir;
-#Exec=gnome-screenshot -a
 Terminal=false
 Type=Application
-Icon[es]=applets-screenshooter
 StartupNotify=true
-Categories=GTK;GNOME;Utility;X-GNOME-Utilities;
-#X-GNOME-Bugzilla-Bugzilla=GNOME
-#X-GNOME-Bugzilla-Product=gnome-utils
-X#-GNOME-Bugzilla-Component=screenshot
-#Actions=screen-shot;window-shot;
-#DBusActivatable=true
-#Exec=gnome-screenshot
-Exec=gnome-screenshot -a
-Icon=/home/esy9d7l1/compliance/image/screamshot.png
+Exec=gnome-screenshot --area
+Icon[es]=/usr/share/pixmaps/screamshot.png
+Icon=/usr/share/pixmaps/screamshot.png

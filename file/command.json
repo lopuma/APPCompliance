@@ -124,22 +124,40 @@
       "SO": "Linux"
     },
     {
-      "object": "",
-      "owner": "",
-      "tipo": "",
-      "ownerGroup": "",
+      "object": "/install_TIVOLI/ITM_Linux_Comun/",
+      "owner": "tivoli",
+      "tipo": "/F/",
+      "ownerGroup": "*EAUTIV",
       "user": [
-        "",
-        ""
+        "ANGEL LILLO GOMEZ"
       ],
-      "code": "",
+      "code": "1-OK",
       "servers": [
-        ""
+        "ALL Servers"
       ],
-      "risk": "",
+      "risk": "Son temporales de cuando instalan, una vez meten agente los desmontan",
       "impact": "",
       "variable": [
-        "fdSUDO=\"\""
+        "fdSUDO=\"/install_TIVOLI/ITM_Linux_Comun\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/install_TIVOLI/jre/",
+      "owner": "tivoli",
+      "tipo": "/F/",
+      "ownerGroup": "*EAUTIV",
+      "user": [
+        "ANGEL LILLO GOMEZ"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "Son temporales de cuando instalan, una vez meten agente los desmontan",
+      "impact": "",
+      "variable": [
+        "fdSUDO=\"/install_TIVOLI/jre\""
       ],
       "SO": "Linux"
     }

@@ -1,5 +1,5 @@
 +-------------------------------------------------------------------------------------+
-E.1.1.5.1 Password Requirements	/usr/share/dict/words dictionary	"last line must be:
+---E.1.1.5.1 Password Requirements	/usr/share/dict/words dictionary	"last line must be:
 $USER"
 
 "si es superior a 7.1 debe existir $USER al final"
@@ -14,11 +14,11 @@ oslevel -s
 
 cat /etc/security/user|grep -v "*" | head -n 33 | egrep "default|dictionlist"
 +-------------------------------------------------------------------------------------+
-E.1.1.12 Password Requirements	Sharing of passwords
+---E.1.1.12 Password Requirements	Sharing of passwords
 
 YES, es informacion del uso compartido de contraseñas
 +-------------------------------------------------------------------------------------+
-E.1.2.4 Logging	Log record retention time frame.
+---E.1.2.4 Logging	Log record retention time frame.
 
 #VERIFICAR LA ROTACION en cualquiera de los 3 sistemas#
 
@@ -31,14 +31,14 @@ cat /etc/logrotate.conf
 #->sinLOGKEEPE&&&sinLOGROTATE<-#
 cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
 +-------------------------------------------------------------------------------------+
-E.1.2.5.2 Logging	/var/adm/auth.log
+---E.1.2.5.2 Logging	/var/adm/auth.log
 
 "Debe existir y estar rotanto en el syslog"
 
 cat /etc/syslog.conf | egrep "auth|authpriv"
 ls -la /var/adm/auth.log
 +-------------------------------------------------------------------------------------+
-E.1.5.2.3 Network Settings	Configuration of bin subdirectory of the ftp account home directory.
+---E.1.5.2.3 Network Settings	Configuration of bin subdirectory of the ftp account home directory.
 
 Must be owned by root and grant write access only to the owner. Files contained in this directory must have mode 0555.
 
@@ -48,13 +48,13 @@ ls -la /home/ftp
 ls -ld  /home/ftp/usr/bin
 ls -la /home/ftp/usr/bin
 +-------------------------------------------------------------------------------------+
-E.1.5.2.6 Network Settings	Configuration of other subdirectories of the ftp account home directory
+---E.1.5.2.6 Network Settings	Configuration of other subdirectories of the ftp account home directory
 
 #Contestamos yes si los subdirectorios del /home/ftp no tienen permisos de escritura en other#
 
 ls -la /home/ftp
 +-------------------------------------------------------------------------------------+
-E.1.5.9 Network Settings	NNTP authentication and identification
+---E.1.5.9 Network Settings	NNTP authentication and identification
 
 Contestamos YES:
 -Si la conexión al puerto 119 nos da refused.
@@ -63,7 +63,7 @@ Comando:
 grep nntp /etc/services
 telnet localhost 119
 +-------------------------------------------------------------------------------------+
-E.1.5.16 Network Settings	Directories enabled for anonymous FTP access.
+---E.1.5.16 Network Settings	Directories enabled for anonymous FTP access.
 
 Contestamos NO:
 -Si tiene ftp activo y si se puede loguear como anónimo.
@@ -76,7 +76,7 @@ Password:> anonymous
 Login failed.
 #Contestar YES#
 +-------------------------------------------------------------------------------------+
-E.1.5.17 Network Settings	Directories enabled for tftp access.
+---E.1.5.17 Network Settings	Directories enabled for tftp access.
 
 Comando:
 grep -i 'tftp' /etc/passwd
@@ -91,19 +91,19 @@ grep tftp /etc/inetd.conf
 "#tftp"
 Yes
 +-------------------------------------------------------------------------------------+
-E.1.5.18.1 Network Settings	/etc/exports
-E.1.5.18.2 Network Settings
-E.1.5.18.3 Network Settings
-E.1.5.18.4 Network Settings
-E.1.5.18.5 Network Settings
+---E.1.5.18.1 Network Settings	/etc/exports
+---E.1.5.18.2 Network Settings
+---E.1.5.18.3 Network Settings
+---E.1.5.18.4 Network Settings
+---E.1.5.18.5 Network Settings
 
 may be exported by NFS without the -sec=dh or -secure option on an exception basis under the following conditions:
 Note: -secure is deprecated, but may be used if supported on your platform."
 
 cat /etc/exports
 +-------------------------------------------------------------------------------------+
-E.1.5.19 Network Settings	NIS maps
-E.1.5.20 Network Settings	NIS+ maps
+---E.1.5.19 Network Settings	NIS maps
+---E.1.5.20 Network Settings	NIS+ maps
 
 #"Nada refente a NIS maps en los grupos o password"#
 La siguiente  configuración es incorrecta :
@@ -147,15 +147,17 @@ egrep -i "sendmail" /etc/inetd.conf
 
 /* CONTESTAR NO   */ : " The entry is not removed or disabled : entry sendmail
 +-------------------------------------------------------------------------------------+
-E.5.0.1 Privileged Authorizations/Userids	Persons with access to the 'root' user account 
+---E.5.0.1 Privileged Authorizations/Userids	Persons with access to the 'root' user account 
 
 Contestamos N/A:
 -Siempre
 En el comentario : “No requirements in this category.”
 +-------------------------------------------------------------------------------------+
-E.5.0.3.1 Privileged Authorizations/Userids
-hasta 
-E.5.0.4.20 Privileged Authorizations/Userids
+---E.5.0.3.1 Privileged Authorizations / Userids
+
+hasta / TOTAL 38 PREGUNTAS
+
+---E.5.0.4.20 Privileged Authorizations / Userids
 
 Contestar N/A “No requirements in this category.”
 +-------------------------------------------------------------------------------------+

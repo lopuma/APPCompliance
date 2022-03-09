@@ -61,7 +61,9 @@ find /home/*/.ssh -name authorized_keys2|while read kfil; do cat $kfil|grep -vEe
 
 /* CONTESTAR NO  */ : " SSH authorized_keys file: $file_authorized_keys; Invalid from section: *º or *.*.*.* or 0/0 or 0.0.0.0/0.  or empty are forbidden values in the `from=` parameter
 +-------------------------------------------------------------------------------------+
----AV.1.2.2 Logging 	"QuietMode"
+---AV.1.2.2 Logging 	
+
+"QuietMode"
 
 "Specifies that only fatal errors should be logged.
 (F-Secure/SSH Communications Only - OS: Unix, Linux)"

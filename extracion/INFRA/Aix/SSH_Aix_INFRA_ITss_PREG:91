@@ -128,12 +128,26 @@ cat /etc/rsyslog.conf | egrep -i "secure|messages"
 /*  CONTESTAR YES*/ "Si el "/var/log/secure & /var/log/messages" esta rotando a 90 dias, y esta configurado.
 /* CONTESTAR NO*/ " in /etc/rsyslog.conf, there is no configurations.
 +-------------------------------------------------------------------------------------+
----AV.1.4.1 System Settings	"KeepAlive"
+---AV.1.4.1 System Settings
 
-#"Aplica si es OpenSSHV3.7 y inferior"#
-ssh -V
+"TCP KeepAlive (Old)
+//(OpenSSH 3.7 and prior, SunSSH)
 
-#"N/A Top-end OpenSSH of 3.7"#
+// Si openSSH es superior a 3.7
+
+cat /etc/ssh/sshd_config | grep TCPKeepAlive
+
+// Si esta comentado, reviar en el MAN el valor por defect, o si no existe esta deprecated
+
+man sshd_config
+
+o
+
+/usr/sbin/sshd -T | grep -i TCPKeepAlive
+
+/* CONTESTAR YES */ : " Si TCPKeepAlive es YES o por defecto es YES
+
+/* CONTESTAR N/A  */ : " Por la version de SSH
 +-------------------------------------------------------------------------------------+
 ---AV.1.4.2 System Settings	"TCPKeepAlive" = YES
 

@@ -406,9 +406,9 @@
   "CTTI": [
     {
       "object": "root",
-      "owner": "Sistemas",
+      "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EGCLIN",
       "user": [
         "Soporte de CTTI "
       ],
@@ -425,9 +425,9 @@
     },
     {
       "object": "emer",
-      "owner": "Sistemas",
+      "owner": "emer",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EGCLIN",
       "user": [
         "Soporte de CTTI"
       ],
@@ -444,9 +444,9 @@
     },
     {
       "object": "ibm-admin",
-      "owner": "Sistemas",
+      "owner": "ibm-admin",
       "tipo": "/S/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EGCLIN",
       "user": [
         "Soporte de CTTI"
       ],
@@ -458,6 +458,44 @@
       "impact": "",
       "variable": [
         "account=\"ibm-admin\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "oradb",
+      "owner": "oradb",
+      "tipo": "/S/",
+      "ownerGroup": "*EGCDDB",
+      "user": [
+        "Mirtha Caballero Acosta"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM",
+      "impact": "GENERICO / MAXAGE / IBM",
+      "variable": [
+        "Usuario Proprietario de los binarios de Oracle"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "oragr1d",
+      "owner": "oragr1d",
+      "tipo": "/S/",
+      "ownerGroup": "*EGCDDB",
+      "user": [
+        "Mirtha Caballero Acosta"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM",
+      "impact": "GENERICO / MAXAGE / IBM",
+      "variable": [
+        "Usuario Proprietario de los binarios de Grid Infrastructure Oracle"
       ],
       "SO": "Linux"
     }
@@ -475,10 +513,29 @@
       "servers": [
         "ALL Servers"
       ],
-      "risk": "GENERICO / MAXAGE / KYNDRYL",
-      "impact": "GENERICO / MAXAGE / KYNDRYL",
+      "risk": "GENERICO / MAXAGE / IBM",
+      "impact": "GENERICO / MAXAGE / IBM",
       "variable": [
         "Usuario para el proceso de Compliance"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "orarom",
+      "owner": "Oracle",
+      "tipo": "/F/",
+      "ownerGroup": "*EAUXOS",
+      "user": [
+        "Javi de Paula"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM",
+      "impact": "GENERICO / MAXAGE / IBM",
+      "variable": [
+        "Usuario de monitorización del Enterprise Manager de Platinum - Oracle"
       ],
       "SO": "Linux"
     },
@@ -674,8 +731,8 @@
       "servers": [
         "ALL Servers"
       ],
-      "risk": "GENERICO / MAXAGE / KYNDRYL",
-      "impact": "GENERICO / MAXAGE / KYNDRYL",
+      "risk": "GENERICO / MAXAGE / IBM",
+      "impact": "GENERICO / MAXAGE / IBM",
       "variable": [
         "Usuario de aplicativo TIVOLI"
       ],

@@ -1,43 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 SUDO Linux Cesce CsD  - Issue REF : 742473 / PRE 4
-/*----------------------------------------------------------------------------------------------*/
- "=============================================================================================="
-/*----------------------------------------------------------------------------------------------*/
-ZY.1.2.3 Logging	Secondary logging
-
-#"Si la configuración de sudo implementado permite a los usuarios o grupos realizar el mandato su, el registro secundario se debe implementar para mantener la responsabilidad individual, a través de un registro que registra los mandatos emitidos por cada individuo."
-
-//Se revisan 2 cosas.
-➡ 1 "Que el registro de sudo este implementado
-
-cat /etc/sudoers | grep -i logfile
-cat /etc/sudoers.d/* | grep -i logfile
-
-#"Ejemplo
---> Defaults logfile=/var/adm/sudo.log, log_year, log_host, loglinelen=0
-#*/
-
-"Lanzar un ls del fichero que nos muestra y debe existir
-ls -la /var/adm/sudo.log
-
-➡ 2 "Que existe un registro de comandos(Secondary Longgins)
-        //Esto se puede verificar de 2 formas, si cumple cualquiera de las 2 es YES.
-      OPCION ➡ 1 "Primero un fichero llamado secondary_logging_IBM.sh, debe existir y contener                      la ruta, donde se guardan los logs de los comandos por usuario.
-        ls -la /etc/profile.d/secondary_logging_IBM.sh 
-        cat /etc/profile.d/secondary_logging_IBM.sh | grep -i 'HIST_DIR='
-        "Lanzar un ls del fichero que nos muestra
-        ls -la /var/log/hist
-        
-      OPCION ➡ 2 "Segundo, si no existe el fichero IBM.sh, puede estar implementado en /etc/bashrh
-        ls -la /etc/bashrc  
-        cat /etc/bashrc  | grep -i 'HIST_DIR='
-        "Lanzar un ls del fichero que nos muestra
-        ls -la /var/log/hist
-        //###########################################################################
-
-/*  CONTESTAR YES*/ "Si el fichero de sudo.log, existe y esta configurado en el SUDOERS"
-/* CONTESTAR NO*/ : "No tiene implementado el fichero del sudo.log, en la configuracion del SUDOERS. : Defaults logfile=/var/adm/sudo.log, log_year, log_host, loglinelen=0"
-			"The file of the sudo.log, is not the correct one, is configured by default: /var/log/sudo.log, it is rRecommended to be: /var/adm/sudo.log
 +-------------------------------------------------------------------------------------+
 ---ZY.1.2.1 Logging
 "Sudo Logging, must not be disabled

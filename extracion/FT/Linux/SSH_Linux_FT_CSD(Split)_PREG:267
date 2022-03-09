@@ -40,11 +40,8 @@ SSH LINUX FT Csd(Split) - Issue REF : 756777 / PRE 267
 ---AV.2.1.1.7 Encryption	Authentication - Public Key - Public key minimum length
 ---AV.1.9.1 Protecting Resources - User Resources	PermitUserEnvironment  (OpenSSH 3.5/SunSSH 1.2 and greater - OS: Unix, Linux)
 ---AV.2.0.1.2 Business Use Notice	Business use Notice - VanDyke Vshell
----AV.1.4.1 System Settings	KeepAlive (OpenSSH 3.7 and prior/SunSSH/Attachmate RSIT UNIX Server - OS: Unix, Linux)
-
 
 "Preguntas que N/A por Sistema Operativo. "For OS, revision OpenSSH"
-
 +-------------------------------------------------------------------------------------+
 ---AV.1.1.1 Password Requirements
 "PermitEmptyPasswords  
