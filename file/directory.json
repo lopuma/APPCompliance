@@ -1081,6 +1081,25 @@
       "SO": "Linux"
     },
     {
+      "object": "/install_TIVOLI/",
+      "owner": "tivoli",
+      "tipo": "/F/",
+      "ownerGroup": "*EAUTIV",
+      "user": [
+        "ANGEL LILLO GOMEZ"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "Son temporales de cuando instalan, una vez meten agente los desmontan",
+      "impact": "",
+      "variable": [
+        "directory=\"/install_TIVOLI/\""
+      ],
+      "SO": "Linux"
+    },
+    {
       "object": "/homeuser/hpfms/",
       "owner": "hpfms",
       "tipo": "/C/",
