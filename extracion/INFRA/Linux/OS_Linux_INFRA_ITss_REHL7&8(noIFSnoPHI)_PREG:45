@@ -148,30 +148,13 @@ cat /etc/profile | grep -i "IBMsinit.sh"
 ---IZ.1.4.6.2 System Settings	
 "/etc/csh.login
 
-//NOTA
-"Si CSH está instalado, deb RETORNA una invocación de" source /etc/profile.d/IBMsinit.csh
-
-//Saber que shell usa.
-
-echo $SHELL
-printenv SHELL
-ps -p "$$"
-
-// Saber las shell que estan instaladas.
-
-cat /etc/shells
-
-"Si usa CSH o esta instalada CSH, ejecutar el siguiente comando.
+//Debe tener la invocacion a IBMsinit.csh
 
 cat /etc/csh.login | grep -i "IBMsinit.csh"
 
 /* CONTESTAR YES */ : "El archivo RETORNA una invocación de" source /etc/profile.d/IBMsinit.csh
 
-/* CONTESTAR NO  */ : "Si no retorna la invocacion"
-
-/* NO */ : " In File /etc/csh.login, does not  trigger an invocation of line . /etc/profile.d/IBMsinit.csh
-
-/* CONTESTAR N/A  */ : " The server does not use the csh shell."
+/* CONTESTAR NO  */ : " In File /etc/csh.login, does not  trigger an invocation of line . /etc/profile.d/IBMsinit.csh
 +-------------------------------------------------------------------------------------+
 ---IZ.1.4.6.3 System Settings
 "/etc/profile.d/IBMsinit.sh
@@ -180,12 +163,9 @@ cat /etc/csh.login | grep -i "IBMsinit.csh"
 
 grep '^[^#]*TMOUT' /etc/profile.d/IBMsinit.sh
 
-/* CONTESTAR YES */ : "Debe retornar:-"
-			    TMOUT=21600
-			    export TMOUT
+/* CONTESTAR YES */ : " Si retornar TMOUT=21600 seguido export TMOUT.
 
-/* CONTESTAR NO  */ : " Si no tiene un TMOUT establecido.
-/* NO */ : " /etc/profile.d/IBMsinit.sh Default: Set systems to terminate a session after 21600 seconds of inactivity. File must  contain "TMOUT=21600" followed by "export TMOUT". A shorter time frame may be specified.
+/* CONTESTAR NO  */ : " /etc/profile.d/IBMsinit.sh Default: Set systems to terminate a session after 21600 seconds of inactivity. File must  contain "TMOUT=21600" followed by "export TMOUT". A shorter time frame may be specified.
 +-------------------------------------------------------------------------------------+
 ---IZ.1.4.6.4 System Settings
 "/etc/profile.d/IBMsinit.csh
@@ -242,7 +222,7 @@ Shells='/bin/csh|/bin/tcsh|/bin/sh|/bin/ksh|/bin/bash|/bin/sh|/bin/false|/sbin/n
 
 //Segundo debemos comprobar que cada shell que retorna por usuario, soporten la funcion de TMOUT O autologout
 
-"NOTA : HAY QUE COPIAR EL SIGUIENTE CODIGO ENTERO.
+# NOTA : HAY QUE COPIAR EL SIGUIENTE CODIGO ENTERO #
 
 // El script muestra todas aquellas cuentas con su shell definida, las shell que aparecen son las que no estan definida por defecto en la variable Shells, Y son las que debemos comprobar si soportan TMOUT o autologout.
 

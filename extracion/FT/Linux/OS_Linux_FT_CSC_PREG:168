@@ -975,6 +975,7 @@ service nfs status
 "Debe estar inactivo
 +-------------------------------------------------------------------------------------+
 ---AD.1.5.10.1 Network Settingsyppasswd daemon
+
 ---AD.1.5.10.2 Network SettingsNIS maps
 ---AD.1.5.11 Network SettingsNIS+ maps
 
@@ -985,8 +986,29 @@ cat /etc/nsswitch.conf|grep -i nis
 cat /etc/rc.nfs|grep -i nis
 
 +-------------------------------------------------------------------------------------+
----AD.1.5.12.2 Network Settings	rlogin	Allowed to be active on secure internal networks Services on secure internal networks 
----AD.1.5.12.3 Network Settings	rsh	Allowed to be active on secure internal networks Services on secure internal networks 
+---AD.1.5.12.2 Network Settings	
+"rlogin	
+
+// Servicios en redes internas seguras
+
+service rlogin status 
+
+/* CONTESTAR YES */ : " Si es una red interna segura.
+
+/* CONTESTAR N/A */ : " Si el servicio no esta activo.
++-------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
+---AD.1.5.12.3 Network Settings	
+"rsh
+
+// Servicios en redes internas seguras
+
+service rsh status
+
+/* CONTESTAR YES */ : " Si es una red interna segura.
+
+/* CONTESTAR N/A */ : " Si el servicio no esta activo.
++-------------------------------------------------------------------------------------+
 ---AD.1.5.12.4  Network Settings	sendmail –bd	Allowed to be active on secure internal networks Services on secure internal networks 
 
 service rlogin status 
@@ -995,18 +1017,76 @@ service rsh status
 
 service sendmail status 
 +-------------------------------------------------------------------------------------+
----AD.1.5.13.1
+---AD.1.5.13.1 Network Settings
+"Ensure core dumps are restricted
 
-grep "hard core" /etc/security/limits.conf /etc/security/limits.d/*.conf | LC_ALL=C sort -V
-
-*/"Debe ser hard core 0
+/*
+"Set 'hard core' ulimit to '0'.
+"O
+"Set fs.suid_dumpable to '0'.
+*/
 
 sysctl fs.suid_dumpable
-"Debe ser 0
+grep ""fs\.suid_dumpable"" /etc/sysctl.conf /etc/sysctl.d/*.conf | sort -V
+
+*/
+
+"SI fs.suid_dumpable to 0" // CONTESTAR YES, no se revisa nada mas
+
+//En caso contrario revisar que cumpla una de las 3 opciones siguientes "
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1.: Ulimit a traves del archivo de configuracion:
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	" CONTESTAR YES si esta definido en /etc/security/limits.conf"
+
+	cat /etc/security/limits.conf  | egrep -i "hard|core|ulimit"
+	egrep -i "hard|core|ulimit" /etc/security/limits.conf /etc/security/limits.d/* | sort -V
+
+	"*/
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2.: Configuracion Ulimit via perfiles.
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	" CONTESTAR YES si está definido ulimit a 0, en la configuracion de profile o en archivo personalizado disable-coredumps.sh "
+
+	cat  /etc/profile | egrep -i "hard|core|ulimit"
+	cat  /etc/profile.d/disable-coredumps.sh
+
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3.: Ulimit a traves de systemd 
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	" CONTESTAR YES si systemd-coredump service esta activo y la configuracion es correcta
+
+	cat /etc/services | egrep -i "systemd|coredump"
+	systemctl status systemd-coredump
+	systemctl list-units --all --state=active | grep -i coredump
+
+	"Revisar la siguente configuracionScheduleApprover
+	"Deben existir estos fichero y dentro debe estar configurado Storage=none, ProcessSizeMax=0
+
+	ls -la /etc/systemd/coredump.conf 
+	ls -la /etc/systemd/coredump.conf.d/*.conf 
+	ls -la /run/systemd/coredump.conf.d/*.conf 
+	ls -la /usr/lib/systemd/coredump.conf.d/*.conf
+
+	"*/
+
+	grep Storage /etc/systemd/coredump.conf /etc/systemd/coredump.conf.d/*.conf /run/systemd/coredump.conf.d/*.conf /usr/lib/systemd/coredump.conf.d/*.conf
+
+	"*/
+
+	grep ProcessSizeMax /etc/systemd/coredump.conf /etc/systemd/coredump.conf.d/*.conf /run/systemd/coredump.conf.d/*.conf /usr/lib/systemd/coredump.conf.d/*.conf
+
+	"*/
 +-------------------------------------------------------------------------------------+
----AD.1.5.13.2
+---AD.1.5.13.2 Network Settings
+"Ensure address space layout randomization (ASLR) is enabled
+
+//Debe existir" kernel.randomize_va_space = 2
+
 sysctl kernel.randomize_va_space
-"debe devolver 2
+grep randomize_va_space /etc/sysctl.conf /etc/sysctl.d/*.conf | sort -V
+
+"CONTESTAR YES */ : " Si existe la entrada kernel.randomize_va_space = 2
 +-------------------------------------------------------------------------------------+
 ---AD.1.8.1.2 Protecting Resources - OSR'suserIDs
 ---AD.1.8.1.3 Protecting Resources - OSR'sGroupids
@@ -1486,22 +1566,27 @@ cat /etc/motd
 ---AD.2.1.2 Encryption	
 "File/Database Storage
 
-"Se debe mirar el protocol que sea 2 o serverkey sea 1024"
+//Se pueden utilizar todos los cifrados de cifrado nativos, siempre que cumplan uno de estos valores de longitud mínima de bits: 128-bit (clave secret/simétrica), 1024-bit (claves pública/privada).
+
+// Se debe mirar el protocol que sea 2 o serverkey sea 1024
 cat /etc/ssh/sshd_config | egrep -i "protocol|ServerKeyBits"
 
-"Si sale comentado mirar en el MAN
-man sshd_config
+"Si sale comentado mirar en el MAN o mirar por defecto:
+sshd -T|grep -iprotocol
 
-"Si no muestra resultado en el MAN, mirar que exista uno de estos 2 ficheros.
+# Apartir de la la versión OpenSSH_7.4p1 ya no utiliza protocolo 1 (ServerKeyBits) #
+# En RHEL 7.8 o >, ambos están deprecated (obsoletos) #
+
+// En el caso de estar deprecated, debe estar instalado algunos de los 2 siguientes RPM: 
 
 rpm -q coreutils
 rpm -q openssl
 
-"el ssh a partir de la la versión OpenSSH_7.4p1 ya no utiliza protocolo 1."
-"y en RHEL 7.8 o > ambos están deprecated (obsoletos)"
 
-cat /etc/*release
-*/-----------------------------------+
+/* CONTESTAR YES */ : " Si tiene protocol 2 o serverKeyBits a 1024, si estan deprecated, deben tener instalados, uno de los 2 RMP.
+
+/* CONTESTAR NO  */ : " En otro caso.
++-------------------------------------------------------------------------------------+
 ---AD.2.1.3.0 EncryptionStorage of passwords (Passwords must be protected with 128-bit encryption)
 
 "Si es un rhel superior a 6 debe existir en /etc/pam.d/password-auth"

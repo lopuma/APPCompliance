@@ -132,7 +132,8 @@ grep -i 'FileCreateMode' /etc/rsyslog.conf /etc/rsyslog.d/*.conf
 
 /* CONTESTAR NO */ : " en otro caso.
 +-------------------------------------------------------------------------------------+
----AD.1.2.99 Logging	Archive Log	Enable	Archive Log in ES01QLO030SOLRM
+---AD.1.2.99 Logging	
+"Archive Log  Enable Archive Log in ES01QLO030SOLRM
 
 +-------------------------------------------------------------------------------------+
 ---AD.1.4.99 System Settings	
@@ -354,40 +355,33 @@ cat /etc/default/useradd | grep -i EXPIRE
 
 +-------------------------------------------------------------------------------------+
 ---AD.1.7.98 Identify and Authenticate Users
-"Session timeout	15 minutes
 
-"TMOUT environment variable in /etc/profile
+"Session timeout
 
-egrep 'TMOUT=|[[:space:]][[:space:]]*TMOUT[[:space:]]|[[:space:]][[:space:]]*TMOUT$' /etc/profile /etc/profile.d/*
+// TMOUT environment variable in /etc/profile
+
+egrep 'TMOUT' /etc/profile /etc/profile.d/*
+
+// Si no esta en /etc/profile o /etc/profile.d/*/, Preferiblemente se debe establecer en `/etc/profile.d/IBMsinit.sh`
+
+grep TMOUT /etc/profile.d/IBMsinit.sh
 
 "*/
-"Si no esta en /etc/profile o /etc/profile.d/*, se puede buscar en otro lugar:
+/* CONTESTAR YES */ : " Si retorna: export TMOUT=$X or TMOUT=$X
 
-grep TMOUT $HOME/.??* /etc/* 2> /dev/null
-
-"*/
-" CONTESTAR YES*/ 
-"si retorna:
-export TMOUT=$X
-or
-TMOUT=$X
-"	- para servidores PCI, sustituya $X por 15 m, or  900 s
-
-" CONTESTAR NO   TMOUT is not configured, recommended at 15 minutes or 900 seconds.
-
-
+/* CONTESTAR NO */ : " /etc/profile should not set/reset the time out control after '. /etc/profile.d/IBMsinit.sh' invocation. /etc/profile must trigger an invocation of '. /etc/profile.d/IBMsinit.sh', and does not set/reset the time out control after that invocation.
 +-------------------------------------------------------------------------------------+
 ---AD.1.7.99 Identify and Authenticate Users
 "Delete or revoke users	90 days after last logon
 
-"Muestra todos los que nunca han logueado
-lastlog
+// Muestra todas las cuentas, que nunca han logueado.
+lastlog -b 90 | egrep "Never|Nunca"
 
-"Este comando muestra todos aquellos que no han logueado en los ultimos 90 dias o mas.
-for i in `cat /etc/passwd|cut -f 1 -d ":"` ; do lastlog -b 90 -u $i|egrep -v "Never|Nunca|Usuario|Username";if [ $? = 0 ];then chage -l $i ; passwd -S $i;fi; done
+// Revisar que sean cuentas EXTERNAS "/E/I/"
 
-" CONTESTAR YES
-" CONTESTAR NO
+/* CONTESTAR YES */ : " Si no existen cuentas externas que nunca han logueado.
+
+/* CONTESTAR NO */ : " En otro caso.
 +-------------------------------------------------------------------------------------+
 ---AD.1.8.12.8 Protecting Resources - OSRs
 "gpgcheck

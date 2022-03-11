@@ -328,23 +328,37 @@ find / -type d -perm -o=wx | xargs -l ls -ld
 +-------------------------------------------------------------------------------------+
 ---IZ.1.9.1.3 Protecting Resources - User Resources
 " /etc/profile.d/IBMsinit.sh
+
+//Debe existir y contener la siguiente Configuracion"
+
+#--------- begin IBMsinit.sh --------#
+if [ $UID -gt 199 ]; then
+umask 077
+fi
+#--------- end IBMsinit.sh  ---------#
+
+cat /etc/profile.d/IBMsinit.sh
+
+/* CONTESTAR YES */ : " Si la configuracion del fichero IBMsinit.sh, es correcta.
+
+/* CONTESTAR NO  */ : " File /etc/profile.d/IBMsinit.sh must exist, be readable by all users, and contain at least: ""if [ $UID -gt 199 ]; then""\n""umask 077""\n""fi""
++-------------------------------------------------------------------------------------+
 ---IZ.1.9.1.4 Protecting Resources - User Resources
 " /etc/profile.d/IBMsinit.csh
 
-//Deben existir y contener la configuracion de Recommended Setting"
+//Debe existir y contener la siguiente Configuracion"
 
-cat /etc/profile.d/IBMsinit.sh
+#--------- begin IBMsinit.csh --------#
+if ($uid > 199) then
+    umask 077
+endif
+#--------- end IBMsinit.csh  ---------#
+
 cat /etc/profile.d/IBMsinit.csh
 
-/* CONTESTAR YES */ : "Si la configuracion de los ficheros son correctas."
+/* CONTESTAR YES */ : " Si la configuracion del fichero IBMsinit.csh, es correcta.
 
-/* CONTESTAR NO  */ : "Si la configuracion de cada fichero no es correcta."
-
-/*NO*/                          "does not exist the file /etc/profile.d/IBMsinit.xx and neither the recommended configuration"
-
-				" File /etc/profile.d/IBMsinit.sh must exist, be readable by all users, and contain at least: ""if [ $UID -gt 199 ]; then""\n""umask 077""\n""fi""
-
-				" File /etc/profile.d/IBMsinit.csh must exist, be readable by all users, and contain at least: ""if ($uid > 199) then""\n""umask 077""\n""endif""
+/* CONTESTAR NO  */ : " File /etc/profile.d/IBMsinit.csh must exist, be readable by all users, and contain at least: ""if ($uid > 199) then""\n""umask 077""\n""endif""
 +-------------------------------------------------------------------------------------+
 ---IZ.C.6.2.6 User and Group Settings 	
 "Ensure root PATH Integrity in the default root environment
