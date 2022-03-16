@@ -50,7 +50,8 @@ hostname
 cat /etc/ntp.conf | grep -i restrict
 
 +-------------------------------------------------------------------------------------+
-AD.1.4.7 System Settings	GCC (varios compiladores)
+AD.1.4.7 System Settings	
+"GCC (varios compiladores)
 
 rpm -qa | grep -i ^gcc-
 

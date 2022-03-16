@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 REF ISSUE: 696481
 +-------------------------------------------------------------------------------------+
----AD.1.1.2.0 Password Requirements
+------AD.1.1.2.0 Password Requirements
 "PASS_MIN_LEN, password complexity = MINLEN a 14
 
 /*
@@ -17,7 +17,7 @@ grep -i minlen /etc/pam.d/password-auth
 "CONTESTAR YES */ : "Si esta implementado, ya sea pam_cracklib, o pam_pwquality con su configuracion"
 "CONTESTAR NO  */ : "Incorrect System Default minimum password length or password complexity rules. Minimum password length should be set to 14 or more secure, in file /etc/pam.d/password-auth. It should be set through pam_cracklib.so or pam_pwquality.so. For more information about password length or password complexity rules see matrix coverage document."
 +-------------------------------------------------------------------------------------+
----AD.1.1.7.1 Password Requirements
+------AD.1.1.7.1 Password Requirements
 "ROOT
 
 grep root /etc/shadow| cut -d ":" -f1,2,4,5
@@ -28,23 +28,23 @@ grep root /etc/shadow| cut -d ":" -f1,2,4,5
 
 /* NO */ : "Account root has invalid Password Max Age setting of 99999  should be set to Customer Required Setting: 90. More secure value can be set.",
 +-------------------------------------------------------------------------------------+
-AD.1.1.8.1 Password Requirements	Identify and Authenticate Users
+---AD.1.1.8.1 Password Requirements	Identify and Authenticate Users
 
 "Contestar YES, es informativo de como hacer sudo etc etc..."
 +-------------------------------------------------------------------------------------+
-AD.1.2.1.2 Logging	Login success or failure
+---AD.1.2.1.2 Logging	Login success or failure
 
 "YES si existe y contiene lo de recomendaciones, N/A si no existe "
 cat /etc/syslog-ng/syslog-ng.conf
 
 "N/a systems no used syslog-ng.conf
 +-------------------------------------------------------------------------------------+
-AD.1.2.6 Logging	
+---AD.1.2.6 Logging	
 "Log record retention time frame.	90 days.
 
 /* CONTESTAR YES */ " Siempre YES, la rotaciones se realizar en un AlienVault
 +-------------------------------------------------------------------------------------+
-AD.1.4.6 System Settings	NTP	
+---AD.1.4.6 System Settings	NTP	
 
 cat /etc/ntp.conf | grep -i restrict
 
@@ -58,7 +58,7 @@ restrict -6 default kod nomodify notrap nopeer noquery
 restrict 127.0.0.1
 restrict -6 ::1
 +-------------------------------------------------------------------------------------+
-AD.1.4.7 System Settings	GCC (varios compiladores)
+---AD.1.4.7 System Settings	GCC (varios compiladores)
 
 rpm -qa | grep -i ^gcc-
 
@@ -67,21 +67,22 @@ rpm -qa | grep -i ^gcc-
 "Riesgo : si no estan esos paquetes no permite la instalacion de parches, ni recompilar las librerias en caso de incidencias
 "Impacto : estos paquetes estan para el buen funcionamiento del Agente de monitorizacion del Enterprise Manager que esta instalado en toda las maquinas
 +-------------------------------------------------------------------------------------+
-AD.1.4.8 System Settings	Shells
+---AD.1.4.8 System Settings	
+"Shells
 
-"En sistemas ubicados en entornos de producción, sólo estarán instalados aquellos lenguajes interpretados necesarios para la ejecución del servicio."#
+// En sistemas ubicados en entornos de producción, sólo estarán instalados aquellos lenguajes interpretados necesarios para la ejecución del servicio."#
 
 cat /etc/shells
 
 "Contestar YES es informacion, porque no sabemos las SHELL o lenguajes que usan en producion.
 +-------------------------------------------------------------------------------------+
-AD.1.4.4 System Settings	/etc/shadow
+---AD.1.4.4 System Settings	/etc/shadow
 
 "Debe tener la password encryptadas y no otra informacion"
 
 cat /etc/shadow | cut -d: -f1,2,5
 +-------------------------------------------------------------------------------------+
-AD.1.5.1.7 Network Settings	Directories enabled for Anonymous FTP access
+---AD.1.5.1.7 Network Settings	Directories enabled for Anonymous FTP access
 
 "si ftp esta enabled, ver si podemos entrar con anonymous anonymous"
 
@@ -94,7 +95,7 @@ ftp: socket: Address family not supported by protocol
 ftp> anonymous
 ?Invalid command
 +-------------------------------------------------------------------------------------+
-AD.1.5.2.2 Network Settings	Directories enabled for TFTP access
+---AD.1.5.2.2 Network Settings	Directories enabled for TFTP access
 "Trivial File Transfer Protocol (TFTP)
 
 "YES, si esta habilitado y los permisos en directorios son correctos."
@@ -103,7 +104,7 @@ grep -i 'tftp' /etc/passwd
 ls -l /home/tftp
 
 +-------------------------------------------------------------------------------------+
-AD.1.5.3.2 Network Settings	Network File System (NFS), Process for Exporting Confidential Data Without Strong Authentication
+---AD.1.5.3.2 Network Settings	Network File System (NFS), Process for Exporting Confidential Data Without Strong Authentication
 
 "YES, si esta vacio o tiene parametros de restrinciones de permisos eje,plo -SEC"
 
@@ -112,7 +113,7 @@ cat /etc/exports
 "PESC4L002PRE(rw,no_root_squash,async)
 "En este caso contestar YES ,lista de los hostname donde este directorio es accesible. 
 +-------------------------------------------------------------------------------------+
-AD.1.5.6 Network Settings	NNTP authentication and identification
+---AD.1.5.6 Network Settings	NNTP authentication and identification
 "Net News Transfer Protocol (NNTP) system settings
 
 cat /usr/lib/news/nntp_access
@@ -120,7 +121,7 @@ find / -name nntp_access
 
 "Si no existe nada YES"
 +-------------------------------------------------------------------------------------+
-AD.1.5.12.5 Network Settings	/etc/sysctl.conf
+---AD.1.5.12.5 Network Settings	/etc/sysctl.conf
 
 "La equivalencia en Linux es:
 "En /etc/sysctl.conf:
@@ -129,23 +130,23 @@ AD.1.5.12.5 Network Settings	/etc/sysctl.conf
 
 /sbin/sysctl -a |grep -i net.ipv4.ip_forward
 +-------------------------------------------------------------------------------------+
-AD.1.7.0.0 Identify and Authenticate Users	SUID
+---AD.1.7.0.0 Identify and Authenticate Users	SUID
 
 "Buscar si hay algún fichero con sui o guid, LA PREGUNTA YA ESTA EXCEPCIONADA, CONTESTAR YES"
 
 find / -type f -perm -2000 -o -perm -4000
 +-------------------------------------------------------------------------------------+
-AD.1.5.10.2 Network Settings	NIS maps
-AD.1.5.11 Network Settings	NIS+ maps
+---AD.1.5.10.2 Network Settings	NIS maps
+---AD.1.5.11 Network Settings	NIS+ maps
 
 "Nada refente a NIS en grupos y usuarios"
 
 cat /etc/nsswitch.conf|grep -i nis
 cat /etc/rc.nfs|grep -i nis
 +-------------------------------------------------------------------------------------+
-AD.1.5.12.2 Network Settings
-AD.1.5.12.3 Network Settings
-AD.1.5.12.4 Network Settings
+---AD.1.5.12.2 Network Settings
+---AD.1.5.12.3 Network Settings
+---AD.1.5.12.4 Network Settings
 
 "YES si no estan habilitados"
 
@@ -153,14 +154,14 @@ service rlogin status
 service rsh status 
 service sendmail status
 +-------------------------------------------------------------------------------------+
-AD.1.8.17.1 Protecting Resources -OSR's	/etc/xinetd.conf
+---AD.1.8.17.1 Protecting Resources -OSR's	/etc/xinetd.conf
 
 "Each active entry must specify full path of the file/command/script to be executed.	Protection requirements for system facility entries executing with privilege authority.
 
 ls -ld /etc/xinetd.conf 
 grep -v ^# /etc/xinetd.conf
 +-------------------------------------------------------------------------------------+
-AD.1.8.19.2 Protecting Resources -OSR's	/etc/init.d/ -or /etc/rc.d/ directory structure
+---AD.1.8.19.2 Protecting Resources -OSR's	/etc/init.d/ -or /etc/rc.d/ directory structure
 
 "si hay ficheros deberan  tener valores para "otro" de r-x o más estrictos "
 
@@ -168,13 +169,13 @@ ls -ld /etc/init.d/*
 ls -ld /etc/rc.d/*
 find /etc/init.d/*  /etc/rc.d/* -perm -o=wx  | xargs -l ls -laH | grep ^........w. | grep -v lrw; 
 +-------------------------------------------------------------------------------------+
-AD.1.9.1.1 Protecting Resources - User Resources	$HOME
+---AD.1.9.1.1 Protecting Resources - User Resources	$HOME
 
 "Contestar YES		
 +-------------------------------------------------------------------------------------+
----AD.1.9.1.3 Protecting Resources - User Resources
+------AD.1.9.1.3 Protecting Resources - User Resources
 " /etc/profile.d/IBMsinit.sh
----AD.1.9.1.4 Protecting Resources - User Resources
+------AD.1.9.1.4 Protecting Resources - User Resources
 " /etc/profile.d/IBMsinit.csh
 
 //Deben existir y contener la configuracion de Recommended Setting"
@@ -190,8 +191,8 @@ cat /etc/profile.d/IBMsinit.csh
 
 /*NO*/                          "The configuration in: /etc/profile.d/IBMsinit.xx, is not the correct, it must be done according to the recommended configuration."
 +-------------------------------------------------------------------------------------+
-AD.2.1.1 Encryption	Data Transmission
----AD.2.1.2 Encryption	
+---AD.2.1.1 Encryption	Data Transmission
+------AD.2.1.2 Encryption	
 "File/Database Storage
 
 "Se debe mirar el protocol que sea 2 o serverkey sea 1024"
@@ -211,7 +212,7 @@ rpm -q openssl
 cat /etc/*release
 */
 +-------------------------------------------------------------------------------------+
-AD.2.1.4 Encryption	Protection of private keys (Minimum 1024-bit public key)
+---AD.2.1.4 Encryption	Protection of private keys (Minimum 1024-bit public key)
 
 #"Si hay ficheros id_rsa o authorized_keys deben ser propietario del owner"#
 
