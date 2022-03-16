@@ -1,0 +1,293 @@
+{
+  "AFB": [
+    {
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
+      "user": [
+        "",
+        ""
+      ],
+      "code": "",
+      "servers": [
+        ""
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "service=\"\""
+      ],
+      "SO": "Linux"
+    }
+  ],
+  "ASISA": [
+    {
+      "object": "pcnfsd",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "service=\"pcnfsd\""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "rsh",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "service=\"rsh\""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "ftp",
+      "owner": "moulghaz",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Usuario de cliente, Oulghazi, Mohamed"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "CP1ABWASPRU1",
+        "cp1abwaspre1"
+      ],
+      "risk": "GENERICO /  SERVICE : FTP,  Port 21 / CUSTOMER",
+      "impact": "GENERICO /  SERVICE : FTP,  Port 21 / CUSTOMER",
+      "variable": [
+        "Aplica a todas las maquinas, que tengan FTP y lo utiliza el cliente "
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "nfs",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "CP1ABWASPRE1",
+        "SAPASISASM",
+        "SAPASISADESA"
+      ],
+      "risk": "GENERICO /  SERVICE : NFS / CUSTOMER",
+      "impact": "GENERICO /  SERVICE : NFS / CUSTOMER",
+      "variable": [
+        "Sistema de archivos de red compartidos para cuentas de clientes."
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "NFS",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "CP1ABWASPRE2"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "service=\"nfs\""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "permitrootlogin",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "sapasisasm"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "service=\"PermitRootLogin\""
+      ],
+      "SO": "Aix"
+    }
+  ],
+  "CESCE": [
+    {
+      "object": "PermitRootLogin",
+      "owner": "Sistemas",
+      "tipo": "/S/",
+      "ownerGroup": "Grupo de Sistemas",
+      "user": [
+        "GEMMA ESCAR APARICIO", 
+        "NINELA ELENA PAVEL MANCIU", 
+        "RAMON RUIZ GARCIA"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "INFLIORAPRE03",
+        "INFLIORAPRE01",
+        "INFLIORAPRE04",
+        "INFLIORAPRO01",
+        "INFLIORAPRE02",
+        "INFLIORAPRO02"
+      ],
+      "risk": "Poner PermitRootLogin a NO en la lista de servidores",
+      "impact": "",
+      "variable": [
+        "service=\"PermitRootLogin=no\""
+      ],
+      "SO": "Linux"
+    }
+  ],
+  "FT": [
+    {
+      "object": "PermitRootLogin",
+      "owner": "Sistemas",
+      "tipo": "/S/",
+      "ownerGroup": "Group Sistemas",
+      "user": [
+        ""
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "AOTLXPRSIO10002"
+      ],
+      "risk": "By restricting root login through ssh, a user is forced to use a regular, account to login, and perform su to gain root acces.  Root access is achieved by logging into a regular non-privileged userid, and then su To provide an audit trail.",
+      "impact": "The configuration is required to perform server activities, for gpfs requirements it is mandatory to put it on the nodes of the cluster itself.",
+      "variable": [
+        "Para servidores CLUSTER, tiene PermitRootLogin a YES, con un Match Address a las IP del CLUSTER, puede ir conjunto con un PermitRootLogin a NO"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "nfs",
+      "owner": "Sistemas",
+      "tipo": "/S/",
+      "ownerGroup": "Group Sistemas",
+      "user": [
+        ""
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "tibbwp2"
+      ],
+      "risk":"GENERICO /  SERVICE : NFS / IBM",
+      "impact": "GENERICO /  SERVICE : NFS / IBM",
+      "variable": [
+        ""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "ftp",
+      "owner": "Sistemas",
+      "tipo": "/S/",
+      "ownerGroup": "Group Sistemas",
+      "user": [
+        "PEDRO JAVIER PRIETO HOLGUIN"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk":"Aplica a todos los server que no tengan conexiones FTP",
+      "impact": "Pertenece al puerto 21",
+      "variable": [
+        "service=\"ftp\""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "telnet",
+      "owner": "Sistemas",
+      "tipo": "/S/",
+      "ownerGroup": "Group Sistemas",
+      "user": [
+        "PEDRO JAVIER PRIETO HOLGUIN"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk":"Aplica a todos los server que no tengan shell `/bin/false`, para la cuenta FTP",
+      "impact": "Pertenece al puerto 23",
+      "variable": [
+        "service=\"telnet\""
+      ],
+      "SO": "Aix"
+    }
+  ],
+  "INFRA": [
+    {
+      "object": "LDAP",
+      "owner": "Sistemas",
+      "tipo": "/S/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ES06QIH02IR01RM"
+      ],
+      "risk": "If we disable this SLAPD service, CACF automation framework won't be able to transfer files to endpoints since BDS service depends on this SLAPD service. CACF  is required to handle automation actions like compliance, inventory and patching among others. It's a mandatory requirement to check and apply compliance settings. If we disable it, we will not be able to follow security guidelines and wil impact in customer agreements.",
+      "impact": "SLAPD is a service that exposes user information. Any device connected to the same network would be able to acces userid information. In order to avoid it, we've configured the service to listen only in localhost interface.",
+      "variable": [
+        ""
+      ],
+      "SO" : "Linux"
+    }
+  ],
+  "LBK": [
+    {
+      "object": "netstat",
+      "owner": "Sistemas",
+      "tipo": "/S/",
+      "ownerGroup": "Grupo de Sistemas",
+      "user": [
+        "GEMMA ESCAR APARICIO", 
+        "NINELA ELENA PAVEL MANCIU", 
+        "RAMON RUIZ GARCIA"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "SVTARQFRT7P"
+      ],
+      "risk": "GENERICO /  SERVICE Netsat / LBK",
+      "impact": "GENERICO /  SERVICE Netsat / LBK",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    }
+  ]
+}

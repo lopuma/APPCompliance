@@ -1,0 +1,926 @@
+desviaciones_LBK.json:        "modulo": "Protecting Resources-OSRs/Log File Restrictions",
+desviaciones_LBK.json-        "clave": "WTMP",
+--
+desviaciones_LBK.json:        "modulo": "Business Use Notice/Business Use Notice Required",
+desviaciones_LBK.json-        "clave": "BUN",
+--
+desviaciones_LBK.json:        "modulo": "Network Settings/Ensure nfs-utils is not enabled and active",
+desviaciones_LBK.json-        "clave": "NFS",
+--
+desviaciones_LBK.json:        "modulo": "Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories",
+desviaciones_LBK.json-        "clave": "STICKY",
+-- 10/03
+desviaciones_LBK.json:        "modulo": "Protecting Resources-OSRs/OSR /TMP Files Restrictions",
+desviaciones_LBK.json-        "clave": "OSRTMP",
+--
+desviaciones_LBK.json:        "modulo": "Protecting Resources-OSRs/CRON Full Path Restriction",
+desviaciones_LBK.json-        "clave": "CRON",
+--
+desviaciones_LBK.json:        "modulo": "Password Requirements/Password MIN Age Shadow",
+desviaciones_LBK.json-        "clave": "MINAGE",
+--
+desviaciones_LBK.json:        "modulo": "Encryption/Password Encryption Required",
+desviaciones_LBK.json-        "clave": "SHA512",
+--
+desviaciones_LBK.json:        "modulo": "Password Requirements/Password History",
+desviaciones_LBK.json-        "clave": "REMEMBER",
+--
+desviaciones_LBK.json:        "modulo": "Logging/Ntpd has secure defaults",
+desviaciones_LBK.json-        "clave": "NTPD",
+--
+desviaciones_LBK.json:        "modulo": "Password Requirements/Password MAX Age /etc/shadow",
+desviaciones_LBK.json-        "clave": "MAXAGE",
+--
+desviaciones_LBK.json:        "modulo": "Network Settings/TCP Configuration Files Restrictions",
+desviaciones_LBK.json-        "clave": "SYSCTL",
+--
+desviaciones_LBK.json:        "modulo": "System Settings/MaxAuthTries Restriction",
+desviaciones_LBK.json-        "clave": "MAXAUTHTRIES",
+--
+desviaciones_LBK.json:        "modulo": "Business Use Notice/PrintMotd Restriction",
+desviaciones_LBK.json-        "clave": "PRINTMOTD",
+--
+desviaciones_LBK.json:        "modulo": "AD.1.9.1.3 Protecting Resources - User Resources",
+desviaciones_LBK.json-        "clave": "IBMSINIT.SH",
+--
+desviaciones_LBK.json:        "modulo": "AD.1.9.1.4 Protecting Resources - User Resources",
+desviaciones_LBK.json-        "clave": "IBMSINIT.CSH",
+--
+desviaciones_LBK.json:        "modulo": "Network Settings/Prohibited Processes",
+desviaciones_LBK.json-        "clave": "PROCESSES",
+--
+desviaciones_LBK.json:        "modulo": "IZ.1.9.1.3 Protecting Resources - User Resources",
+desviaciones_LBK.json-        "clave": "",
+--
+desviaciones_LBK.json:        "modulo": "IZ.1.9.1.4 Protecting Resources - User Resources",
+desviaciones_LBK.json-        "clave": "",
+--
+desviaciones_LBK.json:        "modulo": "Protecting Resources-OSRs/Set gpgcheck in yum file",
+desviaciones_LBK.json-        "clave": "GPGCHECK",
+--
+desviaciones_LBK.json:        "modulo": "IZ.1.8.12.8 Protecting Resources - OSRs",
+desviaciones_LBK.json-        "clave": "",
+--
+desviaciones_LBK.json:        "modulo": "Protecting Resources-OSRs/OSR /ETC Restrictions",
+desviaciones_LBK.json-        "clave": "OSRETC",
+--
+desviaciones_LBK.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/crontab Restrictions",
+desviaciones_LBK.json-        "clave": "OSRCRONTAB",
+--
+desviaciones_LBK.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/cron.hourly Restrictions",
+desviaciones_LBK.json-        "clave": "OSRHOURLY",
+--
+desviaciones_LBK.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/cron.daily Restrictions",
+desviaciones_LBK.json-        "clave": "OSRDAILY",
+--
+desviaciones_LBK.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/cron.weekly Restrictions",
+desviaciones_LBK.json-        "clave": "OSRWEEKLY",
+--
+desviaciones_LBK.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/cron.monthly Restrictions",
+desviaciones_LBK.json-        "clave": "OSRMONTHLY",
+--
+desviaciones_LBK.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/cron.d Restrictions",
+desviaciones_LBK.json-        "clave": "OSRCRON.D",
+--
+desviaciones_LBK.json:        "modulo": "Password Requirements/NULL Passphrase",
+desviaciones_LBK.json-        "clave": "IDRSA",
+--
+desviaciones_LBK.json:        "modulo": "Password Requirements/Password shadow specification",
+desviaciones_LBK.json-        "clave": "EMPTY",
+--
+desviaciones_LBK.json:        "modulo": "Protecting Resources-OSRs/OSR /OPT Files Restrictions",
+desviaciones_LBK.json-        "clave": "OSROPT",
+--
+desviaciones_LBK.json:        "modulo": "IZ.1.4.6.3 System Settings",
+desviaciones_LBK.json-        "clave": "",
+--
+desviaciones_AFB.json:        "modulo": "Identify and Authenticate Users/PermitRootLogin Restriction",
+desviaciones_AFB.json-        "clave": "PERMITROOTLOGIN",
+--
+desviaciones_AFB.json:      "modulo": "Password Requirements/Private Key Passphrase",
+desviaciones_AFB.json-      "clave": "NOT PASSPHRASE",
+--
+desviaciones_AFB.json:    "modulo": "Identify and Authenticate Users/Public Key Label",
+desviaciones_AFB.json-    "clave": "LABEL",
+--
+desviaciones_AFB.json:      "modulo": "Identify and Authenticate Users/Public Key Authentication",
+desviaciones_AFB.json-      "clave": "PUBLICKEY",
+--
+desviaciones_AFB.json:    "modulo": "Password Requirements/Acceptance of the null password with nullok parameter",
+desviaciones_AFB.json-    "clave": "NULLOK",
+--
+desviaciones_AFB.json:    "modulo": "Password Requirements/Password MAX Age /etc/shadow",
+desviaciones_AFB.json-    "clave": "MAXAGE",
+--
+desviaciones_AFB.json:    "modulo": "Password Requirements/Password History",
+desviaciones_AFB.json-    "clave": "REMEMBER",
+--
+desviaciones_AFB.json:    "modulo": "Network Settings/Network file system settings in /etc/exports",
+desviaciones_AFB.json-    "clave": "",
+--
+desviaciones_AFB.json:      "modulo": "Network Settings/TCP Configuration Files Restrictions",
+desviaciones_AFB.json-      "clave": "SYSCTL",
+--
+desviaciones_ASISA.json:        "modulo": "Logging/Synchronized system clocks",
+desviaciones_ASISA.json-        "clave": " XNTPD",
+--
+desviaciones_ASISA.json:        "modulo": "Password Requirements/Password histexpire - System Default",
+desviaciones_ASISA.json-        "clave": "HISTEXPIRE",
+--
+desviaciones_ASISA.json:        "modulo": "Password Requirements/Password MAX Age",
+desviaciones_ASISA.json-        "clave": "MAXAGE",
+--
+desviaciones_ASISA.json:        "modulo": "Password Requirements/Password MIN Length - System Default",
+desviaciones_ASISA.json-        "clave": "MINLENGTH",
+--
+desviaciones_ASISA.json:        "modulo": "Password Requirements/Password mindiff - System Default",
+desviaciones_ASISA.json-        "clave": "MINDIFF",
+--
+desviaciones_ASISA.json:        "modulo": "Password Requirements/Requirement for pwd_algorithm",
+desviaciones_ASISA.json-        "clave": "PWD_ALGORITHM",
+--
+desviaciones_ASISA.json:        "modulo": "Protecting Resources-OSRs/CRON Command Group Permissions",
+desviaciones_ASISA.json-        "clave": "OSRCRON",
+--
+desviaciones_ASISA.json:        "modulo": "Protecting Resources-OSRs/CRON Command WW Permissions",
+desviaciones_ASISA.json-        "clave": "OSRsCRON",
+--
+desviaciones_ASISA.json:        "modulo": "Protecting Resources-OSRs/OSR /var/adm/cron files restrictions",
+desviaciones_ASISA.json-        "clave": "/VAR/ADM/CRON",
+--
+desviaciones_ASISA.json:        "modulo": "Protecting Resources-OSRs/OSR /var/ct/RMstart.log restrictions",
+desviaciones_ASISA.json-        "clave": "/VAR/CT/RMSTART.LOG",
+--
+desviaciones_ASISA.json:        "modulo": "Protecting Resources-OSRs/OSR /var/spool/cron/crontabs files restrictions",
+desviaciones_ASISA.json-        "clave": "/VAR/SPOOL/CRON/CRONTABS/",
+--
+desviaciones_ASISA.json:        "modulo": "Network Settings//etc/inetd.conf - ntalk",
+desviaciones_ASISA.json-        "clave": "ENTRY NTALK",
+--
+desviaciones_ASISA.json:        "modulo": "Network Settings//etc/inetd.conf - time",
+desviaciones_ASISA.json-        "clave": "ENTRY TIME",
+--
+desviaciones_ASISA.json:        "modulo": "Network Settings//etc/inetd.conf - exec",
+desviaciones_ASISA.json-        "clave": "ENTRY EXEC",
+--
+desviaciones_ASISA.json:        "modulo": "Network Settings//etc/inetd.conf - kshell",
+desviaciones_ASISA.json-        "clave": "ENTRY KSHELL",
+--
+desviaciones_ASISA.json:        "modulo": "Network Settings//etc/inittab - piobe",
+desviaciones_ASISA.json-        "clave": "PIOBE",
+--
+desviaciones_ASISA.json:        "modulo": "Network Settings//etc/inittab - qdaemon",
+desviaciones_ASISA.json-        "clave": "QDAEMON",
+--
+desviaciones_ASISA.json:        "modulo": "Network Settings//etc/inittab - writesrv",
+desviaciones_ASISA.json-        "clave": "WRITESRV",
+--
+desviaciones_ASISA.json:        "modulo": "Network Settings/On syslog clients, disable remote message collection",
+desviaciones_ASISA.json-        "clave": "SYSLOGD",
+--
+desviaciones_ASISA.json:        "modulo": "Network Settings/tcpip aixmibd entry",
+desviaciones_ASISA.json-        "clave": "AIXMIBD",
+--
+desviaciones_ASISA.json:        "modulo": "Network Settings/tcpip hostmibd entry",
+desviaciones_ASISA.json-        "clave": "HOSTMIBD",
+--
+desviaciones_ASISA.json:        "modulo": "Network Settings/tcpip snmpmibd entry",
+desviaciones_ASISA.json-        "clave": "SNMPMIBD",
+--
+desviaciones_ASISA.json:        "modulo": "Network Settings/Prohibited SNMP Community Names",
+desviaciones_ASISA.json-        "clave": "SNMP",
+--
+desviaciones_ASISA.json:        "modulo": "Network Settings/tcpip snmpd entry",
+desviaciones_ASISA.json-        "clave": "SNMPD",
+--
+desviaciones_ASISA.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/security files restrictions",
+desviaciones_ASISA.json-        "clave": "OSR /ETC/SECURITY",
+--
+desviaciones_ASISA.json:        "modulo": "Protecting Resources-OSRs/OSR Directory Restrictions",
+desviaciones_ASISA.json-        "clave": "",
+--
+desviaciones_ASISA.json:        "modulo": "Protecting Resources-OSRs/OSR /OPT Files Restrictions",
+desviaciones_ASISA.json-        "clave": "OSROPT",
+--
+desviaciones_ASISA.json:        "modulo": "Network Settings/default core dumps restriction",
+desviaciones_ASISA.json-        "clave": "CORE DUMPS",
+--
+desviaciones_ASISA.json:        "modulo": "Network Settings/X-server access control",
+desviaciones_ASISA.json-        "clave": "X-SERVER",
+--
+desviaciones_ASISA.json:        "modulo": "Protecting Resources-OSRs/OSR /TMP Files Restrictions",
+desviaciones_ASISA.json-        "clave": "OSRTMP",
+--
+desviaciones_ASISA.json:        "modulo": "Protecting Resources-OSRs/OSR /VAR Files Restrictions",
+desviaciones_ASISA.json-        "clave": "OSRVAR",
+--
+desviaciones_ASISA.json:        "modulo": "Protecting Resources-OSRs/OSR /var/tmp/hostmibd.log restrictions",
+desviaciones_ASISA.json-        "clave": "/VAR/TMP/HOSTMIBD.LOG",
+--
+desviaciones_ASISA.json:        "modulo": "Protecting Resources-OSRs/smit.log Restrictions",
+desviaciones_ASISA.json-        "clave": "SMIT.LOG",
+--
+desviaciones_ASISA.json:        "modulo": "Protecting Resources-OSRs/smit.script Restrictions",
+desviaciones_ASISA.json-        "clave": "SMIT.SCRIPT",
+--
+desviaciones_ASISA.json:        "modulo": "Protecting Resources-OSRs/smit.transaction Restrictions",
+desviaciones_ASISA.json-        "clave": "SMIT.TRANSACTION",
+--
+desviaciones_ASISA.json:        "modulo": "Network Settings/Disable NIS client",
+desviaciones_ASISA.json-        "clave": "NIS",
+--
+desviaciones_ASISA.json:        "modulo": "protecting Resources-OSRs/SUDO Command WW Permissions",
+desviaciones_ASISA.json-        "clave": "COMMAND",
+--
+desviaciones_ASISA.json:        "modulo": "Network Settings/Prohibited Processes",
+desviaciones_ASISA.json-        "clave": "INETD",
+--
+desviaciones_ASISA.json:        "modulo": "Network Settings/CDE installed",
+desviaciones_ASISA.json-        "clave": "CDE",
+--
+desviaciones_ASISA.json:        "modulo": "E.1.5.22.3 Network Settings",
+desviaciones_ASISA.json-        "clave": "",
+--
+desviaciones_ASISA.json:        "modulo": "E.1.5.22.4 Network Settings",
+desviaciones_ASISA.json-        "clave": "SENDMAIL",
+--
+desviaciones_ASISA.json:        "modulo": "Network Settings/NFS root restrictions",
+desviaciones_ASISA.json-        "clave": "NFS",
+--
+desviaciones_ASISA.json:        "modulo": "Identify and Authenticate Users/PermitRootLogin Restriction",
+desviaciones_ASISA.json-        "clave": "PERMITROOTLOGIN",
+--
+desviaciones_ASISA.json:        "modulo": "AV.1.1.7 Password Requirements",
+desviaciones_ASISA.json-        "clave": "",
+--
+desviaciones_ASISA.json:        "modulo": "AV.1.1.6 Password Requirements",
+desviaciones_ASISA.json-        "clave": "",
+--
+desviaciones_CESCE.json:        "modulo": "AD.1.8.7.2 Protecting Resources - OSRs",
+desviaciones_CESCE.json-        "clave": "WTMP",
+--
+desviaciones_CESCE.json:        "modulo": "Password Requirements/Private Key File Restriction",
+desviaciones_CESCE.json-        "clave": "AUTHORIZED_KEY",
+--
+desviaciones_CESCE.json:        "modulo": "Password Requirements/Login Retries",
+desviaciones_CESCE.json-        "clave": "PAM_TALLY",
+--
+desviaciones_CESCE.json:        "modulo": "Encryption/System wide Cryptographic policies requirement",
+desviaciones_CESCE.json-        "clave": "CRYPTOGRAPHIC",
+--
+desviaciones_CESCE.json:        "modulo": "Network Settings/Configure vsftpd service where anonymous ftp is permitted",
+desviaciones_CESCE.json-        "clave": "ANONYMOUS",
+--
+desviaciones_CESCE.json:        "modulo": "Password Requirements/Duplicate GIDs Forbidden",
+desviaciones_CESCE.json-        "clave": "GID DUPLICATE",
+--
+desviaciones_CESCE.json:        "modulo": "Password Requirements/Duplicate UIDs Forbidden",
+desviaciones_CESCE.json-        "clave": "UID DUPLICATE",
+--
+desviaciones_CESCE.json:        "modulo": "Password Requirements/Password MAX Age /etc/shadow",
+desviaciones_CESCE.json-        "clave": "MAXAGE",
+--
+desviaciones_CESCE.json:        "modulo": "Protecting Resources-OSRs/OSR /ETC Restrictions",
+desviaciones_CESCE.json-        "clave": "OSRETC",
+--
+desviaciones_CESCE.json:        "modulo": "System Settings/SELinux current mode requirement",
+desviaciones_CESCE.json-        "clave": "SELINUX",
+--
+desviaciones_CESCE.json:        "modulo": "Encryption/Deny Ciphers",
+desviaciones_CESCE.json-        "clave": "DENY CIPHERS",
+--
+desviaciones_CESCE.json:        "modulo": "Encryption/Permitted Ciphers",
+desviaciones_CESCE.json-        "clave": "CIPHERS",
+--
+desviaciones_CESCE.json:        "modulo": "Identify and Authenticate Users/Public Key Label",
+desviaciones_CESCE.json-        "clave": "LABEL",
+--
+desviaciones_CESCE.json:        "modulo": "Logging/Log Verbosity Shared ID",
+desviaciones_CESCE.json-        "clave": "LOGLEVEL",
+--
+desviaciones_CESCE.json:        "modulo": "Password Requirements/Private Key Passphrase",
+desviaciones_CESCE.json-        "clave": "NOT PASSPHRASE",
+--
+desviaciones_CESCE.json:        "modulo": "Identify and Authenticate Users/Public Key Label",
+desviaciones_CESCE.json-        "clave": "LABEL",
+--
+desviaciones_CESCE.json:        "modulo": "AD.1.5.9.20.4 Network Settings",
+desviaciones_CESCE.json-        "clave": "",
+--
+desviaciones_CESCE.json:        "modulo": "AD.1.1.1.2 Password Requirements",
+desviaciones_CESCE.json-        "clave": "",
+--
+desviaciones_CESCE.json:        "modulo": "AD.1.1.2.0 Password Requirements",
+desviaciones_CESCE.json-        "clave": "MINLEN DEBIAN",
+--
+desviaciones_CESCE.json:        "modulo": "AD.1.1.6.1 Password Requirements",
+desviaciones_CESCE.json-        "clave": "PAM_TALLY DEBIAN",
+--
+desviaciones_CESCE.json:        "modulo": "AD.1.1.3.2 Password Requirements",
+desviaciones_CESCE.json-        "clave": "",
+--
+desviaciones_CESCE.json:        "modulo": "AD.2.0.1.0 Business Use Notice",
+desviaciones_CESCE.json-        "clave": "BUN",
+--
+desviaciones_CESCE.json:        "modulo": "AD.1.8.4.2.3 Protecting Resources - OSRs",
+desviaciones_CESCE.json-        "clave": "/etc/shadow",
+--
+desviaciones_CESCE.json:        "modulo": "AD.1.2.6 Logging",
+desviaciones_CESCE.json-        "clave": "ROTACION",
+--
+desviaciones_CESCE.json:        "modulo": "Business Use Notice/PrintMotd Restriction",
+desviaciones_CESCE.json-        "clave": "PRINTMOTD",
+--
+desviaciones_CESCE.json:        "modulo": "Identify and Authenticate Users/PermitRootLogin Restriction",
+desviaciones_CESCE.json-        "clave": "PERMITROOTLOGIN",
+--
+desviaciones_CESCE.json:        "modulo": "System Settings/MaxAuthTries Restriction",
+desviaciones_CESCE.json-        "clave": "MAXAUTHTRIES",
+--
+desviaciones_CESCE.json:        "modulo": "Business Use Notice/Business Use Notice exists in Gnome",
+desviaciones_CESCE.json-        "clave": "GNOME BUN",
+--
+desviaciones_INFRA.json:        "modulo": "Network Settings/On syslog clients, disable remote message collection",
+desviaciones_INFRA.json-        "clave": "SYSLOGD",
+--
+desviaciones_INFRA.json:        "modulo": "E.1.5.24.1 Network Settings",
+desviaciones_INFRA.json-        "clave": "",
+--
+desviaciones_INFRA.json:        "modulo": "Protecting Resources-OSRs/smit.log Restrictions",
+desviaciones_INFRA.json-        "clave": "SMIT.LOG",
+--
+desviaciones_INFRA.json:        "modulo": "Protecting Resources-OSRs/smit.transaction Restrictions",
+desviaciones_INFRA.json-        "clave": "SMIT.TRANSACTION",
+--
+desviaciones_INFRA.json:        "modulo": "E.1.8.9.1 Protecting Resources - OSRs",
+desviaciones_INFRA.json-        "clave": "",
+--
+desviaciones_INFRA.json:        "modulo": "Filesystem Configuration/nodev option set on /tmp partition",
+desviaciones_INFRA.json-        "clave": "NODEVTMP",
+--
+desviaciones_INFRA.json:        "modulo": "Filesystem Configuration/nosuid option set on /tmp partition",
+desviaciones_INFRA.json-        "clave": "NOSUIDTMP",
+--
+desviaciones_INFRA.json:        "modulo": "Filesystem Configuration/noexec option set on /tmp partition",
+desviaciones_INFRA.json-        "clave": "NOEXECTMP",
+--
+desviaciones_INFRA.json:        "modulo": "Filesystem Configuration/nodev option set on /home partition",
+desviaciones_INFRA.json-        "clave": "NODEVHOME",
+--
+desviaciones_INFRA.json:        "modulo": "IZ.C.1.1.14 Filesystem Configuration",
+desviaciones_INFRA.json-        "clave": "IZ.C.1.1.14",
+--
+desviaciones_INFRA.json:        "modulo": "Filesystem Configuration/noexec option set on /dev/shm partition",
+desviaciones_INFRA.json-        "clave": "NOEXECSHM",
+--
+desviaciones_INFRA.json:        "modulo": "Filesystem Configuration/Disable filesystem type cramfs",
+desviaciones_INFRA.json-        "clave": "CRAMFS",
+--
+desviaciones_INFRA.json:        "modulo": "Filesystem Configuration/Disable filesystem type squashfs",
+desviaciones_INFRA.json-        "clave": "SQUASHFS",
+--
+desviaciones_INFRA.json:        "modulo": "Filesystem Configuration/Disable filesystem type udf",
+desviaciones_INFRA.json-        "clave": "UDF",
+--
+desviaciones_INFRA.json:        "modulo": "Password Requirements/Automatic Logoff support shells",
+desviaciones_INFRA.json-        "clave": "SHELL LOGINS",
+--
+desviaciones_INFRA.json:        "modulo": "Protecting Resources-OSRs/Set gpgcheck in yum file",
+desviaciones_INFRA.json-        "clave": "GPGCHECK",
+--
+desviaciones_INFRA.json:        "modulo": "Password Requirements/Password MIN Age Shadow",
+desviaciones_INFRA.json-        "clave": "MINAGE",
+--
+desviaciones_INFRA.json:        "modulo": "AD.1.1.3.2 Password Requirements",
+desviaciones_INFRA.json-        "clave": "",
+--
+desviaciones_INFRA.json:        "modulo": "AD.1.9.1.3 Protecting Resources - User Resources",
+desviaciones_INFRA.json-        "clave": "UMASK IBMSINIT.SH",
+--
+desviaciones_INFRA.json:        "modulo": "AD.1.9.1.4 Protecting Resources - User Resources",
+desviaciones_INFRA.json-        "clave": "UMASK IBMSINIT.CSH",
+--
+desviaciones_INFRA.json:        "modulo": "Protecting Resources-OSRs/IBMsinit Permission Restriction",
+desviaciones_INFRA.json-        "clave": "OSR IBMSINIT",
+--
+desviaciones_INFRA.json:        "modulo": "AD.1.8.12.6 Protecting Resources - OSRs",
+desviaciones_INFRA.json-        "clave": "OSR IBMSINIT.SH",
+--
+desviaciones_INFRA.json:        "modulo": "AD.1.8.12.7 Protecting Resources - OSRs",
+desviaciones_INFRA.json-        "clave": "OSR IBMSINIT.SH",
+--
+desviaciones_INFRA.json:        "modulo": "Network Settings/TCP Configuration Files Restrictions",
+desviaciones_INFRA.json-        "clave": "SYSCTL",
+--
+desviaciones_INFRA.json:        "modulo": "Password Requirements/Automatic Logoff IBMsinit sh TMOUT",
+desviaciones_INFRA.json-        "clave": "TMOUT",
+--
+desviaciones_INFRA.json:        "modulo": "AD.1.8.7.2 Protecting Resources - OSRs",
+desviaciones_INFRA.json-        "clave": "WTMP",
+--
+desviaciones_INFRA.json:        "modulo": "Password Requirements/Private Key Passphrase",
+desviaciones_INFRA.json-        "clave": "NOT PASSPHRASE",
+--
+desviaciones_INFRA.json:        "modulo": "IZ.1.4.6.3 System Settings",
+desviaciones_INFRA.json-        "clave": "",
+--
+desviaciones_INFRA.json:        "modulo": "Network Settings/Ensure LDAP Server is not enabled",
+desviaciones_INFRA.json-        "clave": "LDAP",
+--
+desviaciones_INFRA.json:        "modulo": "Password Requirements//etc/profile IBMsinit sh",
+desviaciones_INFRA.json-        "clave": "TMOUT IBMSINIT.SH",
+--
+desviaciones_INFRA.json:        "modulo": "Password Requirements/Automatic Logoff IBMsinit csh autologout",
+desviaciones_INFRA.json-        "clave": "AUTOLOGOUT",
+--
+desviaciones_INFRA.json:        "modulo": "Network Settings/CDE installed",
+desviaciones_INFRA.json-        "clave": "CDE",
+--
+desviaciones_INFRA.json:        "modulo": "Password Requirements/Login Retries",
+desviaciones_INFRA.json-        "clave": "PAM_TALLY",
+--
+desviaciones_INFRA.json:    "modulo": "AD.1.1.13.1.0 Password Requirements",
+desviaciones_INFRA.json-    "clave": "LISTFILE.SO",
+--
+desviaciones_INFRA.json:        "modulo": "Protecting Resources-OSRs/OSR /VAR Files Restrictions",
+desviaciones_INFRA.json-        "clave": "OSRVAR",
+--
+desviaciones_INFRA.json:        "modulo": "AD.1.8.22.2 Protecting Resources - OSRs",
+desviaciones_INFRA.json-        "clave": "",
+--
+desviaciones_INFRA.json:        "modulo": "E.2.0.1 Business Use Notice",
+desviaciones_INFRA.json-        "clave": "BUN",
+--
+desviaciones_INFRA.json:        "modulo": "Password Requirements/Password History",
+desviaciones_INFRA.json-        "clave": "REMEMBER",
+--
+desviaciones_INFRA.json:        "modulo": "Encryption/Password Encryption Required",
+desviaciones_INFRA.json-        "clave": "SHA512",
+--
+desviaciones_INFRA.json:        "modulo": "Identify and Authenticate Users/Public Key Label",
+desviaciones_INFRA.json-        "clave": "LABEL",
+--
+desviaciones_INFRA.json:        "modulo": "AV.1.7.2.1 Identify and Authenticate Users",
+desviaciones_INFRA.json-        "clave": "",
+--
+desviaciones_INFRA.json:        "modulo": "Password Requirements/Private Key File Restriction",
+desviaciones_INFRA.json-        "clave": "AUTHORIZED_KEY",
+--
+desviaciones_INFRA.json:        "modulo": "AV.1.1.6 Password Requirements",
+desviaciones_INFRA.json-        "clave": "AUTHORIZED_KEY",
+--
+desviaciones_INFRA.json:        "modulo": "AV.1.1.7 Password Requirements",
+desviaciones_INFRA.json-        "clave": "",
+--
+desviaciones_INFRA.json:        "modulo": "Identify and Authenticate Users/Public Key Authentication",
+desviaciones_INFRA.json-        "clave": "PUBLICKEY",
+--
+desviaciones_INFRA.json:        "modulo": "Password Requirements/Specific Host Access",
+desviaciones_INFRA.json-        "clave": "",
+--
+desviaciones_INFRA.json:        "modulo": "Protecting Resources-OSRs/OSR /TMP Files Restrictions",
+desviaciones_INFRA.json-        "clave": "OSRTMP",
+--
+desviaciones_INFRA.json:        "modulo": "Encryption/Permitted Ciphers",
+desviaciones_INFRA.json-        "clave": "CIPHERS",
+--
+desviaciones_INFRA.json:        "modulo": "Encryption/MACs MACs",
+desviaciones_INFRA.json-        "clave": "MACS",
+--
+desviaciones_INFRA.json:        "modulo": "AV.2.1.1.3 Encryption",
+desviaciones_INFRA.json-        "clave": "",
+--
+desviaciones_INFRA.json:        "modulo": "AV.2.1.1.2 Encryption",
+desviaciones_INFRA.json-        "clave": "",
+--
+desviaciones_INFRA.json:        "modulo": "Encryption/Deny Ciphers",
+desviaciones_INFRA.json-        "clave": "DENY",
+--
+desviaciones_INFRA.json:        "modulo": "E.C.1.1.2 Permissions and Ownership",
+desviaciones_INFRA.json-        "clave": "PATH",
+--
+desviaciones_INFRA.json:        "modulo": "Password Requirements/NULL Passphrase",
+desviaciones_INFRA.json-        "clave": "ID_RSA",
+--
+desviaciones_INFRA.json:        "modulo": "Logging/Login Success or Failure in rsyslog.conf",
+desviaciones_INFRA.json-        "clave": "RSYSLOG",
+--
+desviaciones_INFRA.json:        "modulo": "Logging/Ntpd has secure defaults",
+desviaciones_INFRA.json-        "clave": "NTPD",
+--
+desviaciones_INFRA.json:        "modulo": "Password Requirements/Password MIN Length and complexity",
+desviaciones_INFRA.json-        "clave": "MINLEN",
+--
+desviaciones_INFRA.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/crontab Restrictions",
+desviaciones_INFRA.json-        "clave": "OSRCRONTAB",
+--
+desviaciones_INFRA.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/cron.hourly Restrictions",
+desviaciones_INFRA.json-        "clave": "OSRHOURLY",
+--
+desviaciones_INFRA.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/cron.daily Restrictions",
+desviaciones_INFRA.json-        "clave": "OSRDAILY",
+--
+desviaciones_INFRA.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/cron.weekly Restrictions",
+desviaciones_INFRA.json-        "clave": "OSRWEEKLY",
+--
+desviaciones_INFRA.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/cron.monthly Restrictions",
+desviaciones_INFRA.json-        "clave": "OSRMONTHLY",
+--
+desviaciones_INFRA.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/cron.d Restrictions",
+desviaciones_INFRA.json-        "clave": "OSRCRON.D",
+--
+desviaciones_INFRA.json:        "modulo": "Protecting Resources-OSRs/OSR /OPT Files Restrictions",
+desviaciones_INFRA.json-        "clave": "OSROPT",
+--
+desviaciones_INFRA.json:        "modulo": "Logging/Log Verbosity Shared ID",
+desviaciones_INFRA.json-        "clave": "LOGLEVEL",
+--
+desviaciones_INFRA.json:        "modulo": "ZY.1.2.4 Logging  - Aix / LOGKEEPER",
+desviaciones_INFRA.json-        "clave": "SUDO LOGKEEPER",
+--
+desviaciones_INFRA.json:        "modulo": "ZY.1.2.4 Logging - Linux / LOGKEEPER",
+desviaciones_INFRA.json-        "clave": "SUDO LOGKEEPER",
+--
+desviaciones_INFRA.json:        "modulo": "ZY.1.2.4 Logging - Linux / Logrotate.conf",
+desviaciones_INFRA.json-        "clave": "SUDO LOGROTATE",
+--
+desviaciones_INFRA.json:        "modulo": "AV.1.2.4 Logging",
+desviaciones_INFRA.json-        "clave": "SSH LOGKEEPER",
+--
+desviaciones_INFRA.json:        "modulo": "BV.1.2.1 Logging",
+desviaciones_INFRA.json-        "clave": "OS LOGKEEPER",
+--
+desviaciones_INFRA.json:        "modulo": "Password Requirements/Password MAX Age /etc/shadow - Aix",
+desviaciones_INFRA.json-        "clave": "MAXAGE",
+--
+desviaciones_INFRA.json:        "modulo": "Password Requirements/Password MAX Age /etc/shadow - Linux",
+desviaciones_INFRA.json-        "clave": "MAXAGE",
+--
+desviaciones_INFRA.json:        "modulo": "AD.1.1.1.2 Password Requirements",
+desviaciones_INFRA.json-        "clave": "MAXAGE",
+--
+desviaciones_INFRA.json:        "modulo": "E.1.2.5.1 Logging",
+desviaciones_INFRA.json-        "clave": "SYSLOG.CONF",
+--
+desviaciones_INFRA.json:        "modulo": "E.1.2.5.3 Logging",
+desviaciones_INFRA.json-        "clave": "SYSLOG.CONF",
+--
+desviaciones_INFRA.json:        "modulo": "IZ.1.9.1.3 Protecting Resources - User Resources",
+desviaciones_INFRA.json-        "clave": "UMASK IBMSINIT.SH",
+--
+desviaciones_INFRA.json:        "modulo": "IZ.1.9.1.4 Protecting Resources - User Resources",
+desviaciones_INFRA.json-        "clave": "UMASK IBMSINIT.CSH",
+--
+desviaciones_INFRA.json:        "modulo": "Network Settings/Disable NFS server",
+desviaciones_INFRA.json-        "clave": "NFS",
+--
+desviaciones_INFRA.json:        "modulo": "E.1.5.18.0 Network Settings",
+desviaciones_INFRA.json-        "clave": "NFS",
+--
+desviaciones_INFRA.json:        "modulo": "Password Requirements/Automatic Logoff /etc/profile TMOUT",
+desviaciones_INFRA.json-        "clave": "TMOUT PROFILE",
+--
+desviaciones_INFRA.json:        "modulo": "Password Requirements/Automatic Logoff /etc/tsh_profile TMOUT",
+desviaciones_INFRA.json-        "clave": "TMOUT TSH",
+--
+desviaciones_INFRA.json:        "modulo": "Password Requirements/Automatic Logoff /etc/csh.login autologout",
+desviaciones_INFRA.json-        "clave": "AUTOLOGOUT CSH",
+--
+desviaciones_FT.json:        "modulo": "protecting Resources-OSRs/SUDO Command WW Permissions",
+desviaciones_FT.json-        "clave": "COMMAND",
+--
+desviaciones_FT.json:        "modulo": "Encryption/Password Encryption Required",
+desviaciones_FT.json-        "clave": "SHA512",
+--
+desviaciones_FT.json:        "modulo": "Password Requirements/Password History",
+desviaciones_FT.json-        "clave": "REMEMBER",
+--
+desviaciones_FT.json:        "modulo": "Password Requirements/Acceptance of the null password with nullok parameter",
+desviaciones_FT.json-        "clave": "NULLOK",
+--
+desviaciones_FT.json:        "modulo": "Network Settings/TCP Configuration Files Restrictions",
+desviaciones_FT.json-        "clave": "SYSCTL",
+--
+desviaciones_FT.json:        "modulo": "Password Requirements/SSH PermitRootLogin Restriction",
+desviaciones_FT.json-        "clave": "PERMITROOTLOGIN",
+--
+desviaciones_FT.json:        "modulo": "Identify and Authenticate Users/PermitRootLogin Restriction",
+desviaciones_FT.json-        "clave": "",
+--
+desviaciones_FT.json:        "modulo": "Business Use Notice/PrintMotd Restriction",
+desviaciones_FT.json-        "clave": "PRINTMOTD",
+--
+desviaciones_FT.json:        "modulo": "Password Requirements/Password MAX Age /etc/shadow - Aix",
+desviaciones_FT.json-        "clave": "MAXAGE",
+--
+desviaciones_FT.json:        "modulo": "Password Requirements/Password MAX Age /etc/shadow - Linux",
+desviaciones_FT.json-        "clave": "MAXAGE",
+--
+desviaciones_FT.json:        "modulo": "AD.1.1.1.2 Password Requirements",
+desviaciones_FT.json-        "clave": "MAXAGE",
+--
+desviaciones_FT.json:        "modulo": "Password Requirements/Password MIN Age Shadow",
+desviaciones_FT.json-        "clave": "MINAGE",
+--
+desviaciones_FT.json:        "modulo": "Protecting Resources-OSRs/IBMsinit Permission Restriction",
+desviaciones_FT.json-        "clave": "OSR IBMSINIT",
+--
+desviaciones_FT.json:        "modulo": "System Settings/SELinux AppArmor install requirement",
+desviaciones_FT.json-        "clave": "SELINUX",
+--
+desviaciones_FT.json:        "modulo": "System Settings/SELinux type requirement",
+desviaciones_FT.json-        "clave": "SELINUX",
+--
+desviaciones_FT.json:        "modulo": "System Settings/SELinux mode per domain",
+desviaciones_FT.json-        "clave": "SELINUX",
+--
+desviaciones_FT.json:        "modulo": "System Settings/SELinux current mode requirement",
+desviaciones_FT.json-        "clave": "SELINUX",
+--
+desviaciones_FT.json:        "modulo": "Encryption/Deny Ciphers",
+desviaciones_FT.json-        "clave": "DENY",
+--
+desviaciones_FT.json:        "modulo": "Protecting Resources-OSRs/OSR /VAR Files Restrictions",
+desviaciones_FT.json-        "clave": "OSRVAR",
+--
+desviaciones_FT.json:        "modulo": "Protecting Resources-OSRs/OSR /TMP Files Restrictions",
+desviaciones_FT.json-        "clave": "OSRTMP",
+--
+desviaciones_FT.json:        "modulo": "Protecting Resources-OSRs/OSR /OPT Files Restrictions",
+desviaciones_FT.json-        "clave": "OSROPT",
+--
+desviaciones_FT.json:        "modulo": "Protecting Resources-OSRs/OSR /ETC Restrictions",
+desviaciones_FT.json-        "clave": "OSRETC",
+--
+desviaciones_FT.json:        "modulo": "Protecting Resources-OSRs/OSR /USR Restrictions",
+desviaciones_FT.json-        "clave": "OSRUSR",
+--
+desviaciones_FT.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/crontab Restrictions",
+desviaciones_FT.json-        "clave": "OSRCRONTAB",
+--
+desviaciones_FT.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/cron.hourly Restrictions",
+desviaciones_FT.json-        "clave": "OSRHOURLY",
+--
+desviaciones_FT.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/cron.daily Restrictions",
+desviaciones_FT.json-        "clave": "OSRDAILY",
+--
+desviaciones_FT.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/cron.weekly Restrictions",
+desviaciones_FT.json-        "clave": "OSRWEEKLY",
+--
+desviaciones_FT.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/cron.monthly Restrictions",
+desviaciones_FT.json-        "clave": "OSRMONTHLY",
+--
+desviaciones_FT.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/cron.d Restrictions",
+desviaciones_FT.json-        "clave": "OSRCRON.D",
+--
+desviaciones_FT.json:        "modulo": "AD.1.9.1.3 Protecting Resources - User Resources",
+desviaciones_FT.json-        "clave": "UMASK IBMSINIT.SH",
+--
+desviaciones_FT.json:        "modulo": "AD.1.9.1.4 Protecting Resources - User Resources",
+desviaciones_FT.json-        "clave": "UMASK IBMSINIT.CSH",
+--
+desviaciones_FT.json:        "modulo": "Protecting Resources-User Resources//etc/profile File Restriction",
+desviaciones_FT.json-        "clave": "INVOCATION.SH",
+--
+desviaciones_FT.json:        "modulo": "Password Requirements/Password change date in the past",
+desviaciones_FT.json-        "clave": "",
+--
+desviaciones_FT.json:        "modulo": "Password Requirements/Requirement for pwd_algorithm",
+desviaciones_FT.json-        "clave": "PWD_ALGORITHM",
+--
+desviaciones_FT.json:        "modulo": "E.1.1.6.1 Password Requirements",
+desviaciones_FT.json-        "clave": "PWD_ALGORITHM",
+--
+desviaciones_FT.json:        "modulo": "Password Requirements/Password mindiff - System Default",
+desviaciones_FT.json-        "clave": "MINDIFF",
+--
+desviaciones_FT.json:        "modulo": "E.1.1.7.2 Password Requirements",
+desviaciones_FT.json-        "clave": "MINDIFF",
+--
+desviaciones_FT.json:        "modulo": "Password Requirements/Password MIN Length - System Default",
+desviaciones_FT.json-        "clave": "MINLENGTH",
+--
+desviaciones_FT.json:        "modulo": "Protecting Resources-User Resources/Login.defs umask restriction",
+desviaciones_FT.json-        "clave": "UMASK DEFAULT",
+--
+desviaciones_FT.json:        "modulo": "Identify and Authenticate Users/Public Key Authentication",
+desviaciones_FT.json-        "clave": "PUBLICKEY",
+--
+desviaciones_FT.json:        "modulo": "Password Requirements/Private Key File Restriction",
+desviaciones_FT.json-        "clave": "AUTHORIZED_KEY",
+--
+desviaciones_FT.json:        "modulo": "AV.1.1.6 Password Requirements",
+desviaciones_FT.json-        "clave": "",
+--
+desviaciones_FT.json:        "modulo": "Identify and Authenticate Users/Public Key Label",
+desviaciones_FT.json-        "clave": "LABEL",
+--
+desviaciones_FT.json:        "modulo": "AV.1.7.1.2 Identify and Authenticate Users",
+desviaciones_FT.json-        "clave": "",
+--
+desviaciones_FT.json:        "modulo": "AV.1.1.7 Password Requirements",
+desviaciones_FT.json-        "clave": "",
+--
+desviaciones_FT.json:        "modulo": "Logging/Logging auth authpriv in external system",
+desviaciones_FT.json-        "clave": "AUTHPRIV",
+--
+desviaciones_FT.json:        "modulo": "Network Settings//etc/inetd.conf - ntalk",
+desviaciones_FT.json-        "clave": "ENTRY NTALK",
+--
+desviaciones_FT.json:        "modulo": "Network Settings//etc/inetd.conf - time",
+desviaciones_FT.json-        "clave": "ENTRY TIME",
+--
+desviaciones_FT.json:        "modulo": "E.1.5.12.31 Network Settings",
+desviaciones_FT.json-        "clave": "ENTRY TIME",
+--
+desviaciones_FT.json:        "modulo": "Network Settings//etc/inetd.conf - exec",
+desviaciones_FT.json-        "clave": "ENTRY EXEC",
+--
+desviaciones_FT.json:        "modulo": "Network Settings//etc/inetd.conf - kshell",
+desviaciones_FT.json-        "clave": "ENTRY KSHELL",
+--
+desviaciones_FT.json:        "modulo": "Network Settings//etc/inittab - piobe",
+desviaciones_FT.json-        "clave": "PIOBE",
+--
+desviaciones_FT.json:        "modulo": "Network Settings//etc/inittab - qdaemon",
+desviaciones_FT.json-        "clave": "QDAEMON",
+--
+desviaciones_FT.json:        "modulo": "Network Settings//etc/inittab - writesrv",
+desviaciones_FT.json-        "clave": "WRITESRV",
+--
+desviaciones_FT.json:        "modulo": "Network Settings/default core dumps restriction",
+desviaciones_FT.json-        "clave": "CORE DUMPS",
+--
+desviaciones_FT.json:        "modulo": "Network Settings/Disable NFS server",
+desviaciones_FT.json-        "clave": "NFS",
+--
+desviaciones_FT.json:        "modulo": "Network Settings/Disable NIS client",
+desviaciones_FT.json-        "clave": "NIS",
+--
+desviaciones_FT.json:        "modulo": "Network Settings/On syslog clients, disable remote message collection",
+desviaciones_FT.json-        "clave": "SYSLOGD",
+--
+desviaciones_FT.json:        "modulo": "Network Settings/Prohibited Processes",
+desviaciones_FT.json-        "clave": "INETD",
+--
+desviaciones_FT.json:        "modulo": "Network Settings/X-server access control",
+desviaciones_FT.json-        "clave": "X-SERVER",
+--
+desviaciones_FT.json:        "modulo": "E.1.5.11.1 Network Settings",
+desviaciones_FT.json-        "clave": "X-SERVER",
+--
+desviaciones_FT.json:        "modulo": "Password Requirements/Automatic Logoff /etc/csh.login autologout",
+desviaciones_FT.json-        "clave": "AUTOLOGOUT",
+--
+desviaciones_FT.json:        "modulo": "Password Requirements/Automatic Logoff /etc/profile TMOUT",
+desviaciones_FT.json-        "clave": "TMOUT",
+--
+desviaciones_FT.json:        "modulo": "Password Requirements/Password histexpire - System Default",
+desviaciones_FT.json-        "clave": "HISTEXPIRE",
+--
+desviaciones_FT.json:        "modulo": "E.1.1.3.2 Password Requirements",
+desviaciones_FT.json-        "clave": "HISTEXPIRE",
+--
+desviaciones_FT.json:        "modulo": "Protecting Resources-OSRs/OSR /var/adm/cron files restrictions",
+desviaciones_FT.json-        "clave": "/VAR/ADM/CRON",
+--
+desviaciones_FT.json:        "modulo": "Protecting Resources-OSRs/OSR /var/ct/RMstart.log restrictions",
+desviaciones_FT.json-        "clave": "/VAR/CT/RMSTART.LOG",
+--
+desviaciones_FT.json:        "modulo": "Protecting Resources-OSRs/OSR /var/spool/cron/crontabs files restrictions",
+desviaciones_FT.json-        "clave": "/VAR/SPOOL/CRON/CRONTABS/",
+--
+desviaciones_FT.json:        "modulo": "Protecting Resources-OSRs/OSR /var/tmp/hostmibd.log restrictions",
+desviaciones_FT.json-        "clave": "/VAR/TMP/HOSTMIBD.LOG",
+--
+desviaciones_FT.json:        "modulo": "Protecting Resources-OSRs/smit.transaction Restrictions",
+desviaciones_FT.json-        "clave": "SMIT.TRANSACTION",
+--
+desviaciones_FT.json:        "modulo": "Password Requirements/NULL Passphrase",
+desviaciones_FT.json-        "clave": "IDRSA",
+--
+desviaciones_FT.json:        "modulo": "System Settings/MaxAuthTries Restriction",
+desviaciones_FT.json-        "clave": "MAXAUTHTRIES",
+--
+desviaciones_FT.json:        "modulo": "Password Requirements//etc/profile IBMsinit sh",
+desviaciones_FT.json-        "clave": "TMOUT IBMSINIT.SH",
+--
+desviaciones_FT.json:        "modulo": "Password Requirements/Automatic Logoff IBMsinit sh TMOUT",
+desviaciones_FT.json-        "clave": "TMOUT",
+--
+desviaciones_FT.json:        "modulo": "Password Requirements/Automatic Logoff support shells",
+desviaciones_FT.json-        "clave": "SHELL LOGINS",
+--
+desviaciones_FT.json:        "modulo": "Password Requirements/Login Retries",
+desviaciones_FT.json-        "clave": "PAM_TALLY",
+--
+desviaciones_FT.json:        "modulo": "Password Requirements/Password MIN Length and complexity",
+desviaciones_FT.json-        "clave": "MINLEN",
+--
+desviaciones_FT.json:        "modulo": "Password Requirements/Password shadow specification",
+desviaciones_FT.json-        "clave": "EMPTY",
+--
+desviaciones_FT.json:        "modulo": "IZ.1.9.1.3 Protecting Resources - User Resources",
+desviaciones_FT.json-        "clave": "UMASK IBMSINIT.SH",
+--
+desviaciones_FT.json:        "modulo": "IZ.1.9.1.4 Protecting Resources - User Resources",
+desviaciones_FT.json-        "clave": "UMASK IBMSINIT.CSH",
+--
+desviaciones_FT.json:        "modulo": "Encryption/Permitted Ciphers",
+desviaciones_FT.json-        "clave": "CIPHERS",
+--
+desviaciones_FT.json:        "modulo": "Logging/Log Verbosity Shared ID",
+desviaciones_FT.json-        "clave": "LOGLEVEL",
+--
+desviaciones_FT.json:        "modulo": "E.1.5.22.4 Network Settings",
+desviaciones_FT.json-        "clave": "SENDMAIL",
+--
+desviaciones_CTTI.json:        "modulo": "Network Settings/TCP Configuration Files Restrictions",
+desviaciones_CTTI.json-        "clave": "SYSCTL",
+--
+desviaciones_CTTI.json:        "modulo": "Protecting Resources -OSRs/006 Alert logs",
+desviaciones_CTTI.json-        "clave": "006",
+--
+desviaciones_CTTI.json:        "modulo": "Identify and Authenticate Users/Public Key Label",
+desviaciones_CTTI.json-        "clave": "LABEL",
+--
+desviaciones_CTTI.json:        "modulo": "Password Requirements/Automatic Logoff IBMsinit sh TMOUT",
+desviaciones_CTTI.json-        "clave": "TMOUT",
+--
+desviaciones_CTTI.json:        "modulo": "Protecting Resources -OSRs/014 LISTENER.ORA",
+desviaciones_CTTI.json-        "clave": "LISTENER.014",
+--
+desviaciones_CTTI.json:        "modulo": "Password Requirements/Password MIN Length - System Default",
+desviaciones_CTTI.json-        "clave": "MINLENGTH DEFAULT",
+--
+desviaciones_CTTI.json:        "modulo": "Password Requirements/Password MIN Length",
+desviaciones_CTTI.json-        "clave": "MINLENGTH",
+--
+desviaciones_CTTI.json:        "modulo": "AV.1.1.7 Password Requirements",
+desviaciones_CTTI.json-        "clave": "",
+--
+desviaciones_CTTI.json:        "modulo": "AV.1.1.6 Password Requirements",
+desviaciones_CTTI.json-        "clave": "",
+--
+desviaciones_CTTI.json:        "modulo": "Encryption/Permitted Ciphers",
+desviaciones_CTTI.json-        "clave": "CIPHERS",
+--
+desviaciones_CTTI.json:        "modulo": "Encryption/Password Encryption Required",
+desviaciones_CTTI.json-        "clave": "SHA512",
+--
+desviaciones_CTTI.json:        "modulo": "Password Requirements/Acceptance of the null password with nullok parameter",
+desviaciones_CTTI.json-        "clave": "NULLOK",
+--
+desviaciones_CTTI.json:        "modulo": "Password Requirements/Password History",
+desviaciones_CTTI.json-        "clave": "REMEMBER",
+--
+desviaciones_CTTI.json:        "modulo": "Protecting Resources-OSRs/IBMsinit Permission Restriction",
+desviaciones_CTTI.json-        "clave": "OSR IBMSINIT",
+--
+desviaciones_CTTI.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/crontab Restrictions",
+desviaciones_CTTI.json-        "clave": "OSRCRONTAB",
+--
+desviaciones_CTTI.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/cron.hourly Restrictions",
+desviaciones_CTTI.json-        "clave": "OSRHOURLY",
+--
+desviaciones_CTTI.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/cron.daily Restrictions",
+desviaciones_CTTI.json-        "clave": "OSRDAILY",
+--
+desviaciones_CTTI.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/cron.weekly Restrictions",
+desviaciones_CTTI.json-        "clave": "OSRWEEKLY",
+--
+desviaciones_CTTI.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/cron.monthly Restrictions",
+desviaciones_CTTI.json-        "clave": "OSRMONTHLY",
+--
+desviaciones_CTTI.json:        "modulo": "Protecting Resources-OSRs/OSR /etc/cron.d Restrictions",
+desviaciones_CTTI.json-        "clave": "OSRCRON.D",
+--
+desviaciones_CTTI.json:        "modulo": "Protecting Resources-OSRs/OSR /TMP Files Restrictions",
+desviaciones_CTTI.json-        "clave": "OSRTMP",
+--
+desviaciones_CTTI.json:        "modulo": "Password Requirements/Password MAX Age /etc/shadow - Aix",
+desviaciones_CTTI.json-        "clave": "MAXAGE",
+--
+desviaciones_CTTI.json:        "modulo": "Password Requirements/Password MAX Age /etc/shadow - Linux",
+desviaciones_CTTI.json-        "clave": "MAXAGE",
+--
+desviaciones_CTTI.json:        "modulo": "AD.1.1.1.2 Password Requirements",
+desviaciones_CTTI.json-        "clave": "MAXAGE",
+--
+desviaciones_CTTI.json:        "modulo": "Password Requirements/Password MIN Age Shadow",
+desviaciones_CTTI.json-        "clave": "MINAGE",
+--
+desviaciones_CTTI.json:        "modulo": "Password Requirements/Password MAX Age /etc/login.defs",
+desviaciones_CTTI.json-        "clave": "MAXAGE DEFAULT",
+--
+desviaciones_CTTI.json:        "modulo": "ZY.1.2.1 Logging - Linux",
+desviaciones_CTTI.json-        "clave": "LOGFILE",
+--
+desviaciones_CTTI.json:        "modulo": "ZY.1.2.1 Logging - Aix",
+desviaciones_CTTI.json-        "clave": "LOGFILE",
+--
+desviaciones_CTTI.json:        "modulo": "ZY.1.2.3 Logging",
+desviaciones_CTTI.json-        "clave": "SECONDARY LOGGIN",
+--
+desviaciones_CTTI.json:        "modulo": "Protecting Resources-OSRs/OSR /ETC Restrictions",
+desviaciones_CTTI.json-        "clave": "OSRETC",

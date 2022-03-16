@@ -1,0 +1,157 @@
+///////////////////////////////////////////////////////////////////////////////////////
+OS LINUX CTTI (noRHEL 7&8) GCT - Ref:714284 - Preguntas 15
++-------------------------------------------------------------------------------------+
+AD.1.1.3.2 Password Requirements
+
+"Todos los usuarios deben tener MINAGE a 1"#
+"Comando:
+cat /etc/shadow |  cut -d: -f1,2,4 | grep -v :1
+
+" CONTESTAR N/A   Account Cyberar, LIST OF ALREADY APPROVED EXCEPTIONS.
++-------------------------------------------------------------------------------------+
+AD.1.1.7.1 Password Requirements
+
+"Contestamos YES:
+"-Si el usuario root tiene pw asignado y expira.
+
+"Comando:
+grep root /etc/shadow| cut -d ":" -f1,2,4,5
++-------------------------------------------------------------------------------------+
+AD.1.2.6 Logging	
+"Log record retention time frame.	90 days.
+
+/* CONTESTAR YES */ " Siempre YES, la rotaciones se realizar en un AlienVault
++-------------------------------------------------------------------------------------+
+AD.1.4.6 System Settings	NTP	
+
+"Se deben sincronizar los relojes con servidores NTP corporativos o servidores NTP corporativos intermedios si existen y, en todo caso, mantener los relojes de los sistemas en hora.
+cat /etc/ntp.conf|grep -v ^#
+
+"Configuracion correcta.
+" permit the source to query or modify the service on this system.
+restrict default kod nomodify notrap nopeer noquery
+restrict -6 default kod nomodify notrap nopeer noquery
+
+"Y por debajo de:
+" the administrative functions.
+restrict 127.0.0.1
+restrict -6 ::1
+
+"Tiene que tener configurado el servidor NTP, para eso tiene que tener una entrada similar:
+"Ejemplo
+server ntp1.cpd2.intranet.gencat.cat iburst
+server ntp3.cpd2.intranet.gencat.cat iburst
+
+"Con estos comando sabremos si esta sincronizando con el SERVIDOR DE NTP.
+ntpq -p
+ntpq -c ass
+
+"NOTA#
+"ntpq -p con * y el ntpq -c ass con sys.peer"
+"#Ejemplo del ntpq -p, debe tener un * por delante de la ip(LA IP ES LA DEL server dns1.cpd2pre.in 192.168.90.6)
+
+     remote           refid      st t when poll reach   delay   offset  jitter
+==============================================================================
+*dns1.cpd2pre.in 192.168.90.6     4 u  466 1024  377    0.831   -0.038   0.212
+ dns2.cpd2.intra .STEP.          16 u    - 1024    0    0.000    0.000   0.000
+
+*******************************
+
+"#Ejemplo del ntpq -c ass, debe tener sys.peer debajo de condition#
+
+ind assid status  conf reach auth condition  last_event cnt
+===========================================================
+  1 59239  965a   yes   yes  none  sys.peer    sys_peer  5
+  2 59240  8011   yes    no  none    reject    mobilize  1
++-------------------------------------------------------------------------------------+
+AD.1.4.7 System Settings	GCC (varios compiladores)
+
+rpm -qa | grep -i ^gcc-
+
+"ESTA EXCEPCIONADA CONTESTAR YES"
+
+"Riesgo : si no estan esos paquetes no permite la instalacion de parches, ni recompilar las librerias en caso de incidencias
+"Impacto : estos paquetes estan para el buen funcionamiento del Agente de monitorizacion del Enterprise Manager que esta instalado en toda las maquinas
++-------------------------------------------------------------------------------------+
+AD.1.4.8 System Settings	Shells
+
+"En sistemas ubicados en entornos de producción, sólo estarán instalados aquellos lenguajes interpretados necesarios para la ejecución del servicio."
+
+cat /etc/shells
+
+"Contestar YES es informacion, porque no sabemos las SHELL o lenguajes que usan en producion.
++-------------------------------------------------------------------------------------+
+AD.1.5.1.7 Network Settings	Directories enabled for Anonymous FTP access
+
+"SI FTP esta habilitado probar entrar con anonymous, si entra con anonyous, mirar en agreed to setting, LAS RESTRICIONES QUE NOS INDICA"#
+
+ls -l /etc/init.d/*ftp*
+
+"*/
+"Si muestra servicio ya sea vsftpd(ftp) o tftp, realizar pruebas de estado y acceso a anonymous
+service vsftpd status
+systemctl status vsftpd
+service tftpd status
+"o
+ftp localhost
+"usuario: anonymous y passwd: anonymous
+
+
+" CONTESTAR N/A "Unit ftp.service could not be found"
+" CONTESTAR NO  " Ftp is enabled and access to anonymous, it is recommended to verify if the service is required. "status vsftpd (pid 3061) is running ..."
++-------------------------------------------------------------------------------------+
+AD.1.5.3.2 Network Settings
+" --> /etc/exports
+
+"Debe estar vacio, o tener renstriciones aprobadas. Ejemplo -sec=, -secure ......"
+
+cat /etc/exports
+
+"Otra opcion de confirmar"
+grep -v "^[[:space:]]*#" /etc/exports | egrep -v "sec=dh|sec=krb5|secure"
++-------------------------------------------------------------------------------------+
+AD.1.5.10.2 Network Settings	NIS maps
+AD.1.5.11 Network Settings	NIS+ maps
+
+"(NADA REFERENTE A NIS en los grupos o usuarios)
+
+cat /etc/nsswitch.conf|grep -i passwd
+cat /etc/nsswitch.conf|grep -i nis
+cat /etc/rc.nfs|grep -i nis
++-------------------------------------------------------------------------------------+
+AD.1.5.12.5 Network Settings	/etc/sysctl.conf
+
+"La equivalencia en Linux es:
+"En /etc/sysctl.conf:
+"# Disables packet forwarding
+"net.ipv4.ip_forward = 0
+
+/sbin/sysctl -a |grep -i net.ipv4.ip_forward
++-------------------------------------------------------------------------------------+
+AD.1.7.0.0 Identify and Authenticate Users	SUID
+
+"Buscar si hay algún fichero con sui o guid, LA PREGUNTA YA ESTA EXCEPCIONADA, CONTESTAR YES"
+
+find / -type f -perm -2000 -o -perm -4000
++-------------------------------------------------------------------------------------+
+AD.2.1.1 Encryption	Data Transmission
+---AD.2.1.2 Encryption	
+"File/Database Storage
+
+"Se debe mirar el protocol que sea 2 o serverkey sea 1024"
+cat /etc/ssh/sshd_config | egrep -i "protocol|ServerKeyBits"
+
+"Si sale comentado mirar en el MAN
+man sshd_config
+
+"Si no muestra resultado en el MAN, mirar que exista uno de estos 2 ficheros.
+
+rpm -q coreutils
+rpm -q openssl
+
+"el ssh a partir de la la versión OpenSSH_7.4p1 ya no utiliza protocolo 1."
+"y en RHEL 7.8 o > ambos están deprecated (obsoletos)"
+
+cat /etc/*release
+*/
++-------------------------------------------------------------------------------------+

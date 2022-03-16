@@ -1,0 +1,26 @@
+preguntas 3:
+
+/********************************************************************************************************************************************************************/
+E.1.1.5.1 Password Requirements	/usr/share/dict/words dictionary
+
+"si es superior a 7.1 debe existir $USER al final"
+
+oslevel -s
+
+tail /usr/share/dict/words
+/********************************************************************************************************************************************************************/
+E.1.1.5.2 Password Requirements	/etc/security/user 
+
+"si es superior a 7.1 debe existir dictionlist = /usr/share/dict/words"
+
+oslevel -s
+
+cat /etc/security/user|grep -v "*" | head -n 33 | egrep "default|dictionlist"
+/*******************************************************************************************************************************************************************/
+E.1.2.5.2 Logging	/var/adm/auth.log
+
+"Debe existir y estar rotanto en el syslog"
+
+cat /etc/syslog.conf | egrep "auth|authpriv"
+ls -la /var/adm/auth.log
+/********************************************************************************************************************************************************************/

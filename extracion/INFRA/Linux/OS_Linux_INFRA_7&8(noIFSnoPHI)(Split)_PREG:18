@@ -1,0 +1,257 @@
+///////////////////////////////////////////////////////////////////////////////////////
+OS Linux INFRA 7&8_ITSS (noIFSnoPHI)(Split) - Issue REF : 755679 / PRE 18
+✍
++-------------------------------------------------------------------------------------+
+---IZ.1.1.4.7 Password Requirements
+"For the password facility, ensure pam modules are in correct order.
+
+//Hay que revisar el orden del pam_cracklib.so or pam_pwquality, debe ser superior a pam_pwhistory.so, seguido de pam_unix.so , y último pam_deny.so"
+
+cat /etc/pam.d/system-auth | grep -i password
+
+//EJEMPLO
+#"password    required      pam_cracklib.so O pam_pwquality
+#"password    sufficient    pam_unix.so
+#"password    required      pam_deny.so
+
+cat /etc/*release
+
+"*/
+"Si es Rehl 7 superior, se revisa tambien en password-auth"
+
+cat /etc/pam.d/password-auth | grep -i password
+
+/* CONTESTAR YES  */ : "Si existe solo pam_cracklib O pam_pwquality, solo debe haber un modulo"
+
+/* CONTESTAR NO   */ : "Si no existe ningun de los 2 modulos mencionados o los 2 modulos por igual, o en distinto orden"
+
+/* NO  */ : "On /etc/pam.d/system-auth and /etc/pam.d/password-auth , you have configured pam_cracklib.so and pam_pwquality, only 1 must exist, if you cannot cause configuration problems.
+
+/* NO */ : "There are two entries in /etc/pam.d/password-auth, pam_cracklib.so and pam_pwquality, only one allowed entry must be configured.
++-------------------------------------------------------------------------------------+
+---IZ.1.2.1.4.2 Logging
+
+"Login success or failure, logs to specified files.
+"Requerido para los sistemas que usan rsyslog"
+
+ls -la /etc/rsyslog.conf
+
+"Debe tener una de las 2 opciones siguientes"
+$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
+*.info;mail.none;authpriv.none;cron.none                /var/log/messages
+authpriv.*                                              /var/log/secure
+
+"or (if you don't want to use global variable $ActionFileDefaultTemplate)
+
+*.info;mail.none;authpriv.none;cron.none /var/log/messages;RSYSLOG_TraditionalFileFormat
+authpriv.* /var/log/secure;RSYSLOG_TraditionalFileFormat
+
+"Comprobar
+cat /etc/rsyslog.conf |grep -v "#" |egrep "Action|secure|messages|RSYSLOG"
+
+/* CONTESTAR YES */ : "Si en /etc/rsyslog.conf encontramos: lo indicado en Recommended Setting"
+/* CONTESTAR N/A */ : "Si el sistema no utiliza /etc/rsyslog.conf"
++-------------------------------------------------------------------------------------+
+---IZ.1.2.2 Logging
+
+" /var/log/wtmp
+
+ls -la /var/log/wtmp
+
+/* CONTESTAR YES */ : "Si existe /var/log/wtmp"
++-------------------------------------------------------------------------------------+
+---IZ.1.4.6.6 System Settings	
+"Login shell which supports time out
+
+//primero declarar una variable con las shell a comprobar
+
+Shells='/bin/csh|/bin/tcsh|/bin/sh|/bin/ksh|/bin/bash|/bin/sh|/bin/false|/sbin/nologin|/usr/bin/sh|/usr/bin/bash|/usr/sbin/nologin|/bin/ksh93|/usr/bin/ksh|/usr/bin/rksh|/usr/bin/ksh93|'
+
+//Segundo debemos comprobar que cada shell que retorna por usuario, soporten la funcion de TMOUT O autologout
+
+"NOTA : HAY QUE COPIAR EL SIGUIENTE CODIGO ENTERO.
+
+// El script muestra todas aquellas cuentas con su shell definida, las shell que aparecen son las que no estan definida por defecto en la variable Shells, Y son las que debemos comprobar si soportan TMOUT o autologout.
+
+cat /etc/passwd | egrep -v '^sync:.*:/bin/sync\s*$|^halt:.*:/sbin/halt\s*$|^shutdown:.*:/sbin/shutdown\s*$' |
+while read ENTRY
+do
+SHELL=$(echo $ENTRY | awk -F: '{printf $7"\n"}')
+Uid=$(echo $ENTRY | awk -F: '{printf $1"\n"}')
+[[ "$SHELL" != @($Shells) ]] && printf " AVISO: Verify shell da soporte a la función de autologo/TMOUT ID: \'$Uid\' -- SHELL: \'$SHELL\'\n"
+done
+
+
+/* CONTESTAR YES */ : "Si retorna vacio. o si retorna alguna shell y tiene autologout o TMOUT"
+
+/* CONTESTAR NO */ : "Si la shell que retorna, no soporta la funcion de autologout / TMOUT"
++-------------------------------------------------------------------------------------+
+---IZ.1.5.9.24.4.1 Network Settings
+
+"Configure vsftpd service where secure ftp is permitted. Purchased Cert. Option 1
+"Si vsftpd esta activo ver recommended settings"
+
+systemctl status vsftpd
+systemctl list-units --all --state=active | grep -i vsftpd
+
+
+##Configuracion de recommended settings
+"El archivo /etc/vsftpd/vsftpd.conf # debe existir con permisos de 600, si vsftpd es activo.
+ls -l /etc/vsftpd/vsftpd.conf
+
+"Y debe contener las siguiente configuraciones ver recommended settings"
+cat /etc/vsftpd/vsftpd.conf | grep -v '^\s*#' | egrep 'ssl_enable|allow_anon_ssl|force_local_|ssl_|rsa_'
+
+" y los archivos rsa_ * existen y tienen permisos de 600.
+"rsa_cert_file=/etc/pki/tls/certs/$pemFileName
+"rsa_private_key_file=/etc/pki/tls/private
+
+ls -l /etc/pki/tls/certs/$pemFileName
+ls -l /etc/pki/tls/private/$keyFileName
+
+/*CONTESTAR YES */ : " SI ESTA ACTIVO vsftpd, y al revisar LA CONFIGURACION ES CORRECTA"
+
+/*CONTESTAR N/A */ : " SI vsftpd NO ESTA ACTIVO"
+
+/* N/A */            " Unit vsftpd.service could not be found"
++-------------------------------------------------------------------------------------+
+---IZ.1.5.9.24.4.2 Network Settings
+
+"Configure vsftpd service where secure ftp is permitted. Self-signed. Option 2
+
+//Lo mismo que ---IZ.1.5.9.24.4.1 Network Settings"
+
+/*CONTESTAR N/A */ : "SI vsftpd NO ESTA ACTIVO"
+
+/* N/A */            " Unit vsftpd.service could not be found"
++-------------------------------------------------------------------------------------+
+---IZ.1.5.13.1 Network Settings
+"Ensure core dumps are restricted
+
+/*
+"Set 'hard core' ulimit to '0'.
+"O
+"Set fs.suid_dumpable to '0'.
+*/
+
+sysctl fs.suid_dumpable
+grep ""fs\.suid_dumpable"" /etc/sysctl.conf /etc/sysctl.d/*.conf | sort -V
+
+*/
+
+"SI fs.suid_dumpable to 0" // CONTESTAR YES, no se revisa nada mas
+
+//En caso contrario revisar que cumpla una de las 3 opciones siguientes "
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1.: Ulimit a traves del archivo de configuracion:
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	" CONTESTAR YES si esta definido en /etc/security/limits.conf"
+
+	cat /etc/security/limits.conf  | egrep -i "hard|core|ulimit"
+	egrep -i "hard|core|ulimit" /etc/security/limits.conf /etc/security/limits.d/* | sort -V
+
+	"*/
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2.: Configuracion Ulimit via perfiles.
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	" CONTESTAR YES si está definido ulimit a 0, en la configuracion de profile o en archivo personalizado disable-coredumps.sh "
+
+	cat  /etc/profile | egrep -i "hard|core|ulimit"
+	cat  /etc/profile.d/disable-coredumps.sh
+
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3.: Ulimit a traves de systemd 
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	" CONTESTAR YES si systemd-coredump service esta activo y la configuracion es correcta
+
+	cat /etc/services | egrep -i "systemd|coredump"
+	systemctl status systemd-coredump
+	systemctl list-units --all --state=active | grep -i coredump
+
+	"Revisar la siguente configuracionScheduleApprover
+	"Deben existir estos fichero y dentro debe estar configurado Storage=none, ProcessSizeMax=0
+
+	ls -la /etc/systemd/coredump.conf 
+	ls -la /etc/systemd/coredump.conf.d/*.conf 
+	ls -la /run/systemd/coredump.conf.d/*.conf 
+	ls -la /usr/lib/systemd/coredump.conf.d/*.conf
+
+	"*/
+
+	grep Storage /etc/systemd/coredump.conf /etc/systemd/coredump.conf.d/*.conf /run/systemd/coredump.conf.d/*.conf /usr/lib/systemd/coredump.conf.d/*.conf
+
+	"*/
+
+	grep ProcessSizeMax /etc/systemd/coredump.conf /etc/systemd/coredump.conf.d/*.conf /run/systemd/coredump.conf.d/*.conf /usr/lib/systemd/coredump.conf.d/*.conf
+
+	"*/
++-------------------------------------------------------------------------------------+
+---IZ.1.5.13.2 Network Settings
+"Ensure address space layout randomization (ASLR) is enabled
+
+//Debe existir" kernel.randomize_va_space = 2
+
+sysctl kernel.randomize_va_space
+grep randomize_va_space /etc/sysctl.conf /etc/sysctl.d/*.conf | sort -V
+
+"CONTESTAR YES */ : " Si existe la entrada kernel.randomize_va_space = 2
++-------------------------------------------------------------------------------------+
+---IZ.C.1.1.14 Filesystem Configuration 
+"Ensure nodev option set on /home partition
+
+// Si existe una partición de `/home`, ejecute el siguiente comando 
+// Y verifique que la opción `nodev` esté establecida en `/home`
+
+mount | grep /home
+
+" Ejemplo :
+// En /dev/xvdf1 on /home type ext4 (rw,nodev,relatime,data=ordered)
+
+/* CONTESTAR YES */ : " Si tiene `nodev`, en la particion de home"
+
+/* CONTESTAR NO */ : " Si no tiene `nodev`, en la particion de home"
+/* NO */ : " Ensure nodev option set on /home partition if it exist
++-------------------------------------------------------------------------------------+
+---IZ.C.1.1.2 Filesystem Configuration
+"Ensure separate partition exists for /tmp
+---IZ.C.1.1.6 Filesystem Configuration
+"Ensure separate partition exists for /var
+---IZ.C.1.1.7 Filesystem Configuration	
+"Ensure separate partition exists for /var/tmp
+---IZ.C.1.1.11 Filesystem Configuration	
+"Ensure separate partition exists for /var/log
+---IZ.C.1.1.12 Filesystem Configuration	
+"Ensure separate partition exists for /var/log/audit
+---IZ.C.1.1.13 Filesystem Configuration	
+"Ensure separate partition exists for /home
+---IZ.C.1.6.1.5 Mandatory Access Control
+"Ensure the MCS Translation Service (mcstrans) is not installed
+---IZ.C.4.1.3 Configure System Accounting
+"Ensure auditing for processes that start prior to auditd is enabled
+
+" For IFS (Internet Facing Systems), create directory as a separate partition.
+
+/* CONTESTAR N/A */ : "For IFS (Internet Facing Systems)"
++-------------------------------------------------------------------------------------+
+---IZ.C.6.2.6 User and Group Settings 	
+"Ensure root PATH Integrity in the default root environment
+
+"El usuario "root" puede ejecutar cualquier comando en el sistema y podría ser engañado para ejecutar programas sin querer si el "PATH" no está correctamente establecido.
+
+echo $PATH
+
+
+"Estan definidos los binarios a ejecutar, debemos hacer un ls y ver si son de root, deben no tener escritua en other, ni en grupo.
+ls -ld  /usr/local/sbin
+ls -ld  /usr/local/bin
+ls -ld  /sbin
+ls -ld  /bin
+ls -ld  /usr/sbin
+ls -ld  /usr/bin
+ls -ld  /root/bin
+
+"Si no existe tambien es un YES.
+
+/* CONTESTAR YES */ : "Si existen o no, y son propietario de root"
++-------------------------------------------------------------------------------------+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

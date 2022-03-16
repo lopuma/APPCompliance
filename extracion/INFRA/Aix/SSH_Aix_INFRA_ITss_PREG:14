@@ -1,0 +1,195 @@
+///////////////////////////////////////////////////////////////////////////////////////
+SSH Aix Igs Itss - Issue REF : 729304 / PRE 14
++-------------------------------------------------------------------------------------+
+---AV.1.1.1 Password Requirements	"PermitEmptyPasswords" = no
+
+cat /etc/ssh/sshd_config | grep -i PermitEmptypassword
+
+"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/PermitEmptyPasswords
++-------------------------------------------------------------------------------------+
+---AV.1.1.5 Password Requirements	
+"Private Key Passphrases
+// Nos habla de la caracteristicas de la Passphrases
+// Las frases de contraseña deben tener un número mínimo de 15 caracteres. Todas las demás reglas de contraseña son aplicables.
++-------------------------------------------------------------------------------------+
+---AV.1.1.6 Password Requirements	
+"Restrict Private Keys access using  "from=" parameter on Public Keys.
+
+// Nos habla de los valores adecuados que debe tener un FROM=
+
+/*
+La entrada "authorized_keys" (o archivo configurado equivalente) del usuario para una clave pública debe contener el parámetro "from =" con los valores adecuados.
+
+"*" o "*. *. *. *" o "0/0" o "0.0.0.0/0" son valores prohibidos en el parámetro "from =", ya que permiten el acceso sin restricciones de todos/todos los hosts.
+*/
+
+---AV.1.1.7 Password Requirements	
+"Private Key Passphrases - security administrative and system authority
+
+// Nos habla de que la clave privada(id_rsa), puede no tener un passphrase, siempre que la clave_publica(authorized_keys), tenga un FROM.
+
+/*
+Las claves publicas que se utilizan para obtener acceso a los ID que tienen autorización administrativa o del sistema de seguridad deben ser accesibles únicamente por los usuarios que tengan autorización administrativa o del sistema. 
+
+Cualquier archivo authorized_keys o authorized_keys2 que otorgue acceso a un ID que tenga autorización administrativa o del sistema de seguridad debe limitar el acceso sólo de hosts específicos especificando la opción "from" con el valor adecuado.
+*/
+
+ls -la /home/*/.ssh/* | grep -i authorized_keys
+
+"*/
+// En el caso de existir ficheros authorized_keys o authorized_keys2  ,hay que realizar un cat de los ficheros  y ver que tiene entradas del estilo:
+
+'from=*HOSTNAME*' // Esto se supone que es para limitar el acceso sólo desde sistemas principales específicos.
+
+// El siguiente comando saca, por cada fichero authorized_keys y authorized_keys2, aquellos que no tengan un FROM y los saca directo para poner NO en la extracion.
+
+find /home/*/.ssh -name authorized_keys|while read kfil; do cat $kfil|grep -vEe '^from=|^$'|awk -v var=$kfil '{print "SSH authorized_keys file: " var "; Invalid from section: *º or *.*.*.* or 0/0 or 0.0.0.0/0.  or empty are forbidden values in the `from=` parameter"}'; done
+
+find /home/*/.ssh -name authorized_keys2|while read kfil; do cat $kfil|grep -vEe '^from=|^$'|awk -v var=$kfil '{print "SSH authorized_keys file: " var "; Invalid from section: *º or *.*.*.* or 0/0 or 0.0.0.0/0.  or empty are forbidden values in the `from=` parameter"}'; done
+
+## NOTA
+// SI HAY ARCHIVOS authorized_keys CON OWNER HUERFANOS, SE PUEDE COMPROBAR QUE NO EXISTE EL OWNER Y SE PUEDEN BORRAR (" en la DESVIACION ")
+
+
+/* CONTESTAR YES */ : " Si los archivos authorized_keys son accesibles solo al owner del archivo y debe contener un FROM"
+
+/* CONTESTAR NO  */ : " SSH authorized_keys file: $file_authorized_keys; Invalid from section: *º or *.*.*.* or 0/0 or 0.0.0.0/0.  or empty are forbidden values in the `from=` parameter
++-------------------------------------------------------------------------------------+
+---AV.1.2.2 Logging	"QuietMode
+"	no
+N/A OpenSSH
++-------------------------------------------------------------------------------------+
+			  /* POLITICA SSH - AIX*/ 
+
+---AV.1.2.4 Logging 	
+Retain Log Files = 180 days
+
+"Para la rotacion de SSH se revisa 2 cosas.
+"1.- La rotacion que debe ser 180 dias.
+"2.- Revisar que los ficheros de segurida estan rotando."#
+
+
+#COMPROBACIONES
+1. - "La rotacion debe ser 180 dias."#
+"Saber que sistema de rotacion USA
+
+"OPCION 1" // Si usa logkeeper
+crontab -l|grep -v ^#|grep logkeeper
+
+"Muestra la configuracion que se esta ejecutando en el crontab.
+"Es OK, si el resultado del comando es "/usr/util/seguridad/logkeeper --trim 180 --keep 180"
+
+"Ver si esta definido el fichero de seguridad
+/usr/util/seguridad/logkeeper -s | grep -i "messages"
+
+ #->sinofunciona mirar,Logrotate<-#
+
+"OPCION 2" // Si usa logrotate.conf
+
+cat /etc/logrotate.conf
+
+ #->sinofunciona mirar sinLOGKEEPE&&&sinLOGROTATE<-#
+
+
+#2.- "El fichero del seguridad debe estar rotando a 90 dias."#
+"Saber que SO estamos revisando "dependeran los ficheros", ya sea Linux o Aix
+*********************************|*************************************************
+- OpenSSH / Linux		 |	      - OpenSSH / Aix
+-------------------------------	 |      ----------------------------------
+"Fichero de configuracion "	 | 	 "Fichero de configuracion "
+/etc/rsyslog.conf		 |	 /etc/syslog.conf
+				 |	
+"Ficheros de rotacion para SSH"	 |	 "Ficheros de rotacion para SSH"
+/var/log/secure			 |	 /var/adm/messages
+/var/log/messages		 |
+*********************************|*************************************************
+
+
+#3.- "Revisar si esta OK: "CONFIGURACION PARA OpenSSH / Aix
+"Para sistemas AIX y politica SSH, debe estar rotando, configurado"
+"//Configuracion
+
+cat /etc/syslog.conf |grep -v "#" |egrep -i "auth|messages"
+
+"debe estar auth.info;authpriv.info /var/adm/messages
+
+
+/*  CONTESTAR YES*/: "Si esta rotando a 180 y existen el fichero "MESSAGES", y configurado en la rotacion"
+/* CONTESTAR NO*/ : "Si no esta rotando a 180 dias o no existe el fichero "/MESSAGES", o no estan configurado en la rotacion.".#
+
+"The rotation is not 180 days and the security file /var/adm/messages is not rotating the security information.
++-------------------------------------------------------------------------------------+
+---AV.1.4.4 System Settings	"MaxConnections"
+
+N/A	OpenSSH
++-------------------------------------------------------------------------------------+
+---AV.1.7.1.2 Identify and Authenticate Users	"PermitRootLogin" = NO
+
+cat /etc/ssh/sshd_config | grep -i PermitRootLogin
+
+"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/PermitRootLogin
++-------------------------------------------------------------------------------------+
+---AV.1.7.2.1 Identify and Authenticate Users	
+
+"Public Key Authentication Key Label for Private Key Ownership Identification
+
+"Una clave pública configurada en un ID de usuario puede pertenecer a otro individuo que no posee el ID de destino, utilizar 
+"el campo "comentario" en las claves públicas para establecer una etiqueta que indique el propietario del par de claves."
+
+
+ls -la /home/*/.ssh/* | grep -i "authorized"
+
+#*/
+"NOTA
+// SI HAY ARCHICOS 'AUTHORIZED_KEYS' CON OWNER HUERFANOS o OWNER DIFERENTES, deben tener un "comentario", ademas de cada fichero authorized_keys debe tener un comentario entre !!, por ejemplo el "!!GECOS!!"
+
+// Por cada fichero authorized_keys, se debe hacer un CAT y ver si tiene un comentario (!!GECOS!!)
+
+" El siguiente comando saca, por cada clave el fichero authorized_keys que no tiene un comentario, y lo saca listo para poner como un NO en la extracion.
+
+find /home/*/.ssh -name authorized_keys|while read kfil; do cat $kfil|grep -vEe '\!!$|^$' | awk -v var=$kfil 'BEGIN {FS=" "} {print "SSH authorized_keys file: " var "; Some of the keys have no identifying label"}';done
+
+Ejemplo:
+
+// Este clave no tiene !!COMENTARIO!!    ---> /home/ES082009/.ssh/authorized_keys
+
+
+/*  CONTESTAR YES */ : "Si todas las claves publicas pertenecen a su owner o no hay claves publicas, y tienen un comentario"
+/* CONTESTAR NO  */ : "Si las claves publicas no tienen un comentario"
+
+/* NO */ : "SSH authorized_keys file: /home/ES082009/.ssh/authorized_keys; Some of the keys have no identifying label"
++-------------------------------------------------------------------------------------+
+---AV.1.7.3.2 Identify and Authenticate Users	Host-Based Authentication    =NO
+
+grep HostbasedAuthentication /etc/ssh/sshd_config
+
+"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/HostbasedAuthentication
++-------------------------------------------------------------------------------------+
+---AV.1.7.3.3 Identify and Authenticate Users	Host-Based Authentication  =NO   /etc/shosts.equiv file
+
+grep HostbasedAuthentication /etc/ssh/sshd_config
++-------------------------------------------------------------------------------------+
+---AV.2.1.1.2 Encryption
+---AV.2.1.1.3 Encryption
+---AV.2.1.1.4 Encryption
+
+sshd -T|grep protocol
+grep -i protocol /etc/ssh/sshd_config
+grep -i ServerKeyBits /etc/ssh/sshd_config /usr/local/etc/sshd_config
+
+"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/ServerKeyBits
+
+" el ssh a partir de la la versión OpenSSH_7.4p1 ya no utiliza protocolo 1.##
+/************************************************************************************************************************************/
