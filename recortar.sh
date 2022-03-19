@@ -3,15 +3,16 @@
 miLista=(
     'Añadir Descripcion.'
     'Saber si es /C/S/F/ or /K/I/E/'
-    "MINAGE - Linux"
-    'MAXAGE - Linux'
-    'Listar CUENTAS - Linux'
-    'MINAGE - Aix'
-    'MAXAGE - Aix'
-    'Listar CUENTAS de MINAGE- Aix'
-    'Listar CUENTAS de MAXAGE- Aix'
-    'MINLEN Sistemas Aix'
-    'LIstar MINLEN Sistemas Aix'
+    "MIN AGE - Linux"
+    'MAX AGE - Linux'
+    'MAX AGE - Linux - CTTI'
+    '--- Listar CUENTAS - Linux'
+    'MIN AGE - Aix'
+    'MAX AGE - Aix'
+    '--- Listar CUENTAS de MIN AGE- Aix'
+    '--- Listar CUENTAS de MAX AGE- Aix'
+    'MIN LEN Sistemas Aix'
+    '---- Listar MIN LEN Sistemas Aix'
     'Salir'
 )
 
@@ -125,6 +126,13 @@ function maxage_linux () {
     gedit ${home}'resultado.txt'
 }
 
+function maxage_linux_ctti () {
+    command_sed
+    cat  ${home}'descripciones.txt' | awk '{print "chage -M 45 "$2}'
+    cat  ${home}'descripciones.txt' | awk '{print "chage -M 45 "$2}' > ${home}'resultado.txt'
+    gedit ${home}'resultado.txt'
+}
+
 function maxage_aix () {
     command_sed
     cat ${home}'descripciones.txt' | awk '{print "chuser maxage=13 "$2}'        
@@ -181,7 +189,7 @@ function menu() {
             ;;
         3)
             clear
-            logInfo "MINAGE Sistemas Linux!\n"
+            logInfo "MIN AGE Sistemas Linux!\n"
             minage_linux
             log ""
             menu
@@ -190,7 +198,7 @@ function menu() {
             ;;
         4)
             clear
-            logInfo "MAXAGE Sistemas Linux!\n"
+            logInfo "MAX AGE Sistemas Linux!\n"
             maxage_linux
             log ""
             menu
@@ -199,8 +207,8 @@ function menu() {
             ;;
         5)
             clear
-            logInfo "LISTAR CUENTAS para Sistemas Linux!\n"
-            listar_linux
+            logInfo "MAX AGE Sistemas Linux!\n"
+            maxage_linux_ctti
             log ""
             menu
             #continuar
@@ -208,8 +216,8 @@ function menu() {
             ;;
         6)
             clear
-            logInfo "MINAGE para Sistemas Aix !\n"
-            minage_aix
+            logInfo "LISTAR CUENTAS para Sistemas Linux!\n"
+            listar_linux
             log ""
             menu
             #continuar
@@ -217,8 +225,8 @@ function menu() {
             ;;
         7)
             clear
-            logInfo "MAXAGE para Sistemas Aix !\n"
-            maxage_aix
+            logInfo "MIN AGE para Sistemas Aix !\n"
+            minage_aix
             log ""
             menu
             #continuar
@@ -226,8 +234,8 @@ function menu() {
             ;;
         8)
             clear
-            logInfo "LISTAR CUENTAS de MINAGE para Sistemas Aix !\n"
-            listarMinage_aix
+            logInfo "MAX AGE para Sistemas Aix !\n"
+            maxage_aix
             log ""
             menu
             #continuar
@@ -235,8 +243,8 @@ function menu() {
             ;;
         9)
             clear
-            logInfo "LISTAR CUENTAS de MAXAGE para Sistemas Aix !\n"
-            listarMaxage_aix
+            logInfo "LISTAR CUENTAS de MIN AGE para Sistemas Aix !\n"
+            listarMinage_aix
             log ""
             menu
             #continuar
@@ -244,8 +252,8 @@ function menu() {
             ;;
         10)
             clear
-            logInfo "EDITAR CUENTAS para MINLEN para Sistemas Aix !\n"
-            minlen
+            logInfo "LISTAR CUENTAS de MAX AGE para Sistemas Aix !\n"
+            listarMaxage_aix
             log ""
             menu
             #continuar
@@ -253,7 +261,16 @@ function menu() {
             ;;
         11)
             clear
-            logInfo "LISTAR CUENTAS para MINLEN para Sistemas Aix !\n"
+            logInfo "EDITAR CUENTAS para MIN LEN para Sistemas Aix !\n"
+            minlen
+            log ""
+            menu
+            #continuar
+            break
+            ;;
+        12)
+            clear
+            logInfo "LISTAR CUENTAS para MIN LEN para Sistemas Aix !\n"
             listar_minlen
             log ""
             menu

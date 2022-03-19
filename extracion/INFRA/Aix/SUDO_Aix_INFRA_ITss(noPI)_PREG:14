@@ -206,8 +206,7 @@ Cmnd_Alias IBM_TSM_C_BAU_CMDS
 
 // Siguiente comando nos muestra, por debajo de cada cmd_alias, sus mandatos y hay que revisar los listados en la seccion (ZY.1.4.2.2), tenga la palabra noexec o -exec, al definirse en el cmd_alias
 "EJEMPLO:
-NOEXEC: /bin/ftp
-
+NOEXEC: /bin/ft
 cat /etc/sudoers /etc/sudoers.d/* | grep -v "^#"|nl|egrep -i "IBM_SHELLESCAPE_ALL|IBM_NONE_EDITOR|IBM_NONE_ALL|IBM_TIVCLIENT_OS_BAU_CMDS|IBM_TSM_C_BAU_CMDS"
 
 */

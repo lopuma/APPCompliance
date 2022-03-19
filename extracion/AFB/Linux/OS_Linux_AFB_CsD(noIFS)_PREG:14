@@ -308,23 +308,18 @@ grep -i "^gpgcheck" /etc/yum.repos.d/*
 " Ensure sticky para todos los directorios que tengan 777.
 
 /*
-
-Establecer el bit de permanencia (t) en directorios grabables en el mundo impide que los usuarios supriman o renombren los archivos de ese directorio que no son propiedad de ellos.
-Nota: la intención de esta regla es aplicar a todos los directorios grabables en todo el mundo, OSR, no OSR y Recursos de usuario que se encuentran en sistemas de archivos locales.
-
+Establecer el bit de permanencia (t) en directorios con escritura en other, impide que los usuarios supriman o renombren los archivos de ese directorio que no son propiedad de ellos.
 */
 
-// Buscar todos los directorios que tengan permisos 777 y deben tener un STICKY BIT
+// Buscar todos los directorios que tengan permisos 777 y deben tener un STICKY BIT (t)
 
-// Muestra el numero total de directorios que ecuenta con 777
+// El siguiente comando lista, todos los directorios con permisos de 777, que no tengan stickybit
 
-find / -type d -perm -o=wx -u=t | wc -l
-
-// Lista los directorios que tenga 777, y hay que revisar que tengan STICKT BIT (t)
-
-find / -type d -perm -o=wx | xargs -l ls -ld
+find / -type f -perm -777 | xargs -l ls -ld | grep -v '^d........t'
 
 /* CONTESTAR YES */ : " Si todos los directorios que muestra tienen sticky bit
+
+/* CONTESTAR NO  */ : " Sticky bit is not set on world-writable directory: $directory
 +-------------------------------------------------------------------------------------+
 ---IZ.1.9.1.3 Protecting Resources - User Resources
 " /etc/profile.d/IBMsinit.sh

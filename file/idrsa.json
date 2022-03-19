@@ -133,6 +133,25 @@
                 "file_idrsa=\"/home/tevjmp15/.ssh/id_rsa\""
             ],
             "SO": "LINUX"
+        },
+        {
+            "object": "/home/ncosys/.ssh/id_rsa",
+            "owner": "ncosys",
+            "tipo": "/S/",
+            "ownerGroup": "Tivoli",
+            "user": [
+                "Mari Cruz Terciado"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Server"
+            ],
+            "risk": "We don't run any risk with leaving it like this. It is impossible to copy the file id_rsa, take it to another machine and connect without password because on the target machine the authorized_keys is configured to only support connections without password from the source.",
+            "impact": "If you set up id_rsa with passphrase the script that controls the HA of the JDBC GW would stop working, you could not control which machine is running and you could not copy the cache files. This could lead to corruption failures of the BBDD in e",
+            "variable": [
+                "Ademas del RISK e IMPACT, hay que adjuntar un PDF: llamado 'GSMA_OMNibus_Failover_Cookbook_10.1.1.0', ubicado en `documentos/`"
+            ],
+            "SO": "LINUX"
         }
     ],
     "LBK": [

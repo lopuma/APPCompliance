@@ -617,10 +617,11 @@
             "servers": [
                 "ALL servers"
             ],
-            "risk": "MONITORIZACION / AUTHORIZED_KEYS",
-            "impact": "MONITORIZACION / AUTHORIZED_KEYS",
+            "risk": "MONITORIZACION / AUTHORIZED_KEYS / INFRA",
+            "impact": "1-OK para `Identify and Authenticate Users/Public Key Label`",
             "variable": [
-                ""
+                "file_authorized=\"/home/ncosftp/.ssh/authorized_keys\"",
+                "gecos=\"!!---!!\""
             ],
             "SO": "AIX"
         },

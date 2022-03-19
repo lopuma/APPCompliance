@@ -209,8 +209,7 @@ mount | grep /home
 
 /* CONTESTAR YES */ : " Si tiene `nodev`, en la particion de home"
 
-/* CONTESTAR NO */ : " Si no tiene `nodev`, en la particion de home"
-/* NO */ : " Ensure nodev option set on /home partition if it exist
+/* CONTESTAR NO */ : " Ensure nodev option set on /home partition if it exist
 +-------------------------------------------------------------------------------------+
 ---IZ.C.1.1.2 Filesystem Configuration
 "Ensure separate partition exists for /tmp
