@@ -1,0 +1,235 @@
+{
+    "AFB": [
+        {
+            "object": "/home/afb-md/.ssh/id_rsa",
+            "owner": "afb-md",
+            "tipo": "/C/",
+            "ownerGroup": "Customer",
+            "user": [
+                "Customer"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "GENERICO / ID_RSA / CUSTOMER",
+            "impact": "GENERICO / ID_RSA / CUSTOMER",
+            "variable": [
+                "Usuario de aplicativo"
+            ],
+            "SO": "Linux"
+        }
+    ],
+    "CESCE": [
+        {
+            "object": "/cescelink/usuario/home/usuario/.ssh/id_rsa",
+            "owner": "usuario",
+            "tipo": "/C/",
+            "ownerGroup": "Customer",
+            "user": [
+                "Customer"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "GENERICO / ID_RSA / CUSTOMER",
+            "impact": "GENERICO / ID_RSA / CUSTOMER",
+            "variable": [
+                "Usuario de prueba para el cliente"
+            ],
+            "SO": "Linux"
+        },
+        {
+            "object": "/home/apps/.ssh/id_rsa",
+            "owner": "apps",
+            "tipo": "/C/",
+            "ownerGroup": "APPS",
+            "user": [
+                "Customer"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "GENERICO / ID_RSA / CUSTOMER",
+            "impact": "GENERICO / ID_RSA / CUSTOMER",
+            "variable": [
+                "Usuario de prueba para el cliente"
+            ],
+            "SO": "Linux"
+        },
+        {
+            "object": "/home/grid/.ssh/id_rsa",
+            "owner": "grid",
+            "tipo": "/F/",
+            "ownerGroup": "Oracle DBA",
+            "user": [
+                "Daniel Castroverde",
+                "JUAN MANUEL RODRIGUEZ IGLESIAS",
+                "LUIS MIGUEL CALLES SANCHEZ"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers RAC Oracle", 
+                "INFLIORAPRE03",
+                "INFLIORAPRE01",
+                "INFLIORAPRE04",
+                "INFLIORAPRO01",
+                "INFLIORAPRE02",
+                "INFLIORAPRO02"
+            ],
+            "risk": "GENERICO / ID_RSA / RAC Oracle",
+            "impact": "GENERICO / ID_RSA / RAC Oracle",
+            "variable": [
+                "Cuenta para Oracle DBA"            ],
+            "SO": "LINUX"
+        },
+        {
+            "object": "/home/oracle/.ssh/id_rsa",
+            "owner": "oracle",
+            "tipo": "/F/",
+            "ownerGroup": "Oracle DBA",
+            "user": [
+                "Daniel Castroverde",
+                "JUAN MANUEL RODRIGUEZ IGLESIAS",
+                "LUIS MIGUEL CALLES SANCHEZ"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers RAC Oracle", 
+                "INFLIORAPRE03",
+                "INFLIORAPRE01",
+                "INFLIORAPRE04",
+                "INFLIORAPRO01",
+                "INFLIORAPRE02",
+                "INFLIORAPRO02"
+            ],
+            "risk": "GENERICO / ID_RSA / RAC Oracle",
+            "impact": "GENERICO / ID_RSA / RAC Oracle",
+            "variable": [
+                "Cuenta para Oracle DBA"
+            ],
+            "SO": "LINUX"
+        }
+    ],
+    "INFRA": [
+        {
+            "object": "/home/dnsadmin/.ssh/id_rsa",
+            "owner": "dnsadmin",
+            "tipo": "/F/",
+            "ownerGroup": "Sistemas",
+            "user": [
+                "Grupo de sistemas"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ESMA2DN01SR15NM"
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_idrsa=\"/home/dnsadmin/.ssh/id_rsa\""
+            ],
+            "SO": "LINUX"
+        },
+        {
+            "object": "/home/tevjmp15/.ssh/id_rsa",
+            "owner": "tevjmp15",
+            "tipo": "/S/",
+            "ownerGroup": "TEVA",
+            "user": [
+                "Rafal.Miskiewicz@kyndryl.com",
+                "Grzegorz.Mateja@kyndryl.com"
+            ],
+            "code": "NULL",
+            "servers": [
+                ""
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_idrsa=\"/home/tevjmp15/.ssh/id_rsa\""
+            ],
+            "SO": "LINUX"
+        },
+        {
+            "object": "/home/ncosys/.ssh/id_rsa",
+            "owner": "ncosys",
+            "tipo": "/S/",
+            "ownerGroup": "Tivoli",
+            "user": [
+                "Mari Cruz Terciado"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Server"
+            ],
+            "risk": "We don't run any risk with leaving it like this. It is impossible to copy the file id_rsa, take it to another machine and connect without password because on the target machine the authorized_keys is configured to only support connections without password from the source.",
+            "impact": "If you set up id_rsa with passphrase the script that controls the HA of the JDBC GW would stop working, you could not control which machine is running and you could not copy the cache files. This could lead to corruption failures of the BBDD in e",
+            "variable": [
+                "Ademas del RISK e IMPACT, hay que adjuntar un PDF: llamado 'GSMA_OMNibus_Failover_Cookbook_10.1.1.0', ubicado en `documentos/`"
+            ],
+            "SO": "LINUX"
+        }
+    ],
+    "LBK": [
+        {
+            "object": "/batchUCMD/batchUCMD.INTRANET/.ssh/id_rsa",
+            "owner": "ubroker",
+            "tipo": "/C/",
+            "ownerGroup": "Customer",
+            "user": [
+                "Customer"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Server"
+            ],
+            "risk": "GENERICO / ID_RSA / CUSTOMER",
+            "impact": "GENERICO / ID_RSA / CUSTOMER",
+            "variable": [
+                "Fichero pertenece a una cuenta de cliente"
+            ],
+            "SO": "Aix"
+        },
+        {
+            "object": "/home/nodejs/.ssh/id_rsa",
+            "owner": "nodejs",
+            "tipo": "/C/",
+            "ownerGroup": "Customer",
+            "user": [
+                "Customer"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Server"
+            ],
+            "risk": "GENERICO / ID_RSA / CUSTOMER",
+            "impact": "GENERICO / ID_RSA / CUSTOMER",
+            "variable": [
+                "Fichero pertenece a una cuenta de cliente"
+            ],
+            "SO": "Aix"
+        },
+        {
+            "object": "/home/tibco/.ssh/id_rsa",
+            "owner": "tibco",
+            "tipo": "/C/",
+            "ownerGroup": "Customer",
+            "user": [
+                "Customer"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Server"
+            ],
+            "risk": "GENERICO / ID_RSA / CUSTOMER",
+            "impact": "GENERICO / ID_RSA / CUSTOMER",
+            "variable": [
+                "Fichero pertenece a una cuenta de cliente"
+            ],
+            "SO": "Aix"
+        }
+    ]
+}
