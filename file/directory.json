@@ -538,6 +538,27 @@
         "directoryETC=\"/etc/oracle/maps/\""
       ],
       "SO": "Linux"
+    },
+    {
+      "object": "/var/www/canmds/can/assets/js/scripts.js",
+      "owner": "apachedep",
+      "tipo": "/S/",
+      "ownerGroup": "*EGCEBH",
+      "user": [
+        "Silvia Pereira",
+        "Alfonso Marcos Tarancon",
+        "Almudena Outeda Rodríguez"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fichero=\"/var/www/canmds/can/assets/js/scripts.js\""
+      ],
+      "SO": "Linux"
     }
   ],
   "ENEL": [

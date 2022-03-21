@@ -29,8 +29,8 @@
         "copia": null,
         "editar": "+-------------------------------------------------------------------------------------+\n## De forma INDIVIDUAL\n+-------------------------------------------------------------------------------------+\nchown oradb:asmadmin $filebdd\nchmod g-r $filebdd/*\n\n+-------------------------------------------------------------------------------------+\n## De forma RECURSIVA\n+-------------------------------------------------------------------------------------+\nfind  $filebdd -type f -group oinstall -exec chown oradb:asmadmin {} +\nfind  $filebdd -type f -perm -g=r -exec chmod g-r {} +\n",
         "refrescar": null,
-        "evidencia": "+-------------------------------------------------------------------------------------+\n## De forma INDIVIDUAL\n+-------------------------------------------------------------------------------------+\nclear\ndate\nhostname\nls -la $filebdd\n\n+-------------------------------------------------------------------------------------+\n## De forma RECURSIVA\n+-------------------------------------------------------------------------------------+\nclear\ndate\nhostname\nfind $filebdd -type f -group oinstall | wc -l\nfind $filebdd -type f -perm -g=r | wc -l\nls -la $filebdd",
-        "SO": "Bases de Datos"
+        "evidencia": "+-------------------------------------------------------------------------------------+\n## De forma INDIVIDUAL\n+-------------------------------------------------------------------------------------+\nclear\ndate\nhostname\nls -la $filebdd\n\n+-------------------------------------------------------------------------------------+\n## De forma RECURSIVA\n+-------------------------------------------------------------------------------------+\nclear\ndate\nhostname\nfind $filebdd -type f -group oinstall | wc -l\nfind $filebdd -type f -perm -g=r | wc -l\nls -ld $filebdd",
+        "SO": "Oracle"
     },
     {
         "modulo": "Identify and Authenticate Users/Public Key Label",

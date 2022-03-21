@@ -41,6 +41,25 @@
             "SO": "Linux"
         },
         {
+            "object": "/home/apps/.ssh/id_rsa",
+            "owner": "apps",
+            "tipo": "/C/",
+            "ownerGroup": "APPS",
+            "user": [
+                "Customer"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "GENERICO / ID_RSA / CUSTOMER",
+            "impact": "GENERICO / ID_RSA / CUSTOMER",
+            "variable": [
+                "Usuario de prueba para el cliente"
+            ],
+            "SO": "Linux"
+        },
+        {
             "object": "/home/grid/.ssh/id_rsa",
             "owner": "grid",
             "tipo": "/F/",
