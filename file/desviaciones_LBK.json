@@ -322,9 +322,9 @@
         "modulo": "Password Requirements/Password shadow specification",
         "clave": "EMPTY",
         "descripcion": "Account: $account have \"empty\" (null) password. In /etc/shadow  password (second field) cannot be assigned the null value.",
-        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Las cuentas no deben tener un valor nulo, en el segundo campo de /etc/shadow\n## Valida para todas las cuentas, ya sean /C/F/S/\n+-------------------------------------------------------------------------------------+\n\naccount=\"\"\n\ncat /etc/shadow | grep $account",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Las cuentas no deben tener un valor nulo, en el segundo campo de /etc/shadow\n## Valida para todas las cuentas, ya sean /C/F/S/\n+-------------------------------------------------------------------------------------+\n\ncat /etc/shadow | grep $account",
         "copia": null,
-        "editar": "+-------------------------------------------------------------------------------------+\n## Añadir el valor ya sea `!, !!, *`, a la cuenta en el segundo campo.\n## Hay que remplazar $account, por la cuenta a corregir.\n+-------------------------------------------------------------------------------------+\n\npasswd -l $account\n",
+        "editar": "+-------------------------------------------------------------------------------------+\n## Añadir el valor ya sea `!, !!, *`, a la cuenta en el segundo campo.\n+-------------------------------------------------------------------------------------+\n\npasswd -l $account\n",
         "refrescar": null,
         "evidencia": "clear\ndate\nhostname\ncat /etc/shadow | grep \"$account\"\n",
         "SO": "Linux"

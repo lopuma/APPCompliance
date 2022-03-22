@@ -387,9 +387,12 @@
       "object": "root",
       "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EPUXOS",
       "user": [
-        "Grupo de soporte CESCE - Linux"
+        "Grupo de soporte CESCE - Linux",
+        "GEMMA ESCAR APARICIO", 
+        "NINELA ELENA PAVEL MANCIU", 
+        "RAMON RUIZ GARCIA"
       ],
       "code": "1-OK",
       "servers": [
@@ -399,6 +402,25 @@
       "impact": "",
       "variable": [
         "account=\"root\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "cmfcloudscp",
+      "owner": "cmfcloudscp",
+      "tipo": "/F/",
+      "ownerGroup": "*CMFEUF",
+      "user": [
+        "MARTIN BEITIA COSTA"
+      ],
+      "code": "null",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "Usuario para el cloud, lo suelen crear para las subidas a CMOS",
+      "impact": "",
+      "variable": [
+        "account=\"cmfcloudscp\""
       ],
       "SO": "Linux"
     }
@@ -543,9 +565,10 @@
       "object": "root",
       "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EAUXOS",
       "user": [
-        "Grupo FT Linux - Sigifi"
+        "Soporte LINUX de FT Sigifi",
+        "Soporte UNIX de FT Sigifi"
       ],
       "code": "1-OK",
       "servers": [
@@ -564,7 +587,7 @@
       "tipo": "/F/",
       "ownerGroup": "Sistemas",
       "user": [
-        "Grupo FT Linux - Sigifi"
+        "Soporte LINUX de FT Sigifi"
       ],
       "code": "1-OK",
       "servers": [
@@ -613,7 +636,45 @@
       "variable": [
         ""
       ],
-      "SO": "Linux"
+      "SO": "Linux / Aix"
+    },
+    {
+      "object": "cdevzbbx",
+      "owner": "cdevzbbx",
+      "tipo": "/C/",
+      "ownerGroup": "Customer Orange",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "cdevdisc",
+      "owner": "cdevdisc",
+      "tipo": "/C/",
+      "ownerGroup": "Customer Orange",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Aix"
     }
   ],
   "INFRA": [

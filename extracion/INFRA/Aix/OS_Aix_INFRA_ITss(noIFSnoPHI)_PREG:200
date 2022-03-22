@@ -449,34 +449,47 @@ ls -la /etc/security/failedlogin
 
 /* CONTESTAR YES */ : "  */ Must exist
 +-------------------------------------------------------------------------------------+
----E.1.2.5.1 Logging	
+---E.1.2.5.1 Logging
+
 "/etc/syslog.conf
 
-"//Must contain:
+/* 
+Puede existir:
 auth.info /var/adm/messages
 or
 auth.debug /var/adm/messages
+*/
+
+# NOTA : No es necesario mas de un control auth, ya sea solo auth.info o auth.debug#
 
 cat /etc/syslog.conf|egrep "messages|auth"
 
-/* CONTESTAR YES */ : "  */ Must contain: should return:
-auth.$1 $2
-$1 is 'info' or 'debug'
-$2 is an OSR con los permisos adecuados, normalmente '/var/adm/messages'
+// Debe existir /var/adm/messages y con permisos 770
 
-* CONTESTAR NO  : "in /etc/syslog.conf, there is auth.info /var/adm/auth.log, it is recommended that it be auth.info /var/adm/messages"
+ls -la /var/adm/messages
+
+/* CONTESTAR YES */ : "  Si en syslog.conf, tiene configurado auth.info /var/adm/messages o auth.debug /var/adm/messages y existe /var/adm/messages.
+
+/* CONTESTAR NO  */ : " In /etc/syslog.conf, there is auth.info /var/adm/auth.log, it is recommended that it be auth.info /var/adm/messages"
+
+/* CONTESTAR NO  */ : " In /etc/syslog.conf, it is recommended that file exist /var/adm/messages, with permissions 770
 +-------------------------------------------------------------------------------------+
----E.1.2.5.2 Logging	/var/log/messages	
-"Debe existir Nota: /var/adm/messages se puede sustituir por un nombre de directorio/archivo alternativo, tal como se especifica 
-"como destino para el recurso auth en /etc/syslog.conf en la regla ---E. 1.2.5.1
+---E.1.2.5.2 Logging	
+
+"/var/log/messages	
+
+# Nota: /var/log/messages se puede sustituir por un nombre de directorio/archivo alternativo, tal como se especifica como destino para el recurso `auth` en `/etc/syslog.conf` en la regla ---E.1.2.5.1 #
 
 ls -la /var/log/messages
 
-/* CONTESTAR YES */ : "  */ si se ha revisado en la pregunta ---E.1.2.5.1
+// Revisar si existe /var/adm/messages y con permisos 770
 
-* CONTESTAR NO   */ : ""
-/* CONTESTAR N/A */ : "   */ : "For aix is not required /var/log/messages, it is required with /var/adm/messages, review rule ---E.1.2.5.1 Logging
-"
+ls -la /var/adm/messages
+
+
+/* CONTESTAR YES */ : " Si no existe /var/log/messages o si existe /var/adm/messages.
+
+/* CONTESTAR NO  */ : " In /etc/syslog.conf, it is recommended that file exist /var/adm/messages, with permissions 770
 +-------------------------------------------------------------------------------------+
 ---E.1.2.5.3 Logging	
 "/etc/syslog.conf	

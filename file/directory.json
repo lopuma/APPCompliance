@@ -1086,9 +1086,12 @@
       "object": "/tmp/",
       "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EAUXOS",
       "user": [
-        "Grupo de Sistemas"
+        "Soporte LINUX de FT Sigifi",
+        "PABLO MOSCOSO SARABIA",
+        "FT-LINUX - Santiago Tirado Salvador",
+        "FT-LINUX - Antonio Gil López"
       ],
       "code": "2-DOC",
       "servers": [
@@ -1200,9 +1203,12 @@
       "object": "/var/ibm/",
       "owner": "bin",
       "tipo": "/S/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EAUXOS",
       "user": [
-        "Sistemas"
+        "Soporte LINUX de FT Sigifi",
+        "PABLO MOSCOSO SARABIA",
+        "FT-LINUX - Santiago Tirado Salvador",
+        "FT-LINUX - Antonio Gil López"
       ],
       "code": "1-OK",
       "servers": [
@@ -1216,12 +1222,16 @@
       "SO": "Linux"
     },
     {
-      "object": "/var/",
+      "object": "/var/tmp/collection/",
       "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EAUXOS",
       "user": [
-        "Sistemas"
+        "Soporte UNIX de FT sigifi:",
+        "FT-UNIX Angel Arribas Martinez", 
+        "FT-UNIX Juan Carlos Herranz Jimenez", 
+        "FT-UNIX_jose_ramon_alonso_dominguez",
+        "PEDRO JAVIER PRIETO HOLGUIN"
       ],
       "code": "1-OK",
       "servers": [
@@ -1230,17 +1240,20 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "fileVAR=\"/var/\""
+        "fileVAR=\"/var/tmp/collection/\""
       ],
-      "SO": "Linux"
+      "SO": "Aix"
     },
     {
       "object": "/var/.com.zerog.registry.xml",
       "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EAUXOS",
       "user": [
-        "Sistemas"
+        "Soporte LINUX de FT Sigifi",
+        "PABLO MOSCOSO SARABIA",
+        "FT-LINUX - Santiago Tirado Salvador",
+        "FT-LINUX - Antonio Gil López"
       ],
       "code": "1-OK",
       "servers": [
@@ -1257,9 +1270,12 @@
       "object": "/opt/IBM/ITM/lx8266/08/bin/",
       "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EAUXOS",
       "user": [
-        "Sistemas"
+        "Soporte LINUX de FT Sigifi",
+        "PABLO MOSCOSO SARABIA",
+        "FT-LINUX - Santiago Tirado Salvador",
+        "FT-LINUX - Antonio Gil López"
       ],
       "code": "1-OK",
       "servers": [
@@ -1276,9 +1292,12 @@
       "object": "/opt/IBM/ITM/smitools/",
       "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EAUXOS",
       "user": [
-        "Sistemas"
+        "Soporte LINUX de FT Sigifi",
+        "PABLO MOSCOSO SARABIA",
+        "FT-LINUX - Santiago Tirado Salvador",
+        "FT-LINUX - Antonio Gil López"
       ],
       "code": "1-OK",
       "servers": [
@@ -1295,9 +1314,12 @@
       "object": "/opt/tivoli/tsm/client/",
       "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EAUXOS",
       "user": [
-        "Sistemas"
+        "Soporte LINUX de FT Sigifi",
+        "PABLO MOSCOSO SARABIA",
+        "FT-LINUX - Santiago Tirado Salvador",
+        "FT-LINUX - Antonio Gil López"
       ],
       "code": "1-OK",
       "servers": [
@@ -1315,9 +1337,12 @@
       "object": "/opt/tivoli/tsm/client/api/bin64/",
       "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EAUXOS",
       "user": [
-        "Sistemas"
+        "Soporte LINUX de FT Sigifi",
+        "PABLO MOSCOSO SARABIA",
+        "FT-LINUX - Santiago Tirado Salvador",
+        "FT-LINUX - Antonio Gil López"
       ],
       "code": "1-OK",
       "servers": [
@@ -1334,9 +1359,12 @@
       "object": "/opt/tivoli/tsm/client/oracle/_uninstall/.com.zerog.registry.xml",
       "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EAUXOS",
       "user": [
-        "Sistemas"
+        "Soporte LINUX de FT Sigifi",
+        "PABLO MOSCOSO SARABIA",
+        "FT-LINUX - Santiago Tirado Salvador",
+        "FT-LINUX - Antonio Gil López"
       ],
       "code": "1-OK",
       "servers": [
@@ -1353,7 +1381,7 @@
       "object": "/etc/mount-dbfs.conf",
       "owner": "oracle",
       "tipo": "/F/",
-      "ownerGroup": "Administrador de ORACLE",
+      "ownerGroup": "*EFDBAD",
       "user": [
         "FT-BBDD - Javi de Paula",
         "FT-BBDD - Santiago Santos"
@@ -1373,9 +1401,9 @@
     },
     {
       "object": "/etc/tmpfiles.d/oracleGI.conf",
-      "owner": "root",
+      "owner": "oracle",
       "tipo": "/F/",
-      "ownerGroup": "dba",
+      "ownerGroup": "*EFDBAD",
       "user": [
         "FT-BBDD - Javi de Paula",
         "FT-BBDD - Santiago Santos"
@@ -1397,7 +1425,7 @@
       "object": "/etc/mount-dbfs_ogg_mdg.conf",
       "owner": "oracle",
       "tipo": "/F/",
-      "ownerGroup": "Administrador de ORACLE",
+      "ownerGroup": "*EFDBAD",
       "user": [
         "FT-BBDD - Javi de Paula",
         "FT-BBDD - Santiago Santos"
@@ -1419,7 +1447,7 @@
       "object": "/etc/oracle/",
       "owner": "oracle",
       "tipo": "/F/",
-      "ownerGroup": "Administrador de ORACLE",
+      "ownerGroup": "*EFDBAD",
       "user": [
         "FT-BBDD - Javi de Paula",
         "FT-BBDD - Santiago Santos"
@@ -1441,7 +1469,7 @@
       "object": "/etc/oragchomelist",
       "owner": "oracle",
       "tipo": "/F/",
-      "ownerGroup": "Administrador de ORACLE",
+      "ownerGroup": "*EFDBAD",
       "user": [
         "FT-BBDD - Javi de Paula",
         "FT-BBDD - Santiago Santos"
@@ -1463,7 +1491,7 @@
       "object": "/etc/oratab",
       "owner": "oracle",
       "tipo": "/F/",
-      "ownerGroup": "Administrador de ORACLE",
+      "ownerGroup": "*EFDBAD",
       "user": [
         "FT-BBDD - Javi de Paula",
         "FT-BBDD - Santiago Santos"
@@ -1485,9 +1513,12 @@
       "object": "/etc/adsm/",
       "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EAUXOS",
       "user": [
-        "Sistemas"
+        "Soporte LINUX de FT Sigifi",
+        "PABLO MOSCOSO SARABIA",
+        "FT-LINUX - Santiago Tirado Salvador",
+        "FT-LINUX - Antonio Gil López"
       ],
       "code": "1-OK",
       "servers": [
@@ -1506,9 +1537,12 @@
       "object": "/opt/tivoli/tsm/client/api/bin64/cit/bin/etc/",
       "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EAUXOS",
       "user": [
-        "Sistemas"
+        "Soporte LINUX de FT Sigifi",
+        "PABLO MOSCOSO SARABIA",
+        "FT-LINUX - Santiago Tirado Salvador",
+        "FT-LINUX - Antonio Gil López"
       ],
       "code": "1-OK",
       "servers": [
@@ -1563,9 +1597,12 @@
       "object": "/opt/IBM/ITM/08_Silent_Config.txt",
       "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EAUXOS",
       "user": [
-        "Sistemas"
+        "Soporte LINUX de FT Sigifi",
+        "PABLO MOSCOSO SARABIA",
+        "FT-LINUX - Santiago Tirado Salvador",
+        "FT-LINUX - Antonio Gil López"
       ],
       "code": "1-OK",
       "servers": [
@@ -1580,9 +1617,9 @@
     },
     {
       "object": "/usr/sbin/cvuqdisk",
-      "owner": "root",
+      "owner": "oracle",
       "tipo": "/F/",
-      "ownerGroup": "dba",
+      "ownerGroup": "*EFDBAD",
       "user": [
         "FT-BBDD - Javi de Paula",
         "FT-BBDD - Santiago Santos"
@@ -1604,9 +1641,12 @@
       "object": "/var/opt/ansible/ITM/",
       "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EAUXOS",
       "user": [
-        "Grupo FT-LINUX Sigifi"
+        "Soporte LINUX de FT Sigifi",
+        "PABLO MOSCOSO SARABIA",
+        "FT-LINUX - Santiago Tirado Salvador",
+        "FT-LINUX - Antonio Gil López"
       ],
       "code": "1-OK",
       "servers": [

@@ -211,8 +211,12 @@
       "object": "ftp",
       "owner": "Sistemas",
       "tipo": "/S/",
-      "ownerGroup": "Group Sistemas",
+      "ownerGroup": "Group Soporte",
       "user": [
+        "Soporte UNIX de FT sigifi:",
+        "FT-UNIX Angel Arribas Martinez", 
+        "FT-UNIX Juan Carlos Herranz Jimenez", 
+        "FT-UNIX_jose_ramon_alonso_dominguez",
         "PEDRO JAVIER PRIETO HOLGUIN"
       ],
       "code": "1-OK",
@@ -230,8 +234,12 @@
       "object": "telnet",
       "owner": "Sistemas",
       "tipo": "/S/",
-      "ownerGroup": "Group Sistemas",
+      "ownerGroup": "Group Soporte",
       "user": [
+        "Soporte UNIX de FT sigifi:",
+        "FT-UNIX Angel Arribas Martinez", 
+        "FT-UNIX Juan Carlos Herranz Jimenez", 
+        "FT-UNIX_jose_ramon_alonso_dominguez",
         "PEDRO JAVIER PRIETO HOLGUIN"
       ],
       "code": "1-OK",
@@ -242,6 +250,29 @@
       "impact": "Pertenece al puerto 23",
       "variable": [
         "service=\"telnet\""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "sendmail",
+      "owner": "Sistemas",
+      "tipo": "/S/",
+      "ownerGroup": "Group Soporte",
+      "user": [
+        "Soporte UNIX de FT sigifi:",
+        "FT-UNIX Angel Arribas Martinez", 
+        "FT-UNIX Juan Carlos Herranz Jimenez", 
+        "FT-UNIX_jose_ramon_alonso_dominguez",
+        "PEDRO JAVIER PRIETO HOLGUIN"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk":"GENERICO /  SENDMAIL / FT",
+      "impact": "GENERICO /  SENDMAIL / FT",
+      "variable": [
+        "`sendmail` Lo usa el cliente para el envio de mails"
       ],
       "SO": "Aix"
     }

@@ -234,8 +234,8 @@
         "modulo": "Protecting Resources-OSRs/OSR /VAR Files Restrictions",
         "clave": "OSRVAR",
         "descripcion": "Invalid permissions for $fileVAR  Octal permissions: 0777  Text Permissions: -rwxrwxrwx;  May not have execute permissions on any files and no write for others.",
-        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Aplica a ficheros del directorio /VAR\n+-------------------------------------------------------------------------------------+\n\n## El desvio trata de quitarle escritura a OTHER, a ficheros que tienen escritura y ejecucion que cuelgan en el directorio /VAR y sub-directorios.\n\n+-------------------------------------------------------------------------------------+\n## Hay que tener en cuenta el tipo de owner que pertenece, cada fichero o directorio BASE.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Ya sea de tipo '/C/F/S/'\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es /C/, se pasa a excepcion con RISK e IMPACT\n(Por favor revisar la seccion de RISK e IMPACT)\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /F/S/, se debe preguntar al owner, si podemos modificar los permisos\n## Revisar ('PERMISSIONS'), antes de cualquier cambio.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Buscar y comprobar los fichero a cambiar permisos.\n+-------------------------------------------------------------------------------------+\n\n## FICHEROS FORMA RECURVISA:\n---\necho \"ficheros con permisos w en other : \";find $fileVAR -type f -perm -o=wx | wc -l\nfind $fileVAR -type f -perm -o=wx | xargs -l ls -l\n\n## FICHERO\n---\nls -l $fichero\n\n+-------------------------------------------------------------------------------------+\n## Pregunta RELACIONADAS\n+-------------------------------------------------------------------------------------+\n\nProtecting Resources-mixed/Ensure sticky bit is set on all world-writable directories",        "copia": null,
-        "editar": "+-------------------------------------------------------------------------------------+\n## Se puede quitar de forma 'RECURSIVA' o por 'INDIVIDUAL'\n\n## VARIABLES:\n## $fileVAR : es la variable del directorio base de los ficheros a cambiar permisos.\n## $fichero : es la variable, del fichero a cambiar permiso.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Asi quitamos de permisos de W a Other, en los ficheros('RECURSIVO'):\n+-------------------------------------------------------------------------------------+\n\nfind $fileVAR -type f -perm -o=wx -exec chmod o-w {} \\;\n\n+-------------------------------------------------------------------------------------+\n## Asi quitamos permisos, de W a other de forma('INDIVIDUAL'):\n+-------------------------------------------------------------------------------------+\n\nchmod o-w $fichero",        
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Aplica a ficheros del directorio /VAR\n+-------------------------------------------------------------------------------------+\n\n## El desvio trata de quitarle escritura a OTHER, a ficheros que tienen escritura y ejecucion que cuelgan en el directorio /VAR y sub-directorios.\n\n+-------------------------------------------------------------------------------------+\n## Hay que tener en cuenta el tipo de owner que pertenece, cada fichero o directorio BASE.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Ya sea de tipo '/C/F/S/'\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es /C/, se pasa a excepcion con RISK e IMPACT\n(Por favor revisar la seccion de RISK e IMPACT)\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Si es de tipo /F/S/, se debe preguntar al owner, si podemos modificar los permisos\n## Revisar ('PERMISSIONS'), antes de cualquier cambio.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Buscar y comprobar los fichero a cambiar permisos.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## TOTAL FICHEROS FORMA RECURVISA:\n+-------------------------------------------------------------------------------------+\n---\necho \"ficheros con permisos w en other : \";find $fileVAR -type f -perm -o=wx | wc -l\n\n+-------------------------------------------------------------------------------------+\n## LISTA FICHEROS FORMA RECURVISA:\n+-------------------------------------------------------------------------------------+\n---\nfind $fileVAR -type f -perm -o=wx | xargs -l ls -l\n\n+-------------------------------------------------------------------------------------+\n## FICHERO:\n+-------------------------------------------------------------------------------------+\n---\nls -l $fichero\n\n+-------------------------------------------------------------------------------------+\n## Pregunta RELACIONADAS\n+-------------------------------------------------------------------------------------+\n\nProtecting Resources-mixed/Ensure sticky bit is set on all world-writable directories",        "copia": null,
+        "editar": "+-------------------------------------------------------------------------------------+\n## Se puede quitar de forma 'RECURSIVA' o por 'INDIVIDUAL'\n\n+-------------------------------------------------------------------------------------+\n## VARIABLES:\n+-------------------------------------------------------------------------------------+\n## $fileVAR : es la variable, del directorio base de los ficheros a cambiar permisos.\n## $fichero : es la variable, del fichero a cambiar permiso.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Asi quitamos de permisos de W a Other, en los ficheros('RECURSIVO'):\n+-------------------------------------------------------------------------------------+\n\nfind $fileVAR -type f -perm -o=wx -exec chmod o-w {} \\;\n\n+-------------------------------------------------------------------------------------+\n## Asi quitamos permisos, de W a other de forma('INDIVIDUAL'):\n+-------------------------------------------------------------------------------------+\n\nchmod o-w $fichero",        
         "refrescar": null,
         "evidencia": "+-------------------------------------------------------------------------------------+\n## De forma ('RECURSIVA'):\n+-------------------------------------------------------------------------------------+\n\nclear\ndate\nhostname\nfind $fileVAR -type f -perm -o=wx | wc -l\nls -ld $fileVAR\n\n+-------------------------------------------------------------------------------------+\n## De forma('INDIVIDUAL'):\n+-------------------------------------------------------------------------------------+\n\nclear\ndate\nhostname\nls -l $fichero",        "SO": "Linux"
     },
@@ -725,10 +725,10 @@
     {
         "modulo": "Password Requirements/Password histexpire - System Default",
         "clave": "HISTEXPIRE",
-        "descripcion": "Invalid system default histexpire set to 0, must be not less than 105",
-        "comprobacion": "+-------------------------------------------------------------------------------------+\n## El parametro histexpire, debe ser 105, por defecto y por usuario.\n## Una vez cambiado a default, se corrigen para las demas cuentas, puede quedar root o alguna cuenta sin cambiar, por lo que se puede cambiar manual.\n+-------------------------------------------------------------------------------------+\n\nlssec -f /etc/security/user -s default -a histexpire",
+        "descripcion": "Invalid system default histexpire set to 0, must be not less than 78",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## El parametro histexpire, debe ser 78, por defecto y por usuario.\n## Una vez cambiado a default, se corrigen para las demas cuentas, puede quedar root o alguna cuenta sin cambiar, por lo que se puede cambiar manual.\n+-------------------------------------------------------------------------------------+\n\nlssec -f /etc/security/user -s default -a histexpire",
         "copia": null,
-        "editar": "chsec -f /etc/security/user -s default -a histexpire=105\nchsec -f /etc/security/user -s root -a histexpire=105",
+        "editar": "chsec -f /etc/security/user -s default -a histexpire=78\nchsec -f /etc/security/user -s root -a histexpire=78",
         "refrescar": null,
         "evidencia": "clear\ndate\nhostname\nlssec -f /etc/security/user -s default -a histexpire\nlssec -f /etc/security/user -s root -a histexpire",
         "SO": "Aix"
@@ -736,10 +736,10 @@
     {
         "modulo": "E.1.1.3.2 Password Requirements",
         "clave": "HISTEXPIRE",
-        "descripcion": "Invalid system default histexpire set to 0, must be not less than 105",
-        "comprobacion": "+-------------------------------------------------------------------------------------+\n## El parametro histexpire, debe ser 105, por defecto y por usuario.\n## Una vez cambiado a default, se corrigen para las demas cuentas, puede quedar root o alguna cuenta sin cambiar, por lo que se puede cambiar manual.\n+-------------------------------------------------------------------------------------+\n\nlssec -f /etc/security/user -s default -a histexpire",
+        "descripcion": "Invalid system default histexpire set to 0, must be not less than 78",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## El parametro histexpire, debe ser 78, por defecto y por usuario.\n## Una vez cambiado a default, se corrigen para las demas cuentas, puede quedar root o alguna cuenta sin cambiar, por lo que se puede cambiar manual.\n+-------------------------------------------------------------------------------------+\n\nlssec -f /etc/security/user -s default -a histexpire",
         "copia": null,
-        "editar": "chsec -f /etc/security/user -s default -a histexpire=105\nchsec -f /etc/security/user -s root -a histexpire=105",
+        "editar": "chsec -f /etc/security/user -s default -a histexpire=78\nchsec -f /etc/security/user -s root -a histexpire=78",
         "refrescar": null,
         "evidencia": "clear\ndate\nhostname\nlssec -f /etc/security/user -s default -a histexpire\nlssec -f /etc/security/user -s root -a histexpire",
         "SO": "Aix"
@@ -880,9 +880,9 @@
         "modulo": "Password Requirements/Password shadow specification",
         "clave": "EMPTY",
         "descripcion": "Account: $account have \"empty\" (null) password. In /etc/shadow  password (second field) cannot be assigned the null value.",
-        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Las cuentas no deben tener un valor nulo, en el segundo campo de /etc/shadow\n## Valida para todas las cuentas, ya sean /C/F/S/\n+-------------------------------------------------------------------------------------+\n\naccount=\"\"\n\ncat /etc/shadow | grep $account",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Las cuentas no deben tener un valor nulo, en el segundo campo de /etc/shadow\n## Valida para todas las cuentas, ya sean /C/F/S/\n+-------------------------------------------------------------------------------------+\n\ncat /etc/shadow | grep $account",
         "copia": null,
-        "editar": "+-------------------------------------------------------------------------------------+\n## Añadir el valor ya sea `!, !!, *`, a la cuenta en el segundo campo.\n## Hay que remplazar $account, por la cuenta a corregir.\n+-------------------------------------------------------------------------------------+\n\npasswd -l $account\n",
+        "editar": "+-------------------------------------------------------------------------------------+\n## Añadir el valor ya sea `!, !!, *`, a la cuenta en el segundo campo.\n+-------------------------------------------------------------------------------------+\n\npasswd -l $account\n",
         "refrescar": null,
         "evidencia": "clear\ndate\nhostname\ncat /etc/shadow | grep \"$account\"\n",
         "SO": "Linux"
@@ -934,12 +934,67 @@
     {
         "modulo": "E.1.5.22.4 Network Settings",
         "clave": "SENDMAIL",
-        "descripcion": "Entry in /etc/rc.tcpip must be removed or disabled. : service sendmail",
-        "comprobacion": "grep -i sendmail /etc/rc.tcpip|grep -v ^#",
+        "descripcion": "start /usr/lib/sendmail \"$src_running\" \"-bd -q${qpi}\"",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## No se puede quitar el servicio de 'sendmail', el cliente usa el servicio para enviar mails\n+-------------------------------------------------------------------------------------+\n\n2 - DOC, revisar RISK e IMPACT:\nGENERICO /  SENDMAIL / FT\n",
         "copia": null,
-        "editar": "chrctcp -d sendmail",
+        "editar": null,
         "refrescar": null,
-        "evidencia": "clear\ndate\nhostname\ngrep -i sendmail /etc/rc.tcpip|grep -v ^#",
+        "evidencia": null,
+        "SO": "Aix"
+    },
+    {
+        "modulo": "E.1.5.18.1 Network Settings",
+        "clave": "/ETC/EXPORTS",
+        "descripcion": "File /etc/exports has invalid line: $FILESYSTEM -anon=0,sec=sys:none,rw",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Si NFS es activo, en /etc/exports, solo puede ser exportados aquellos filesystem, donde NO se puedan exportar datos confidenciales/sensibles, No se puede especificar ningún sistema de archivos exportado con la opción 'anon=0' excepto los valores de anon=-1 o anon=-2.\n\n## NOTA: 'Se permite aceptar el valor predeterminado de anon=-2 al no especificar una opción anon, y es la codificación por defecto.'\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+## FILESYSTEM, que no se pueden exportar :\n+-------------------------------------------------------------------------------------+\n\n/home\n\n\n+-------------------------------------------------------------------------------------+## FILESYSTEM, que si se pueden exportar:\n+-------------------------------------------------------------------------------------+\n\n",
+        "copia": "+-------------------------------------------------------------------------------------+\n## Obtener usuario logueado:\n+-------------------------------------------------------------------------------------+\n\nuser=$(logname)\n\n+-------------------------------------------------------------------------------------+\n## Backup\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/exports /home/$user/exports_`date +%d%m%y_%T`\n",
+        "editar": "+-------------------------------------------------------------------------------------+\nSe puede Eliminar la linea, O comentar (#)\n+-------------------------------------------------------------------------------------+\n\nvi /etc/exports\n",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nuname -a\ncat /etc/exports",
+        "SO": "Aix"
+    },
+    {
+        "modulo": "Network Settings/NFS anon restrictions",
+        "clave": "/ETC/EXPORTS",
+        "descripcion": "File /etc/exports has invalid line: $FILESYSTEM -anon=0,sec=sys:none,rw",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Si NFS es activo, en /etc/exports, solo puede ser exportados aquellos filesystem, donde NO se puedan exportar datos confidenciales/sensibles, No se puede especificar ningún sistema de archivos exportado con la opción 'anon=0' excepto los valores de anon=-1 o anon=-2.\n\n## NOTA: 'Se permite aceptar el valor predeterminado de anon=-2 al no especificar una opción anon, y es la codificación por defecto.'\n+-------------------------------------------------------------------------------------+\n\ncat /etc/exports\n\n+-------------------------------------------------------------------------------------+## FILESYSTEM, que no se pueden exportar :\n+-------------------------------------------------------------------------------------+\n\n/home\n\n\n+-------------------------------------------------------------------------------------+## FILESYSTEM, que si se pueden exportar:\n+-------------------------------------------------------------------------------------+\n\n",
+        "copia": "+-------------------------------------------------------------------------------------+\n## Obtener usuario logueado:\n+-------------------------------------------------------------------------------------+\n\nuser=$(logname)\n\n+-------------------------------------------------------------------------------------+\n## Backup\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/exports /home/$user/exports_`date +%d%m%y_%T`\n",
+        "editar": "+-------------------------------------------------------------------------------------+\nSe puede Eliminar la linea, O comentar (#)\n+-------------------------------------------------------------------------------------+\n\nvi /etc/exports\n",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nuname -a\ncat /etc/exports",
+        "SO": "Aix"
+    },
+    {
+        "modulo": "Network Settings/tcpip sendmail entry",
+        "clave": "SENDMAIL",
+        "descripcion": "start /usr/lib/sendmail \"$src_running\" \"-bd -q${qpi}\"",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## No se puede quitar el servicio de 'sendmail', el cliente usa el servicio para enviar mails\n+-------------------------------------------------------------------------------------+\n\n2 - DOC, revisar RISK e IMPACT:\nGENERICO /  SENDMAIL / FT\n",
+        "copia": null,
+        "editar": null,
+        "refrescar": null,
+        "evidencia": null,
+        "SO": "Aix"
+    },
+    {
+        "modulo": "Password Requirements/Automatic Logoff /etc/tsh_profile TMOUT",
+        "clave": "TMOUT TSH",
+        "descripcion": "/etc/tsh_profile Default: Set systems to terminate a session after 21600 seconds of inactivity. File must  contain \"TMOUT=21600\" followed by \"export TMOUT\". A shorter time frame may be specified.",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## En /etc/tsh_profile, al final del SCRIPT\n## Debe tener un TMOUT\n+-------------------------------------------------------------------------------------+\n\ncat /etc/tsh_profile | grep -i TMOUT\n",
+        "copia": "+-------------------------------------------------------------------------------------+\n## Obtener usuario logueado:\n+-------------------------------------------------------------------------------------+\n\nuser=$(logname)\n\n+-------------------------------------------------------------------------------------+\n## Backup en HOME\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/tsh_profile /home/$user/tsh_profile`date +%d%m%y_%T`",
+        "editar": "+-------------------------------------------------------------------------------------+\n## Editar y Añadir al final del SCRIPT\n+-------------------------------------------------------------------------------------+\n\nvi /etc/tsh_profile\n\nTMOUT=21600\nexport TMOUT",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nhostname\ncat /etc/tsh_profile | grep -i TMOUT",
+        "SO": "Aix"
+    },
+    {
+        "modulo": "Password Requirements/Empty password attribute",
+        "clave": "EMPTY",
+        "descripcion": "Invalid password attribute for an ID: $account. Attribute 'password' cannot be assigned the null value.",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Las cuentas no deben tener un valor nulo, en el segundo campo de /etc/passwd\n## En /etc/security/passwd, debe teber una entrada para la cuenta y 'password = '\n## Valida para todas las cuentas, ya sean /C/F/S/\n+-------------------------------------------------------------------------------------+\n\ncat /etc/passwd | grep $account\n\ncat /etc/security/passwd  | grep -p $account\n\n+-------------------------------------------------------------------------------------+\n## Con el comando : `pwdck -n ALL` ,sacamos todos los usuarios que tienen algo mal.",
+        "copia": null,
+        "editar": "+-------------------------------------------------------------------------------------+\n## Añadir el valor ya sea `!`, a la cuenta en el segundo campo de /etc/passwd.\n## Hay que añadir una entrada de la cuenta en /etc/security/passwd.\n\n## Lanzando  `pwdck -y ALL`, se arreglan los desvios mostrados, o puedes remplazar ALL por la cuenta a corregir.\n+-------------------------------------------------------------------------------------+\n\npwdck -y ALL",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nhostname\ncat /etc/passwd | grep \"$account\"\ncat /etc/security/passwd  | grep -p $account\npwdck -n ALL",
         "SO": "Aix"
     }
 ]

@@ -350,5 +350,16 @@
         "refrescar": "dconf update",
         "evidencia": "clear\ndate\nhostname\ncat /etc/dconf/profile/gdm\ncat /etc/dconf/db/gdm.d/01-banner-message",
         "SO": "Linux"
+    },
+    {
+        "modulo": "Password Requirements/User primary GID requirement",
+        "clave": "GID NULL",
+        "descripcion": "User: $account has primary GID: $gid which is missing in /etc/group file.",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## El grupo que hace referencia la cuenta debe existir.\n+-------------------------------------------------------------------------------------+\n\ncat /etc/group | grep $gid",
+        "copia": null,
+        "editar": "+-------------------------------------------------------------------------------------+\n## Se le debe añadir un grupo a la cuenta, que nos marca el desvio\n+-------------------------------------------------------------------------------------+\n\ngpasswd -a nombreUsuario nombreGrupo\n\n+-------------------------------------------------------------------------------------+\n## Si el grupo que nos indican no existe se debe crear\n## EJEMPLO\n+-------------------------------------------------------------------------------------+\n\ngroupadd -g 600 ibmadmin",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nhostname\ncat /etc/group | grep $gid",
+        "SO": "Linux"
     }
 ]
