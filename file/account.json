@@ -25,9 +25,9 @@
       "object": "afernand",
       "owner": "afernand",
       "tipo": "/C/",
-      "ownerGroup": "Customer",
+      "ownerGroup": "CUSTOMER",
       "user": [
-        "Customer"
+        "CUSTOMER"
       ],
       "code": "2-DOC",
       "servers": [
@@ -44,9 +44,9 @@
       "object": "archive",
       "owner": "archive",
       "tipo": "/C/",
-      "ownerGroup": "Customer",
+      "ownerGroup": "CUSTOMER",
       "user": [
-        "Customer"
+        "CUSTOMER"
       ],
       "code": "2-DOC",
       "servers": [
@@ -62,9 +62,9 @@
       "object": "svjasper",
       "owner": "svjasper",
       "tipo": "/C/",
-      "ownerGroup": "Customer",
+      "ownerGroup": "CUSTOMER",
       "user": [
-        "Customer"
+        "CUSTOMER"
       ],
       "code": "2-DOC",
       "servers": [
@@ -81,9 +81,9 @@
       "object": "usaxwftp",
       "owner": "usaxwftp",
       "tipo": "/C/",
-      "ownerGroup": "Customer",
+      "ownerGroup": "CUSTOMER",
       "user": [
-        "Customer"
+        "CUSTOMER"
       ],
       "code": "2-DOC",
       "servers": [
@@ -176,7 +176,7 @@
       "object": "wasasisa",
       "owner": "wasasisa",
       "tipo": "/C/",
-      "ownerGroup": "EBH Customer",
+      "ownerGroup": "EBH CUSTOMER",
       "user": [
         "Silvia Pereira"
       ],
@@ -195,9 +195,9 @@
       "object": "db2conn1",
       "owner": "db2conn1",
       "tipo": "/C/",
-      "ownerGroup": "Customer",
+      "ownerGroup": "CUSTOMER",
       "user": [
-        "Customer"
+        "CUSTOMER"
       ],
       "code": "2-DOC",
       "servers": [
@@ -623,9 +623,9 @@
       "object": "sigaux",
       "owner": "sigaux",
       "tipo": "/C/",
-      "ownerGroup": "Customer",
+      "ownerGroup": "CUSTOMER",
       "user": [
-        "Customer"
+        "CUSTOMER"
       ],
       "code": "2-DOC",
       "servers": [
@@ -642,9 +642,9 @@
       "object": "cdevzbbx",
       "owner": "cdevzbbx",
       "tipo": "/C/",
-      "ownerGroup": "Customer Orange",
+      "ownerGroup": "CUSTOMER Orange",
       "user": [
-        "Customer"
+        "CUSTOMER"
       ],
       "code": "2-DOC",
       "servers": [
@@ -661,9 +661,9 @@
       "object": "cdevdisc",
       "owner": "cdevdisc",
       "tipo": "/C/",
-      "ownerGroup": "Customer Orange",
+      "ownerGroup": "CUSTOMER Orange",
       "user": [
-        "Customer"
+        "CUSTOMER"
       ],
       "code": "2-DOC",
       "servers": [
@@ -725,11 +725,87 @@
   "LBK": [
     {
       "object": "indus",
-      "owner": "Customer",
+      "owner": "indus",
       "tipo": "/C/",
       "ownerGroup": "CUSTOMER",
       "user": [
-        "Customer"
+        "CUSTOMER"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "deploys",
+      "owner": "deploys",
+      "tipo": "/C/",
+      "ownerGroup": "CUSTOMER",
+      "user": [
+        "CUSTOMER"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "infabdmd",
+      "owner": "infabdmd",
+      "tipo": "/C/",
+      "ownerGroup": "CUSTOMER",
+      "user": [
+        "CUSTOMER"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "infabdmdin",
+      "owner": "infabdmdin",
+      "tipo": "/C/",
+      "ownerGroup": "CUSTOMER",
+      "user": [
+        "CUSTOMER"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "infabdmdout",
+      "owner": "infabdmdout",
+      "tipo": "/C/",
+      "ownerGroup": "CUSTOMER",
+      "user": [
+        "CUSTOMER"
       ],
       "code": "2-DOC",
       "servers": [
@@ -744,11 +820,11 @@
     },
     {
       "object": "nodejs",
-      "owner": "Customer",
+      "owner": "nodejs",
       "tipo": "/C/",
       "ownerGroup": "CUSTOMER",
       "user": [
-        "Customer"
+        "CUSTOMER"
       ],
       "code": "2-DOC",
       "servers": [
@@ -763,11 +839,11 @@
     },
     {
       "object": "nodejsarq",
-      "owner": "Customer",
+      "owner": "nodejsarq",
       "tipo": "/C/",
       "ownerGroup": "CUSTOMER",
       "user": [
-        "Customer"
+        "CUSTOMER"
       ],
       "code": "2-DOC",
       "servers": [
@@ -777,6 +853,25 @@
       "impact": "GENERICO / MAXAGE / CUSTOMER",
       "variable": [
         ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "ubroker",
+      "owner": "ubroker",
+      "tipo": "/C/",
+      "ownerGroup": "CUSTOMER",
+      "user": [
+        "CUSTOMER"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        "Usuario batch UCMD (Planificador Procesos)"
       ],
       "SO": "Linux"
     },
@@ -796,6 +891,44 @@
       "impact": "GENERICO / MAXAGE / IBM",
       "variable": [
         "Usuario de aplicativo TIVOLI"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "hive",
+      "owner": "hive",
+      "tipo": "/S/",
+      "ownerGroup": "*ESCL1L",
+      "user": [
+        ""
+      ],
+      "code": "NULL",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "mysql",
+      "owner": "mysql",
+      "tipo": "/F/",
+      "ownerGroup": "*EDDBA2",
+      "user": [
+        ""
+      ],
+      "code": "NULL",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "MYSQL Server"
       ],
       "SO": "Linux"
     }

@@ -111,6 +111,44 @@
                 "Cuenta para Oracle DBA"
             ],
             "SO": "LINUX"
+        },
+        {
+            "object": "/home/cesnet/.ssh/id_rsa",
+            "owner": "cesnet",
+            "tipo": "/C/",
+            "ownerGroup": "Customer",
+            "user": [
+                "Customer"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "GENERICO / ID_RSA / CUSTOMER",
+            "impact": "GENERICO / ID_RSA / CUSTOMER",
+            "variable": [
+                ""
+            ],
+            "SO": "LINUX"
+        },
+        {
+            "object": "/home/jenkins/.ssh/id_rsa",
+            "owner": "jenkins",
+            "tipo": "/C/",
+            "ownerGroup": "Customer",
+            "user": [
+                "Customer"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "GENERICO / ID_RSA / CUSTOMER",
+            "impact": "GENERICO / ID_RSA / CUSTOMER",
+            "variable": [
+                ""
+            ],
+            "SO": "LINUX"
         }
     ],
     "INFRA": [
@@ -227,7 +265,7 @@
             "risk": "GENERICO / ID_RSA / CUSTOMER",
             "impact": "GENERICO / ID_RSA / CUSTOMER",
             "variable": [
-                "Fichero pertenece a una cuenta de cliente"
+                "Clave privada pertenece a una cuenta de cliente"
             ],
             "SO": "Aix"
         }

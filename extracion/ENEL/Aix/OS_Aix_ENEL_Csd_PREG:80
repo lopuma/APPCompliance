@@ -219,8 +219,7 @@ Key system IDs to not be accessed via password.
 "Los ID listados en ---E. 1.1.10.3 deben manejarse a través de este requisito(CYBERARK) si tienen una contraseña asignada a ellos.
 
 
-#Comprobar
-cat /etc/security/passwd | egrep -p "daemon:|bin:|sys:|adm:|uucp:|nuucp:|lpd:|imnadm:|ipsec:|ldap:|lp:|snapp:|invscout:|pconsole:|nobody:|esaadmin:|sshd"
+cat /etc/security/passwd | egrep -wp "daemon|bin|sys|adm|uucp|nuucp|lpd|imnadm|ipsec|ldap|lp|snapp|invscout|pconsole|nobody|esaadmin|sshd"
 
 /*  CONTESTAR YES */ : "Si las cuentas de sistemas no tienen contraseña."
 /* CONTESTAR NO  */ : ""
