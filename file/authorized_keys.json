@@ -609,7 +609,7 @@
             "object": "/home/ncosftp/.ssh/authorized_keys",
             "owner": "ncosftp",
             "tipo": "/F/",
-            "ownerGroup": "Monitorización",
+            "ownerGroup": "*EETIAD",
             "user": [
                 "MARIA CRUZ TERCIADO TERCIADO"
             ],
@@ -621,7 +621,7 @@
             "impact": "1-OK para `Identify and Authenticate Users/Public Key Label`",
             "variable": [
                 "file_authorized=\"/home/ncosftp/.ssh/authorized_keys\"",
-                "gecos=\"!!---!!\""
+                "gecos=\"!!ES/F/*EETIAD/IBM/Usuario ncosftp!!\""
             ],
             "SO": "AIX"
         },
@@ -629,7 +629,7 @@
             "object": "/home/ncosys/.ssh/authorized_keys",
             "owner": "ncosys",
             "tipo": "/F/",
-            "ownerGroup": "Monitorización",
+            "ownerGroup": "*EDTIAD",
             "user": [
                 "MARIA CRUZ TERCIADO TERCIADO"
             ],
@@ -637,10 +637,11 @@
             "servers": [
                 "ALL servers"
             ],
-            "risk": "MONITORIZACION / AUTHORIZED_KEYS",
-            "impact": "MONITORIZACION / AUTHORIZED_KEYS",
+            "risk": "MONITORIZACION / AUTHORIZED_KEYS / INFRA",
+            "impact": "1-OK para `Identify and Authenticate Users/Public Key Label`",
             "variable": [
-                ""
+                "file_authorized=\"/home/ncosys/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/F/*EETIAD/IBM/Usuario Netcool - Omnibus de Tivoli!!\""
             ],
             "SO": "AIX"
         },

@@ -657,7 +657,8 @@
         "risk": "",
         "impact": "",
         "variable": [
-          "directory=\"/tmp/gts-ansible/\""
+          "directory=\"/tmp/gts-ansible/\"",
+          "fileTMP=\"/tmp/gts-ansible/\""
         ],
         "SO": "Linux"
       },

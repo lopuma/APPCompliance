@@ -411,16 +411,17 @@
       "tipo": "/F/",
       "ownerGroup": "*CMFEUF",
       "user": [
-        "MARTIN BEITIA COSTA"
+        "MARTIN BEITIA COSTA",
+        "MARIA TERESA GONZALEZ SANCHEZ"
       ],
-      "code": "null",
+      "code": "2-DOC",
       "servers": [
         "ALL Servers"
       ],
-      "risk": "Usuario para el cloud, lo suelen crear para las subidas a CMOS",
-      "impact": "",
+      "risk": "GENERICO / MAXAGE / IBM",
+      "impact": "GENERICO / MAXAGE / IBM",
       "variable": [
-        "account=\"cmfcloudscp\""
+        "Usuario para el cloud, lo suelen crear para las subidas a CMOS, lo requiere así la herramienta CLOUDSCAPE"
       ],
       "SO": "Linux"
     }
