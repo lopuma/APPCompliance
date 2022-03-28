@@ -1,14 +1,18 @@
 #! /bin/bash
 servidores=$(cat /tmp/remotes.txt)
 
-SSHPASS=Dopracau2000lopo
+SSHPASS=w6EjLf88eBh4UOJ
 export SSHPASS
 
-for i in $servidores; do 
-	sshpass -e ssh-copy-id $i
+for host in $servidores; do 
+	sshpass -e ssh-copy-id $host
+	scp /home/esy9d7l1/Alvaro/Desarrollo/Bash/sudo_itss_preg4.sh  $host:/tmp/
 done
 
 for host in $servidores; do
-	scp /home/esy9d7l1/Alvaro/Desarrollo/Bash/sudo_itss_preg4.sh  $host:/tmp/
-	ssh -t $host 'sudo -S bash -c /tmp/sudo_itss_preg4.sh'
+	ssh $host 'sudo /tmp/sudo_itss_preg4.sh;
+	rm /tmp/sudo_itss_preg4.sh &> /dev/null;
+	user=$(logname);
+	rm /home/${user^^}/.ssh/authorized_keys &> /dev/null;
+	rm /home/${user,,}/.ssh/authorized_keys &> /dev/null'
 done
