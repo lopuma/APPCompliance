@@ -1,7 +1,7 @@
 #! /bin/bash
 servidores=$(cat /tmp/remotes.txt)
 
-SSHPASS=w6EjLf88eBh4UOJ
+SSHPASS=Dopracau2000lopo
 export SSHPASS
 
 for host in $servidores; do 
