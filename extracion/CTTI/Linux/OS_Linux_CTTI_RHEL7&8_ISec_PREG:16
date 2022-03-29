@@ -1,0 +1,90 @@
+///////////////////////////////////////////////////////////////////////////////////////
+OS Linux CTTI RHEL 7&8 ISeC - Issue REF :  / PRE 16
+
++-------------------------------------------------------------------------------------+
+---AD.1.1.4.7 Password Requirements
+"For the password facility, ensure pam modules are in correct order.
+
+//Hay que revisar el orden del pam_cracklib.so or pam_pwquality, debe ser superior a pam_pwhistory.so, seguido de pam_unix.so , y último pam_deny.so"
+
+cat /etc/pam.d/system-auth | grep -i password
+
+//EJEMPLO
+#"password    required      pam_cracklib.so O pam_pwquality
+#"password    sufficient    pam_unix.so
+#"password    required      pam_deny.so
+
+cat /etc/*release
+
+"*/
+"Si es Rehl 7 superior, se revisa tambien en password-auth"
+
+cat /etc/pam.d/password-auth | grep -i password
+
+/* CONTESTAR YES  */ : "Si existe solo pam_cracklib O pam_pwquality, solo debe haber un modulo"
+
+/* CONTESTAR NO   */ : "Si no existe ningun de los 2 modulos mencionados o los 2 modulos por igual, o en distinto orden"
+
+/* NO  */ : "On /etc/pam.d/system-auth and /etc/pam.d/password-auth , you have configured pam_cracklib.so and pam_pwquality, only 1 must exist, if you cannot cause configuration problems.
+
+/* NO */ : "There are two entries in /etc/pam.d/password-auth, pam_cracklib.so and pam_pwquality, only one allowed entry must be configured.
++-------------------------------------------------------------------------------------+
+---AD.1.1.6.0 Password Requirements
+"loginretries
+
+//Hay que revisar que version de REHL es: 7 o 8"
+
+cat /etc/*release
+
+"*/
+"REHL 7#
+
+cat /etc/pam.d/system-auth
+cat /etc/pam.d/password-auth
+
+"Debe existir"
+auth        required      pam_tally2.so deny=5
+account     required      pam_tally2.so
+
+//Debe ser superior a cualquier entrada del del mismo tipo de módulo, con un distintivo de control de suficiente con la excepción de pam_deny.so "
+
+"REHL 8#
+auth 	    required 	  pam_faillock.so preauth silent deny=5 unlock_time= 0
+"Debe ser superior de auth pam_unix.so'"
+auth  	    [default=die] pam_faillock.so authfail  deny=5 unlock_time=0
+"Debe ser inferior de auth pam_unix.so y superior de pam_deny.so"
+
+account     required      pam_faillock.so
+"Debe ser supeiror de su modulo"
+
+// EJEMPLO REHL8
+auth        required      pam_faillock.so preauth silent deny=5 unlock_time=0
+auth        required      pam_env.so
+auth        required      pam_listfile.so item=user sense=deny file=/etc/security/$FILENAME onerr=succeed
+auth        sufficient    pam_unix.so try_first_pass
+auth  	    [default=die] pam_faillock.so authfail  deny=5 unlock_time=0
+auth        requisite     pam_succeed_if.so uid >= 1000 quiet_success
+auth        sufficient    pam_sss.so forward_pass
+auth        required      pam_deny.so
+
+account     required      pam_faillock.so
+
+/* CONTESTAR YES  */ : "Si existen uno de los 2 parametro definidos, dependiendo la version de RHEL que tiene el sistema.
+
+/* CONTESTAR NO   */ : "Si no existen, ninguno de los 2 opciones.
+
+/* NO  */ : " It is a REHL 7, and there is no configuration of the pam_tally2.so, or the order.
+/* NO  */ : " It is a REHL 8, and there is no configuration of the pam_faillock.so, or the order.
++-------------------------------------------------------------------------------------+
+---AD.1.1.7.1 Password Requirements
+"ROOT
+
+grep root /etc/shadow| cut -d ":" -f1,2,4,5
+
+/* CONTESTAR YES */ : " Si el usuario root tiene pw asignado y expira.
+
+/* CONTESTAR NO  */ : " Si root tiene passwd asignada y no expira.
+
+/* NO */ : "Account root has invalid Password Max Age setting of 99999  should be set to Customer Required Setting: 90. More secure value can be set.",
++-------------------------------------------------------------------------------------+
+///////////////////////////////////////////////////////////////////////////////////////

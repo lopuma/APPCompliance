@@ -1,0 +1,937 @@
+{
+  "AFB": [
+    {
+      "object": "root",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Grupo de Soporte AFB Linux"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"root\""
+      ],
+      "SO": "Linux"
+    }
+  ],
+  "ASISA": [
+    {
+      "object": "afernand",
+      "owner": "afernand",
+      "tipo": "/C/",
+      "ownerGroup": "CUSTOMER",
+      "user": [
+        "CUSTOMER"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "AIX"
+    },
+    {
+      "object": "archive",
+      "owner": "archive",
+      "tipo": "/C/",
+      "ownerGroup": "CUSTOMER",
+      "user": [
+        "CUSTOMER"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ]
+    },
+    {
+      "object": "svjasper",
+      "owner": "svjasper",
+      "tipo": "/C/",
+      "ownerGroup": "CUSTOMER",
+      "user": [
+        "CUSTOMER"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "AIX"
+    },
+    {
+      "object": "usaxwftp",
+      "owner": "usaxwftp",
+      "tipo": "/C/",
+      "ownerGroup": "CUSTOMER",
+      "user": [
+        "CUSTOMER"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "automate",
+      "owner": "automate",
+      "tipo": "/S/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"automate\""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "tivadmin",
+      "owner": "tivadmin",
+      "tipo": "/S/",
+      "ownerGroup": "Tivoli",
+      "user": [
+        "Mari Cruz Terciado"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"tivadmin\""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "was7",
+      "owner": "was7",
+      "tipo": "/F/",
+      "ownerGroup": "EBH",
+      "user": [
+        "Silvia Pereira"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"was7\""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "ihs7",
+      "owner": "ihs7",
+      "tipo": "/F/",
+      "ownerGroup": "EBH",
+      "user": [
+        "Silvia Pereira"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"ihs7\""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "wasasisa",
+      "owner": "wasasisa",
+      "tipo": "/C/",
+      "ownerGroup": "EBH CUSTOMER",
+      "user": [
+        "Silvia Pereira"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        "Cuenta del cliente para EBH"
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "db2conn1",
+      "owner": "db2conn1",
+      "tipo": "/C/",
+      "ownerGroup": "CUSTOMER",
+      "user": [
+        "CUSTOMER"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "assuxat1",
+      "owner": "assuxat1",
+      "tipo": "/S/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"assuxat1\""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "assuxat2",
+      "owner": "assuxat2",
+      "tipo": "/S/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Sistemas"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"assuxat2\""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "aspadm",
+      "owner": "aspadm",
+      "tipo": "/F/",
+      "ownerGroup": "ABAP DB2 Connect User",
+      "user": [
+        "ISIDORO AREVALO PEÑA"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM-SAP",
+      "impact": "GENERICO / MAXAGE / IBM-SAP",
+      "variable": [
+        "Usuario de SAP"
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "db2sm1",
+      "owner": "db2sm1",
+      "tipo": "/F/",
+      "ownerGroup": "Database Administrator ",
+      "user": [
+        "ISIDORO AREVALO PEÑA"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM-SAP",
+      "impact": "GENERICO / MAXAGE / IBM-SAP",
+      "variable": [
+        "Usuario de SAP"
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "sapasp",
+      "owner": "sapasp",
+      "tipo": "/F/",
+      "ownerGroup": "ABAP DB2 Connect User",
+      "user": [
+        "ISIDORO AREVALO PEÑA"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM-SAP",
+      "impact": "GENERICO / MAXAGE / IBM-SAP",
+      "variable": [
+        "Usuario de SAP"
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "sapsm1",
+      "owner": "sapsm1",
+      "tipo": "/F/",
+      "ownerGroup": "Database Administrator ",
+      "user": [
+        "ISIDORO AREVALO PEÑA"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM-SAP",
+      "impact": "GENERICO / MAXAGE / IBM-SAP",
+      "variable": [
+        "Usuario de SAP"
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "sapsm1db",
+      "owner": "sapsm1db",
+      "tipo": "/F/",
+      "ownerGroup": "Java Database Connect User",
+      "user": [
+        "ISIDORO AREVALO PEÑA"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM-SAP",
+      "impact": "GENERICO / MAXAGE / IBM-SAP",
+      "variable": [
+        "Usuario de SAP"
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "sm1adm",
+      "owner": "sm1adm",
+      "tipo": "/F/",
+      "ownerGroup": "SAP System Administrator",
+      "user": [
+        "ISIDORO AREVALO PEÑA"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM-SAP",
+      "impact": "GENERICO / MAXAGE / IBM-SAP",
+      "variable": [
+        "Usuario de SAP"
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "smdadm",
+      "owner": "smdadm",
+      "tipo": "/F/",
+      "ownerGroup": "ABAP DB2 Connec",
+      "user": [
+        "ISIDORO AREVALO PEÑA"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM-SAP",
+      "impact": "GENERICO / MAXAGE / IBM-SAP",
+      "variable": [
+        "Usuario de SAP"
+      ],
+      "SO": "Aix"
+    }
+  ],
+  "CESCE": [
+    {
+      "object": "root",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "*EPUXOS",
+      "user": [
+        "Grupo de soporte CESCE - Linux",
+        "GEMMA ESCAR APARICIO", 
+        "NINELA ELENA PAVEL MANCIU", 
+        "RAMON RUIZ GARCIA"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"root\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "cmfcloudscp",
+      "owner": "cmfcloudscp",
+      "tipo": "/F/",
+      "ownerGroup": "*CMFEUF",
+      "user": [
+        "MARTIN BEITIA COSTA",
+        "MARIA TERESA GONZALEZ SANCHEZ"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM",
+      "impact": "GENERICO / MAXAGE / IBM",
+      "variable": [
+        "Usuario para el cloud, lo suelen crear para las subidas a CMOS, lo requiere así la herramienta CLOUDSCAPE"
+      ],
+      "SO": "Linux"
+    }
+  ],
+  "CTTI": [
+    {
+      "object": "root",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "*EGCLIN",
+      "user": [
+        "Soporte de CTTI "
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"root\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "emer",
+      "owner": "emer",
+      "tipo": "/F/",
+      "ownerGroup": "*EGCLIN",
+      "user": [
+        "Soporte de CTTI"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"emer\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "ibm-admin",
+      "owner": "ibm-admin",
+      "tipo": "/S/",
+      "ownerGroup": "*EGCLIN",
+      "user": [
+        "Soporte de CTTI"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "Usuario de extraccion COMPLIANCE (MEF3)",
+      "impact": "",
+      "variable": [
+        "account=\"ibm-admin\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "oradb",
+      "owner": "oradb",
+      "tipo": "/S/",
+      "ownerGroup": "*EGCDDB",
+      "user": [
+        "Mirtha Caballero Acosta"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM",
+      "impact": "GENERICO / MAXAGE / IBM",
+      "variable": [
+        "Usuario Proprietario de los binarios de Oracle"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "oragr1d",
+      "owner": "oragr1d",
+      "tipo": "/S/",
+      "ownerGroup": "*EGCDDB",
+      "user": [
+        "Mirtha Caballero Acosta"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM",
+      "impact": "GENERICO / MAXAGE / IBM",
+      "variable": [
+        "Usuario Proprietario de los binarios de Grid Infrastructure Oracle"
+      ],
+      "SO": "Linux"
+    }
+  ],
+  "FT": [
+    {
+      "object": "aotipat1",
+      "owner": "CACF",
+      "tipo": "/S/",
+      "ownerGroup": "Group FT Linux",
+      "user": [
+        "Group FT Linux"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM",
+      "impact": "GENERICO / MAXAGE / IBM",
+      "variable": [
+        "Usuario para el proceso de Compliance"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "orarom",
+      "owner": "Oracle",
+      "tipo": "/F/",
+      "ownerGroup": "*EAUXOS",
+      "user": [
+        "Javi de Paula"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM",
+      "impact": "GENERICO / MAXAGE / IBM",
+      "variable": [
+        "Usuario de monitorización del Enterprise Manager de Platinum - Oracle"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "root",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "*EAUXOS",
+      "user": [
+        "Soporte LINUX de FT Sigifi",
+        "Soporte UNIX de FT Sigifi"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"root\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "ctmagent",
+      "owner": "ctmagent",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Soporte LINUX de FT Sigifi"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"ctmagent\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "tivoli",
+      "owner": "tivoli",
+      "tipo": "/F/",
+      "ownerGroup": "MONITORING",
+      "user": [
+        "Grupo FT Linux - Sigifi"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"tivoli\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "sigaux",
+      "owner": "sigaux",
+      "tipo": "/C/",
+      "ownerGroup": "CUSTOMER",
+      "user": [
+        "CUSTOMER"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux / Aix"
+    },
+    {
+      "object": "cdevzbbx",
+      "owner": "cdevzbbx",
+      "tipo": "/C/",
+      "ownerGroup": "CUSTOMER Orange",
+      "user": [
+        "CUSTOMER"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Aix"
+    },
+    {
+      "object": "cdevdisc",
+      "owner": "cdevdisc",
+      "tipo": "/C/",
+      "ownerGroup": "CUSTOMER Orange",
+      "user": [
+        "CUSTOMER"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Aix"
+    }
+  ],
+  "INFRA": [
+    {
+      "object": "sklmdb40",
+      "owner": "sklmdb40",
+      "tipo": "S",
+      "ownerGroup": "es_sd04",
+      "user": [
+        "JOSE MANUEL VARGAS HUERCANO"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "es01isklm001",
+        "ES01ISKLM002",
+        "es01isklm003",
+        "es01isklm004",
+        "es01isklm005",
+        "es01isklm006"
+      ],
+      "risk": "Servidores son de infraestructura",
+      "impact": "",
+      "variable": [
+        "account=\"sklmdb40\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "TESAN",
+      "owner": "TESAN",
+      "tipo": "F",
+      "ownerGroup": "*EPDSAN",
+      "user": [
+        "JUAN JOSE ROMERA DE FRUTOS"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Server"
+      ],
+      "risk": "The non-ability to access the Storage, Special, Emte, Hyperscale Manager software process startup console",
+      "impact": "Not posbilidade manage A9K and TPC cabins from multiple customers. Degradation of the service in case of high severity incident in clients with A9K.",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    }
+  ],
+  "LBK": [
+    {
+      "object": "indus",
+      "owner": "indus",
+      "tipo": "/C/",
+      "ownerGroup": "CUSTOMER",
+      "user": [
+        "CUSTOMER"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "deploys",
+      "owner": "deploys",
+      "tipo": "/C/",
+      "ownerGroup": "CUSTOMER",
+      "user": [
+        "CUSTOMER"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "infabdmd",
+      "owner": "infabdmd",
+      "tipo": "/C/",
+      "ownerGroup": "CUSTOMER",
+      "user": [
+        "CUSTOMER"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "infabdmdin",
+      "owner": "infabdmdin",
+      "tipo": "/C/",
+      "ownerGroup": "CUSTOMER",
+      "user": [
+        "CUSTOMER"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "infabdmdout",
+      "owner": "infabdmdout",
+      "tipo": "/C/",
+      "ownerGroup": "CUSTOMER",
+      "user": [
+        "CUSTOMER"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "nodejs",
+      "owner": "nodejs",
+      "tipo": "/C/",
+      "ownerGroup": "CUSTOMER",
+      "user": [
+        "CUSTOMER"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "nodejsarq",
+      "owner": "nodejsarq",
+      "tipo": "/C/",
+      "ownerGroup": "CUSTOMER",
+      "user": [
+        "CUSTOMER"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "ubroker",
+      "owner": "ubroker",
+      "tipo": "/C/",
+      "ownerGroup": "CUSTOMER",
+      "user": [
+        "CUSTOMER"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / CUSTOMER",
+      "impact": "GENERICO / MAXAGE / CUSTOMER",
+      "variable": [
+        "Usuario batch UCMD (Planificador Procesos)"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "ncosys",
+      "owner": "ncosys",
+      "tipo": "/S/",
+      "ownerGroup": "Grupo Tivoli",
+      "user": [
+        "MARIA CRUZ TERCIADO TERCIADO"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM",
+      "impact": "GENERICO / MAXAGE / IBM",
+      "variable": [
+        "Usuario de aplicativo TIVOLI"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "hive",
+      "owner": "hive",
+      "tipo": "/S/",
+      "ownerGroup": "*ESCL1L",
+      "user": [
+        ""
+      ],
+      "code": "NULL",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "mysql",
+      "owner": "mysql",
+      "tipo": "/F/",
+      "ownerGroup": "*EDDBA2",
+      "user": [
+        ""
+      ],
+      "code": "NULL",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "MYSQL Server"
+      ],
+      "SO": "Linux"
+    }
+  ]
+}

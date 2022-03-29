@@ -1,0 +1,39 @@
+///////////////////////////////////////////////////////////////////////////////////////
+MYSQL CTTI GCT ISEC - Issue REF : 768148 / PREG 3
++-------------------------------------------------------------------------------------+
+---R.1.2.2.1 Logging	
+"Synchronized system clocks
+
+// Mantener los relojes del sistema sincronizados con un origen de tiempo de referencia común para mejorar la precisión del registro
+
+// Debe contener la siguiente entrada
+/*
+
+[mysqld] 
+log_error = /var/log/mysql/error.log 
+
+*/
+
+cat /etc/my.cnf | grep -v '^#'
+
+/* CONTESTAR YES  */ : "Si existe una entrada para error.log"
++-------------------------------------------------------------------------------------+
+---R.1.2.3 Logging
+" Log retention
+
+/* CONTESTAR N/A  */ : "Log's rotation is reviewed in an Alient Vault"
++-------------------------------------------------------------------------------------+
+---R.1.8.1 Protecting Resources - OSRs
+"Running MySQL Server using a non-privileged OS account
+
+// Ejecute el servidor MySQL utilizando una cuenta de SO no privilegiada (no root)
+
+ls -la /var/lib/ | grep mysq
+
+// Los ficheros o directorios que muentran deben ser ejecutado por la cuenta mysql por defecto.
+
+/* CONTESTAR YES  */ : "Si el servidor MYSQL se ejecuta con la cuenta mysql"
++-------------------------------------------------------------------------------------+
+
+///////////////////////////////////////////////////////////////////////////////////////
+

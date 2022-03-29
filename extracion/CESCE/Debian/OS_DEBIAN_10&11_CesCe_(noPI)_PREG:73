@@ -1,0 +1,1006 @@
+///////////////////////////////////////////////////////////////////////////////////////
+OS DEBIAN 10&11 noPI - Issue REF : 768691 / PREG 73
++-------------------------------------------------------------------------------------+
+---AD.1.1.1.1 Password Requirements
+"PASS_MAX_DAYS a 90
+
+grep PASS_MAX_DAYS /etc/login.defs | grep -v ^#
+
+/* CONTESTAR YES */ : " SI PASS_MAX_DAYS es 90 "
++-------------------------------------------------------------------------------------+
+---AD.1.1.1.2 Password Requirements
+"PASS_MAX_DAYS	a Field 5 of /etc/shadow must be 90
+
+// Solo para las cuentas que tengan passwd asignada, deben expirar a 90 dias
+
+echo "";cat /etc/shadow | cut -d: -f1,2,5 | grep -v ':90' | egrep -v "\*|\!\!|\!";echo ""
+
+// El siguiente commando, no muestra el resultado en formato, mas limpio, de los usuarios que tienen passwd y no expiran a 90 dias, nos muestra si es cuenta /E/, /I/, /K/, /F/, /S/ o /C/, ( ! TARDA 3 segundos ! )
+
+cat /etc/shadow | cut -d: -f1,2,5 | grep  -v ':90' | egrep -v "\*|\!\!|\!" | awk -F: '{ print $1 }' >> maxage.txt;sleep 1;cat maxage.txt | while read tt; do cat /etc/passwd | grep $tt|awk -F: '{ print $1":"$5 }';done>>label.txt;sleep 1;echo "";awk -F "/" '{ if ($2=="E" || $2=="F" || $2=="S" || $2=="I") { print "Account "$1 " has invalid Password Max Age setting of 99999, should be set to Customer Required Setting: 90. More secure value can be set. Account Type: ibm." } else if ($2=="K")  { print "Account "$1 " has invalid Password Max Age setting of 99999, should be set to Customer Required Setting: 90. More secure value can be set. Account Type: kyndryl." } else if ($2=="C")  { print "Account "$1 " has invalid Password Max Age setting of 99999, should be set to Customer Required Setting: 90. More secure value can be set. Account Type: customer." } else print "Account " $1 " has invalid Password Max Age setting of 99999, should be set to Customer Required Setting: 90. More secure value can be set. Account Type: no label uid" } ' label.txt;echo "";sleep 1;rm -f maxage.txt;rm -f label.txt
+
+
+"CONTESTAR YES */ : "Si para las cuentas que tienen passwd, expiran a 90 dias"
+"CONTESTAR NO  */ : "Account $Account has invalid Password Max Age setting of 99999, should be set to Customer Required Setting: 90. More secure value can be set."
++-------------------------------------------------------------------------------------+
+---AD.1.1.2.0 Password Requirements
+"PASS_MIN_LEN, password complexity = MINLEN a 14
+
+/*
+Una de estas tres opciones debe aplicarse::
+
+## OPCION 1, para ""password $CONTROL pam_pwquality.so""
+
+* Parameters of "minlen=14 dcredit=-1 ucredit=0 lcredit=-1 ocredit=0 "
+
+## OPCION 2, para ""password $CONTROL pam_cracklib.so"
+
+* Parameters of "minlen=14 dcredit=-1 ucredit=0 lcredit=-1 ocredit=0 reject_username"
+
+## OPCION 3, nos dice que si solo existe ""password $CONTROL pam_pwquality.so"", sin parametros, se especifican en ""/etc/security/pwquality.conf""
+
+* "password $CONTROL pam_pwquality.so ..." stanza exists in /etc/pam.d/system-auth AND /etc/pam.d/password-auth with none of these parameters, AND the parameters of minlen = 14, dcredit= -1, ucredit=0, lcredit=-1, and ocredit=0 are specified in /etc/security/pwquality.conf
+
+
+Note: $PAMFILES will be 'common-password' for SLES and Debian.
+Note: $CONTROL in the above examples must be one of "required", or "requisit".
+*/
+
+grep -i minlen /etc/pam.d/common-password
+
+// Debe existir 
+
+"password        required	pam_cracklib.so minlen=14 dcredit=-1 ucredit=0 lcredit=-1 ocredit=0 reject_username"
+
+"CONTESTAR YES */ : "Si esta implementado, ya sea pam_cracklib, o pam_pwquality con su configuracion"
+"CONTESTAR NO  */ : "Incorrect System Default minimum password length or password complexity rules. Minimum password length should be set to 14 or more secure, in file /etc/pam.d/common-password. It should be set through pam_cracklib.so or pam_pwquality.so. For more information about password length or password complexity rules see matrix coverage document."
++-------------------------------------------------------------------------------------+
+---AD.1.1.2.1 Password Requirements	
+"password specification within /etc/shadow
+
+//En /etc/shadow, la contraseña (segundo campo) no se puede asignar al valor nulo (::)
+
+cat /etc/shadow |  cut -d: -f1,2
+
+//Debe tener "x","!", "!!", or "*" o otro valor, pero no vacio (null(::))
+
+/* CONTESTAR YES */ : " Si en la segundo campo no tiene ningun valor NULL(::)"
++-------------------------------------------------------------------------------------+
+---AD.1.1.2.2 Password Requirements	
+"password specification within /etc/passwd
+
+//En /etc/passwd, la contraseña (segundo campo) no se puede asignar al valor nulo (::)
+
+cat /etc/passwd |  cut -d: -f1,2
+
+//Debe tener "x","!", "!!", or "*" o otro valor, pero no vacio (null(::))
+
+/* CONTESTAR YES */ : " Si en la segundo campo no tiene ningun valor NULL(::)"
++-------------------------------------------------------------------------------------+
+---AD.1.1.3.1 Password Requirements 
+"PASS_MIN_DAYS a 1
+
+grep PASS_MIN_DAYS /etc/login.defs | grep -v ^#
+
+/* CONTESTAR YES */ : " Si PASS_MIN_DAYS es a 1"
++-------------------------------------------------------------------------------------+
+---AD.1.1.3.2 Password Requirements
+"Per-userid Minimum Password Age
+
+//Todos los usuarios que tengan passwd asignada, deben tener MINAGE a 1
+
+cat /etc/shadow |  cut -d: -f1,2,4 | grep -v :1
+
+// EL SIGUIENTE CODIGO MUESTRA LOS QUE NO TIENEN MINAGE A 1, tarda 3 segundos.
+
+cat /etc/shadow | cut -d: -f1,2,4 | grep  -v ':1' | egrep -v "\*|\!\!|\!" | awk -F: '{ print $1 }' >> minage.txt;sleep 1;cat minage.txt | while read tt; do cat /etc/passwd | grep $tt|awk -F: '{ print $1":"$5 }';done>>label.txt;sleep 1;echo "";awk -F "/" '{ if ($2=="E" || $2=="F" || $2=="S" || $2=="I") { print "Account "$1 " has invalid Password Min Age setting of 0, should be set to IBM Required Setting: 1. Account Type: IBM (Stricted Setting Validated)" } else if ($2=="K")  { print "Account "$1 " has invalid Password Min Age setting of 0, should be set to IBM Required Setting: 1. Account Type: KYNDRYL (Stricted Setting Validated)" } else if ($2=="C")  { print "Account "$1 " has invalid Password Min Age setting of 0, should be set to IBM Required Setting: 1. Account Type: CUSTOMER (Stricted Setting Validated)" } else print "Account " $1 " has invalid Password Min Age setting of 0, should be set to IBM Required Setting: 1. Account Type: NO LABEL UID (Stricted Setting Validated)" } ' label.txt;echo "";sleep 1;rm -f minage.txt;rm -f label.txt
+
+/* CONTESTAR YES */ : " Si en el campo 4, todos los usuarios tiene  minage a 1"
+
+/* CONTESTAR NO  */ : " Account root has invalid Password Min Age setting of 0, should be set to IBM Required Setting: 1. Account Type: ibm  "
++-------------------------------------------------------------------------------------+
+---AD.1.1.4.4 Password Requirements
+"Password History - Remeber = 7
+
+/*
+Debian 5 y posteriores.
+/etc/pam.d/common-password debe existir e incluir estos dos valores de 'password sufficient pam_unix.so remember=7 use_authtok sha512 shadow'
+
+    * Esta sentencia debe aparecer en /etc/pam.d/common-password.
+    * Si /etc/pam.d/system-auth NO existe, esta sentencia debe aparecer en /etc/pam.d/login, /etc/pam.d/passwd, /etc/pam.d/sshd y /etc/pam.d/su.
+
+*/
+
+cat /etc/pam.d/common-password | grep -i remember
+
+// Si existe /etc/pam.d/system-auth, debe tener 'password sufficient pam_unix.so remember=7 use_authtok sha512 shadow'
+
+cat /etc/pam.d/system-auth | grep -i remember
+
+// Si no existe /etc/pam.d/system-auth, deben estar en loS ficheros /etc/pam.d/login, /etc/pam.d/passwd, /etc/pam.d/sshd y /etc/pam.d/su.
+
+cat /etc/pam.d/login | grep -i remember
+cat /etc/pam.d/passwd | grep -i remember
+cat /etc/pam.d/sshd | grep -i remember
+cat /etc/pam.d/su | grep -i remember
+
+/* CONTESTAR YES */ : " Si el REMEMBER es a 7, los ficheros del PAM"
+
+/* CONTESTAR NO  */ : " PAM service file: /etc/pam.d/common-password must have ""password sufficient pam_unix.so"" stanza with ""remember=7"" parameter. ""sufficient"" can be replaced with ""required""
+		      " PAM service file: /etc/pam.d/system-auth must have ""password sufficient pam_unix.so"" stanza with ""remember=7"" parameter. ""sufficient"" can be replaced with ""required""
+
+/* CONTESTAR NO  */ : " PAM service file: /etc/pam.d/common-password must have ""password sufficient pam_unix.so"" stanza with ""remember=7"" parameter. ""sufficient"" can be replaced with ""required""
+		      " PAM service file: /etc/pam.d/passwd must have ""password sufficient pam_unix.so"" stanza with ""remember=7"" parameter. ""sufficient"" can be replaced with ""required""
+		      " PAM service file: /etc/pam.d/login must have ""password sufficient pam_unix.so"" stanza with ""remember=7"" parameter. ""sufficient"" can be replaced with ""required""
+		      " PAM service file: /etc/pam.d/sshd must have ""password sufficient pam_unix.so"" stanza with ""remember=7"" parameter. ""sufficient"" can be replaced with ""required""
+		      " PAM service file: /etc/pam.d/su must have ""password sufficient pam_unix.so"" stanza with ""remember=7"" parameter. ""sufficient"" can be replaced with ""required""
++-------------------------------------------------------------------------------------+
+---AD.1.1.6.1 Password Requirements	
+"loginretries - PAM_TALLY
+
+/*
+For Debian
+
+Si PAM_TALLY.so esta en USO:
+
+/etc/pam.d/common-auth debe existir e incluir estos valores:
+auth        required        pam_tally.so    deny=5 onerr=fail per_user no_lock_time
+
+/etc/pam.d/common-account debe existir e incluir estos valores:
+account        required        pam_tally.so
+
+Si PAM_TALLY 2 esta en USO:
+
+/etc/pam.d/common-auth  debe existir e incluir estos valores:
+auth        required        pam_tally2.so deny=5 onerr=fail per_user no_lock_time
+
+/etc/pam.d/common-account debe existir e incluir estos valores:
+account        required        pam_tally2.so
+*/
+
+## PAM_TALLY & PAM_TALLY2
+cat /etc/pam.d/common-auth | grep pam_tally
+cat /etc/pam.d/common-account| grep pam_tally
+
+/* CONTESTAR YES */ : " Si para pam_tally o pam_tally2, tienen los parametros correspondientes
+
+/* CONTESTAR NO  */ : " Non of the Login Retrie options was found in file: /etc/pam.d/common-auth.
+		      " Non of the Login Retrie options was found in file: /etc/pam.d/common-account.
+
+/* CONTESTAR N/A */ : "Si no usa pam_tally o pam_tally2"
++-------------------------------------------------------------------------------------+
+---AD.1.1.7.1 Password Requirements
+"ROOT
+
+grep root /etc/shadow| cut -d ":" -f1,2,4,5
+
+/* CONTESTAR YES */ : " Si el usuario root tiene pw asignado y expira.
+
+/* CONTESTAR NO  */ : " Si root tiene passwd asignada y no expira.
+
+/* NO */ : " Account root has invalid Password Max Age setting of 99999  should be set to Customer Required Setting: 90. More secure value can be set.",
++-------------------------------------------------------------------------------------+
+---AD.1.1.7.2 Password Requirements
+
+grep PermitRootLogin /etc/ssh/sshd_config
+
+//En caso de no existir consultar el man sshd_config.
+man sshd_config
+/PermitRootLogin
+
+/* CONTESTAR YES */ : " Si PermitRootLogin es NO"
+
+/* CONTESTAR NO  */ : "The PermitRootLogin parameter, by default is YES, it is recommended that the value be NO."
++-------------------------------------------------------------------------------------+
+---AD.1.1.8.2 Password Requirements
+"UID
+
+---AD.1.1.8.3 Password Requirements
+"GID
+
+// Se debe comprobar que no haya UID o GID repetidos
+
+cut -d: -f 3 /etc/passwd | sort | uniq -c -d
+cut -d: -f 3 /etc/group | sort | uniq -c -d
+
+/* CONTESTAR YES */ : " Si no hay UID Y GID repetidos."
+
+/* CONTESTAR NO */ : " Duplicate UID for Account: $account, UID: $uid. Each UID must only be used once
+
+/* CONTESTAR NO */ : " Duplicate GID for Account: $account, GID: $gid. Each GID must only be used once
++-------------------------------------------------------------------------------------+
+---AD.1.1.9.1 Password Requirements	
+"Exemptions to password rules
+
+/*
+Cualquier ID, incluido root o los indicados en la sección 5.0, que se establece para que ninguna contraseña pueda ser utilizada para autenticarse por cualquier medio a través de cualquiera de las opciones B o C a continuación, puede tener la 'contraseña' establecida en no caducar.
+*/
+
+// Aqui hay que revisar CUALQUIER ID, que tenga establecido ""x","!", "!!", or "*"", puede no caducar.
+cat /etc/shadow |  cut -d: -f1,2,5
+
+/* CONTESTAR YES */ : " Si las cuentas que tengan ""x","!", "!!", or "*"", pueden no caducar.
++-------------------------------------------------------------------------------------+
+---AD.1.1.10.1 Password Requirements	
+"/etc/passwd
+
+OPTION A de las reglas de CONTRASEÑA - PARTE 1
+
+## Esto se incluye en la validación indicada para AD.1.1.1.2
+
+// El valor del atributo shell de inicio de sesión en /etc/passwd debe ser /bin/false o /sbin/nologin
+
+// El siguiente comando, te muestra todas las cuentas que no tienen /bin/false o /sbin/nologin.
+
+echo "";cat /etc/passwd | cut -d: -f 1,7 | egrep -v "/bin/false|/sbin/nologin" |cut -d: -f1 | while read sline; do echo -n "$sline|";done;echo "";echo ""
+
+// De la lista anterior, la añadimos a una variable.
+
+var='root|sync|emer|apps|'
+
+// Solo mostramos las cuentas que tengan password y no expiren.
+
+cat /etc/shadow | egrep -w $var --color=always |cut -d: -f1,2,5 | grep -v ':90' | egrep -v "\*|\!\!|\!";echo "";echo ""
+
+/* CONTESTAR YES */ : " Si todas las cuentas que no tenga passwd asignada, tenga shell /bin/false or /sbin/nologin"
+
+/* CONTESTAR NO  */ : "Account emer has invalid Password Max Age setting of 99999, should be set to Customer Required Setting: 90. More secure value can be set.
+		      "Account root has invalid Password Max Age setting of 99999, should be set to Customer Required Setting: 90. More secure value can be set.
+
++-------------------------------------------------------------------------------------+
+---AD.1.1.11.1 Password Requirements
+"/etc/shadow
+
+---AD.1.1.12.1 Password Requirements
+"/etc/shadow
+
+// No debe existir un valor NULL en el segundo campo de /etc/shadow, si no tiene passwd asignada, debe tener los siguientes simbolos "x","!", "!!", or "*".
+
+cut -d: -f 1,2 /etc/shadow
+
+/* CONTESTAR YES */ : " Si no hay campo NULL"
+
+/* CONTESTAR NO  */ : "The accounts have a password "" empty "" (null). In /etc/shadow, the password (second field) cannot be assigned to the null value."
++-------------------------------------------------------------------------------------+
+---AD.1.1.13.1.1 Password Requirements
+"Deny access file
+
+OPTION D de las reglas de CONTRASEÑA - PARTE 1
+/*
+
+Este requisito concreto sólo debe cumplirse si se selecciona la opción D como mecanismo de excepción para un ID con caducidad de contraseña ampliada (365 dias). No es necesario configurarlo a menos que sea necesario para un ID específico.
+
+Para Debian y SLES:
+- En /etc/pam.d/common-auth debe existir e incluir estos valores
+
+auth required pam_listfile.so item=user sense=deny file=/etc/security/$FILENAME onerr=succeed
+
+## Donde $FILENAME, es la variable del fichero que contendra los usuarios que no deben loguear, como parte de la OPCION D de las reglas de contraseña.
+
+Nota: Esta entrada debe preceder a las entradas de tipo auth cuyo campo de control esté establecido en el valor suficiente.
+*/
+
+cat /etc/pam.d/common-auth | pam_listfile.so
+
+/* CONTESTAR YES */ : " Si hay cuentas no privilegiadas que tengan maxage de 365 dias y cumpla la OPCION D"
+
+/* CONTESTAR NO  */ : "Account $account has invalid Password Max Age setting of 99999, should be set to Customer Required Setting: 90. More secure value can be set."
++-------------------------------------------------------------------------------------+
+---AD.1.1.13.2 Password Requirements
+"/etc/security/$FILENAME
+
+OPTION D de las reglas de CONTRASEÑA - PARTE 2
+
+// Archivo que contiene una lista de los ID de usuario, uno por línea, que no están permitidos para realizar un inicio de sesión interactivo en el sistema
+
+/*
+El ID debe existir en /etc/security/FILENAME Nota: el nombre de archivo real puede variar, pero debe colocarse en el directorio /etc/security y ser idéntico al nombre de archivo utilizado en la regla anterior (AD.1.1.13.1.1 Password Requirements).
+*/
+
+//Esto se incluye en la validación indicada para AD.1.1.1.2; donde existe una cuenta con contraseña y no caduca, y cuempla la OPCION D como excepcion de regla de CONTRASEÑA.
+
+grep " ^ $User\s * $" /etc/security/$FILENAME
+
+//Debe devolver el NOMBRE DEL USUARIO.
+
+/* CONTESTAR YES */ : " Si hay cuentas no privilegiadas que tengan maxage no expirable y cumpla la OPCION D"
+
+/* CONTESTAR NO  */ : "Account $account has invalid Password Max Age setting of 99999, should be set to Customer Required Setting: 90. More secure value can be set."
++-------------------------------------------------------------------------------------+
+---AD.1.1.13.4 Password Requirements	
+"etc/ssh/sshd_config
+
+OPTION D de las reglas de CONTRASEÑA - PARTE 4
+
+// UsePAM si los ID están pensados para configurarse con la opción D para contraseñas ampliadas.
+
+grep UsePAM /etc/ssh/sshd_config
+
+/* CONTESTAR YES */ : " Si UsePAM es a YES"
++-------------------------------------------------------------------------------------+
+---AD.1.2.1.1 Logging	
+"Login success or failure
+
+// Requisito para sistemas que USEN syslog : file : /etc/syslog.conf
+
+systemctl status syslog
+
+// Debe contener :
+
+/*
+Los siguientes requisitos cubren Debian Linux: 
+
+auth,authpriv.* /var/log/auth.log
+*.*;auth,authpriv.none -/var/log/syslog
+*.=info;*.=notice;*.=warning; auth,authpriv.none; cron,daemon.none; mail,news.none -/var/log/messages
+
+*/
+
+/* CONTESTAR YES */ : " Si en /etc/syslog.conf encontramos: lo indicado en AGREED TO SETTING"
+
+/* CONTESTAR N/A */ : "The system does not use SYSLOG"
++-------------------------------------------------------------------------------------+
+---AD.1.2.1.4.1 Logging	
+"Login success or failure, logging enabled.
+
+systemctl status rsyslog
+
+/* CONTESTAR YES */ : " Si rsyslog esta habilitado"
+
+/* CONTESTAR N/A */ : "The system does not use RSYSLOG"
++-------------------------------------------------------------------------------------+
+---AD.1.2.1.4.3 Logging
+
+"Login success or failure, logs created secure by default.
+
+"Primero hay que verificar el umask, si no da resultado" // CONTESTAR YES
+
+grep umask /etc/rsyslog.conf /etc/rsyslog.d/*.conf | sort -V
+
+"*/
+
+"Si al lanzar UMASK muestra resultado, la siguiente linea debe ser $FileCreateMode 640 o mas restrictivo" // CONTESTAR YES
+
+grep -i 'FileCreateMode' /etc/rsyslog.conf /etc/rsyslog.d/*.conf
+
+"*/
+
+/* CONTESTAR NO */ : " en otro caso.
++-------------------------------------------------------------------------------------+
+---AD.1.2.1.5 Logging	
+"Login success or failure
+
+// Requisito para sistemas que USEN rsyslog : file : /etc/rsyslog.conf
+
+/*
+Los siguientes requisitos cubren Debian Linux: 
+
+$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
+auth,authpriv.* /var/log/auth.log
+*.*;auth,authpriv.none -/var/log/syslog
+*.=info;*.=notice;*.=warning; auth,authpriv.none; cron,daemon.none; mail,news.none -/var/log/messages
+
+Nota: El uso de "-" en "-/var/log/...", que indica que se permiten grabaciones en almacenamiento intermedio, es opcional en cualquier configuración de syslog de Linux.
+
+Nota: El registro más extenso es permisible, por ejemplo, "cron.none" se puede eliminar de la sección de instalación de la stanza de control para /var/log/messages.
+*/
+
+cat /etc/rsyslog.conf | egrep "auth|=info|/var/log/messages|ActionFileDefaultTemplate" --color=always| grep -v '^#'
+
+
+/* CONTESTAR YES */ : " Si en /etc/rsyslog.conf encontramos: lo indicado en AGREED TO SETTING"
+
+/* CONTESTAR N/A */ : "The system does not use RSYSLOG"
++-------------------------------------------------------------------------------------+
+---AD.1.2.2 Logging	
+"/var/log/wtmp 
+
+ls -ld /var/log/wtmp
+
+/* CONTESTAR YES */ : " Si existe wtmp"
++-------------------------------------------------------------------------------------+
+---AD.1.2.3.2 Logging	
+"/var/log/syslog
+
+ls -la /var/log/syslog
+
+/* CONTESTAR YES */ : " Si existe /var/log/syslog"
++-------------------------------------------------------------------------------------+
+---AD.1.2.4.0 Logging
+"use of pam_tally2.so (debian10) or pam_faillock (debian11)
+
+// Primero saber que version de DEBIAN es:
+
+cat /etc/*release
+
+#*/
+
+// Debian 10
+
+grep -i pam_tally /etc/pam.d/common-auth
+
+// Debian 11
+
+grep -i pam_faillock /etc/pam.d/common-auth
+
+/* CONTESTAR YES */ : " Si es debian 10 y tiene pam_tally2, O si es debian 11 y tiene pam_faillock"
+
+/* CONTESTAR NO */ : "En otro caso"
++-------------------------------------------------------------------------------------+
+---AD.1.2.4.2 Logging	
+"/var/log/tallylog	
+
+//Existe para los sistemas que using pam_tally2.so
+
+//Saber si usa pam_tally: 
+revisar la pregunta (AD.1.2.4.0 Logging)
+
+// Comprobar si existe
+ls -la /var/log/tallylog
+
+/* CONTESTAR YES */ : " Si utiliza pam_tally2.so y existe tallylog"
+
+/* CONTESTAR N/A */ : "The system no uses the pam_tally2 module"
++-------------------------------------------------------------------------------------+
+---AD.1.2.4.3 Logging	
+"/var/run/faillock
+
+//Existe para los sistemas que using pam_faillock.so
+
+//Saber si usa pam_faillock: 
+revisar la pregunta (AD.1.2.4.0 Logging)
+
+// Comprobar si existe
+ls -la /var/run/faillock
+
+/* CONTESTAR YES */ : " Si utiliza pam_tally2.so y existe tallylog"
+
+/* CONTESTAR N/A */ : "The system no uses the pam_faillock module"
++-------------------------------------------------------------------------------------+
+---AD.1.2.5 Logging 
+"/var/log/secure or /var/log/auth.log	
+
+/*
+Los registros de todas las conexiones deben conservarse, mediante el uso de /var/log/secure o /var/log/auth.log 
+Notes:
+/var/log/secure es necesario en todas las distribuciones de Linux excepto Debian. 
+/var/log/auth.log es necesario en Debian Linux
+*/
+
+cat /etc/*release
+#/*/
+
+// existe en RHEL
+ls -la /var/log/secure
+
+// existe en DEBIAN
+ls -la /var/log/auth.log
+
+/* CONTESTAR YES */ : " Si es DEBIAN y existe /var/log/auth.log"
++-------------------------------------------------------------------------------------+
+SISTENAS DEBIAN / POLITICA OS / 180 DIAS
++-------------------------------------------------------------------------------------+	
+			/* POLITICA OS - OS LINUX (Debian)*/ 
+
+---AD.1.2.6 Logging
+
+"Retain Log files = 180 DIAS (26 semanas)
+
+// Para la rotacion de OS se revisa 2 cosas.
+	OPCION ➡ 1.- La rotacion que debe ser 180 dias (26 semanas).
+	OPCION ➡ 2.- Los ficheros de rotacion a 180 dias (26 semanas)."#
+
+
+OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas). 
+//Saber que sistema de rotacion USA, existen 3 OPCIONES
+
+	"Saber que sistema de rotacion USA
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1. "#-> LOOGKEEPER <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	crontab -l|grep -v ^#|grep logkeeper
+
+	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper
+
+	//Ejecutamos un -s del comando que nos devuelve
+
+	/usr/util/seguridad/logkeeper -s
+
+	// -> si no funciona "LOGKEEPER" mirar Logrotate<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2. "#-> LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+	ls -la /etc/logrotate.conf
+
+	// La rotacion debe esta definida en semanas 'weekly' a 26:
+	head -10 /etc/logrotate.conf
+
+	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3. "#-> sin LOGKEEPER && sin LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+	
+	// Lo rotacion por rotalogs, la primera columna el fichero y la cuarta columna el valor a rotar:
+		
+	// EJEMPLO -> /var/log/secure.log:0:13:90:HP-UX,OSF1,SunOS
+
+OPCION ➡ 2. //Los ficheros de OS deben estar rotando.
+
+	"Saber que SO estamos revisando "dependera de los ficheros de sistemas a rotar", ya sea Linux o Linux (debian)
+
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+          |								         |
+          |	--- Os / Linux (Debian)					         |
+          |----------------------------------------------------------------------| 
+          | /var/log/auth.log "*INFORMACION DE AUTENT." / "*REG.INTENTOS FAIL"   |
+          | /var/adm/sudo.log "LOG`S INDIVIDUALES"                               |
+          | /var/log/messages "*MENSAJES DEL SISTEMAS"                           |
+          | /var/log/cron.log "*INF. INICIO DE TAREAS"                           |
+          | /var/log/wtmp "*INF. DE LOS LOGUEOS"                                 |
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+// Si existen deben estar rotando.
+
+# Debian : 
+
+ls -la /var/log/auth.log /var/adm/sudo.log /var/log/messages /var/log/wtmp /var/log/cron.log
+
+// Debe existir una entrada de los ficheros de OS en la rotacion (OPCION ➡ 1. LOGKEEPER):
+
+	//Muestra resumen de la configuracion en LOGKEEPER	
+	/usr/util/seguridad/logkeeper -s | "trim|backup|auth|sudo|messages|wtmp|cron|config_fil"
+
+	
+	//Si La rotacion de log se define en el fichero de configuracion
+	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim|backup|auth|sudo|messages|wtmp|cron"
+
+// Debe existir una entrada de los ficheros de OS en la rotacion (OPCION ➡ 2. LOGROTATE):
+
+	cat /etc/logrotate.conf | egrep -i "auth|sudo|messages|wtmp|cron" -A5 --color=always
+
+	//Si los ficheros no existen en logrotate.conf, debe estar implementado en logrotate.d
+
+	cat /etc/logrotate.d/* | egrep -i "auth|sudo|messages|wtmp|cron" -A7 --color=always
+
+// Debe existir una entrada del/los fichero(s) de registro en la rotacion (OPCION ➡ 3. ROTALOGS):
+
+	// Si ejecuta en rotalogs con job de control.
+
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -v "^#"| egrep -i "auth|sudo|messages|wtmp|cron|logke"
+
+	//Debe existir /usr/local/bin/tareas/logkeeperalt.cfg en el codigo que se ejecuta.
+
+/* CONTESTAR YES  */ : " Si la rotacion es 180 dias (26 semanas), y exiten, estan rotando los ficheros en el sistema de rotado."
+
+/* CONTESTAR NO   */ : " Si la rotacion no es de 180 dias, o los ficheros de rotatos no existen o no estan rotando"
+		       
+		       " Current rotation is '4' 'weeks' should be set to '26' 'weeks'.
+		       " The file: '/var/log/cron.log', does not exist.
+		       " The file: '/var/adm/sudo.log', exists, but is not rotating in '/etc/logrotate.conf'.
++-------------------------------------------------------------------------------------+
+---AD.1.2.7.1 Logging	
+"Synchronized system clocks, ensure it is active.
+
+//#"ntpd or chronyd must be running."
+
+#"chronyd"#
+/etc/init.d/chronyd status
+systemctl status chronyd
+
+#"ntpd"#
+service ntpd status
+systemctl status ntpd.service
+
+/* CONTESTAR YES */ : " Si esta activo chronyd o ntpd"
++-------------------------------------------------------------------------------------+
+---AD.1.2.7.4 Logging	
+"Synchronized system clocks, ntpd has secure defaults
+---AD.1.2.7.5 Logging	
+"Synchronized system clocks, ntpd has a server.
+
+#"ntpd"#
+service ntpd status
+systemctl status ntpd.service
+
+cat /etc/ntp.conf | grep -i restrict
+
+#"Debe tener "
+#Por debajo de:
+# permit the source to query or modify the service on this system.
+restrict default kod nomodify notrap nopeer noquery
+restrict -6 default kod nomodify notrap nopeer noquery
+
+#Y por debajo de:
+# the administrative functions.
+restrict 127.0.0.1
+restrict -6 ::1
+
+/* CONTESTAR YES */ : " Si existe la configuracion en ntp.conf"
+
+/* CONTESTAR N/A */ : " System does not use NTPD to synchronize the clock
++-------------------------------------------------------------------------------------+
+---AD.1.4.2.2 System Settings
+"Ensure default group for the root account is GID 0
+
+cat /etc/passwd | grep -i root
+
+/* CONTESTAR YES */ : " Si el grupo para root es el GID 0
++-------------------------------------------------------------------------------------+
+---AD.1.4.3.1.1 System Settings
+"Ensure SELinux is installed
+
+// Comprobar si SELinux está instalado, a menos que AppArmor esté instalado y habilitado.
+
+systemctl status selinux
+
+// O
+
+systemctl status apparmor
+
+/* CONTESTAR YES */ : " Si selinux esta habilitado o AppArmor
++-------------------------------------------------------------------------------------+
+---AD.1.5.7 Network Settings	
+"X-server access control
+
+// No se debe inhabilitar a través de xhost +, forzar la instalación de xorg-x11.
+
+apt-cache search xorg-x11*
+
+/* CONTESTAR YES */ : " Si tiene instalado xorg-x11
+
+/* CONTESTAR N/A */ : " Si no devuelve nada
++-------------------------------------------------------------------------------------+
+---AD.1.5.9.20.1 Network Settings
+"/etc/sysctl.conf
+---AD.1.5.9.20.2 Network Settings
+"/etc/sysctl.conf
+---AD.1.5.9.20.3 Network Settings
+"/etc/sysctl.conf
+---AD.1.5.9.20.4 Network Settings
+"/etc/sysctl.conf
+---AD.1.5.9.20.5 Network Settings
+"/etc/sysctl.conf
+---AD.1.5.9.20.6 Network Settings
+"/etc/sysctl.conf
+---AD.1.5.9.20.7 Network Settings
+"/etc/sysctl.conf
+---AD.1.5.9.20.8 Network Settings
+"/etc/sysctl.conf
+---AD.1.5.9.20.9 Network Settings
+"/etc/sysctl.conf
+---AD.1.5.9.21.1 Network Settings
+"/etc/sysctl.conf
+---AD.1.5.9.21.2 Network Settings
+"/etc/sysctl.conf
+
+
+	/sbin/sysctl -a |grep -i syncookies
+
+/* CONTESTAR YES */ : " = EXISTE net.ipv4.tcp_syncookies =1"
+
+	/sbin/sysctl -a |grep -i broadcast 
+
+/* CONTESTAR YES */ : " = EXISTE net.ipv4.icmp_echo_ignore_broadcasts = 1
+
+	/sbin/sysctl -a |grep -i net.ipv4.conf.all.accept_redirects
+
+/* CONTESTAR YES */ : " = EXISTE net.ipv4.conf.all.accept_redirects = 0
+
+	/sbin/sysctl -a |grep -i net.ipv4.ip_forward
+
+/* CONTESTAR YES */ : " = EXISTE net.ipv4.ip_forward = 0
+
+	/sbin/sysctl -a |grep -i net.ipv4.conf.all.accept_source_route
+	/sbin/sysctl -a |grep -i net.ipv4.conf.default.accept_source_route
+
+/* CONTESTAR YES */ : " = EXISTE net.ipv4.conf.all.accept_source_route = 0
+/* CONTESTAR YES */ : " = EXISTE net.ipv4.conf.default.accept_source_route = 0
+
+	/sbin/sysctl -a |grep -i net.ipv4.conf.all.secure_redirects
+	/sbin/sysctl -a |grep -i net.ipv4.conf.default.secure_redirects
+
+/* CONTESTAR YES */ : " = EXISTE net.ipv4.conf.all.secure_redirects = 0
+/* CONTESTAR YES */ : " = EXISTE net.ipv4.conf.default.secure_redirects = 0
+
+	/sbin/sysctl -a |grep -i net.ipv4.conf.all.log_martians
+	/sbin/sysctl -a |grep -i net.ipv4.conf.default.log_martians
+
+/* CONTESTAR YES */ : " = EXISTE net.ipv4.conf.all.log_martians = 1
+/* CONTESTAR YES */ : " = EXISTE net.ipv4.conf.default.log_martians = 1
+
+	/sbin/sysctl -a |grep -i net.ipv4.icmp_ignore_bogus_error_responses
+
+/* CONTESTAR YES */ : " = EXISTE net.ipv4.icmp_ignore_bogus_error_responses = 1
+
+	/sbin/sysctl -a |grep -i net.ipv4.conf.all.rp_filter
+	/sbin/sysctl -a |grep -i net.ipv4.conf.default.rp_filter
+
+/* CONTESTAR YES */ : " = EXISTE net.ipv4.conf.all.rp_filter = 1
+/* CONTESTAR YES */ : " = EXISTE net.ipv4.conf.default.rp_filter = 1
+
+	/sbin/sysctl -a |grep -i net.ipv6.conf.all.accept_ra
+	/sbin/sysctl -a |grep -i net.ipv6.conf.default.accept_ra
+
+/* CONTESTAR YES */ : " = EXISTE net.ipv6.conf.all.accept_ra = 0
+/* CONTESTAR YES */ : " = EXISTE net.ipv6.conf.default.accept_ra = 0
+
+	/sbin/sysctl -a |grep -i net.ipv6.conf.all.accept_redirects
+	/sbin/sysctl -a |grep -i net.ipv6.conf.default.accept_redirects
+
+/* CONTESTAR YES */ : " = EXISTE net.ipv6.conf.all.accept_redirects = 0
+/* CONTESTAR YES */ : " = EXISTE net.ipv6.conf.default.accept_redirects = 0
+
+/* CONTESTAR NO */ : " Incorrect /etc/sysctl.conf or proc files setting for net.ipv4.ip_forward: 1 should be 0
+/* CONTESTAR NO */ : " Incorrect /etc/sysctl.conf or proc files setting for net.ipv4.conf.all.secure_redirects: 1 should be 0
+/* CONTESTAR NO */ : " Incorrect /etc/sysctl.conf or proc files setting for net.ipv4.conf.default.secure_redirects: 1 should be 0
+/* CONTESTAR NO */ : " Incorrect /etc/sysctl.conf or proc files setting for net.ipv4.conf.all.log_martians: 0 should be 1
+/* CONTESTAR NO */ : " Incorrect /etc/sysctl.conf or proc files setting for net.ipv4.conf.default.log_martians: 0 should be 1
+/* CONTESTAR NO */ : " Incorrect /etc/sysctl.conf or proc files setting for net.ipv4.conf.all.rp_filter: 2 should be 1
+/* CONTESTAR NO */ : " Incorrect /etc/sysctl.conf or proc files setting for net.ipv4.conf.default.rp_filter: 2 should be 1
+/* CONTESTAR NO */ : " Incorrect /etc/sysctl.conf or proc files setting for net.ipv6.conf.all.accept_ra: 1 should be 0
+/* CONTESTAR NO */ : " Incorrect /etc/sysctl.conf or proc files setting for net.ipv6.conf.default.accept_ra: 1 should be 0
+/* CONTESTAR NO */ : " Incorrect /etc/sysctl.conf or proc files setting for net.ipv6.conf.all.accept_redirects: 1 should be 0
+/* CONTESTAR NO */ : " Incorrect /etc/sysctl.conf or proc files setting for net.ipv6.conf.default.accept_redirects: 1 should be 0
++-------------------------------------------------------------------------------------+
+---AD.1.8.3.1 Protecting Resources - OSRs	
+"/
+
+// No es recursivo y debe tener r-x en other o mas restrintivos"#
+
+ls -ld /
+
+/* CONTESTAR YES */ : " Si los permisos para other son r-x o mas restrintivos"
+
+/* CONTESTAR NO  */ : " Invalid permissions for /  Octal permissions: 0777  Text Permissions: -rwxrwxrwx;  May not have execute permissions on any files and no write for others.
++-------------------------------------------------------------------------------------+
+---AD.1.8.3.2 Protecting Resources - OSRs	
+"/usr
+
+// No es recursivo y debe tener r-x en other o mas restrintivos"#
+
+ls -ld /usr
+
+/* CONTESTAR YES */ : " Si los permisos para other son r-x o mas restrintivos"
+
+/* CONTESTAR NO  */ : " Invalid permissions for /usr Octal permissions: 0777  Text Permissions: -rwxrwxrwx;  May not have execute permissions on any files and no write for others.
++-------------------------------------------------------------------------------------+
+---AD.1.8.3.3 Protecting Resources - OSRs	
+"/etc
+
+// No es recursivo y debe tener r-x en other o mas restrintivos"#
+
+ls -ld /etc
+
+/* CONTESTAR YES */ : " Si los permisos para other son r-x o mas restrintivos"
+
+/* CONTESTAR NO  */ : " Invalid permissions for /etc Octal permissions: 0777  Text Permissions: -rwxrwxrwx;  May not have execute permissions on any files and no write for others.
++-------------------------------------------------------------------------------------+
+---AD.1.8.4.1 Protecting Resources - OSRs	
+"/etc/security/opasswd
+
+// Si el fichero existe debe tener permisos -rw-------.#
+
+ls -la /etc/security/opasswd
+
+/* CONTESTAR YES */ : " Si los permisos son los indicados"
+
+/* CONTESTAR NO  */ : " Invalid permissions for /etc/security/opasswd, Octal permissions: 0777  Text Permissions: -rwxrwxrwx;  May not have execute permissions on any files and no write for others.
++-------------------------------------------------------------------------------------+
+---AD.1.8.4.2.1 Protecting Resources - OSRs	
+"/etc/shadow
+
+// Si el fichero existe debe tener permisos -rw------- o mas restrintivo.#
+
+ls -la /etc/shadow
+
+/* CONTESTAR YES */ : " Si los permisos son los indicados"
+
+/* CONTESTAR NO  */ : " Invalid permissions for /etc/shadow, Octal permissions: 0777  Text Permissions: -rwxrwxrwx;  May not have execute permissions on any files and no write for others..
++-------------------------------------------------------------------------------------+
+---AD.1.8.4.2.2 Protecting Resources - OSRs
+"Ensure permissions on /etc/gshadow are configured
+
+// Si el fichero existe y debe tener permisos File 000
+
+ls -la /etc/gshadow
+
+/* CONTESTAR YES */ : " Si los permisos son los indicados"
+
+/* CONTESTAR NO  */ : " Invalid permissions for /etc/gshadow, Octal permissions: rw----------, Text Permissions: 000;  May not have execute permissions on any files and no write for others.
++-------------------------------------------------------------------------------------+
+---AD.1.8.4.2.3 Protecting Resources - OSRs
+"Ensure permissions on /etc/shadow- are configured
+
+// Si el fichero existe y debe tener permisos File 000
+
+ls -la /etc/shadow
+
+/* CONTESTAR YES */ : " Si los permisos son los indicados"
+
+/* CONTESTAR NO  */ : " Invalid permissions for /etc/shadow, Octal permissions: rw----------, Text Permissions: 000;  May not have execute permissions on any files and no write for others.
++-------------------------------------------------------------------------------------+
+---AD.1.8.4.3.1 Protecting Resources - OSRs
+"Ensure permissions on /etc/crontab are configured
+
+// Si el fichero existe y debe tener permisos File 0600 y owner root, grupo root
+
+ls -la /etc/crontab
+
+/* CONTESTAR YES */ : " Si los permisos son los indicados"
+
+/* CONTESTAR NO  */ : " /etc/crontab, Owner: root, Group: root, Permissions: -rw-r--r--., should have ""rw- --- ---"" permissions (or more restrictive). Must be owned by user and group ""root"".
++-------------------------------------------------------------------------------------+
+---AD.1.8.4.3.2 Protecting Resources - OSRs
+"Ensure permissions on /etc/cron.hourly are configured
+
+// Si el fichero existe y debe tener permisos File 0600 y owner root, grupo root
+
+ls -ld /etc/cron.hourly
+
+/* CONTESTAR YES */ : " Si los permisos son los indicados"
+
+/* CONTESTAR NO  */ : " /etc/cron.hourly, Owner: root, Group: root, Permissions: drwxr-xr-x., should have ""0600"" permissions (or more restrictive). Must be owned by user and group ""root"".
++-------------------------------------------------------------------------------------+
+---AD.1.8.4.3.3 Protecting Resources - OSRs
+"Ensure permissions on /etc/cron.daily are configured
+
+// Si el fichero existe y debe tener permisos File 0600 y owner root, grupo root
+
+ls -ld /etc/cron.daily
+
+/* CONTESTAR YES */ : " Si los permisos son los indicados"
+
+/* CONTESTAR NO  */ : " /etc/cron.daily, Owner: root, Group: root, Permissions: drwxr-xr-x., should have ""0600"" permissions (or more restrictive). Must be owned by user and group ""root"".
++-------------------------------------------------------------------------------------+
+---AD.1.8.4.3.4 Protecting Resources - OSRs
+"Ensure permissions on /etc/cron.weekly are configured
+
+// Si el fichero existe y debe tener permisos File 0600 y owner root, grupo root
+
+ls -ld /etc/cron.weekly
+
+/* CONTESTAR YES */ : " Si los permisos son los indicados"
+
+/* CONTESTAR NO  */ : " /etc/cron.weekly, Owner: root, Group: root, Permissions: drwxr-xr-x., should have ""0600"" permissions (or more restrictive). Must be owned by user and group ""root"".
++-------------------------------------------------------------------------------------+
+---AD.1.8.4.3.5 Protecting Resources - OSRs
+"Ensure permissions on /etc/cron.monthly are configured
+
+// Si el fichero existe y debe tener permisos File 0600 y owner root, grupo root
+
+ls -ld /etc/cron.monthly
+
+/* CONTESTAR YES */ : " Si los permisos son los indicados"
+
+/* CONTESTAR NO  */ : " /etc/cron.monthly, Owner: root, Group: root, Permissions: drwxr-xr-x., should have ""0600"" permissions (or more restrictive). Must be owned by user and group ""root"".
++-------------------------------------------------------------------------------------+
+---AD.1.8.4.3.6 Protecting Resources - OSRs
+"Ensure permissions on /etc/cron.d are configured
+
+// Si el fichero existe y debe tener permisos File 0600 y owner root, grupo root
+
+ls -ld /etc/cron.d
+
+/* CONTESTAR YES */ : " Si los permisos son los indicados"
+
+/* CONTESTAR NO  */ : " /etc/cron.d, Owner: root, Group: root, Permissions: drwxr-xr-x., should have ""0600"" permissions (or more restrictive). Must be owned by user and group ""root"".
++-------------------------------------------------------------------------------------+
+---AD.1.8.5.1 Protecting Resources - OSRs
+"/var
+
+// No es recursivo y debe tener r-x en other o mas restrintivos"#
+
+ls -ld /var
+
+/* CONTESTAR YES */ : "Si los permisos para other son r-x o mas restrintivos"
++-------------------------------------------------------------------------------------+
+---AD.1.8.6.2 Protecting Resources - OSRs
+---AD.1.8.12.1.2 Protecting Resources - OSRs	
+"/var/log/tallylog
+
+//Saber si usa pam_tally: 
+revisar la pregunta (AD.1.2.4.0 Logging)
+
+// Los permisos de archivo deben establecerse para todos los sistemas utilizando pam_tally2.so rw---- --- (o más restrictivo)
+
+ls -la /var/log/tallylog
+
+/* CONTESTAR YES */ : "Si los permisos son los indicados"
+
+/* CONTESTAR NO  */ : " /var/log/tallylog, Owner: root, Group: root, Permissions: rwxr-xr-x., should have ""0600"" permissions (or more restrictive). Must be owned by user and group ""root"".
++-------------------------------------------------------------------------------------+
+---AD.1.8.7.1 Protecting Resources - OSRs
+---AD.1.8.12.2 Protecting Resources - OSRs
+" /var/log/messages
+
+// Los permisos de archivo deben establecerse: rwx r -- r-- (o más restrictivo)
+
+ls -la /var/log/messages
+
+/* CONTESTAR YES */ : "Si existe var/log/messages con r-x para other o mas restrintivo"
+
+/* CONTESTAR NO  */ : " /var/log/messages, Owner: root, Group: root, Permissions: rwxr-xr-x., should have ""0644"" permissions (or more restrictive). Must be owned by user and group ""root"".
++-------------------------------------------------------------------------------------+
+---AD.1.8.7.2 Protecting Resources - OSRs
+---AD.1.8.12.3 Protecting Resources - OSRs	
+"/var/log/wtmp
+
+// debe tener los permisos rwx r-- r-- (or more restrictive)
+
+ls -la /var/log/wtmp
+
+/* CONTESTAR YES */ : "Si wtmp tiene los permisos requerido"
+
+/* CONTESTAR NO  */ : "Invalid Permissions or Ownership for log file: /var/log/wtmp;   -rw-rw-r--.;  owner:  root;   group:  utmp. For more information see rule description.
++-------------------------------------------------------------------------------------+
+---AD.1.8.8 Protecting Resources - OSRs
+"Debian: /var/log/auth.log
+
+---AD.1.8.12.5 Protecting Resources - OSRs
+"/var/log/auth.log
+
+// Debe existir /var/log/auth.log, con los permisos rwx r-- --- (or more restrictive)
+
+ls -la /var/log/auth.log
+
+/* CONTESTAR YES */ : "Si existe /var/log/auth.log con permisos 0760 para other o mas restrintivo"
+
+/* CONTESTAR NO  */ : "Invalid Permissions or Ownership for log file: /var/log/secure;   -rw-rw-r--.;  owner:  root;   group:  adm. For more information see rule description.
++-------------------------------------------------------------------------------------+
+---AD.1.8.9 Protecting Resources - OSRs
+"/tmp
+
+// Los valores de este directorio deben ser rwxrwxrwt (1777).
+//Nota: Este requisito en particular no es recursivo.
+
+ls -ld /tmp
+
+/* CONTESTAR YES */ : " Si /tmp tiene los permisos requerido"
+
+/* CONTESTAR NO  */ : "Invalid Permissions or Ownership for log file: /tmp  drwxrwxrwx.;  owner:  root;   group:  root. For more information see rule description.
++-------------------------------------------------------------------------------------+
+AD.1.8.11 Protecting Resources - OSRs	
+"/var/tmp
+
+//Los valores de este directorio deben ser rwxrwxrwt (1777).
+//Nota: Este requisito en particular no es recursivo.
+
+ls -ld /var/tmp
+
+/* CONTESTAR YES */ : "Si existe /var/tmp y permisos correctos"
+
+/* CONTESTAR NO  */ : "Invalid Permissions or Ownership for log file: /var/tmp  drwxrwxrwx.;  owner:  root;   group:  root. For more information see rule description.
++-------------------------------------------------------------------------------------+
+---AD.2.0.1.0 Business Use Notice	
+"Business Use Notice
+
+cat /etc/motd
+
+// Debe tener Kyndryl en las ultimas 4 lineas, ya no es IBM
+
+|                                                                             |
+|Kyndryl's internal systems must only be used for conducting Kyndryl's        |
+|business or for purposes authorized by Kyndryl management.. Use is subject to|
+|audit at any time by Kyndryl management.                                     |  
++-----------------------------------------------------------------------------+
+
+/* CONTESTAR YES */ : " Si tiene el correcto mensaje de bienvenidad"
+
+/* CONTESTAR NO */ : " Missing or Incorrect Business Use Notice. It should be set in /etc/motd
++-------------------------------------------------------------------------------------+
+---AD.2.1.3.0 Encryption	
+"Storage of passwords (Passwords must be protected with 128-bit encryption)
+
+// Si es un BEDIAN  debe existir en /etc/pam.d/common-password"#
+// Hay que mirar el tipo de encryptacion de password, DEBE SER sha512"#
+
+cat /etc/pam.d/common-password | grep -i "pam_unix.so"
+
+/* CONTESTAR YES */ : " Si tiene el tipo de encryptacion sha512, en el modulo ""password sufficient pam_unix.so"""
+
+/* CONTESTAR NO  */ : " Any file in /etc/pam.d containing ""password sufficient pam_unix.so"" stanza must carry the ""sha512 shadow"" options.\n\nIncorrect or missing pam_unix.so module stanza. For more information see coverage matrix document
++-------------------------------------------------------------------------------------+
+///////////////////////////////////////////////////////////////////////////////////////
+

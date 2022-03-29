@@ -1,0 +1,1136 @@
+///////////////////////////////////////////////////////////////////////////////////////
+OS LINUX BASE / PREG 175
++-------------------------------------------------------------------------------------+
+---AD.1.1.1.1 Password Requirements
+"PASS_MAX_DAYS a 90
+
+grep PASS_MAX_DAYS /etc/login.defs | grep -v ^#
+
+/* CONTESTAR YES */ : " SI PASS_MAX_DAYS es 90 "
++-------------------------------------------------------------------------------------+
+---AD.1.1.1.2 Password Requirements
+"PASS_MAX_DAYS	a Field 5 of /etc/shadow must be 90
+
+// Solo para las cuentas que tengan passwd asignada, deben expirar a 90 dias
+cat /etc/shadow | cut -d: -f1,2,5 | grep -v ':90' | egrep -v "\*|\!\!|\!"
+
+
+// El siguiente commando, no muestra el resultado en formato, mas limpio, de los usuarios que tienen passwd y no expiran a 90 dias, nos muestra si es cuenta /E/, /I/, /K/, /F/, /S/ o /C/, ( ! TARDA 3 segundos ! )
+
+
+cat /etc/shadow | cut -d: -f1,2,5 | grep  -v ':90' | egrep -v "\*|\!\!|\!" | awk -F: '{ print $1 }' >> maxage.txt;sleep 1;cat maxage.txt | while read tt; do cat /etc/passwd | grep $tt|awk -F: '{ print $1":"$5 }';done>>label.txt;sleep 1;echo "";awk -F "/" '{ if ($2=="E" || $2=="F" || $2=="S" || $2=="I") { print "Account "$1 " has invalid Password Max Age setting of 99999, should be set to Customer Required Setting: 90. More secure value can be set. Account Type: ibm." } else if ($2=="K")  { print "Account "$1 " has invalid Password Max Age setting of 99999, should be set to Customer Required Setting: 90. More secure value can be set. Account Type: kyndryl." } else if ($2=="C")  { print "Account "$1 " has invalid Password Max Age setting of 99999, should be set to Customer Required Setting: 90. More secure value can be set. Account Type: customer." } else print "Account " $1 " has invalid Password Max Age setting of 99999, should be set to Customer Required Setting: 90. More secure value can be set. Account Type: no label uid" } ' label.txt;echo "";sleep 1;rm -f maxage.txt;rm -f label.txt
+
+
+"CONTESTAR YES */ : "Si para las cuentas que tienen passwd, expiran a 90 dias"
+"CONTESTAR NO  */ : "Account $Account has invalid Password Max Age setting of 99999, should be set to Customer Required Setting: 90. More secure value can be set."
++-------------------------------------------------------------------------------------+
+---AD.1.1.2.0 Password Requirements
+"PASS_MIN_LEN, password complexity = MINLEN a 15
+
+/*
+Una de estas tres opciones debe aplicarse::
+* Parameters of "minlen=15 dcredit=-1 ucredit=0 lcredit=-1 ocredit=0 " in pam_pwquality.so
+* Parameters of "minlen=15 dcredit=-1 ucredit=0 lcredit=-1 ocredit=0 reject_username" in pam_cracklib.so
+* "password $CONTROL pam_pwquality.so ..." la stanza existe en /etc/pam.d/system-auth Y /etc/pam.d/password-auth sin ninguno de estos parámetros, Y los parámetros de minlen = 15, dcredit= -1, ucredit= 0, lcredit=-1 y ocredit= 0 se especifican en /etc/security/pwquality.conf
+*/
+
+grep -i minlen /etc/pam.d/system-auth
+grep -i minlen /etc/pam.d/password-auth
+
+"CONTESTAR YES */ : "Si esta implementado, ya sea pam_cracklib, o pam_pwquality con su configuracion"
+"CONTESTAR NO  */ : "Incorrect System Default minimum password length or password complexity rules. Minimum password length should be set to 15 or more secure, in file /etc/pam.d/password-auth. It should be set through pam_cracklib.so or pam_pwquality.so. For more information about password length or password complexity rules see matrix coverage document."
++-------------------------------------------------------------------------------------+
+---AD.1.1.2.1 Password Requirements	
+"password specification within /etc/shadow
+
+//En /etc/shadow, la contraseña (segundo campo) no se puede asignar al valor nulo (::)
+
+cat /etc/shadow |  cut -d: -f1,2
+
+//Debe tener "x","!", "!!", or "*" o otro valor, pero no vacio (null(::))
+
+/* CONTESTAR YES */ : "Si en la segundo campo no tiene ningun valor NULL(::)"
++-------------------------------------------------------------------------------------+
+---AD.1.1.2.2 Password Requirements	
+"password specification within /etc/passwd
+
+//En /etc/passwd, la contraseña (segundo campo) no se puede asignar al valor nulo (::)
+
+cat /etc/passwd |  cut -d: -f1,2
+
+//Debe tener "x","!", "!!", or "*" o otro valor, pero no vacio (null(::))
+
+/* CONTESTAR YES */ : "Si en la segundo campo no tiene ningun valor NULL(::)"
++-------------------------------------------------------------------------------------+
+---AD.1.1.3.1 Password Requirements 
+"PASS_MIN_DAYS a 1
+
+grep PASS_MIN_DAYS /etc/login.defs | grep -v ^#
+
+/* CONTESTAR YES */ : "Si PASS_MIN_DAYS es a 1"
++-------------------------------------------------------------------------------------+
+---AD.1.1.3.2 Password Requirements
+
+// Todos los usuarios deben tener MINAGE a 1, excepto excepciones del emer, root, cyberark"#
+
+cat /etc/shadow |  cut -d: -f1,4 | grep -v :1
+
+// EL SIGUIENTE CODIGO MUESTRA LOS QUE NO TIENEN MINAGE A 1, tarda 3 segundos.
+
+cat /etc/shadow | cut -d: -f1,2,4 | grep  -v ':1' | egrep -v "\*|\!\!|\!" | awk -F: '{ print $1 }' >> minage.txt;sleep 1;cat minage.txt | while read tt; do cat /etc/passwd | grep $tt|awk -F: '{ print $1":"$5 }';done>>label.txt;sleep 1;echo "";awk -F "/" '{ if ($2=="E" || $2=="F" || $2=="S" || $2=="I") { print "Account "$1 " has invalid Password Min Age setting of 0, should be set to IBM Required Setting: 1. Account Type: IBM (Stricted Setting Validated)" } else if ($2=="K")  { print "Account "$1 " has invalid Password Min Age setting of 0, should be set to IBM Required Setting: 1. Account Type: KYNDRYL (Stricted Setting Validated)" } else if ($2=="C")  { print "Account "$1 " has invalid Password Min Age setting of 0, should be set to IBM Required Setting: 1. Account Type: CUSTOMER (Stricted Setting Validated)" } else print "Account " $1 " has invalid Password Min Age setting of 0, should be set to IBM Required Setting: 1. Account Type: NO LABEL UID (Stricted Setting Validated)" } ' label.txt;echo "";sleep 1;rm -f minage.txt;rm -f label.txt
+
+/* CONTESTAR YES */ : " Si en el campo 4, todos los usuarios tiene  minage a 1"
+
+/* CONTESTAR NO  */ : " Account root has invalid Password Min Age setting of 0, should be set to IBM Required Setting: 1. Account Type: ibm  "
++-------------------------------------------------------------------------------------+
+---AD.1.1.4.1 Password Requirements  Password History Remember = 7
+
+#Comando#
+grep -i Remember /etc/pam.d/system-auth
+
+#"Si es un rhel superior a 6 debe existir en /etc/pam.d/password-auth"#
+
+grep -i Remember /etc/pam.d/password-auth
+
+#"NO : The Remember parameter does not exist in the configuration:  "System-auht y Password-auth""#
++-------------------------------------------------------------------------------------+
+---AD.1.1.4.2 Password Requirements
+---AD.1.1.4.3 Password Requirements
+---AD.1.1.4.4 Password Requirements	
+
+N/A  - Red Hat Linux
++-------------------------------------------------------------------------------------+
+---AD.1.1.6.0 Password Requirements / ---AD.1.1.6.1 Password Requirements
+
+#Saber que pam_tally usa: 
+ls -ltr /lib64/security/pam_tally*
+
+#"Depende la version del pam_tally puede ser
+auth required pam_tally.so deny=5
+account required pam_tally.so
+
+o
+
+auth required pam_tally2.so deny=5
+account required pam_tally2.so"
+
+#Comando#
+grep -i pam_tally /etc/pam.d/system-auth
+
+#"Si es un rhel superior a 6 debe existir en /etc/pam.d/password-auth"#
+
+grep -i pam_tally /etc/pam.d/password-auth
+
+#"NO : The pam_tally parameter does not exist in the configuration:  "System-auht y Password-auth""#
++-------------------------------------------------------------------------------------+
+---AD.1.1.6.1 Password Requirements
+
+N/A - Red hat Linux
++-------------------------------------------------------------------------------------+
+---AD.1.1.7.1 Password Requirements
+"ROOT
+
+grep root /etc/shadow| cut -d ":" -f1,2,4,5
+
+/* CONTESTAR YES */ : " Si el usuario root tiene pw asignado y expira.
+
+/* CONTESTAR NO  */ : " Si root tiene passwd asignada y no expira.
+
+/* NO */ : "Account root has invalid Password Max Age setting of 99999  should be set to Customer Required Setting: 90. More secure value can be set.",
++-------------------------------------------------------------------------------------+
+---AD.1.1.7.2 Password Requirements
+
+grep PermitRootLogin /etc/ssh/sshd_config
+
+//En caso de no existir consultar el man sshd_config.
+man sshd_config
+/PermitRootLogin
+
+/* CONTESTAR YES */ : "Si PermitRootLogin es NO"
+
+/* CONTESTAR NO  */ : "The PermitRootLogin parameter, by default is YES, it is recommended that the value be NO."
++-------------------------------------------------------------------------------------+
+---AD.1.1.7.3 Password Requirements
+
+Estos usuario no deben de tener password asignada. 
+
+cat /etc/shadow |cut -d ":" -f1,2,4,5 | egrep -i "bin|daemon|adm|lp|sync|shutdown|halt|mail|uucp|operator|games|gopher|ftp|nobody|dbus|usbmuxd|rpc|avahi-autoipd|vcsa|rtkit|saslauth|postfix|avahi|ntp|apache|radvd|rpcuser|nfsnobody|qemu|haldaemon|nm-openconnect|pulse|gsanslcd|gdm|sshd|tcpdump"
++-------------------------------------------------------------------------------------+
+---AD.1.1.8.2 Password Requirements
+"UID
+
+---AD.1.1.8.3 Password Requirements
+"GID
+
+// Se debe comprobar que no haya UID o GID repetidos
+
+cut -d: -f 3 /etc/passwd | sort | uniq -c -d
+cut -d: -f 3 /etc/group | sort | uniq -c -d
+
+/* CONTESTAR YES */ : "Si no hay UID Y GID repetidos."
+
+/* CONTESTAR NO */ : " Duplicate UID for Account: $account, UID: $uid. Each UID must only be used once
+
+/* CONTESTAR NO */ : " Duplicate GID for Account: $account, GID: $gid. Each GID must only be used once
++-------------------------------------------------------------------------------------+
+---AD.1.1.9.0 Password Requirements	
+"Exemptions to password rules
+
+// Consulte la sección 5.0 para ver la lista de usuarios privilegiados QUE NO PUEDEN TENER UNA CONTRASEÑA SIN CADUCAR.
+
+//"ver los uid, para saber si es de la seccion 5.0, RESULTADO SALE ORDENADO POR UID"#
+awk -F: '{ print $1,$3 }' /etc/passwd | sort -k2 -V
+
+//Consulte la sección 5.0 para ver la lista de usuarios privilegiados que no pueden tener una contraseña que no caduque.
+// Las cuentas de la seccion 5.0, van de UID 0 a 99
+
+//"Ahora esas cuentas no pueden si tienen contraseña deben caducar (POSIBLE CUENTAS).
+cat /etc/shadow | egrep -w "root:|bin:|daemon:|mail:|uucp:|sys:|sync:|games:|man:|lp:|news:|proxy:|www-data:|data:||irc:|gnats:|backup:|list:" --color=always | cut -d: -f1,2,5
+
+/* CONTESTAR YES */ : " Si las cuentas de la seccion 5.0, si tienen passwd asignada y caduca, o si no tienen passwd asignada"
+
+/* CONTESTAR NO  */ : " The following accounts in section 5.0, have passwd and do not expire: root
++-------------------------------------------------------------------------------------+
+---AD.1.1.9.1 Password Requirements	
+"Exemptions to password rules
+
+/*
+Cualquier ID, incluido root o los indicados en la sección 5.0, que se establece para que ninguna contraseña pueda ser utilizada para autenticarse por cualquier medio a través de cualquiera de las opciones B o C a continuación, puede tener la 'contraseña' establecida en no caducar.
+*/
+
+// Aqui hay que revisar CUALQUIER ID, que tenga establecido ""x","!", "!!", or "*"", puede no caducar.
+cat /etc/shadow |  cut -d: -f1,2,5
+
+/* CONTESTAR YES */ : " Si las cuentas que tengan ""x","!", "!!", or "*"", pueden no caducar.
++-------------------------------------------------------------------------------------+
+---AD.1.1.10.1 Password Requirements	
+"/etc/passwd
+
+OPTION A - PARTE 1
+
+## Esto se incluye en la validación indicada para AD.1.1.1.2
+
+// El valor del atributo shell de inicio de sesión en /etc/passwd debe ser /bin/false o /sbin/nologin
+
+// El siguiente comando, te muestra todas las cuentas que no tienen /bin/false o /sbin/nologin.
+
+echo "";cat /etc/passwd | cut -d: -f 1,7 | egrep -v "/bin/false|/sbin/nologin" |cut -d: -f1 | while read sline; do echo -n "$sline|";done;echo "";echo ""
+
+// De la lista anterior, la añadimos a una variable.
+
+var='root|sync|emer|apps|'
+
+// Solo mostramos las cuentas que tengan password y no expiren.
+
+cat /etc/shadow | egrep -w $var --color=always |cut -d: -f1,2,5 | grep -v ':90' | egrep -v "\*|\!\!|\!";echo "";echo ""
+
+/* CONTESTAR YES */ : "Si todas las cuentas que no tenga passwd asignada, tenga shell /bin/false or /sbin/nologin"
+
+/* CONTESTAR NO  */ : "Account emer has invalid Password Max Age setting of 99999, should be set to Customer Required Setting: 90. More secure value can be set.
+		      "Account root has invalid Password Max Age setting of 99999, should be set to Customer Required Setting: 90. More secure value can be set.
+
++-------------------------------------------------------------------------------------+
+---AD.1.1.10.2  Password Requirements /etc/ftpusers or /etc/vsftpd.ftpusers 
+
+#N/A si no esta instlado FTP
+#YES si root debe estar en /etc/ftpusers /etc/vsftpd.ftpusers
+
+ftp localhost
+grep -i root  /etc/ftpusers 
+grep -i root /etc/vsftpd.ftpusers
++-------------------------------------------------------------------------------------+
+---AD.1.1.11.1 Password Requirements
+"/etc/shadow
+
+---AD.1.1.12.1 Password Requirements
+"/etc/shadow
+
+// No debe existir un valor NULL en el segundo campo de /etc/shadow, si no tiene passwd asignada, debe tener los siguientes simbolos "x","!", "!!", or "*".
+
+cut -d: -f 1,2 /etc/shadow
+
+/* CONTESTAR YES */ : "Si no hay campo NULL"
+
+/* CONTESTAR NO  */ : "The accounts have a password "" empty "" (null). In /etc/shadow, the password (second field) cannot be assigned to the null value."
++-------------------------------------------------------------------------------------+
+---AD.1.1.13.1.0 Password Requirements
+
+OPTION D de las reglas de CONTRASEÑA.
+
+---AD.1.1.13.1.1 Password Requirements
+"Deny access file
+
+OPTION D de las reglas de CONTRASEÑA - PARTE 1
+
+// Se trata de si una cuenta no expira, debe estar añadida al fichero que contiene el modulo pam_listfile.so
+
+echo "";cat /etc/shadow | cut -d: -f1,2,5 | grep -v ':90' | egrep -v "\*|\!\!|\!";echo ""
+
+/*
+
+Este requisito concreto sólo debe cumplirse si se selecciona la opción D como mecanismo de excepción para un ID con caducidad de contraseña ampliada (365 dias). No es necesario configurarlo a menos que sea necesario para un ID específico.
+
+Para Linux:
+
+- En /etc/pam.d/system-auth debe existir e incluir estos valores
+
+auth required pam_listfile.so item=user sense=deny file=/etc/security/$FILENAME onerr=succeed
+
+## Donde $FILENAME, es la variable del fichero que contendra los usuarios que no deben loguear, como parte de la OPCION D de las reglas de contraseña.
+
+Nota: Esta entrada debe preceder a las entradas de tipo auth cuyo campo de control esté establecido en el valor suficiente.
+*/
+
+cat /etc/pam.d/system-auth | grep -i pam_listfile.so
+
+// comprobar si las cuentas que no expiran estan añadidas en el fichero que nos marca pam_listfile.so, solo si utiliza la opcion D como mecanismo de excepcion de password
+
+/* CONTESTAR YES */ : " Si hay cuentas no privilegiadas que tengan maxage de 365 dias (o otro valor) y cumpla la OPCION D"
+
+/* CONTESTAR NO  */ : "Account $account has invalid Password Max Age setting of 99999, should be set to Customer Required Setting: 90. More secure value can be set."
+
+/* CONTESTAR N/A */ : " The operating system is not RHEL
++-------------------------------------------------------------------------------------+
+---AD.1.1.13.2 Password Requirements
+"/etc/security/$FILENAME
+
+OPTION D de las reglas de CONTRASEÑA - PARTE 2
+
+// Archivo que contiene una lista de los ID de usuario, uno por línea, que no están permitidos para realizar un inicio de sesión interactivo en el sistema
+
+/*
+El ID debe existir en /etc/security/FILENAME 
+
+Nota: el nombre de archivo real puede variar, pero debe colocarse en el directorio /etc/security y ser idéntico al nombre de archivo utilizado en la regla anterior (AD.1.1.13.1.1 Password Requirements).
+
+## Donde $FILENAME, es la variable del fichero que contendra los usuarios que no deben loguear, como parte de la OPCION D de las reglas de contraseña.
+
+*/
+
+//Esto se incluye en la validación indicada para AD.1.1.1.2; donde existe una cuenta con contraseña y no caduca, y cuempla la OPCION D como excepcion de regla de CONTRASEÑA.
+
+grep " ^ $User\s * $" /etc/security/$FILENAME
+
+//Debe devolver el NOMBRE DEL USUARIO.
+
+/* CONTESTAR YES */ : "Si hay cuentas no privilegiadas que tengan maxage no expirable y cumpla la OPCION D"
+
+/* CONTESTAR NO  */ : "Account $account has invalid Password Max Age setting of 99999, should be set to Customer Required Setting: 90. More secure value can be set."
++-------------------------------------------------------------------------------------+
+---AD.1.1.13.3 Password Requirements
+
+#"lo mismo que la ---AD.1.1.10.2"
++-------------------------------------------------------------------------------------+
+---AD.1.1.13.4 Password Requirements	
+"etc/ssh/sshd_config
+
+OPTION D de las reglas de CONTRASEÑA - PARTE 4
+
+// UsePAM si los ID están pensados para configurarse con la opción D para contraseñas ampliadas.
+
+grep UsePAM /etc/ssh/sshd_config
+
+/* CONTESTAR YES */ : "Si UsePAM es a YES"
++-------------------------------------------------------------------------------------+
+---AD.1.2.1.1 Logging	
+"Login success or failure
+
+cat /etc/syslog.conf|egrep "messages|secure" 
+
+/* CONTESTAR YES */ : "Si en /etc/syslog.conf encontramos: lo indicado en AGREED TO SETTING"
+
+/* CONTESTAR N/A */ : "Does not apply, it is Red Hat superior to Red Hat V5"
++-------------------------------------------------------------------------------------+
+---AD.1.2.1.2 Logging	Login success or failure
+
+Contestamos N/A: 
+-Si el sistema no utiliza /etc/syslog-ng/syslog-ng.conf
+Contestamos YES: 
+-Si en /etc/syslog-ng/syslog-ng.conf encontramos: lo indicado en AGREED TO SETTING
+
+Comando: 
+egrep "f_auth|secure" /etc/syslog-ng/syslog-ng.conf
++-------------------------------------------------------------------------------------+
+---AD.1.2.1.3 Logging	Login success or failure
+---AD.1.2.1.4 Logging
+
+
+Contestamos N/A: 
+-Si el sistema no utiliza /etc/rsyslog.conf
+Contestamos YES: 
+-Si en /etc/rsyslog.conf encontramos: lo indicado en AGREED TO SETTING
+
+egrep "authpriv|info" /etc/rsyslog.conf
++-------------------------------------------------------------------------------------+
+---AD.1.2.1.5 Logging
+"Login success or failure
+
+N/A : Red hat Linux
++-------------------------------------------------------------------------------------+
+---AD.1.2.2 Logging	
+"/var/log/wtmp 
+
+ls -ld /var/log/wtmp
+
+/* CONTESTAR YES */ : "Si existe wtmp"
++-------------------------------------------------------------------------------------+
+---AD.1.2.3.1 Logging	/var/log/messages	Must exist on non-Debian Systems.
+
+ls -la /var/log/messages
+
++-------------------------------------------------------------------------------------+
+---AD.1.2.3.2 Logging	
+"/var/log/syslog	Must exist on Debian Systems.
+
+#"N/A : Red hat Linux"#
++-------------------------------------------------------------------------------------+
+---AD.1.2.4.0 Logging	
+"use of pam_tally.so Vs pam_tally2.so
+
+#Saber que pam_tally usa: 
+ls -ltr /lib64/security/pam_tally*
++-------------------------------------------------------------------------------------+
+---AD.1.2.4.1 Logging	
+"/var/log/faillog  	Must exist for all systems not using pam_tally2.so
+
+#"Debe existir"
+ls -la /var/log/faillog
++-------------------------------------------------------------------------------------+
+---AD.1.2.4.2 Logging	
+"/var/log/tallylog	
+
+//Existe para los sistemas que using pam_tally2.so
+
+//Saber que pam_tally usa: 
+ls -ltr /lib64/security/pam_tally*
+
+// Comprobar si existe
+ls -la /var/log/tallylog
+
+/* CONTESTAR YES */ : "Si es Red Hat superior a V5, utiliza pam_tally2.so y existe tallylog"
+
+/* CONTESTAR N/A */ : "The system no uses the pam_tally2 module"
++-------------------------------------------------------------------------------------+
+---AD.1.2.5 Logging 
+"/var/log/secure or /var/log/auth.log	
+
+/*
+Los registros de todas las conexiones deben conservarse, mediante el uso de /var/log/secure o /var/log/auth.log 
+Notes:
+/var/log/secure es necesario en todas las distribuciones de Linux excepto Debian. 
+/var/log/auth.log es necesario en Debian Linux
+*/
+
+cat /etc/*release
+#/*/
+
+// existe en RHEL
+ls -la /var/log/secure
+
+// existe en DEBIAN
+ls -la /var/log/auth.log
+
+/* CONTESTAR YES */ : "Si es RHEL y existe /var/log/secure"
++-------------------------------------------------------------------------------------+
+SISTENAS DEBIAN / POLITICA OS / 180 DIAS
++-------------------------------------------------------------------------------------+	
+			/* POLITICA OS - OS LINUX (Debian)*/ 
+
+---AD.1.2.6 Logging
+
+"Retain Log files = 180 DIAS (26 semanas)
+
+#"Para la rotacion de OS se revisa 2 cosas.
+1.- La rotacion que debe ser 180 dias (26 semanas).
+2.- Los ficheros de rotacion a 180 dias (26 semanas)."#
+
+
+OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas). 
+//Saber que sistema de rotacion USA, existen 3 OPCIONES
+
+	"Saber que sistema de rotacion USA
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1. "#-> LOOGKEEPER <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper --trim 180 --keep 180
+	crontab -l|grep -v ^#|grep logkeeper
+
+	//Ejecutamos un -s del comando que nos devuelve
+	"Ejemplo
+	/usr/util/seguridad/logkeeper -s
+
+	//Mirar que los valores "$trim_retention_days, $backups_retention_days, " sean 180
+
+	// -> si no funciona "LOGKEEPER" mirar Logrotate<-#
+
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2. "#-> LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+	cat /etc/logrotate.conf
+
+	// La rotacion debe esta definida en semanas 'weekly' a 26:
+	cat /etc/logrotate.conf | head -10
+
+	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3. "#-> sin LOGKEEPER && sin LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+
+OPCION ➡ 2. //Los ficheros de OS deben estar rotando.
+
+	"Saber que SO estamos revisando "dependera de los ficheros de sistemas a rotar", ya sea Linux o Linux (debian)
+
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+          |								         |
+          |	--- Os / Linux (Debian)					         |
+          |----------------------------------------------------------------------| 
+          | /var/log/auth.log "*INFORMACION DE AUTENT." / "*REG.INTENTOS FAIL"   |
+          | /var/adm/sudo.log "LOG`S INDIVIDUALES"                               |
+          | /var/log/messages "*MENSAJES DEL SISTEMAS"                           |
+          | /var/log/cron.log "*INF. INICIO DE TAREAS"                           |
+          | /var/log/wtmp "*INF. DE LOS LOGUEOS"                                 |
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+"Deben existir
+"Debian : 
+ls -la /var/log/auth.log /var/adm/sudo.log /var/log/messages /var/log/cron.log /var/log/wtmp
+
+// Debe existir una entrada de los ficheros en la rotacion (OPCION ➡ 1. LOGKEEPER):
+
+// Debe existir una entrada de los ficheros en la rotacion Y rotando a 26 semanas (OPCION ➡ 2. LOGROTATE):
+
+egrep -i "auth.log|sudo.log|messages|cron.log|wtmp" -A5 --color=always /etc/logrotate.conf
+
+	//Si algun fichero no existe en logrotate.conf, debe estar implementado en syslog
+	egrep -i "auth.log|sudo.log|messages|cron.log|wtmp" -A5 --color=always  /etc/logrotate.d/*
+
+/* CONTESTAR YES  */ : " Si la rotacion es 180 dias (26 semanas), y exiten, estan rotando los ficheros en el sistema de rotado."
+
+/* CONTESTAR NO   */ : " Si la rotacion no es de 180 dias, o los ficheros de rotatos no existen o no estan rotando"
+		       
+		       " Current rotation is '4' 'weeks' should be set to '26' 'weeks'.
+		       " The file: '/var/log/cron.log', does not exist.
+		       " The file: '/var/adm/sudo.log', exists, but is not rotating in '/etc/logrotate.conf'.
++-------------------------------------------------------------------------------------+
+---AD.1.2.7.1 Logging	
+"Synchronized system clocks, ensure it is active.
+
+//#"ntpd or chronyd must be running."
+
+#"chronyd"#
+/etc/init.d/chronyd status
+systemctl status chronyd
+
+#"ntpd"#
+service ntpd status
+systemctl status ntpd.service
+
+/* CONTESTAR YES */ : "Si esta activo chronyd o ntpd"
++-------------------------------------------------------------------------------------+
+---AD.1.2.7.2 Logging	Synchronized system clocks, chronyd has a server.
+---AD.1.2.7.3 Logging	Synchronized system clocks, chronyd does not have excess privilege
+
+#"chronyd"#
+/etc/init.d/chronyd status
+systemctl status chronyd
+
+
+#"N/A : Unit chronyd.service could not be foun"#
++-------------------------------------------------------------------------------------+
+---AD.1.2.7.4 Logging	
+"Synchronized system clocks, ntpd has secure defaults
+---AD.1.2.7.5 Logging	
+"Synchronized system clocks, ntpd has a server.
+
+#"ntpd"#
+service ntpd status
+systemctl status ntpd.service
+
+cat /etc/ntp.conf | grep -i restrict
+
+#"Debe tener "
+#Por debajo de:
+# permit the source to query or modify the service on this system.
+restrict default kod nomodify notrap nopeer noquery
+restrict -6 default kod nomodify notrap nopeer noquery
+
+#Y por debajo de:
+# the administrative functions.
+restrict 127.0.0.1
+restrict -6 ::1
+
+/* CONTESTAR YES */ : "Si existe la configuracion en ntp.conf"
++-------------------------------------------------------------------------------------+
+---AD.1.4.1 System Settings	/etc/pam.d/other
+
+#"Debe existir pam_deny.so"
+
+cat /etc/pam.d/other | grep -i "pam_deny.so"
++-------------------------------------------------------------------------------------+
+---AD.1.4.2 System Settings	/etc/ftpusers,  /etc/vsftpd.ftpusers or /etc/vsftp/ftpusers	Root Id must exist in file
+
+#"lo mismo que"
+---AD.1.1.13.3 Password Requirements
+
+#"lo mismo que la ---AD.1.1.10.2"
++-------------------------------------------------------------------------------------+
+---AD.1.4.3 System Settings	/etc/passwd
+
+#"En la segunda fila no debe tener una password asignada"
+
+cat /etc/passwd | cut -d: -f1,2
++-------------------------------------------------------------------------------------+
+---AD.1.4.3.1 System Settings
+---AD.1.4.3.2 System Settings
+---AD.1.4.4.1 System Settings
+---AD.1.4.4.2 System Settings
+
+Ensure SELinux is installed
++-------------------------------------------------------------------------------------+
+---AD.1.5.1.1 Network Settings
+---AD.1.5.1.2 Network Settings
+---AD.1.5.1.3 Network Settings
+---AD.1.5.1.4 Network Settings
+---AD.1.5.1.5 Network Settings
+---AD.1.5.1.6 Network Settings
+---AD.1.5.1.7 Network Settings
+---AD.1.5.1.8 Network Settings
+
+#"SI FTP esta habilitado probar entrar con anonymous, si entra con anonyous mirar en agreed to setting"#
+
+service ftpd status
+ls -l /etc/init.d/*ftp*
+ftp localhost
+
+
+
+#"N/A Unit ftp.service could not be found"#
++-------------------------------------------------------------------------------------+
+---AD.1.5.2.1 Network Settings	tftp access control
+---AD.1.5.2.2 Network Settings	Directories enabled for TFTP access
+
+service tftp status
+ls -l /etc/init.d/*tftp*
+
+#"N/A Unit tftp.service could not be found"#
++-------------------------------------------------------------------------------------+
+---AD.1.5.3.1 Network Settings
+---AD.1.5.3.2 Network Settings
+ --> /etc/exports
+
+#"Debe estar vacio"
+
+cat /etc/exports
++-------------------------------------------------------------------------------------+
+---AD.1.5.4.1 Network Settings	/etc/hosts.equiv
+
+#"No debe existir o si existe no debe tener entradas activas"#
+
+ls -la /etc/hosts.equiv
++-------------------------------------------------------------------------------------+
+---AD.1.5.4.2 Network Settings	/etc/pam.d/rlogin,  /etc/pam.d/rsh
+
+#"Si existen deben tener las siguientes entradas
+-/lib/security/pam_rhosts_auth.so stanza present, the no_hosts_equiv parameter must be present."#
+
+ls -la /etc/pam.d/rlogin
+ls -la /etc/pam.d/rsh
++-------------------------------------------------------------------------------------+
+---AD.1.5.5 Network Settings	rexd daemon	Must be disabled
+
+grep -v ^# /etc/xinetd.conf
+cat /etc/xinetd.d/services
++-------------------------------------------------------------------------------------+
+---AD.1.5.6 Network Settings
+"NNTP authentication and identification
+
+grep nntp /etc/services
+telnet localhost 119
+
+/* CONTESTAR YES */ : " Si la conexión al puerto 119 nos da refused.
++-------------------------------------------------------------------------------------+
+---AD.1.5.7 Network Settings	
+"X-server access control
+
+// No se debe inhabilitar a través de xhost +, forzar la instalación de xorg-x11.
+
+rpm -qa xorg-x11*
+
+/* CONTESTAR YES */ : " Si tiene instalado xorg-x11
+
+/* CONTESTAR N/A */ : " Si no devuelve nada
++-------------------------------------------------------------------------------------+
+---AD.1.5.8.1 Network Settings
+---AD.1.5.8.2 Network Settings
+---AD.1.5.8.3 Network Settings
+---AD.1.5.8.4 Network Settings
+---AD.1.5.8.5 Network Settings
+---AD.1.5.8.6 Network Settings
+---AD.1.5.8.7 Network Settings
+---AD.1.5.8.8 Network Settings
+---AD.1.5.9.1 Network Settings
+---AD.1.5.9.2 Network Settings
+---AD.1.5.9.3 Network Settings
+---AD.1.5.9.4 Network Settings
+---AD.1.5.9.5 Network Settings
+---AD.1.5.9.6 Network Settings
+---AD.1.5.9.7 Network Settings
+---AD.1.5.9.8 Network Settings
+---AD.1.5.9.9 Network Settings
+---AD.1.5.9.10 Network Settings
+---AD.1.5.9.11 Network Settings
+---AD.1.5.9.12 Network Settings
+---AD.1.5.9.13 Network Settings
+---AD.1.5.9.14 Network Settings
+---AD.1.5.9.15 Network Settings
+---AD.1.5.9.16 Network Settings
+---AD.1.5.9.17 Network Settings
+
+"Entry in /etc/inetd.conf must be removed or disabled
+
+egrep -i "CHARGEN|DAYTIME|DISCARD|ECHO|FINGER|SYSTAT|WHO|NETSTAT|RSTATD|TFTP|RWALLD|RUSERSD|BOOTPS|SPRAYD|PCNFSD|RWHO|CMSD|DTSPCD|TTDBSERVER|time|exec|telnet|ftp|SNMP" /etc/inetd.conf
+
+/* CONTESTAR YES */ : " Si el resultado sale comentado (#) o esta vacio.
+
+/* CONTESTAR NO */ : " The entry : "CMSD " is not removed or disabled in the file /etc/inetd.conf
++-------------------------------------------------------------------------------------+
+---AD.1.5.9.18 Network Settings	SNMP Service
+---AD.1.5.9.19 Network Settings	
+
+Contestamos YES:
+-Si SNMP está en ejecución.
+Contestamos NO:
+-SI SNMP no está en ejecución.
+Comando:
+ps -ef|grep snmp 
++-------------------------------------------------------------------------------------+
+---AD.1.5.9.20 Network Settings	/etc/sysctl.conf
+---AD.1.5.9.21 Network Settings	/etc/sysctl.conf
+---AD.1.5.9.22 Network Settings	/etc/sysctl.conf
+
+#YES = EXISTE	"net.ipv4.tcp_syncookies =1"
+
+/sbin/sysctl -a |grep -i syncookies
+
+#YES = EXISTE net.ipv4.icmp_echo_ignore_broadcasts = 1	
+
+/sbin/sysctl -a |grep -i broadcast 
+
+#YES = EXISTE "net.ipv4.conf.all.accept_redirects = 0
+
+/sbin/sysctl -a |grep -i net.ipv4.conf.all.accept_redirects
++-------------------------------------------------------------------------------------+
+---AD.1.5.9.23 Network Settings	telnet
+
+#Debe estar disabilitado#
+
+service telnet status
+lsof -i :23
++-------------------------------------------------------------------------------------+
+---AD.1.5.9.24 Network Settings	ftp
+
+#Debe estar disabilitado#
+
+service ftp status
+lsof -i :21
++-------------------------------------------------------------------------------------+
+---AD.1.5.10.1 Network Settings	yppasswd daemon
+---AD.1.5.10.2 Network Settings	NIS maps
+---AD.1.5.11 Network Settings	NIS+ maps
+
+(NADA REFERENTE A NIS)
+
+cat /etc/nsswitch.conf|grep -i pass
+cat /etc/rc.nfs|grep -i nis
++-------------------------------------------------------------------------------------+
+---AD.1.8.1.2 Protecting Resources - OSR's	userIDs
+---AD.1.8.1.3 Protecting Resources - OSR's	Groupids
+
+#"En estas preguntas en teoria seria mirar los OSR y ver que el owner y el group esten definidos en /etc/passwd y en /etc/group, por lo tanto contestar siempre YES los permisos los revisamos en la pregunta ---AD.1.8.3.1"#
++-------------------------------------------------------------------------------------+
+---AD.1.8.2.1 Protecting Resources - OSR's	~root/.rhosts
+---AD.1.8.2.2 Protecting Resources - OSR's	~root/.netrc
+
+ls -la ~root/.rhosts
+ls -la ~root/.netrc
++-------------------------------------------------------------------------------------+
+---AD.1.8.3.1 Protecting Resources - OSR's	/
+
+#"No es recursivo y debe tener r-x en other o menos"#
+
+ls -ld /
++-------------------------------------------------------------------------------------+
+---AD.1.8.3.2 Protecting Resources - OSR's	/usr
+
+#"Debe tener r-x en other o menos"#
+
+ls -la /usr
+$( which find ) /usr -perm -o+w \( -perm -u+x -o -perm -g+x -o -perm -o+x \) ! -perm +1000 \( -type d -o -type f \) ! -type l -ls
++-------------------------------------------------------------------------------------+
+---AD.1.8.3.3 Protecting Resources - OSR's	/etc
+
+#"Debe tener r-x en other o menos"#
+
+ls -la /etc
+$( which find ) /etc -perm -o+w \( -perm -u+x -o -perm -g+x -o -perm -o+x \) ! -perm +1000 \( -type d -o -type f \) ! -type l -ls
++-------------------------------------------------------------------------------------+
+---AD.1.8.4.1 Protecting Resources - OSR's	/etc/security/opasswd
+
+#si el fichero existe debe tener permisos -rw-------.#
+
+ls -la /etc/security/opasswd
++-------------------------------------------------------------------------------------+
+---AD.1.8.4.2 Protecting Resources - OSR's	/etc/shadow
+
+#si el fichero existe debe tener permisos -rw------- o mas restrintivo.#
+
+ls -la /etc/shadow
++-------------------------------------------------------------------------------------+
+---AD.1.8.5.1 Protecting Resources - OSR's	/var
+
+#"Debe tener r-x en other o menos"#
+
+ls -ld /var
++-------------------------------------------------------------------------------------+
+---AD.1.8.5.2 Protecting Resources - OSR's	/var/log
+
+#"Debe tener r-x en other o menos y Los subdirectorios de /var/log que tienen permiso de escritura tienen los permisos  1777 SON PERMITIDOS drwxrwxrwt"#
+
+ls -ld /var/log
++-------------------------------------------------------------------------------------+
+---AD.1.8.6.1 Protecting Resources - OSR's	/var/log/faillog
+
+#-***#Saber que PAM_TALLY USA#****-#
+ls -ltr /lib64/security/pam_tally*
+
+#"Si tiene pam_tally2 no es necesario faillog y si existe OK"#
+
+ls -la /var/log/faillog
++-------------------------------------------------------------------------------------+
+---AD.1.8.6.2 Protecting Resources - OSR's	/var/log/tallylog
+
+#"Si tiene pam_tally2 debe existir /var/log/tallylog"#
+
+ls -la /var/log/tallylog
++-------------------------------------------------------------------------------------+
+---AD.1.8.12.2 Protecting Resources - OSR's	"Non-Debian: /var/log/messages
+Debian: /var/log/syslog"
+
+#-***#Saber que PAM_TALLY USA#****-#
+ls -ltr /lib64/security/pam_tally*
+
+#"Si tiene pam_tally2 no es necesario /var/log/syslog y si existe OK"#
+
+ls -la /var/log/syslog
++-------------------------------------------------------------------------------------+
+---AD.1.8.12.3 Protecting Resources - OSR's	/var/log/wtmp
+
+#"Es temporal puede tener los permisos"#
++-------------------------------------------------------------------------------------+
+---AD.1.8.12.4 Protecting Resources - OSR's	/var/log/secure
+
+#"Puede tener excritura en grupo si el grupo esta authorizado"#
+
+ls -la /var/log/secure
++-------------------------------------------------------------------------------------+
+---AD.1.8.12.5 Protecting Resources - OSR's	/var/log/auth.log
+
+#"Puede tener excritura en grupo si el grupo esta authorizado"#
+
+ls -la /var/log/auth.log
++-------------------------------------------------------------------------------------+
+---AD.1.8.12.6 Protecting Resources - OSR's	/etc/profile.d/IBMsinit.sh
+---AD.1.8.12.7 Protecting Resources - OSR's	/etc/profile.d/IBMsinit.csh
+
+#"Deben tener permisos de 0755"#
+
+ls -la /etc/profile.d/IBMsinit.sh
+ls -la /etc/profile.d/IBMsinit.csh
++-------------------------------------------------------------------------------------+
+---AD.1.8.13.1.2 Protecting Resources - OSR's	All active entries.
+
+Yes siempre es informativo
++-------------------------------------------------------------------------------------+
+---AD.1.8.13.1.2 Protecting Resources - OSR's
+---AD.1.8.13.2 Protecting Resources -OSR's
+---AD.1.8.13.3 Protecting Resources -OSR's
+---AD.1.8.13.4 Protecting Resources -OSR's
+
+--> /etc/inittab
+
+#"Mirar lo que salga si tiene escritura en other y grupo"#
+
+cat /etc/inittab
+ls -lad `cat /etc/inittab | grep -v '^#' | tr ',' ' '| tr '\t' ' ' | tr ':' ' ' | tr '>' ' ' | tr ' ' '\n' | tr ';' ' '| sort -u | grep '^/'`
++-------------------------------------------------------------------------------------+
+---AD.1.8.14.1 Protecting Resources -OSR's
+---AD.1.8.14.2 Protecting Resources -OSR's
+---AD.1.8.14.3 Protecting Resources -OSR's
+
+--> /var/spool/cron/root
+
+#"Mirar lo que salga si tiene escritura en other y grupo"#
+
+cat /var/spool/cron/root
+ls -lad `cat /var/spool/cron/root | grep -v '^#' | tr ',' ' '| tr '\t' ' ' | tr ':' ' ' | tr '>' ' ' | tr ' ' '\n' | tr ';' ' '| sort -u | grep '^/'`
++-------------------------------------------------------------------------------------+
+---AD.1.8.15.1 Protecting Resources -OSR's
+---AD.1.8.15.2 Protecting Resources -OSR's
+---AD.1.8.15.3 Protecting Resources -OSR's
+
+--> /etc/crontab
+
+#"Mirar lo que salga si tiene escritura en other y grupo"#
+
+cat /etc/crontab
+ls -lad `cat /etc/crontab | grep -v '^#' | tr ',' ' '| tr '\t' ' ' | tr ':' ' ' | tr '>' ' ' | tr ' ' '\n' | tr ';' ' '| sort -u | grep '^/'`
++-------------------------------------------------------------------------------------+
+---AD.1.8.17.1 Protecting Resources -OSR's
+---AD.1.8.17.2 Protecting Resources -OSR's
+---AD.1.8.17.3 Protecting Resources -OSR's
+
+--> /etc/xinetd.conf
+
+#"Mirar lo que salga si tiene escritura en other y grupo"#
+
+cat /etc/xinetd.conf
+ls -lad `cat /etc/xinetd.conf | grep -v '^#' | tr ',' ' '| tr '\t' ' ' | tr ':' ' ' | tr '>' ' ' | tr ' ' '\n' | tr ';' ' '| sort -u | grep '^/'`
++-------------------------------------------------------------------------------------+
+---AD.1.8.18.2 Protecting Resources -OSR's
+---AD.1.8.18.3 Protecting Resources -OSR's
+---AD.1.8.19.2 Protecting Resources -OSR's
+---AD.1.8.19.3 Protecting Resources -OSR's
+
+--> /etc/init.d/rc*
+--> /etc/rc.d/rc*
+
+#"Mirar que sean Link si son todos LINK YES, si no son link mirar que no tenga escrituras en grupo y other"#
+
+ls -ld /etc/init.d/rc0.d
+ls -ld  /etc/init.d/rc1.d
+ls -ld /etc/init.d/rc2.d
+ls -ld  /etc/init.d/rc3.d
+ls -ld /etc/init.d/rc4.d
+ls -ld  /etc/init.d/rc5.d
+ls -ld /etc/init.d/rc6.d
+ls -ld  /etc/init.d/rcS.d
+ls -ld /etc/rc.d/rc0.d
+ls -ld  /etc/rc.d/rc1.d
+ls -ld /etc/rc.d/rc2.d
+ls -ld  /etc/rc.d/rc3.d
+ls -ld /etc/rc.d/rc4.d
+ls -ld  /etc/rc.d/rc5.d
+ls -ld /etc/rc.d/rc6.d
+ls -ld  /etc/rc.d/rcS.d  
+
+find /etc/init.d/rc*  /etc/rc.d/rc* -perm -o=wx  | xargs -l ls -laH 
++-------------------------------------------------------------------------------------+
+---AD.1.8.20.1 Protecting Resources -OSR's
+---AD.1.8.20.2 Protecting Resources -OSR's
+---AD.1.8.20.3 Protecting Resources -OSR's
+
+--> /etc/cron.d/
+
+#"Mirar lo que salga si tiene escritura en other y grupo"#
+
+cat /etc/cron.d/*
+ls -lad `cat /etc/cron.d/* | grep -v '^#' | tr ',' ' '| tr '\t' ' ' | tr ':' ' ' | tr '>' ' ' | tr ' ' '\n' | tr ';' ' '| sort -u | grep '^/'`
++-------------------------------------------------------------------------------------+
+---AD.1.8.21.1 Protecting Resources -OSR's
+---AD.1.8.21.2 Protecting Resources -OSR's
+---AD.1.8.21.3 Protecting Resources -OSR's
+
+--> /var/spool/cron/tabs/root
+
+#"Mirar lo que salga si tiene escritura en other y grupo"#
+
+cat /var/spool/cron/tabs/root
+ls -lad `cat /var/spool/cron/tabs/root | grep -v '^#' | tr ',' ' '| tr '\t' ' ' | tr ':' ' ' | tr '>' ' ' | tr ' ' '\n' | tr ';' ' '| sort -u | grep '^/'`
++-------------------------------------------------------------------------------------+
+---AD.1.8.22.1 Protecting Resources - OSRs	/opt directory and its sub-directories
+
+--> /opt
+
+#"te muestra todos los que tenga escritura en OTHER, los permisos 1777 no es valido drwxrwxrwt"#
+
+find /opt -type f -perm -o=w -exec ls -la {} +
+find /opt -type d -perm -o=w -exec ls -ld {} +
++-------------------------------------------------------------------------------------+
+---AD.1.8.22.2 Protecting Resources - OSRs	/var directory and its sub-directories
+
+--> /var
+
+#"te muestra todos los que tenga escritura en OTHER, los permisos 1777 no es valido drwxrwxrwt"#
+
+find /var -type f -perm -o=w -exec ls -la {} +
+find /var -type d -perm -o=w -exec ls -ld {} +
+
+Directorios and ficheros con permisos en other de escritura________________________________________
+[root@ES1SRV01TESAN:~]$ find /var -type f -perm -o=w -exec ls -la {} +
+-rwxrwxrwx 1 bin  bin  64910 Mar  7  2016 /var/ibm/tivoli/common/HCV/ffdc/traceHCV_Collector.log
+-rw-rw-rw- 1 root root     0 May 16  2019 /var/opt/BESCommon/.HostIDAccess.read
+-rw-rw-rw- 1 root root     0 May 16  2019 /var/opt/BESCommon/.HostIDAccess.write
+[root@ES1SRV01TESAN:~]$ find /var -type d -perm -o=w -exec ls -ld {} +
+drwxrwxrwt 71 root  root  12288 Dec  4 12:01 /var/adm/hist
+drwxrwxrwt  2 root  root   4096 Oct 31  2011 /var/cache/coolkey
+drwxrwxrwx  3 bin   bin    4096 Dec 21  2011 /var/ibm
+drwxrwxrwx  3 bin   bin    4096 Dec 21  2011 /var/ibm/tivoli
+drwxrwxrwx  3 bin   bin    4096 Dec 21  2011 /var/ibm/tivoli/common
+drwxrwxrwx  4 bin   bin    4096 Dec 21  2011 /var/ibm/tivoli/common/HCV
+drwxrwxrwx  2 bin   bin    4096 May  8  2018 /var/ibm/tivoli/common/HCV/ffdc
+drwxrwxrwx  2 bin   bin    4096 May 17  2018 /var/ibm/tivoli/common/HCV/logs
+drwxrwxrwx  2 root  root   4096 May 16  2019 /var/opt/BESCommon
+drwxrwxrwx 10 tesan tesan 20480 Jan 26 04:02 /var/sanlog
+drwxrwxrwt  2 root  root   4096 Jun  8  2009 /var/spool/vbox
+drwxrwxrwt  5 root  root   4096 Jan 27 20:20 /var/tmp
+
++-------------------------------------------------------------------------------------+
+---AD.1.8.22.3 Protecting Resources - OSRs	/usr/local directory and its sub-directories
+
+--> /usr/local
+
+#"te muestra todos los que tenga escritura en OTHER, los permisos 1777 no es valido drwxrwxrwt"#
+
+find /usr/local -type f -perm -o=w -exec ls -la {} +
+find /usr/local -type d -perm -o=w -exec ls -ld {} +
++-------------------------------------------------------------------------------------+
+---AD.1.8.22.4 Protecting Resources - OSRs	/tmp directory and its sub-directories
+
+
+--> /tmp
+
+#"te muestra todos los que tenga escritura en OTHER, los permisos 1777 no es valido drwxrwxrwt"#
+
+find /tmp -type f -perm -o=w -exec ls -la {} +
+find /tmp -type d -perm -o=w -exec ls -ld {} +
+
+Directorios and ficheros con permisos en other de escritura,.........................................................................................................drwxrwxrwt 2 root root 4096 nov 28 12:46 /tmp/.font-unix
+drwxrwxrwt 2 root root 4096 nov 28 12:46 /tmp/.ICE-unix
+drwxrwxrwt 2 root root 4096 nov 28 12:46 /tmp/.X11-unix
+
++-------------------------------------------------------------------------------------+
+---AD.1.9.1.1 Protecting Resources - User Resources	$HOME	Default Permissions at time of creation: 700.
+
+Contestar Siempre YES
++-------------------------------------------------------------------------------------+
+---AD.1.9.1.2 Protecting Resources - User Resources	Default UMASK
+
+RedHat: Configured in /etc/bashrc
+
+#"El umask debe ser 077"
+cat /etc/bashrc | grep -i umask
+
+"Wrong parametre UMASK :        umask 002/umask 022, is recomende umask 077"
++-------------------------------------------------------------------------------------+
+---AD.1.9.1.2.1 Protecting Resources - User Resources	/etc/login.defs
+
+#"El umask debe ser 077"
+
+cat /etc/login.defs | grep -i umask 
++-------------------------------------------------------------------------------------+
+------AD.1.9.1.3 Protecting Resources - User Resources
+" /etc/profile.d/IBMsinit.sh
+------AD.1.9.1.4 Protecting Resources - User Resources
+" /etc/profile.d/IBMsinit.csh
+
+//Deben existir y contener la configuracion de Recommended Setting"
+
+cat /etc/profile.d/IBMsinit.sh
+cat /etc/profile.d/IBMsinit.csh
+
+/* CONTESTAR YES */ : "Si la configuracion de los ficheros son correctas."
+
+/* CONTESTAR NO  */ : "Si la configuracion de cada fichero no es correcta."
+
+/*NO*/                          "does not exist the file /etc/profile.d/IBMsinit.xx and neither the recommended configuration"
+
+/*NO*/                          "The configuration in: /etc/profile.d/IBMsinit.xx, is not the correct, it must be done according to the recommended configuration."
++-------------------------------------------------------------------------------------+
+---AD.1.9.1.5 Protecting Resources - User Resources
+---AD.1.9.1.6 Protecting Resources - User Resources
+
+cat /etc/profile | grep -i "/etc/profile.d/IBMsinit.sh"
+cat /etc/csh.login | grep -i "source /etc/profile.d/IBMsinit.csh"
++-------------------------------------------------------------------------------------+
+---AD.1.9.1.7 Protecting Resources - User Resources	"/etc/skel/.cshrc, /etc/skel/.login, /etc/skel/.profile, /etc/skel/.bashrc,
+/etc/skel/.bash_profile,
+/etc/skel/.bash_login,
+/etc/skel/.tcshrc,
+"
+
+#"SI existen deben tener la configuracion del UMASK"#
+
+cat /etc/skel/.cshrc | grep -i umask
+cat /etc/skel/.login | grep -i umask
+cat /etc/skel/.profile | grep -i umask
+cat /etc/skel/.bashrc | grep -i umask
+cat /etc/skel/.bash_profile | grep -i umask
+cat /etc/skel/.bash_login | grep -i umask
+cat /etc/skel/.tcshrc | grep -i umask
+
+#NO: No tiene configurado el UMASK: cat /etc/skel/.bashrc  /etc/skel/.bash_profile#
++-------------------------------------------------------------------------------------+
+---AD.2.1.1 Encryption	Data Transmission
+---AD.2.1.2 Encryption	
+"File/Database Storage
+
+"Se debe mirar el protocol que sea 2 o serverkey sea 1024"
+cat /etc/ssh/sshd_config | egrep -i "protocol|ServerKeyBits"
+
+"Si sale comentado mirar en el MAN
+man sshd_config
+
+"Si no muestra resultado en el MAN, mirar que exista uno de estos 2 ficheros.
+
+rpm -q coreutils
+rpm -q openssl
+
+"el ssh a partir de la la versión OpenSSH_7.4p1 ya no utiliza protocolo 1."
+"y en RHEL 7.8 o > ambos están deprecated (obsoletos)"
+
+cat /etc/*release
+*/
++-------------------------------------------------------------------------------------+
+---AD.2.1.3.0 Encryption	
+"Storage of passwords (Passwords must be protected with 128-bit encryption)
+
+// Si es un RHEL superior a 6 debe existir en /etc/pam.d/password-auth"#
+// Hay que mirar el tipo de encryptacion de password, DEBE SER sha512"#
+
+cat /etc/pam.d/system-auth | grep -i "pam_unix.so"
+cat /etc/pam.d/password-auth | grep -i "pam_unix.so"
+
+/* CONTESTAR YES */ : " Si tiene el tipo de encryptacion sha512"
+
+/* CONTESTAR NO  */ : " Any file in /etc/pam.d containing ""password sufficient pam_unix.so"" stanza must carry the ""sha512 shadow"" options.\n\nIncorrect or missing pam_unix.so module stanza. For more information see coverage matrix document
++-------------------------------------------------------------------------------------+
+---AD.2.1.3.1 Encryption	Storage of passwords (Passwords must be protected with 128-bit encryption)
+---AD.2.1.3.2 Encryption	Storage of passwords (Passwords must be protected with 128-bit encryption)
+
+
+N/A VERSION de REHL
++-------------------------------------------------------------------------------------+
+---AD.2.1.4 Encryption	Protection of private keys (Minimum 1024-bit public key)	Private key files must be readable and writeable only by the owner.
+
+#"hay que mirar que el owner sea el mismo que en el fcihero id_rsa o authorized_keys"#
+
+ls -l $HOME/.ssh/*
+ls -la /home/*/.ssh/* | grep -i "authorized"
+ls -la /home/*/.ssh/* | grep -i "id_rsa"
++-------------------------------------------------------------------------------------+
+---AD.40.0.1 Business Use Notice	Business Use Notice
+
+#"debve tener el siguiente mensaje de bienvenida"
+
+"Business Use Notice exists
+
+How implemented:
+/etc/motd or /etc/issue
+
+This system should be used for conducting IBM's business or for purposes authorized by IBM management. It is mandatory to comply with all the requirements listed in the applicable security policy and only process or store the data classes approved for this asset type. Use is subject to audit at any time by IBM management.
+
+
+cat /etc/motd
++-------------------------------------------------------------------------------------+

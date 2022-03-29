@@ -1,0 +1,214 @@
+////////////////////////////////////////////////////////////////////////////////////////////
+SUDO LINUX AFB CSD  - Issue REF : 713956 / PRE 4
++-------------------------------------------------------------------------------------+
+---ZY.1.2.1 Logging
+"Sudo Logging, must not be disabled
+// Que no tenga ! en logfile, dentro de la configuracion de sudoers
+
+---ZY.1.2.2 Logging 	
+"Sudo-specific Log File 
+// En la configuracion de logfile, debe existir el fichero sudo.log
+
+
+//"Si la configuración de sudo implementada, permite a los usuarios o grupos realizar el mandato su, el registro secundario se debe implementar para mantener la responsabilidad individual, a través de un registro que registra los mandatos emitidos por cada individuo."
+
+
+"Que exista el parametro logile sin " ! "
+
+"Que el fichero que hace referencia el logfile, sea el correcto (Para linux es : /var/adm/sudo.log).
+//Esto permite "permite a los usuarios o grupos realizar registro del mandato su"
+
+cat /etc/sudoers | grep -i logfile
+cat /etc/sudoers.d/* | grep -i logfile
+
+// Debe existir
+
+ls -la /var/adm/sudo.log
+
+
+/* CONTESTAR YES */ : " Si tiene logfile, y el fichero por defecto existe."
+
+/* CONTESTAR NO  */ : " Si no tiene configurado la implementacion del SUDO : Defaults logfile=/var/log/sudo.log, log_year, log_host, loglinelen=0"
+
+/* NO */ 		" You do not have SUDO implementation configured: Defaults logfile=/var/log/sudo.log, log_year, log_host, loglinel= 0"
++-------------------------------------------------------------------------------------+
+---ZY.1.2.3 Logging	
+"Secondary logging
+// Que cada usuario debe tener implementado un secundary logging, para mantener registros individuales.
+
+// Tener un secundary loggin, debe existir la llamada a un script, llamado secondary_logging_IBM
+
+	// Esto se puede verificar de 2 formas, si cumple cualquiera de las 2, CONTESTAR YES.
+
+	cat /etc/profile | grep -i "secondary_logging_IBM.sh"
+	
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+        OPCION ➡ 1. //Secondary_logging_IBM.sh, debe existir y contener la ruta, donde se guardan los logs de los comandos por 			     usuario.
+
+        ls -la /etc/profile.d/secondary_logging_IBM.sh 
+        cat /etc/profile.d/secondary_logging_IBM.sh | grep -i 'HIST_DIR='
+        "Lanzar un ls del fichero que nos muestra
+        ls -la /var/log/hist
+        ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+        
+	OPCION ➡ 2. //Segundo, si no existe el fichero IBM.sh, puede estar implementado en /etc/bashrh
+        ls -la /etc/bashrc  
+        cat /etc/bashrc  | grep -i 'HIST_DIR='
+        "Lanzar un ls del fichero que nos muestra
+        ls -la /var/log/hist
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+/* CONTESTAR YES */ : " Si tiene implementado secundary loggin
+
+/* CONTESTAR NO  */ " En otro caso.
++-------------------------------------------------------------------------------------+
+SISTENAS LINUX / POLITICA SUDO / 90 DIAS
++-------------------------------------------------------------------------------------+	
+			/* POLITICA SUDO - SUDO LINUX */ 
+
+---ZY.1.2.4 Logging
+
+"Log retention timeframe
+
+#"Para la rotacion de log`s se revisa 2 cosas.
+1.- La rotacion que debe ser 90 dias.
+2.- El fichero del sudo.log debe estar rotando a 90 dias."#
+
+
+OPCION ➡ 1. "La rotacion debe ser 90 dias.
+// Saber que sistema de rotacion USA, existen 3 OPCIONES
+
+	"Saber que sistema de rotacion USA
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1. "#-> LOOGKEEPER <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper
+
+	crontab -l|grep -v ^#|grep logkeeper
+
+	//Ejecutamos un -s del comando que nos devuelve
+
+	/usr/util/seguridad/logkeeper -s
+
+	//Mirar que los valores "$trim_retention_days, $backups_retention_days, " sean 90
+
+	// -> si no funciona "LOGKEEPER" mirar Logrotate<-#
+
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2. "#-> LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	
+	ls -la /etc/logrotate.conf
+
+	// La rotacion debe esta definida en semanas 'weekly' a 13:
+	cat /etc/logrotate.conf | head -10
+
+	//#->si no funciona mirar sin LOGKEEPE&sin LOGROTATE<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3. "#-> sin LOGKEEPER && sin LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+
+OPCION ➡ 2. // El fichero del sudo.log debe estar rotando a 90 dias.
+
+	"Saber que SO estamos revisando "dependera de los ficheros de sistemas a rotar", ya sea Linux o Aix
+        
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+          |                            |	
+          | - SUDO / Linux             |
+          |----------------------------|
+          | /var/adm/sudo.log          |
+	  |			       |
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+// Debe existir
+#Linux: 
+
+ls -la /var/adm/sudo.log
+
+// Debe existir una entrada del fichero de registro en la rotacion(OPCION ➡ 1. LOGKEEPER):
+
+	//Muestra resumen de la configuracion en LOGKEEPER	
+	/usr/util/seguridad/logkeeper -s
+
+	
+	// Si la rotacion de log se define en el fichero de configuracion
+	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim|backup|sudo"
+
+	//EJEMPLO debe estar implementado:
+	"$Trim a 90
+	"@backups = /var/adm/sudo.log
+
+	//O si ejecuta en rotalogs con job de control.
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -v "^#"|grep -i logkee
+	"Debe existir /usr/local/bin/tareas/logkeeperalt.cfg en el codigo que se ejecuta.
+
+// Debe existir una entrada del/los fichero(s) de registro en la rotacion(OPCION ➡ 2. LOGROTATE):
+
+	cat /etc/logrotate.conf | egrep -i "sudo.log" -A5 --color=always
+
+	//Si la configuracion de rotado para sudo, no existe en logrotate.conf, debe estar implementado en syslog
+
+	cat /etc/logrotate.d/* | egrep -i "sudo.log" -A7 --color=always
+
+/* CONTESTAR YES */ : "Si la rotacion es 90 dias (13 semanas) y existen los ficheros de registro y estan rotando"
+
+/* CONTESTAR NO   */ : " Si la rotacion no es de 90 dias (13 semanas), o los ficheros de rotatos no existen o no estan rotando"
+		       
+		       " Current rotation is '4' 'weeks' should be set to '13' 'weeks'.
+		       " The file: '/var/adm/cron.log', does not exist.
+		       " The file: '/var/adm/sudo.log', exists, but is not rotating in '/etc/logrotate.conf'.
++-------------------------------------------------------------------------------------+
+*********************************************************************************************/
+ZY.1.4.4 System Settings	Logging of commands issued by individuals via sudo
+
+cat /etc/sudoers | grep -v "#" | egrep -i "=(ALL)|ALL=|=ALL|"
+cat /etc/sudoers/etc/sudoers.d/* | grep -v "^#"|egrep -i "ALL="
+tail /etc/sudoers
+#*/
+
+#"EJEMPLO
+entries nom authorizing: 
+- essence ALL=(root) NOPASSWD:/bin/su -
+- es082058 ALL=(root) NOPASSWD:!IBM_NONE_SA, !IBM_SHELLS_ALL, /bin/su -, !IBM_SHELLESCAPE_ALL, IBM_ALL_NEG, !IBM_NONE_EDITOR
+
+/*  CONTESTAR YES*/: "Si solo existe la entrada del "ALL ALL=!SUDOSUDO""
+/* CONTESTAR NO*/ : "Si hay entradas de que no sean "ALL ALL=!SUDOSUDO" o no esten previamente authorizadas"
+			"Next entry: "oracle ALL=(ALL) NOPASSWD:ALL, grid ALL=(ALL) NOPASSWD:ALL,  in /etc/sudoers", does not have prior authorization, should be reviewed if entry is required."
++-------------------------------------------------------------------------------------+
+---ZY.1.4.5 System Settings	
+"Editors used with sudo privileges
+
+//Si en los alias Cmnd_Alias del fichero Sudoers, se definen comandos que podrán ser utilizados por grupos de usuarios,si aparecen mandatos de editar en algunos ,luego los usuarios a los que se le asigne deberán estar excluidos (con el signo ! por delante).
+
+/*
+Verifique que ninguno de los editores siguientes está autorizado en el archivo de configuración de Sudo:
+/bin/vi, /bin/tvi, \ /bin/vim, /bin/rvim, /bin/gvim, /bin/evim, /bin/emacs, /bin/ed, \ /usr/bin/vi, /usr/bin/tvi, \ /usr/bin/nano, \ /usr/bin/vim, /usr/bin/rvim, /usr/bin/gvim, /usr/bin/evim, /usr/bin/emacs, \ /usr/bin/ed, /bin/view, /usr/bin/view, /bin/rvi, /usr/bin/rvi
+*/
+
+cd /etc/sudoers.d
+
+egrep -w -B5 -A5 "/bin/vi,/bin/tvi,|/bin/vim,|/bin/rvim,|/bin/gvim,|/bin/evim,|/bin/emacs,|/bin/ed,|\ /usr/bin/vi,|/usr/bin/tvi,|\ /usr/bin/nano,|/usr/bin/vim,|/usr/bin/rvim,|/usr/bin/gvim,|/usr/bin/evim,|/usr/bin/emacs,|/usr/bin/ed,|/bin/view,|/usr/bin/view,|/bin/rvi,|/usr/bin/rvi" * 
+
+// Plantillas:
+# EJEMPLO
+
+/etc/sudoers.d/010_STD_ALIAS_GLB
+/etc/sudoers.d/305_ITIMEPA_DACH
+
+#"Los cmd_alias que tienen un editor por defecto son:
+
+IBM_SHELLESCAPE_ALL
+IBM_NONE_ALL
+IBM_NONE_EDITOR
+IBM_ITIM_LINUX_STDCMDS 
+
+//Comprobar que los cmd_alias que obtengan un EDITOR AL EJECUTARSE,  tenga por delante ! o NOEXEC. 
+//Lo cual permite negar/excluir cierto valores
+
+cat /etc/sudoers /etc/sudoers.d/* | grep -v "^#"|egrep -w  "IBM_ITIM_LINUX_STDCMDS|IBM_NONE_EDITOR|IBM_SHELLESCAPE_ALL|IBM_NONE_ALL"
+
+/* CONTESTAR YES */: " Si los cmd_alias que tengan un editor, tienen un "!" o NOEXEC, por delante al ejecutarse"
+
+/* CONTESTAR NO */ : " In XXXXXX the entry of the CMD_ALIAS "IBM_SHELLESCAPE_AL" does not have! Ahead, you have to check if it is necessary so or should have!.
++-------------------------------------------------------------------------------------+

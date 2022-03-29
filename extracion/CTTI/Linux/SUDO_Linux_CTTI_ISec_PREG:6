@@ -1,0 +1,74 @@
+////////////////////////////////////////////////////////////////////////////////////////////
+SUDO Linux CTTI(GCT) ISeC - Issue REF : 714733 / PRE 6
+
+/--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------/
+AV.1.2.4 Logging	Retain Log Files	90 days
+
+/* CONTESTAR N/A */ :  "Rotation is reviewed in an AlienVault
+/--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------/
+ZY.1.2.5 Logging	Logging scope	N/A
+
+#/* CONTESTAR YES */ :"YES es informativo#
+/--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------/
+ZY.1.4.3.2 System Settings	Specific commands/programs executed via sudo:
+
+/* CONTESTAR YES */ :
+"-Si en los grupos  bin y sys sólo aparecen usuarios S/F/C
+/* CONTESTAR NO  */ :
+"-En otro caso.
+
+#//Comandos:
+cat /etc/group|grep -i bin
+cat /etc/group|grep -i sys
+
+"Del resultado que nos muestre.
+cat /etc/passwd|grep -i 'daemon' 
+"or 
+cat /etc/passwd | egrep -i "/S/|/F/|/C/"
++-------------------------------------------------------------------------------------+
+---ZY.1.4.5 System Settings	
+"Editors used with sudo privileges
+
+//Si en los alias Cmnd_Alias del fichero Sudoers, se definen comandos que podrán ser utilizados por grupos de usuarios,si aparecen mandatos de editar en algunos ,luego los usuarios a los que se le asigne deberán estar excluidos (con el signo ! por delante).
+
+/*
+Verifique que ninguno de los editores siguientes está autorizado en el archivo de configuración de Sudo:
+/bin/vi, /bin/tvi, \ /bin/vim, /bin/rvim, /bin/gvim, /bin/evim, /bin/emacs, /bin/ed, \ /usr/bin/vi, /usr/bin/tvi, \ /usr/bin/nano, \ /usr/bin/vim, /usr/bin/rvim, /usr/bin/gvim, /usr/bin/evim, /usr/bin/emacs, \ /usr/bin/ed, /bin/view, /usr/bin/view, /bin/rvi, /usr/bin/rvi
+*/
+
+cd /etc/sudoers.d
+
+egrep -w -B5 -A5 "/bin/vi,/bin/tvi,|/bin/vim,|/bin/rvim,|/bin/gvim,|/bin/evim,|/bin/emacs,|/bin/ed,|\ /usr/bin/vi,|/usr/bin/tvi,|\ /usr/bin/nano,|/usr/bin/vim,|/usr/bin/rvim,|/usr/bin/gvim,|/usr/bin/evim,|/usr/bin/emacs,|/usr/bin/ed,|/bin/view,|/usr/bin/view,|/bin/rvi,|/usr/bin/rvi" * 
+
+// Plantillas:
+# EJEMPLO
+
+/etc/sudoers.d/010_STD_ALIAS_GLB
+/etc/sudoers.d/305_ITIMEPA_DACH
+
+#"Los cmd_alias que tienen un editor por defecto son:
+
+IBM_SHELLESCAPE_ALL
+IBM_NONE_ALL
+IBM_NONE_EDITOR
+IBM_ITIM_LINUX_STDCMDS 
+
+//Comprobar que los cmd_alias que obtengan un EDITOR AL EJECUTARSE,  tenga por delante ! o NOEXEC. 
+//Lo cual permite negar/excluir cierto valores
+
+cat /etc/sudoers /etc/sudoers.d/* | grep -v "^#"|egrep -w  "IBM_ITIM_LINUX_STDCMDS|IBM_NONE_EDITOR|IBM_SHELLESCAPE_ALL|IBM_NONE_ALL"
+
+/* CONTESTAR YES */: " Si los cmd_alias que tengan un editor, tienen un "!" o NOEXEC, por delante al ejecutarse"
+
+/* CONTESTAR NO */ : " In XXXXXX the entry of the CMD_ALIAS "IBM_SHELLESCAPE_AL" does not have! Ahead, you have to check if it is necessary so or should have!.
++-------------------------------------------------------------------------------------+
+ZY.1.8.2.4 Protecting Resources - OSRs	Log retention file
+
+#/*  CONTESTAR YES*/: "Si el fichero que contiene el logfile,NO TENGA PERMISOS EN OTHER"#
+
+cat /etc/sudoers /etc/sudoers.d/* | grep -i logfile
+#Defaults logfile=/var/log/sudo.log, log_year,log_host, loglinelen=0#
+
+ls -la /etc/sudoers 
+ls -la /var/log/sudo.log
+/--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------/

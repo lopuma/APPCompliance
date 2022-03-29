@@ -1,0 +1,173 @@
+///////////////////////////////////////////////////////////////////////////////////////
+SSH FT CSD - Issue REF : 776748 / PREG 4
++-------------------------------------------------------------------------------------+
+---AV.1.1.7 Password Requirements
+	
+"Private Key Passphrases - security administrative and system authority
+
+// Nos habla de que la clave privada(id_rsa), puede no tener un passphrase, siempre que la clave_publica(authorized_keys), tenga un FROM.
+
+/*
+Las claves publicas que se utilizan para obtener acceso a los ID que tienen autorización administrativa o del sistema de seguridad deben ser accesibles únicamente por los usuarios que tengan autorización administrativa o del sistema. 
+
+Cualquier archivo authorized_keys o authorized_keys2 que otorgue acceso a un ID que tenga autorización administrativa o del sistema de seguridad debe limitar el acceso sólo de hosts específicos especificando la opción "from" con el valor adecuado.
+*/
+
+ls -la /home/*/.ssh/* | grep -i authorized_keys
+
+"*/
+// En el caso de existir ficheros authorized_keys o authorized_keys2  ,hay que realizar un cat de los ficheros  y ver que tiene entradas del estilo:
+
+'from=*HOSTNAME*' // Esto se supone que es para limitar el acceso sólo desde sistemas principales específicos.
+
+// El siguiente comando saca, por cada fichero authorized_keys y authorized_keys2, aquellos que no tengan un FROM y los saca directo para poner NO en la extracion.
+
+find /home/*/.ssh -name authorized_keys|while read kfil; do cat $kfil|grep -vEe '^from=|^$'|awk -v var=$kfil '{print "SSH authorized_keys file: " var "; Invalid from section: *º or *.*.*.* or 0/0 or 0.0.0.0/0.  or empty are forbidden values in the `from=` parameter"}'; done
+
+find /home/*/.ssh -name authorized_keys2|while read kfil; do cat $kfil|grep -vEe '^from=|^$'|awk -v var=$kfil '{print "SSH authorized_keys file: " var "; Invalid from section: *º or *.*.*.* or 0/0 or 0.0.0.0/0.  or empty are forbidden values in the `from=` parameter"}'; done
+
+## NOTA
+// SI HAY ARCHIVOS authorized_keys CON OWNER HUERFANOS, SE PUEDE COMPROBAR QUE NO EXISTE EL OWNER Y SE PUEDEN BORRAR (" en la DESVIACION ")
+
+
+/* CONTESTAR YES */ : " Si los archivos authorized_keys son accesibles solo al owner del archivo y debe contener un FROM"
+
+/* CONTESTAR NO  */ : " SSH authorized_keys file: $file_authorized_keys; Invalid from section: *º or *.*.*.* or 0/0 or 0.0.0.0/0.  or empty are forbidden values in the `from=` parameter
++-------------------------------------------------------------------------------------+
+---AV.1.2.2 Logging 	
+
+"QuietMode"
+
+"Specifies that only fatal errors should be logged.
+(F-Secure/SSH Communications Only - OS: Unix, Linux)"
+
+/* CONTESTAR N/A  */ : " OpenSSH "
++-------------------------------------------------------------------------------------+
+SISTENAS LINUX / POLITICA SSH / 90 DIAS
++-------------------------------------------------------------------------------------+	
+			/* POLITICA SSH - SSH LINUX */ 
+
+---AV.1.2.4 Logging
+
+"Retain Log Files = 90 days (13 semanas)
+
+// Para la rotacion de los ficheros de seguridad se revisan 2 cosas.
+	OPCION ➡ 1.- La rotacion que debe ser 90 dias (13 semanas).
+	OPCION ➡ 2.- Los ficheros de seguridad debe estar rotando a 90 dias (13 semanas).
+
+
+OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
+// Saber que sistema de rotacion USA, existen 3 OPCIONES
+
+	"Saber que sistema de rotacion USA
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1. "#-> LOOGKEEPER <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	crontab -l|grep -v ^#|grep logkeeper
+
+	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper
+
+	//Ejecutamos un -s del comando que nos devuelve
+
+	/usr/util/seguridad/logkeeper -s
+
+	// -> si no funciona "LOGKEEPER" mirar Logrotate<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2. "#-> LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	ls -la /etc/logrotate.conf
+
+	// La rotacion debe esta definida en semanas 'weekly' a 13:
+	head -10 /etc/logrotate.conf
+
+	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3. "#-> sin LOGKEEPER && sin LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+	
+	// Lo rotacion por rotalogs, la primera columna el fichero y la cuarta columna el valor a rotar:
+		
+	// EJEMPLO -> /var/log/secure.log:0:13:90:HP-UX,OSF1,SunOS
+
+OPCION ➡ 2. " El fichero del sudo.log debe estar rotando a 90 dias.
+
+	"Saber que SO estamos revisando "dependera de los ficheros de sistemas a rotar", ya sea Linux o Aix
+        
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+          |                                 |
+          | - OpenSSH / Linux               |
+          |---------------------------------|
+          | "Fichero de configuracion "     |
+          | /etc/rsyslog.conf               |
+          |                                 |
+          | "Ficheros de rotacion para SSH" |
+          | /var/log/secure                 |
+          | /var/log/messages               |
+          |                                 |
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+// Debe existir
+#Linux: 
+
+ls -la /var/log/secure /var/log/messages
+
+// Debe existir una entrada de los ficheros de seguridad en la rotacion(OPCION ➡ 1. LOGKEEPER):
+
+	//Muestra resumen de la configuracion en LOGKEEPER	
+	/usr/util/seguridad/logkeeper -s | "trim|backup|secure|message|config_fil"
+
+	
+	//Si La rotacion de log se define en el fichero de configuracion
+	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim|backup|secure|message"
+
+	//EJEMPLO debe estar implementado:
+	"$Trim a 90
+	"@backups = /var/log/secure /var/log/messages
+
+// Debe existir una entrada del/los fichero(s) de registro en la rotacion(OPCION ➡ 2. LOGROTATE):
+
+	cat /etc/logrotate.conf | egrep -i "secure|message" -A5 --color=always
+
+	//Si la configuracion de rotado para sudo, no existe en logrotate.conf, debe estar implementado en logrotate.d
+
+	cat /etc/logrotate.d/* | egrep -i "secure|message" -A7 --color=always
+
+// Debe existir una entrada del/los fichero(s) de registro en la rotacion (OPCION ➡ 3. ROTALOGS):
+
+	// Si ejecuta en rotalogs con job de control.
+
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -v "^#"| egrep -i "secure|message"
+
+	//Debe existir /usr/local/bin/tareas/logkeeperalt.cfg en el codigo que se ejecuta.
+
+/* CONTESTAR YES */ : "Si la rotacion es 90 dias (13 semanas) y existen los ficheros de registro y estan rotando"
+
+/* CONTESTAR NO  */ : " Si la rotacion no es de 90 dias (13 semanas), o los ficheros de rotatos no existen o no estan rotando"
+		       
+		       " Current rotation is '4' 'weeks' should be set to '13' 'weeks'.
+		       " The file: '/var/adm/cron.log', does not exist.
+		       " The file: '/var/adm/sudo.log', exists, but is not rotating in '/etc/logrotate.conf'.
++-------------------------------------------------------------------------------------+
+---AV.1.4.1 System Settings
+
+"TCP KeepAlive (Old)
+//(OpenSSH 3.7 and prior, SunSSH)
+
+// Si openSSH es superior a 3.7
+
+cat /etc/ssh/sshd_config | grep TCPKeepAlive
+
+// Si esta comentado, reviar en el MAN el valor por defect, o si no existe esta deprecated
+
+man sshd_config
+
+o
+
+/usr/sbin/sshd -T | grep -i TCPKeepAlive
+
+/* CONTESTAR YES */ : " Si TCPKeepAlive es YES o por defecto es YES
+
+/* CONTESTAR N/A  */ : " Por la version de SSH
++-------------------------------------------------------------------------------------+
+///////////////////////////////////////////////////////////////////////////////////////

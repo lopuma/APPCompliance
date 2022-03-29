@@ -1,0 +1,1502 @@
+///////////////////////////////////////////////////////////////////////////////////////
++-------------------------------------------------------------------------------------+
+SISTENAS VIOS / POLITICA OS / 180 DIAS
++-------------------------------------------------------------------------------------+	
+			/* POLITICA OS - OS VIOS*/ 
+
+---BV.1.2.1 Logging
+
+"Retain Logging for a period of time - either online or backups = 180 dias (26 semanas)
+
+ // Para la rotacion de OS - VIOS, Se revisa 2 cosas.
+	OPCION ➡ 1.- La rotacion que debe ser 180 dias (26 semanas).
+	OPCION ➡ 2.- Los ficheros de rotacion deben rotar a 180 dias (26 semanas).
+
+
+OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
+//Saber que sistema de rotacion USA, existen 3 OPCIONES
+
+	"Saber que sistema de rotacion USA
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1. "#-> LOOGKEEPER <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	crontab -l|grep -v ^#|grep logkeeper
+
+	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper --trim 180 --keep 180
+
+	// -> si no funciona "LOGKEEPER" mirar Logrotate<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2. "#-> LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	ls -la /etc/logrotate.conf
+
+	// La rotacion debe esta definida en semanas 'weekly' a 26:
+	head -10 /etc/logrotate.conf
+
+	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3. "#-> sin LOGKEEPER && sin LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+	
+	// Lo rotacion por rotalogs, la primera columna el fichero y la cuarta columna el valor a rotar:
+		
+	// EJEMPLO -> /var/adm/sudo.log:0:13:180:HP-UX,OSF1,SunOS
+
+OPCION ➡ 2. " Los ficheros de OS deben estar rotando.
+
+	"Saber que SO estamos revisando "dependera de los ficheros de sistemas a rotar", ya sea Linux o Aix
+        
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+          |                                                     |
+          |	- Os / Aix                                      |
+          |-----------------------------------------------------|
+          | /var/adm/sulog "*REG.EL ORDEN EJECUCIONES SU"       |
+          | /var/log/sudo.log "LOG`S INDIVIDUALES"              |
+          | /var/adm/messages "*MENSAJES DEL SISTEMAS"          |
+          | /var/adm/cron/log "*INF. INICIO DE TAREAS"          |
+          | /var/adm/wtmp "*INF. DE LOS LOGUEOS"                |
+          | /etc/security/failedlogin "*REG.INTENTOS FAIL"      |
+          | /etc/passwd                                         |
+          | /etc/group                                          |
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+// Debe existir
+# Unix (vios): 
+
+ls -la /var/adm/sulog /var/log/sudo.log /var/adm/messages /var/adm/cron/log /var/adm/wtmp /etc/security/failedlogin
+
+// Debe existir una entrada de los ficheros de registro en la rotacion (OPCION ➡ 1. LOGKEEPER):
+
+	// Muestra resumen en la configuracion del SCRIPT de LOGKEEPER	
+	/usr/util/seguridad/logkeeper --trim 180 --keep 180 -s | egrep "sulog|messages|cron|wtmp|failedlogin|backup|sudo|config_file"
+
+	
+	// Si la rotacion se define en el fichero de configuracion de LOGKEEPER
+	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim|backup|sudo|sulog|messages|cron|wtmp|failedlogin"
+
+// Debe existir una entrada de los ficheros de registro en la rotacion (OPCION ➡ 2. LOGROTATE):
+
+	cat /etc/logrotate.conf | egrep -i "sulog|messages|cron|wtmp|failedlogin|sudo.log"
+
+	//Si la configuracion de rotado para OS, no existe en logrotate.conf, debe estar implementado en logrotate.d
+
+	cat /etc/logrotate.d/* | egrep -i "sulog|messages|cron|wtmp|failedlogin|sudo.log"
+
+// Debe existir una entrada de los ficheros de registro en la rotacion (OPCION ➡ 3. ROTALOGS):
+
+	// Si ejecuta en rotalogs con job de control.
+
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -v "^#"|grep -i logkee
+
+	//Debe existir /usr/local/bin/tareas/logkeeperalt.cfg en el codigo que se ejecuta.
+
+
+/* CONTESTAR YES */ : "Si la rotacion es 180 dias (26 semanas) y existen los ficheros de registro y estan rotando"
+
+/* CONTESTAR NO   */ : " Si la rotacion no es de 180 dias (26 semanas), o los ficheros de rotatos no existen o no estan rotando"
+		       
+		       " Current rotation is '4' 'weeks' should be set to '26' 'weeks'.
+		       " The file: '/var/log/cron.log', does not exist.
+		       " The file: '/var/log/sudo.log', exists, but is not rotating in '/etc/logrotate.conf'.
++-------------------------------------------------------------------------------------+
+SISTENAS VIOS / POLITICA SUDO / 180 DIAS
++-------------------------------------------------------------------------------------+	
+			/* POLITICA SUDO - SUDO VIOS */ 
+
+---ZY.1.2.4 Logging
+
+"Log retention timeframe = 180 dias (26 semanas)
+
+// Para la rotacion de log`s se revisa 2 cosas.
+	OPCION ➡ 1.- La rotacion que debe ser 180 dias (26 semanas).
+	OPCION ➡ 2.- El fichero del sudo.log debe estar rotando 180 dias (26 semanas).
+
+
+OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
+//Saber que sistema de rotacion USA, existen 3 OPCIONES
+
+	"Saber que sistema de rotacion USA
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1. "#-> LOOGKEEPER <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	crontab -l|grep -v ^#|grep logkeeper
+
+	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper --trim 180 --keep 180
+
+	// -> si no funciona "LOGKEEPER" mirar Logrotate<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2. "#-> LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	ls -la /etc/logrotate.conf
+
+	// La rotacion debe esta definida en semanas 'weekly' a 26:
+	head -10 /etc/logrotate.conf
+
+	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3. "#-> sin LOGKEEPER && sin LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+	
+	// Lo rotacion por rotalogs, la primera columna el fichero y la cuarta columna el valor a rotar:
+		
+	// EJEMPLO -> /var/adm/sudo.log:0:13:180:HP-UX,OSF1,SunOS
+
+OPCION ➡ 2. //El fichero del sudo.log debe estar rotando a 180 dias  (26 semanas).
+
+	"Saber que SO estamos revisando "dependera del fichero de sudo.log a rotar", ya sea Linux o Unix (vios)
+        
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+          |                            |	
+          | - SUDO / Vios              |
+          |----------------------------|
+          | /var/log/sudo.log          |
+	  |			       |
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+// Debe existir
+# Unix (vios): 
+
+ls -la /var/log/sudo.log
+
+// Debe existir una entrada del fichero de sudo.log en la rotacion (OPCION ➡ 1. LOGKEEPER):
+
+	// Muestra resumen en la configuracion del SCRIPT de LOGKEEPER	
+	/usr/util/seguridad/logkeeper --trim 180 --keep 180 -s | egrep "backup|sudo|config_file"
+
+	
+	// Si la rotacion se define en el fichero de configuracion de LOGKEEPER
+	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim|backup|sudo"
+
+// Debe existir una entrada del fichero de sudo en la rotacion (OPCION ➡ 2. LOGROTATE):
+
+	cat /etc/logrotate.conf | egrep -i "sudo.log"
+
+	//Si la configuracion de rotado para SUDO, no existe en logrotate.conf, debe estar implementado en logrotate.d
+
+	cat /etc/logrotate.d/* | egrep -i "sudo.log"
+
+// Debe existir una entrada del/los fichero(s) de registro en la rotacion (OPCION ➡ 3. ROTALOGS):
+
+	// Si ejecuta en rotalogs con job de control.
+
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -v "^#"|grep -i logkee
+
+	//Debe existir /usr/local/bin/tareas/logkeeperalt.cfg en el codigo que se ejecuta.
+
+/* CONTESTAR YES */ : "Si la rotacion es 180 dias (26 semanas) y existen los ficheros de registro y estan rotando"
+
+/* CONTESTAR NO   */ : " Si la rotacion no es de 180 dias (26 semanas), o los ficheros de rotatos no existen o no estan rotando"
+		       
+		       " Current rotation is '4' 'weeks' should be set to '26' 'weeks'.
+		       " The file: '/var/log/cron.log', does not exist.
+		       " The file: '/var/log/sudo.log', exists, but is not rotating in '/etc/logrotate.conf'.
+
++-------------------------------------------------------------------------------------+
+SISTENAS AIX / POLITICA OS / 90 DIAS
++-------------------------------------------------------------------------------------+	
+			/* POLITICA OS - OS AIX */ 
+
+---E.1.2.4 Logging
+"Log record retention time frame = 90 dias (13 semanas)
+
+ // Para la rotacion de OS - AIX, Se revisa 2 cosas.
+	OPCION ➡ 1.- La rotacion que debe ser 90 dias (13 semanas).
+	OPCION ➡ 2.- El/Los ficheros de rotacion a 90 dias (13 semanas)
+
+
+OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
+//Saber que sistema de rotacion USA, existen 3 OPCIONES
+
+	"Saber que sistema de rotacion USA
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1. "#-> LOOGKEEPER <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	crontab -l|grep -v ^#|grep logkeeper
+
+	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper --trim 180 --keep 180
+
+	// -> si no funciona "LOGKEEPER" mirar Logrotate<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2. "#-> LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	ls -la /etc/logrotate.conf
+
+	// La rotacion debe esta definida en semanas 'weekly' a 13:
+	head -10 /etc/logrotate.conf
+
+	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3. "#-> sin LOGKEEPER && sin LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+	
+	// Lo rotacion por rotalogs, la primera columna el fichero y la cuarta columna el valor a rotar:
+		
+	// EJEMPLO -> /var/adm/sudo.log:0:13:90:HP-UX,OSF1,SunOS
+
+OPCION ➡ 2. " Los ficheros de OS deben estar rotando.
+
+	"Saber que SO estamos revisando "dependera de los ficheros de sistemas a rotar", ya sea Linux o Aix
+        
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+          |                                                     |
+          |	- Os / Aix                                      |
+          |-----------------------------------------------------|
+          | /var/adm/sulog "*REG.EL ORDEN EJECUCIONES SU"       |
+          | /var/log/sudo.log "LOG`S INDIVIDUALES"              |
+          | /var/adm/messages "*MENSAJES DEL SISTEMAS"          |
+          | /var/adm/cron/log "*INF. INICIO DE TAREAS"          |
+          | /var/adm/wtmp "*INF. DE LOS LOGUEOS"                |
+          | /etc/security/failedlogin "*REG.INTENTOS FAIL"      |
+          | /etc/passwd                                         |
+          | /etc/group                                          |
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+// Debe existir
+# Aix: 
+
+ls -la /var/adm/sulog /var/log/sudo.log /var/adm/messages /var/adm/cron/log /var/adm/wtmp /etc/security/failedlogin
+
+// Debe existir una entrada de los ficheros de registro en la rotacion (OPCION ➡ 1. LOGKEEPER):
+
+	// Muestra resumen en la configuracion del SCRIPT de LOGKEEPER	
+	/usr/util/seguridad/logkeeper --trim 180 --keep 180 -s | egrep "sulog|messages|cron|wtmp|failedlogin|backup|sudo|config_file"
+
+	
+	// Si la rotacion se define en el fichero de configuracion de LOGKEEPER
+	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "sulog|messages|cron|wtmp|failedlogin|trim|backup|sudo"
+
+// Debe existir una entrada del/los fichero(s) de registro en la rotacion (OPCION ➡ 2. LOGROTATE):
+
+	cat /etc/logrotate.conf | egrep -i "sulog|messages|cron|wtmp|failedlogin|sudo.log"
+
+	//Si la configuracion de rotado para OS, no existe en logrotate.conf, debe estar implementado en logrotate.d
+
+	cat /etc/logrotate.d/* | egrep -i "sulog|messages|cron|wtmp|failedlogin|sudo.log"
+
+// Debe existir una entrada del/los fichero(s) de registro en la rotacion (OPCION ➡ 3. ROTALOGS):
+
+	// Si ejecuta en rotalogs con job de control.
+
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -v "^#"|grep -i logkee
+
+	//Debe existir /usr/local/bin/tareas/logkeeperalt.cfg en el codigo que se ejecuta.
+
+
+/* CONTESTAR YES */ : "Si la rotacion es 90 dias (13 semanas) y existen los ficheros de registro y estan rotando"
+
+/* CONTESTAR NO   */ : " Si la rotacion no es de 90 dias (13 semanas), o los ficheros de rotatos no existen o no estan rotando"
+		       
+		       " Current rotation is '4' 'weeks' should be set to '13' 'weeks'.
+		       " The file: '/var/log/cron.log', does not exist.
+		       " The file: '/var/log/sudo.log', exists, but is not rotating in '/etc/logrotate.conf'.
+
++-------------------------------------------------------------------------------------+
+SISTENAS AIX / POLITICA SUDO / 90 DIAS
++-------------------------------------------------------------------------------------+	
+			/* POLITICA SUDO - SUDO AIX*/ 
+
+---ZY.1.2.4 Logging
+
+"Log retention timeframe = 90 dias (13 semanas)
+
+ // Para la rotacion de SUDO - AIX, Se revisa 2 cosas.
+	OPCION ➡ 1.- La rotacion que debe ser 90 dias (13 semanas).
+	OPCION ➡ 2.- El fichero de sudo.log a 90 dias (13 semanas).
+
+
+OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
+//Saber que sistema de rotacion USA, existen 3 OPCIONES
+
+	"Saber que sistema de rotacion USA
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1. "#-> LOOGKEEPER <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	crontab -l|grep -v ^#|grep logkeeper
+
+	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper --trim 180 --keep 180
+
+	// -> si no funciona "LOGKEEPER" mirar Logrotate<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2. "#-> LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	ls -la /etc/logrotate.conf
+
+	// La rotacion debe esta definida en semanas 'weekly' a 13:
+	head -10 /etc/logrotate.conf
+
+	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3. "#-> sin LOGKEEPER && sin LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+	
+	// Lo rotacion por rotalogs, la primera columna el fichero y la cuarta columna el valor a rotar:
+		
+	// EJEMPLO -> /var/adm/sudo.log:0:13:90:HP-UX,osF1,Sunos
+
+OPCION ➡ 2. // El fichero de sudo.log deben estar rotando.
+
+	"Saber que SO estamos revisando "dependera del fichero de sudo.log a rotar", ya sea Linux o Aix
+        
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+          |                            |	
+          | - SUDO / Aix               |
+          |----------------------------|
+          | /var/log/sudo.log          |
+	  |			       |
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+// Debe existir
+# Aix: 
+
+ls -la /var/log/sudo.log
+
+// Debe existir una entrada del fichero de sudo.log en la rotacion (OPCION ➡ 1. LOGKEEPER):
+
+	// Muestra resumen en la configuracion del SCRIPT de LOGKEEPER	
+	/usr/util/seguridad/logkeeper --trim 180 --keep 180 -s | egrep "backup|sudo|config_file"
+
+	
+	// Si la rotacion se define en el fichero de configuracion de LOGKEEPER
+	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim|backup|sudo"
+
+// Debe existir una entrada del fichero de sudo.log en la rotacion (OPCION ➡ 2. LOGROTATE):
+
+	cat /etc/logrotate.conf | egrep -i "sudo.log"
+
+	//Si la configuracion de rotado para sudo.log, no existe en logrotate.conf, debe estar implementado en logrotate.d
+
+	cat /etc/logrotate.d/* | egrep -i "sudo.log"
+
+// Debe existir una entrada del fichero de sudo.log en la rotacion (OPCION ➡ 3. ROTALOGS):
+
+	// Si ejecuta en rotalogs con job de control.
+
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -v "^#"|grep -i logkee
+
+	//Debe existir /usr/local/bin/tareas/logkeeperalt.cfg en el codigo que se ejecuta.
+
+
+/* CONTESTAR YES */ : "Si la rotacion es 90 dias (13 semanas) y existen los ficheros de registro y estan rotando"
+
+/* CONTESTAR NO   */ : " Si la rotacion no es de 90 dias (13 semanas), o los ficheros de rotatos no existen o no estan rotando"
+		       
+		       " Current rotation is '4' 'weeks' should be set to '13' 'weeks'.
+		       " The file: '/var/log/cron.log', does not exist.
+		       " The file: '/var/log/sudo.log', exists, but is not rotating in '/etc/logrotate.conf'
+
++-------------------------------------------------------------------------------------+
+SISTENAS AIX / POLITICA SSH / 90 DIAS
++-------------------------------------------------------------------------------------+	
+			/* POLITICA SSH - SSH AIX*/ 
+
+---AV.1.2.4  Logging
+
+"Log retention timeframe = 90 dias (13 semanas)
+
+ // Para la rotacion de SSH - AIX, Se revisa 2 cosas.
+	OPCION ➡ 1.- La rotacion que debe ser 90 dias (13 semanas).
+	OPCION ➡ 2.- El fichero de messages a 90 dias (13 semanas).
+
+OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
+//Saber que sistema de rotacion USA, existen 3 OPCIONES
+
+	"Saber que sistema de rotacion USA
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1. "#-> LOOGKEEPER <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	crontab -l|grep -v ^#|grep logkeeper
+
+	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper --trim 180 --keep 180
+
+	// -> si no funciona "LOGKEEPER" mirar Logrotate<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2. "#-> LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	ls -la /etc/logrotate.conf
+
+	// La rotacion debe esta definida en semanas 'weekly' a 13:
+	head -10 /etc/logrotate.conf
+
+	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3. "#-> sin LOGKEEPER && sin LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+	
+	// Lo rotacion por rotalogs, la primera columna el fichero y la cuarta columna el valor a rotar:
+		
+	// EJEMPLO ->  /var/adm/messages:0:13:90:HP-UX,osF1,Sunos
+
+OPCION ➡ 2. // El fichero de messages deben estar rotando.
+
+	"Saber que SO estamos revisando "dependera del fichero de messages a rotar", ya sea Linux o Aix
+        
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+          |                                       |
+          |     - OpenSSH / Aix                   |
+          |---------------------------------------|    
+          | 	 "Fichero de configuracion "      |
+          |      /etc/syslog.conf                 |
+          |	                                  |
+          |	 "Ficheros de rotacion para SSH"  |
+          |	  /var/adm/messages               |
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+// Debe existir
+# Aix: 
+
+ls -la /var/adm/messages
+
+// Debe existir una entrada del fichero de registro en la rotacion (OPCION ➡ 1. LOGKEEPER):
+
+	// Muestra resumen en la configuracion del SCRIPT de LOGKEEPER	
+	/usr/util/seguridad/logkeeper --trim 180 --keep 180 -s | egrep "backup|messages|config_file"
+
+	
+	// Si la rotacion se define en el fichero de configuracion de LOGKEEPER
+	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim|backup|messages"
+
+// Debe existir una entrada del fichero de messages en la rotacion (OPCION ➡ 2. LOGROTATE):
+
+	cat /etc/logrotate.conf | egrep -i "messages"
+
+	//Si la configuracion de rotado para messages, no existe en logrotate.conf, debe estar implementado en logrotate.d
+
+	cat /etc/logrotate.d/* | egrep -i "messages"
+
+// Debe existir una entrada del fichero de messages en la rotacion (OPCION ➡ 3. ROTALOGS):
+
+	// Si ejecuta en rotalogs con job de control.
+
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -v "^#"|grep -w '/var/adm/messages'
+
+	//Debe existir /usr/local/bin/tareas/logkeeperalt.cfg en el codigo que se ejecuta.
+
+
+/* CONTESTAR YES */ : "Si la rotacion es 90 dias (13 semanas) y existen los ficheros de registro y estan rotando"
+
+/* CONTESTAR NO   */ : " Si la rotacion no es de 90 dias (13 semanas), o los ficheros de rotatos no existen o no estan rotando"
+		       
+		       " Current rotation is '4' 'weeks' should be set to '13' 'weeks'.
+		       " The file: '/var/log/cron.log', does not exist.
+		       " The file: '/var/log/messages', exists, but is not rotating in '/etc/logrotate.conf'
+
++-------------------------------------------------------------------------------------+
+SISTENAS AIX / POLITICA OS / 180 DIAS
++-------------------------------------------------------------------------------------+	
+			/* POLITICA OS - OS AIX */ 
+
+---E.1.2.4 Logging
+"Log record retention time frame = 180 dias (26 semanas)
+
+ // Para la rotacion de OS - AIX, Se revisa 2 cosas.
+	OPCION ➡ 1.- La rotacion que debe ser 180 dias (26 semanas).
+	OPCION ➡ 2.- El/Los ficheros de rotacion a 180 dias (26 semanas)."#
+
+
+OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
+//Saber que sistema de rotacion USA, existen 3 OPCIONES
+
+	"Saber que sistema de rotacion USA
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1. "#-> LOOGKEEPER <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	crontab -l|grep -v ^#|grep logkeeper
+
+	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper --trim 180 --keep 180
+
+	// -> si no funciona "LOGKEEPER" mirar Logrotate<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2. "#-> LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	ls -la /etc/logrotate.conf
+
+	// La rotacion debe esta definida en semanas 'weekly' a 26:
+	head -10 /etc/logrotate.conf
+
+	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3. "#-> sin LOGKEEPER && sin LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+	
+	// Lo rotacion por rotalogs, la primera columna el fichero y la cuarta columna el valor a rotar:
+		
+	// EJEMPLO -> /var/adm/sudo.log:0:26:180:HP-UX,OSF1,SunOS
+
+OPCION ➡ 2. " Los ficheros de OS deben estar rotando.
+
+	"Saber que SO estamos revisando "dependera de los ficheros de sistemas a rotar", ya sea Linux o Aix
+        
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+          |                                                     |
+          |	- Os / Aix                                      |
+          |-----------------------------------------------------|
+          | /var/adm/sulog "*REG.EL ORDEN EJECUCIONES SU"       |
+          | /var/log/sudo.log "LOG`S INDIVIDUALES"              |
+          | /var/adm/messages "*MENSAJES DEL SISTEMAS"          |
+          | /var/adm/cron/log "*INF. INICIO DE TAREAS"          |
+          | /var/adm/wtmp "*INF. DE LOS LOGUEOS"                |
+          | /etc/security/failedlogin "*REG.INTENTOS FAIL"      |
+          | /etc/passwd                                         |
+          | /etc/group                                          |
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+// Debe existir
+# Aix: 
+
+ls -la /var/adm/sulog /var/log/sudo.log /var/adm/messages /var/adm/cron/log /var/adm/wtmp /etc/security/failedlogin
+
+// Debe existir una entrada de los ficheros de registro en la rotacion (OPCION ➡ 1. LOGKEEPER):
+
+	// Muestra resumen en la configuracion del SCRIPT de LOGKEEPER	
+	/usr/util/seguridad/logkeeper --trim 180 --keep 180 -s | egrep "sulog|messages|cron|wtmp|failedlogin|backup|sudo|config_file"
+
+	
+	// Si la rotacion se define en el fichero de configuracion de LOGKEEPER
+	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "sulog|messages|cron|wtmp|failedlogin|trim|backup|sudo"
+
+// Debe existir una entrada de los ficheros de registro en la rotacion (OPCION ➡ 2. LOGROTATE):
+
+	cat /etc/logrotate.conf | egrep -i "sulog|messages|cron|wtmp|failedlogin|sudo.log"
+
+	//Si la configuracion de rotado para OS, no existe en logrotate.conf, debe estar implementado en logrotate.d
+
+	cat /etc/logrotate.d/* | egrep -i "sulog|messages|cron|wtmp|failedlogin|sudo.log"
+
+// Debe existir una entrada de los ficheros de registro en la rotacion (OPCION ➡ 3. ROTALOGS):
+
+	// Si ejecuta en rotalogs con job de control.
+
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -v "^#"|grep -i logkee
+
+	//Debe existir /usr/local/bin/tareas/logkeeperalt.cfg en el codigo que se ejecuta.
+
+
+/* CONTESTAR YES */ : "Si la rotacion es 180 dias (26 semanas) y existen los ficheros de registro y estan rotando"
+
+/* CONTESTAR NO   */ : " Si la rotacion no es de 180 dias (26 semanas), o los ficheros de rotatos no existen o no estan rotando"
+		       
+		       " Current rotation is '4' 'weeks' should be set to '26' 'weeks'.
+		       " The file: '/var/log/cron.log', does not exist.
+		       " The file: '/var/log/sudo.log', exists, but is not rotating in '/etc/logrotate.conf'.
+
++-------------------------------------------------------------------------------------+
+SISTENAS AIX / POLITICA SUDO / 180 DIAS
++-------------------------------------------------------------------------------------+	
+			/* POLITICA SUDO - SUDO AIX*/ 
+
+---ZY.1.2.4 Logging
+
+"Log retention timeframe = 180 dias (26 semanas)
+
+ // Para la rotacion de SUDO - AIX, Se revisa 2 cosas.
+	OPCION ➡ 1.- La rotacion que debe ser 180 dias (26 semanas).
+	OPCION ➡ 2.- El fichero de sudo.log a 180 dias (26 semanas)."#
+
+
+OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
+//Saber que sistema de rotacion USA, existen 3 OPCIONES
+
+	"Saber que sistema de rotacion USA
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1. "#-> LOOGKEEPER <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	crontab -l|grep -v ^#|grep logkeeper
+
+	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper --trim 180 --keep 180
+
+	// -> si no funciona "LOGKEEPER" mirar Logrotate<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2. "#-> LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	ls -la /etc/logrotate.conf
+
+	// La rotacion debe esta definida en semanas 'weekly' a 26:
+	head -10 /etc/logrotate.conf
+
+	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3. "#-> sin LOGKEEPER && sin LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+	
+	// Lo rotacion por rotalogs, la primera columna el fichero y la cuarta columna el valor a rotar:
+		
+	// EJEMPLO -> /var/adm/sudo.log:0:26:180:HP-UX,osF1,Sunos
+
+OPCION ➡ 2. // El fichero de sudo.log deben estar rotando.
+
+	"Saber que SO estamos revisando "dependera del fichero de sudo.log a rotar", ya sea Linux o Aix
+        
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+          |                            |	
+          | - SUDO / Aix               |
+          |----------------------------|
+          | /var/log/sudo.log          |
+	  |			       |
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+// Debe existir
+# Aix: 
+
+ls -la /var/log/sudo.log
+
+// Debe existir una entrada del fichero de sudo.log en la rotacion (OPCION ➡ 1. LOGKEEPER):
+
+	// Muestra resumen en la configuracion del SCRIPT de LOGKEEPER	
+	/usr/util/seguridad/logkeeper --trim 180 --keep 180 -s | egrep "backup|sudo|config_file"
+
+	
+	// Si la rotacion se define en el fichero de configuracion de LOGKEEPER
+	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim|backup|sudo"
+
+// Debe existir una entrada del fichero de sudo.log en la rotacion (OPCION ➡ 2. LOGROTATE):
+
+	cat /etc/logrotate.conf | egrep -i "sudo.log"
+
+	//Si la configuracion de rotado para sudo.log, no existe en logrotate.conf, debe estar implementado en logrotate.d
+
+	cat /etc/logrotate.d/* | egrep -i "sudo.log"
+
+// Debe existir una entrada del fichero de sudo.log en la rotacion (OPCION ➡ 3. ROTALOGS):
+
+	// Si ejecuta en rotalogs con job de control.
+
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -v "^#"|grep -i logkee
+
+	//Debe existir /usr/local/bin/tareas/logkeeperalt.cfg en el codigo que se ejecuta.
+
+
+/* CONTESTAR YES */ : "Si la rotacion es 180 dias (26 semanas) y existen los ficheros de registro y estan rotando"
+
+/* CONTESTAR NO   */ : " Si la rotacion no es de 180 dias (26 semanas), o los ficheros de rotatos no existen o no estan rotando"
+		       
+		       " Current rotation is '4' 'weeks' should be set to '26' 'weeks'.
+		       " The file: '/var/log/cron.log', does not exist.
+		       " The file: '/var/log/sudo.log', exists, but is not rotating in '/etc/logrotate.conf'
+
++-------------------------------------------------------------------------------------+
+SISTENAS AIX / POLITICA SSH / 180 DIAS
++-------------------------------------------------------------------------------------+	
+			/* POLITICA SSH - SSH AIX*/ 
+
+---AV.1.2.4 Logging
+
+"Log retention timeframe = 180 dias (26 semanas)
+
+ // Para la rotacion de SSH - AIX, Se revisa 2 cosas.
+	OPCION ➡ 1.- La rotacion que debe ser 180 dias (26 semanas).
+	OPCION ➡ 2.- El fichero de messages a 180 dias (26 semanas).
+
+OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
+//Saber que sistema de rotacion USA, existen 3 OPCIONES
+
+	"Saber que sistema de rotacion USA
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1. "#-> LOOGKEEPER <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	crontab -l|grep -v ^#|grep logkeeper
+
+	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper --trim 180 --keep 180
+
+	// -> si no funciona "LOGKEEPER" mirar Logrotate<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2. "#-> LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	ls -la /etc/logrotate.conf
+
+	// La rotacion debe esta definida en semanas 'weekly' a 26:
+	head -10 /etc/logrotate.conf
+
+	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3. "#-> sin LOGKEEPER && sin LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+	
+	// Lo rotacion por rotalogs, la primera columna el fichero y la cuarta columna el valor a rotar:
+		
+	// EJEMPLO ->  /var/adm/messages:0:26:180:HP-UX,osF1,Sunos
+
+OPCION ➡ 2. // El fichero de messages deben estar rotando.
+
+	"Saber que SO estamos revisando "dependera del fichero de messages a rotar", ya sea Linux o Aix
+        
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+          |                                       |
+          |     - OpenSSH / Aix                   |
+          |---------------------------------------|    
+          | 	 "Fichero de configuracion "      |
+          |      /etc/syslog.conf                 |
+          |	                                  |
+          |	 "Ficheros de rotacion para SSH"  |
+          |	  /var/adm/messages               |
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+// Debe existir
+# Aix: 
+
+ls -la /var/adm/messages
+
+// Debe existir una entrada del fichero de registro en la rotacion (OPCION ➡ 1. LOGKEEPER):
+
+	// Muestra resumen en la configuracion del SCRIPT de LOGKEEPER	
+	/usr/util/seguridad/logkeeper --trim 180 --keep 180 -s | egrep "backup|messages|config_file"
+
+	
+	// Si la rotacion se define en el fichero de configuracion de LOGKEEPER
+	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim|backup|messages"
+
+// Debe existir una entrada del fichero de messages en la rotacion (OPCION ➡ 2. LOGROTATE):
+
+	cat /etc/logrotate.conf | egrep -i "messages"
+
+	//Si la configuracion de rotado para messages, no existe en logrotate.conf, debe estar implementado en logrotate.d
+
+	cat /etc/logrotate.d/* | egrep -i "messages"
+
+// Debe existir una entrada del fichero de messages en la rotacion (OPCION ➡ 3. ROTALOGS):
+
+	// Si ejecuta en rotalogs con job de control.
+
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -v "^#"|grep -w '/var/adm/messages'
+
+	//Debe existir /usr/local/bin/tareas/logkeeperalt.cfg en el codigo que se ejecuta.
+
+
+/* CONTESTAR YES */ : "Si la rotacion es 180 dias (26 semanas) y existen los ficheros de registro y estan rotando"
+
+/* CONTESTAR NO   */ : " Si la rotacion no es de 180 dias (26 semanas), o los ficheros de rotatos no existen o no estan rotando"
+		       
+		       " Current rotation is '4' 'weeks' should be set to '26' 'weeks'.
+		       " The file: '/var/log/cron.log', does not exist.
+		       " The file: '/var/log/messages', exists, but is not rotating in '/etc/logrotate.conf'
+
++-------------------------------------------------------------------------------------+
+SISTENAS DEBIAN / POLITICA OS / 180 DIAS
++-------------------------------------------------------------------------------------+	
+			/* POLITICA OS - OS LINUX (Debian)*/ 
+
+---AD.1.2.6 Logging
+
+"Retain Log files = 180 DIAS (26 semanas)
+
+// Para la rotacion de OS se revisa 2 cosas.
+	OPCION ➡ 1.- La rotacion que debe ser 180 dias (26 semanas).
+	OPCION ➡ 2.- Los ficheros de rotacion a 180 dias (26 semanas)."#
+
+
+OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas). 
+//Saber que sistema de rotacion USA, existen 3 OPCIONES
+
+	"Saber que sistema de rotacion USA
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1. "#-> LOOGKEEPER <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	crontab -l|grep -v ^#|grep logkeeper
+
+	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper
+
+	//Ejecutamos un -s del comando que nos devuelve
+
+	/usr/util/seguridad/logkeeper -s
+
+	// -> si no funciona "LOGKEEPER" mirar Logrotate<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2. "#-> LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+	ls -la /etc/logrotate.conf
+
+	// La rotacion debe esta definida en semanas 'weekly' a 26:
+	head -10 /etc/logrotate.conf
+
+	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3. "#-> sin LOGKEEPER && sin LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+	
+	// Lo rotacion por rotalogs, la primera columna el fichero y la cuarta columna el valor a rotar:
+		
+	// EJEMPLO -> /var/log/secure.log:0:13:90:HP-UX,OSF1,SunOS
+
+OPCION ➡ 2. //Los ficheros de OS deben estar rotando.
+
+	"Saber que SO estamos revisando "dependera de los ficheros de sistemas a rotar", ya sea Linux o Linux (debian)
+
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+          |								         |
+          |	--- Os / Linux (Debian)					         |
+          |----------------------------------------------------------------------| 
+          | /var/log/auth.log "*INFORMACION DE AUTENT." / "*REG.INTENTOS FAIL"   |
+          | /var/adm/sudo.log "LOG`S INDIVIDUALES"                               |
+          | /var/log/messages "*MENSAJES DEL SISTEMAS"                           |
+          | /var/log/cron.log "*INF. INICIO DE TAREAS"                           |
+          | /var/log/wtmp "*INF. DE LOS LOGUEOS"                                 |
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+// Si existen deben estar rotando.
+
+# Debian : 
+
+ls -la /var/log/auth.log /var/adm/sudo.log /var/log/messages /var/log/wtmp /var/log/cron.log
+
+// Debe existir una entrada de los ficheros de OS en la rotacion (OPCION ➡ 1. LOGKEEPER):
+
+	//Muestra resumen de la configuracion en LOGKEEPER	
+	/usr/util/seguridad/logkeeper -s | "trim|backup|auth|sudo|messages|wtmp|cron|config_fil"
+
+	
+	//Si La rotacion de log se define en el fichero de configuracion
+	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim|backup|auth|sudo|messages|wtmp|cron"
+
+// Debe existir una entrada de los ficheros de OS en la rotacion (OPCION ➡ 2. LOGROTATE):
+
+	cat /etc/logrotate.conf | egrep -i "auth|sudo|messages|wtmp|cron" -A5 --color=always
+
+	//Si los ficheros no existen en logrotate.conf, debe estar implementado en logrotate.d
+
+	cat /etc/logrotate.d/* | egrep -i "auth|sudo|messages|wtmp|cron" -A7 --color=always
+
+// Debe existir una entrada del/los fichero(s) de registro en la rotacion (OPCION ➡ 3. ROTALOGS):
+
+	// Si ejecuta en rotalogs con job de control.
+
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -v "^#"| egrep -i "auth|sudo|messages|wtmp|cron|logke"
+
+	//Debe existir /usr/local/bin/tareas/logkeeperalt.cfg en el codigo que se ejecuta.
+
+/* CONTESTAR YES  */ : " Si la rotacion es 180 dias (26 semanas), y exiten, estan rotando los ficheros en el sistema de rotado."
+
+/* CONTESTAR NO   */ : " Si la rotacion no es de 180 dias, o los ficheros de rotatos no existen o no estan rotando"
+		       
+		       " Current rotation is '4' 'weeks' should be set to '26' 'weeks'.
+		       " The file: '/var/log/cron.log', does not exist.
+		       " The file: '/var/adm/sudo.log', exists, but is not rotating in '/etc/logrotate.conf'.
++-------------------------------------------------------------------------------------+
+SISTENAS LINUX / POLITICA OS / 90 DIAS
++-------------------------------------------------------------------------------------+	
+			/* POLITICA OS - OS LINUX */ 
+
+---AD.1.2.6 Logging
+
+"Log record retention time frame = 90 dias (13 semanas)
+
+//Para la rotacion de archivos de registros del sistema se revisa 2 cosas.
+	OPCION ➡ 	OPCION ➡ 1.- La rotacion que debe ser 90 dias (13 semanas).
+	OPCION ➡ 	OPCION ➡ 2.- Los ficheros de rotacion deben rotar a 90 dias (13 semanas).	
+
+OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
+//Saber que sistema de rotacion USA, existen 3 OPCIONES
+
+	"Saber que sistema de rotacion USA
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1. "#-> LOOGKEEPER <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	crontab -l|grep -v ^#|grep logkeeper
+
+	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper
+
+	//Ejecutamos un -s del comando que nos devuelve
+
+	/usr/util/seguridad/logkeeper -s
+
+	// -> si no funciona "LOGKEEPER" mirar Logrotate<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2. "#-> LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	ls -la /etc/logrotate.conf
+
+	// La rotacion debe esta definida en semanas 'weekly' a 13:
+	head -10 /etc/logrotate.conf
+
+	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3. "#-> sin LOGKEEPER && sin LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+	
+	// Lo rotacion por rotalogs, la primera columna el fichero y la cuarta columna el valor a rotar:
+		
+	// EJEMPLO -> /var/adm/sudo.log:0:13:90:HP-UX,OSF1,SunOS
+
+OPCION ➡ 2.-  " Los ficheros de OS deben estar rotando
+	
+	" Saber que SO estamos revisando "dependeran los ficheros", ya sea Linux o Aix
+
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+          |                                             |
+          | - Os / Linux                                |
+          |---------------------------------------------|
+          | /var/log/secure "*INFORMACION DE AUTENT."   |
+          | /var/adm/sudo.log "LOG`S INDIVIDUALES"      |
+          | /var/log/messages "*MENSAJES DEL SISTEMAS"  |
+          | /var/log/cron "*INF. INICIO DE TAREAS"      |
+          | /var/log/wtmp "*INF. DE LOS LOGUEOS"	|
+        ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+// Debe existir
+# Linux:
+
+ls -la /var/log/secure /var/adm/sudo.log /var/log/messages /var/log/cron /var/log/wtmp
+
+// Debe existir una entrada de los ficheros de registro en la rotacion (OPCION ➡ 1. LOGKEEPER):
+
+	// Muestra resumen en la configuracion del SCRIPT de LOGKEEPER	
+	/usr/util/seguridad/logkeeper -s | egrep "trim|backup|secure|messages|sudo.log|cron|wtmp|config_fil"
+
+	
+	// Si la rotacion se define en el fichero de configuracion de LOGKEEPER
+	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim|backup|secure|messages|sudo.log|cron|wtmp"
+
+// Debe existir una entrada dde los ficheros de registro en la rotacion en la rotacion (OPCION ➡ 2. LOGROTATE):
+
+	cat /etc/logrotate.conf | egrep -i "secure|messages|sudo.log|cron|wtmp"
+
+	//Si la configuracion de rotado para OS, no existe en logrotate.conf, debe estar implementado en logrotate.d
+
+	cat /etc/logrotate.d/* | egrep -i "secure|messages|sudo.log|cron|wtmp"
+
+// Debe existir una entrada del/los fichero(s) de registro en la rotacion (OPCION ➡ 3. ROTALOGS):
+
+	// Si ejecuta en rotalogs con job de control.
+
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -v "^#"|grep -i logkee
+
+	//Debe existir /usr/local/bin/tareas/logkeeperalt.cfg en el codigo que se ejecuta.
+
+
+/* CONTESTAR YES */ : "Si la rotacion es 90 dias (13 semanas) y existen los ficheros de registro y estan rotando"
+
+/* CONTESTAR NO   */ : " Si la rotacion no es de 90 dias (13 semanas), o los ficheros de rotatos no existen o no estan rotando"
+		       
+		       " Current rotation is '4' 'weeks' should be set to '13' 'weeks'.
+		       " The file: '/var/log/cron.log', does not exist.
+		       " The file: '/var/adm/sudo.log', exists, but is not rotating in '/etc/logrotate.conf'.
+
++-------------------------------------------------------------------------------------+
+SISTENAS LINUX / POLITICA OS / 180 DIAS
++-------------------------------------------------------------------------------------+	
+			/* POLITICA OS - OS LINUX */ 
+
+---AD.1.2.6 Logging
+
+"Log record retention time frame = 180 dias (26 semanas)
+
+//Para la rotacion de archivos de registros del sistema se revisa 2 cosas.
+	OPCION ➡ 	OPCION ➡ 1.- La rotacion que debe ser 180 dias (26 semanas).
+	OPCION ➡ 	OPCION ➡ 2.- Los ficheros de rotacion deben rotar a 180 dias (26 semanas).	
+
+OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
+//Saber que sistema de rotacion USA, existen 3 OPCIONES
+
+	"Saber que sistema de rotacion USA
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1. "#-> LOOGKEEPER <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	crontab -l|grep -v ^#|grep logkeeper
+
+	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper
+
+	//Ejecutamos un -s del comando que nos devuelve
+
+	/usr/util/seguridad/logkeeper -s
+
+	// -> si no funciona "LOGKEEPER" mirar Logrotate<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2. "#-> LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	ls -la /etc/logrotate.conf
+
+	// La rotacion debe esta definida en semanas 'weekly' a 26:
+	head -10 /etc/logrotate.conf
+
+	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3. "#-> sin LOGKEEPER && sin LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+	
+	// Lo rotacion por rotalogs, la primera columna el fichero y la cuarta columna el valor a rotar:
+		
+	// EJEMPLO -> /var/adm/sudo.log:0:26:180:HP-UX,OSF1,SunOS
+
+OPCION ➡ 2.-  " Los ficheros de OS deben estar rotando
+	
+	" Saber que SO estamos revisando "dependeran los ficheros", ya sea Linux o Aix
+
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+          |                                             |
+          | - Os / Linux                                |
+          |---------------------------------------------|
+          | /var/log/secure "*INFORMACION DE AUTENT."   |
+          | /var/adm/sudo.log "LOG`S INDIVIDUALES"      |
+          | /var/log/messages "*MENSAJES DEL SISTEMAS"  |
+          | /var/log/cron "*INF. INICIO DE TAREAS"      |
+          | /var/log/wtmp "*INF. DE LOS LOGUEOS"	|
+        ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+// Debe existir
+# Linux:
+
+ls -la /var/log/secure /var/adm/sudo.log /var/log/messages /var/log/cron /var/log/wtmp
+
+// Debe existir una entrada de los ficheros de registro en la rotacion (OPCION ➡ 1. LOGKEEPER):
+
+	// Muestra resumen en la configuracion del SCRIPT de LOGKEEPER	
+	/usr/util/seguridad/logkeeper -s | egrep "trim|backup|secure|messages|sudo.log|cron|wtmp|config_fil"
+
+	
+	// Si la rotacion se define en el fichero de configuracion de LOGKEEPER
+	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim|backup|secure|messages|sudo.log|cron|wtmp"
+
+// Debe existir una entrada dde los ficheros de registro en la rotacion en la rotacion (OPCION ➡ 2. LOGROTATE):
+
+	cat /etc/logrotate.conf | egrep -i "secure|messages|sudo.log|cron|wtmp"
+
+	//Si la configuracion de rotado para OS, no existe en logrotate.conf, debe estar implementado en logrotate.d
+
+	cat /etc/logrotate.d/* | egrep -i "secure|messages|sudo.log|cron|wtmp"
+
+// Debe existir una entrada del/los fichero(s) de registro en la rotacion (OPCION ➡ 3. ROTALOGS):
+
+	// Si ejecuta en rotalogs con job de control.
+
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -v "^#"|grep -i logkee
+
+	//Debe existir /usr/local/bin/tareas/logkeeperalt.cfg en el codigo que se ejecuta.
+
+
+/* CONTESTAR YES */ : "Si la rotacion es 180 dias (26 semanas) y existen los ficheros de registro y estan rotando"
+
+/* CONTESTAR NO   */ : " Si la rotacion no es de 180 dias (26 semanas), o los ficheros de rotatos no existen o no estan rotando"
+		       
+		       " Current rotation is '4' 'weeks' should be set to '26' 'weeks'.
+		       " The file: '/var/log/cron.log', does not exist.
+		       " The file: '/var/adm/sudo.log', exists, but is not rotating in '/etc/logrotate.conf'.
+
++-------------------------------------------------------------------------------------+
+SISTENAS LINUX / POLITICA SUDO / 180 DIAS
++-------------------------------------------------------------------------------------+	
+			/* POLITICA SUDO - SUDO LINUX */ 
+
+---ZY.1.2.4 Logging
+
+"Log retention timeframe = 180 dias (26 semanas)
+
+// Para la rotacion de log`s se revisa 2 cosas.
+	OPCION ➡ 1.- La rotacion que debe ser 180 dias (26 semanas).
+	OPCION ➡ 2.- El fichero del sudo.log debe estar rotando a 180 dias (26 semanas).
+
+
+OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
+// Saber que sistema de rotacion USA, existen 3 OPCIONES
+
+	"Saber que sistema de rotacion USA
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1. "#-> LOOGKEEPER <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	crontab -l|grep -v ^#|grep logkeeper
+
+	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper
+
+	//Ejecutamos un -s del comando que nos devuelve
+
+	/usr/util/seguridad/logkeeper -s
+
+	// -> si no funciona "LOGKEEPER" mirar Logrotate<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2. "#-> LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	ls -la /etc/logrotate.conf
+
+	// La rotacion debe esta definida en semanas 'weekly' a 26:
+	head -10 /etc/logrotate.conf
+
+	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3. "#-> sin LOGKEEPER && sin LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+	
+	// Lo rotacion por rotalogs, la primera columna el fichero y la cuarta columna el valor a rotar:
+		
+	// EJEMPLO -> /var/adm/sudo.log:0:26:180:HP-UX,OSF1,SunOS
+
+OPCION ➡ 2. " El fichero del sudo.log debe estar rotando a 180 dias.
+
+	"Saber que SO estamos revisando "dependera de los ficheros de sistemas a rotar", ya sea Linux o Aix
+        
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+          |                            |	
+          | - SUDO / Linux             |
+          |----------------------------|
+          | /var/adm/sudo.log          |
+	  |			       |
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+// Debe existir
+#Linux: 
+
+ls -la /var/adm/sudo.log
+
+// Debe existir una entrada del fichero de sudo.log en la rotacion(OPCION ➡ 1. LOGKEEPER):
+
+	//Muestra resumen de la configuracion en LOGKEEPER	
+	/usr/util/seguridad/logkeeper -s | egrep -i "trim|backup|sudo|config_file"
+
+	
+	//Si La rotacion de log se define en el fichero de configuracion, deben estar DESCOMENTADAS las variables
+	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim|backup|sudo"
+
+	//EJEMPLO debe estar implementado:
+	"$Trim a 180
+	"@backups = /var/adm/sudo.log
+
+// Debe existir una entrada del/los fichero(s) de registro en la rotacion(OPCION ➡ 2. LOGROTATE):
+
+	cat /etc/logrotate.conf | egrep -i "sudo.log" -A5 --color=always
+
+	//Si la configuracion de rotado para sudo, no existe en logrotate.conf, debe estar implementado en logrotate.d
+
+	cat /etc/logrotate.d/* | egrep -i "sudo.log" -A7 --color=always
+
+// Debe existir una entrada del/los fichero(s) de registro en la rotacion (OPCION ➡ 3. ROTALOGS):
+
+	// Si ejecuta en rotalogs con job de control.
+
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -v "^#"|grep -i sudo
+
+	//Debe existir /usr/local/bin/tareas/logkeeperalt.cfg en el codigo que se ejecuta.
+
+/* CONTESTAR YES */ : "Si la rotacion es 180 dias (26 semanas) y existen los ficheros de registro y estan rotando"
+
+/* CONTESTAR NO  */ : " Si la rotacion no es de 180 dias (26 semanas), o los ficheros de rotatos no existen o no estan rotando"
+		       
+		       " Current rotation is '4' 'weeks' should be set to '26' 'weeks'.
+		       " The file: '/var/adm/cron.log', does not exist.
+		       " The file: '/var/adm/sudo.log', exists, but is not rotating in '/etc/logrotate.conf'.
+
++-------------------------------------------------------------------------------------+
+SISTENAS LINUX / POLITICA SUDO / 90 DIAS
++-------------------------------------------------------------------------------------+	
+			/* POLITICA SUDO - SUDO LINUX */ 
+
+---ZY.1.2.4 Logging
+
+"Log retention timeframe = 90 dias (13 semanas)
+
+// Para la rotacion de log`s se revisa 2 cosas.
+	OPCION ➡ 1.- La rotacion que debe ser 90 dias (13 semanas).
+	OPCION ➡ 2.- El fichero del sudo.log debe estar rotando a 90 dias (13 semanas).
+
+
+OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
+// Saber que sistema de rotacion USA, existen 3 OPCIONES
+
+	"Saber que sistema de rotacion USA
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1. "#-> LOOGKEEPER <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	crontab -l|grep -v ^#|grep logkeeper
+
+	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper
+
+	//Ejecutamos un -s del comando que nos devuelve
+
+	/usr/util/seguridad/logkeeper -s
+
+	// -> si no funciona "LOGKEEPER" mirar Logrotate<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2. "#-> LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	ls -la /etc/logrotate.conf
+
+	// La rotacion debe esta definida en semanas 'weekly' a 13:
+	head -10 /etc/logrotate.conf
+
+	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3. "#-> sin LOGKEEPER && sin LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+	
+	// Lo rotacion por rotalogs, la primera columna el fichero y la cuarta columna el valor a rotar:
+		
+	// EJEMPLO -> /var/adm/sudo.log:0:13:90:HP-UX,OSF1,SunOS
+
+OPCION ➡ 2. " El fichero del sudo.log debe estar rotando a 90 dias.
+
+	"Saber que SO estamos revisando "dependera de los ficheros de sistemas a rotar", ya sea Linux o Aix
+        
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+          |                            |	
+          | - SUDO / Linux             |
+          |----------------------------|
+          | /var/adm/sudo.log          |
+	  |			       |
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+// Debe existir
+#Linux: 
+
+ls -la /var/adm/sudo.log
+
+// Debe existir una entrada del fichero de sudo.log en la rotacion(OPCION ➡ 1. LOGKEEPER):
+
+	//Muestra resumen de la configuracion en LOGKEEPER	
+	/usr/util/seguridad/logkeeper -s | egrep -i "trim|backup|sudo|config_file"
+
+	
+	//Si La rotacion de log se define en el fichero de configuracion, deben estar DESCOMENTADAS las variables
+	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim|backup|sudo"
+
+	//EJEMPLO debe estar implementado:
+	"$Trim a 90
+	"@backups = /var/adm/sudo.log
+
+// Debe existir una entrada del/los fichero(s) de registro en la rotacion(OPCION ➡ 2. LOGROTATE):
+
+	cat /etc/logrotate.conf | egrep -i "sudo.log" -A5 --color=always
+
+	//Si la configuracion de rotado para sudo, no existe en logrotate.conf, debe estar implementado en logrotate.d
+
+	cat /etc/logrotate.d/* | egrep -i "sudo.log" -A7 --color=always
+
+// Debe existir una entrada del/los fichero(s) de registro en la rotacion (OPCION ➡ 3. ROTALOGS):
+
+	// Si ejecuta en rotalogs con job de control.
+
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -v "^#"|grep -i sudo
+
+	//Debe existir /usr/local/bin/tareas/logkeeperalt.cfg en el codigo que se ejecuta.
+
+/* CONTESTAR YES */ : "Si la rotacion es 90 dias (13 semanas) y existen los ficheros de registro y estan rotando"
+
+/* CONTESTAR NO  */ : " Si la rotacion no es de 90 dias (13 semanas), o los ficheros de rotatos no existen o no estan rotando"
+		       
+		       " Current rotation is '4' 'weeks' should be set to '13' 'weeks'.
+		       " The file: '//var/adm/sudo.log', does not exist.
+		       " The file: '/var/adm/sudo.log', exists, but is not rotating in '/etc/logrotate.conf'.
+
++-------------------------------------------------------------------------------------+
+SISTENAS LINUX / POLITICA SSH / 90 DIAS
++-------------------------------------------------------------------------------------+	
+			/* POLITICA SSH - SSH LINUX */ 
+
+---AV.1.2.4 Logging
+
+"Retain Log Files = 90 days (13 semanas)
+
+// Para la rotacion de los ficheros de seguridad se revisan 2 cosas.
+	OPCION ➡ 1.- La rotacion que debe ser 90 dias (13 semanas).
+	OPCION ➡ 2.- Los ficheros de seguridad debe estar rotando a 90 dias (13 semanas).
+
+
+OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
+// Saber que sistema de rotacion USA, existen 3 OPCIONES
+
+	"Saber que sistema de rotacion USA
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1. "#-> LOOGKEEPER <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	crontab -l|grep -v ^#|grep logkeeper
+
+	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper
+
+	//Ejecutamos un -s del comando que nos devuelve
+
+	/usr/util/seguridad/logkeeper -s
+
+	// -> si no funciona "LOGKEEPER" mirar Logrotate<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2. "#-> LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	ls -la /etc/logrotate.conf
+
+	// La rotacion debe esta definida en semanas 'weekly' a 13:
+	head -10 /etc/logrotate.conf
+
+	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3. "#-> sin LOGKEEPER && sin LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+	
+	// Lo rotacion por rotalogs, la primera columna el fichero y la cuarta columna el valor a rotar:
+		
+	// EJEMPLO -> /var/log/secure.log:0:13:90:HP-UX,OSF1,SunOS
+
+OPCION ➡ 2. " El fichero del sudo.log debe estar rotando a 90 dias.
+
+	"Saber que SO estamos revisando "dependera de los ficheros de sistemas a rotar", ya sea Linux o Aix
+        
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+          |                                 |
+          | - OpenSSH / Linux               |
+          |---------------------------------|
+          | "Fichero de configuracion "     |
+          | /etc/rsyslog.conf               |
+          |                                 |
+          | "Ficheros de rotacion para SSH" |
+          | /var/log/secure                 |
+          | /var/log/messages               |
+          |                                 |
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+// Debe existir
+#Linux: 
+
+ls -la /var/log/secure /var/log/messages
+
+// Debe existir una entrada de los ficheros de seguridad en la rotacion(OPCION ➡ 1. LOGKEEPER):
+
+	//Muestra resumen de la configuracion en LOGKEEPER	
+	/usr/util/seguridad/logkeeper -s | "trim|backup|secure|message|config_fil"
+
+	
+	//Si La rotacion de log se define en el fichero de configuracion
+	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim|backup|secure|message"
+
+	//EJEMPLO debe estar implementado:
+	"$Trim a 90
+	"@backups = /var/log/secure /var/log/messages
+
+// Debe existir una entrada del/los fichero(s) de registro en la rotacion(OPCION ➡ 2. LOGROTATE):
+
+	cat /etc/logrotate.conf | egrep -i "secure|message" -A5 --color=always
+
+	//Si la configuracion de rotado para sudo, no existe en logrotate.conf, debe estar implementado en logrotate.d
+
+	cat /etc/logrotate.d/* | egrep -i "secure|message" -A7 --color=always
+
+// Debe existir una entrada del/los fichero(s) de registro en la rotacion (OPCION ➡ 3. ROTALOGS):
+
+	// Si ejecuta en rotalogs con job de control.
+
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -v "^#"| egrep -i "secure|message"
+
+	//Debe existir /usr/local/bin/tareas/logkeeperalt.cfg en el codigo que se ejecuta.
+
+/* CONTESTAR YES */ : "Si la rotacion es 90 dias (13 semanas) y existen los ficheros de registro y estan rotando"
+
+/* CONTESTAR NO  */ : " Si la rotacion no es de 90 dias (13 semanas), o los ficheros de rotatos no existen o no estan rotando"
+		       
+		       " Current rotation is '4' 'weeks' should be set to '13' 'weeks'.
+		       " The file: '/var/adm/cron.log', does not exist.
+		       " The file: '/var/adm/sudo.log', exists, but is not rotating in '/etc/logrotate.conf'.
+
+
++-------------------------------------------------------------------------------------+
+SISTENAS LINUX / POLITICA SSH / 180 DIAS
++-------------------------------------------------------------------------------------+	
+			/* POLITICA SSH - SSH LINUX */ 
+
+---AV.1.2.4 Logging
+
+"Retain Log Files = 180 days (26 semanas)
+
+// Para la rotacion de los ficheros de seguridad se revisan 2 cosas.
+	OPCION ➡ 1.- La rotacion que debe ser 180 dias (26 semanas).
+	OPCION ➡ 2.- Los ficheros de seguridad debe estar rotando a 180 dias (26 semanas).
+
+
+OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
+// Saber que sistema de rotacion USA, existen 3 OPCIONES
+
+	"Saber que sistema de rotacion USA
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1. "#-> LOOGKEEPER <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	crontab -l|grep -v ^#|grep logkeeper
+
+	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper
+
+	//Ejecutamos un -s del comando que nos devuelve
+
+	/usr/util/seguridad/logkeeper -s
+
+	// -> si no funciona "LOGKEEPER" mirar Logrotate<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2. "#-> LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	ls -la /etc/logrotate.conf
+
+	// La rotacion debe esta definida en semanas 'weekly' a 26:
+	head -10 /etc/logrotate.conf
+
+	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3. "#-> sin LOGKEEPER && sin LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+	
+	// Lo rotacion por rotalogs, la primera columna el fichero y la cuarta columna el valor a rotar:
+		
+	// EJEMPLO -> /var/log/secure.log:0:26:180:HP-UX,OSF1,SunOS
+
+OPCION ➡ 2. " El fichero del sudo.log debe estar rotando a 180 dias.
+
+	"Saber que SO estamos revisando "dependera de los ficheros de sistemas a rotar", ya sea Linux o Aix
+        
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+          |                                 |
+          | - OpenSSH / Linux               |
+          |---------------------------------|
+          | "Fichero de configuracion "     |
+          | /etc/rsyslog.conf               |
+          |                                 |
+          | "Ficheros de rotacion para SSH" |
+          | /var/log/secure                 |
+          | /var/log/messages               |
+          |                                 |
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+// Debe existir
+#Linux: 
+
+ls -la /var/log/secure /var/log/messages
+
+// Debe existir una entrada de los ficheros de seguridad en la rotacion(OPCION ➡ 1. LOGKEEPER):
+
+	//Muestra resumen de la configuracion en LOGKEEPER	
+	/usr/util/seguridad/logkeeper -s | "trim|backup|secure|message|config_fil"
+
+	
+	//Si La rotacion de log se define en el fichero de configuracion
+	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim|backup|secure|message"
+
+	//EJEMPLO debe estar implementado:
+	"$Trim a 180
+	"@backups = /var/log/secure /var/log/messages
+
+// Debe existir una entrada del/los fichero(s) de registro en la rotacion(OPCION ➡ 2. LOGROTATE):
+
+	cat /etc/logrotate.conf | egrep -i "secure|message" -A5 --color=always
+
+	//Si la configuracion de rotado para sudo, no existe en logrotate.conf, debe estar implementado en logrotate.d
+
+	cat /etc/logrotate.d/* | egrep -i "secure|message" -A7 --color=always
+
+// Debe existir una entrada del/los fichero(s) de registro en la rotacion (OPCION ➡ 3. ROTALOGS):
+
+	// Si ejecuta en rotalogs con job de control.
+
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -v "^#"| egrep -i "secure|message"
+
+	//Debe existir /usr/local/bin/tareas/logkeeperalt.cfg en el codigo que se ejecuta.
+
+/* CONTESTAR YES */ : "Si la rotacion es 180 dias (26 semanas) y existen los ficheros de registro y estan rotando"
+
+/* CONTESTAR NO  */ : " Si la rotacion no es de 180 dias (26 semanas), o los ficheros de rotatos no existen o no estan rotando"
+		       
+		       " Current rotation is '4' 'weeks' should be set to '26' 'weeks'.
+		       " The file: '/var/adm/cron.log', does not exist.
+		       " The file: '/var/adm/sudo.log', exists, but is not rotating in '/etc/logrotate.conf'.
++-------------------------------------------------------------------------------------+

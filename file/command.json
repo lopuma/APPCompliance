@@ -1,0 +1,207 @@
+{
+  "AFB": [
+    {
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
+      "user": [
+        "",
+        ""
+      ],
+      "code": "",
+      "servers": [
+        ""
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fdSUDO=\"\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
+      "user": [
+        "",
+        ""
+      ],
+      "code": "",
+      "servers": [
+        ""
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fdSUDO=\"\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
+      "user": [
+        "",
+        ""
+      ],
+      "code": "",
+      "servers": [
+        ""
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fdSUDO=\"\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
+      "user": [
+        "",
+        ""
+      ],
+      "code": "",
+      "servers": [
+        ""
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fdSUDO=\"\""
+      ],
+      "SO": "Linux"
+    }
+  ],
+  "ASISA": [
+    {
+      "object": "/usr/local/scripts/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Lorenzo Fuertes"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fdSUDO=\"/usr/local/scripts/\""
+      ],
+      "SO": "Linux"
+    }
+  ],
+  "FT": [
+    {
+      "object": "/ogg_mdg/ggate",
+      "owner": "ogg_mdg",
+      "tipo": "/C/",
+      "ownerGroup": "Customer",
+      "user": [
+        "Customer",
+        ""
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "All server"
+      ],
+      "risk": "GENERICO",
+      "impact": "GENERICO",
+      "variable": [
+        "Pertenece al cliente"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/install_TIVOLI/ITM_Linux_Comun/",
+      "owner": "tivoli",
+      "tipo": "/F/",
+      "ownerGroup": "*EAUTIV",
+      "user": [
+        "ANGEL LILLO GOMEZ"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "Son temporales de cuando instalan, una vez meten agente los desmontan",
+      "impact": "",
+      "variable": [
+        "fdSUDO=\"/install_TIVOLI/ITM_Linux_Comun\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/install_TIVOLI/jre/",
+      "owner": "tivoli",
+      "tipo": "/F/",
+      "ownerGroup": "*EAUTIV",
+      "user": [
+        "ANGEL LILLO GOMEZ"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "Son temporales de cuando instalan, una vez meten agente los desmontan",
+      "impact": "",
+      "variable": [
+        "fdSUDO=\"/install_TIVOLI/jre\""
+      ],
+      "SO": "Linux"
+    }
+  ],
+  "INFRA": [
+    {
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
+      "user": [
+        "",
+        ""
+      ],
+      "code": "",
+      "servers": [
+        ""
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fdSUDO=\"\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "",
+      "owner": "",
+      "tipo": "",
+      "ownerGroup": "",
+      "user": [
+        "",
+        ""
+      ],
+      "code": "",
+      "servers": [
+        ""
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fdSUDO=\"\""
+      ],
+      "SO": "Linux"
+    }
+  ]
+}
