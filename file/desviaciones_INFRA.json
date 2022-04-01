@@ -187,6 +187,17 @@
         "SO": "Linux"
     },
     {
+        "modulo": "IZ.1.8.12.8 Protecting Resources - OSRs",
+        "clave": "GPGCHECK",
+        "descripcion": "Set gpgcheck=1 in /etc/yum.conf file",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## Despues de guardar la configuracion,  ejecute el siguiente mandato y verifique que `gpgcheck` está establecido en 1\n+-------------------------------------------------------------------------------------+\n\ngrep -w gpgcheck /etc/yum.conf\n\n## debe devolver: gpgcheck= 1\n\n+-------------------------------------------------------------------------------------+\n## Despues de guardar la configuracion,  ejecute el siguiente mandato y verifique que todas las instancias de `gpgcheck` devueltas están establecidas en ' \"1\" o simplemente nada.\n+-------------------------------------------------------------------------------------+\n\ngrep -w gpgcheck /etc/yum.repos.d/* ",
+        "copia": "+-------------------------------------------------------------------------------------+\n## Obtener usuario logueado:\n+-------------------------------------------------------------------------------------+\n\nuser=$(logname)\n\n+-------------------------------------------------------------------------------------+\n## Backup con HOME en MAYÚSCULAS\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/yum.conf /home/${user^^}/yum_`date +%d%m%y_%T`\n\n+-------------------------------------------------------------------------------------+\n## Backup con HOME en minúsculas\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/yum.conf /home/${user,,}/yum_`date +%d%m%y_%T`\n",
+        "editar": "+-------------------------------------------------------------------------------------+\n## Edite `/etc/yum.conf` y establezca `gpgcheck=1`\n## En la sección [main], necesario para estar presente.\n+-------------------------------------------------------------------------------------+\n\nvi /etc/yum.conf\n\n+-------------------------------------------------------------------------------------+\n## Edite los archivos anómalos en `/etc/yum.repos.d/*` \n## Y establezca todas las instancias de `gpgcheck` en `1`, o simplemente elimine la línea.\n+-------------------------------------------------------------------------------------+\n\ncd /etc/yum.repos.d/\n\nls -la",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nhostname\ngrep -w gpgcheck /etc/yum.conf\ngrep -w gpgcheck /etc/yum.repos.d/*",
+        "SO": "Linux"
+    },
+    {
         "modulo": "Password Requirements/Password MIN Age Shadow",
         "clave": "MINAGE",
         "descripcion": "Account $account has invalid Password Min Age setting of null  should be set to Customer Required Setting: 1. Account Type: Customer",

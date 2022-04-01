@@ -559,6 +559,48 @@
         "fichero=\"/var/www/canmds/can/assets/js/scripts.js\""
       ],
       "SO": "Linux"
+    },
+    {
+      "object": "/opt/jws/t22stx04/webapps/manager/WEB-INF/jsp/",
+      "owner": "tomgct",
+      "tipo": "/S/",
+      "ownerGroup": "*EGCEBH",
+      "user": [
+        "Silvia Pereira",
+        "Alfonso Marcos Tarancon",
+        "Almudena Outeda Rodríguez"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/opt/jws/t22stx04/webapps/manager/WEB-INF/jsp/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/opt/jws/t22stx03/webapps/manager/WEB-INF/jsp/",
+      "owner": "tomgct",
+      "tipo": "/S/",
+      "ownerGroup": "*EGCEBH",
+      "user": [
+        "Silvia Pereira",
+        "Alfonso Marcos Tarancon",
+        "Almudena Outeda Rodríguez"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/opt/jws/t22stx03/webapps/manager/WEB-INF/jsp/\""
+      ],
+      "SO": "Linux"
     }
   ],
   "ENEL": [

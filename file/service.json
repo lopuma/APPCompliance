@@ -175,11 +175,16 @@
       "tipo": "/S/",
       "ownerGroup": "Group Sistemas",
       "user": [
-        ""
+        "PABLO MOSCOSO SARABIA",
+        "FT-LINUX - Antonio Gil López",
+        "FT-LINUX - Santiago Tirado Salvador"
       ],
       "code": "2-DOC",
       "servers": [
-        "AOTLXPRSIO10002"
+        "AOTLXPRSIO10002",
+        "aotlxprtra00001",
+        "aotlxprtra00002",
+        "aotlxprtra00099"
       ],
       "risk": "By restricting root login through ssh, a user is forced to use a regular, account to login, and perform su to gain root acces.  Root access is achieved by logging into a regular non-privileged userid, and then su To provide an audit trail.",
       "impact": "The configuration is required to perform server activities, for gpfs requirements it is mandatory to put it on the nodes of the cluster itself.",
