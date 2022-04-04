@@ -1,0 +1,110 @@
+{
+    "AFB": [
+      {
+        "politica": [
+          "Sistemas",
+          "Sudo",
+          "Ssh"
+        ]
+      }
+    ],
+    "INFRA": [
+      {
+        "politica": [
+          "Sistemas",
+          "Sudo",
+          "Ssh",
+          "Hmc",
+          "Vios"
+        ]
+      }
+    ],
+    "ASISA": [
+      {
+        "politica": [
+          "Sistemas",
+          "Sudo",
+          "Ssh",
+          "Hmc",
+          "Vios"
+        ]
+      }
+    ],
+    "CESCE": [
+      {
+        "politica": [
+          "Sistemas",
+          "Sudo",
+          "Ssh"
+        ]
+      }
+    ],
+    "CTTI": [
+      {
+        "politica": [
+          "Sistemas",
+          "Sudo",
+          "Ssh",
+          "BD",
+          "Hmc"
+        ]
+      }
+    ],
+    "ENEL": [
+      {
+        "politica": [
+          "Sistemas",
+          "Sudo",
+          "Ssh",
+          "Hmc",
+          "Vios"
+        ]
+      }
+    ],
+    "EUROFRED": [
+      {
+        "politica": [
+          "Sistemas",
+          "Sudo",
+          "Ssh",
+          "Hmc"
+        ]
+      }
+    ],
+    "FT": [
+      {
+        "politica": [
+          "Sistemas",
+          "Sudo",
+          "Ssh",
+          "HP-UX"
+        ]
+      }
+    ],
+    "LBK": [
+      {
+        "politica": [
+          "Sistemas",
+          "Sudo",
+          "Ssh"
+        ]
+      }
+    ],
+    "PLANETA": [
+      {
+        "politica": [
+          "Hmc",
+          "Vios"        ]
+      }
+    ],
+    "SERVIHABITAT": [
+        {
+          "politica": [
+            "Sistemas",
+            "Sudo",
+            "Ssh",
+            "Hmc"
+          ]
+        }
+      ]
+  }
