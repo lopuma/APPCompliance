@@ -920,16 +920,19 @@
       "tipo": "/F/",
       "ownerGroup": "*EDDBA2",
       "user": [
-        ""
+        "CARLOS PEREZ GARCIA", 
+        "DAVID DE MIGUEL HERRERO", 
+        "David Palomero Méndez", 
+        "JESUS SANCHEZ CRUZ"
       ],
-      "code": "NULL",
+      "code": "2-DOC",
       "servers": [
         "ALL Servers"
       ],
-      "risk": "",
-      "impact": "",
+      "risk": "GENERICO / MAXAGE / IBM",
+      "impact": "GENERICO / MAXAGE / IBM",
       "variable": [
-        "MYSQL Server"
+        "usuario para arrancar MYSQL Server"
       ],
       "SO": "Linux"
     }

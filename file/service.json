@@ -147,8 +147,8 @@
       "tipo": "/S/",
       "ownerGroup": "Grupo de Sistemas",
       "user": [
-        "GEMMA ESCAR APARICIO", 
-        "NINELA ELENA PAVEL MANCIU", 
+        "GEMMA ESCAR APARICIO",
+        "NINELA ELENA PAVEL MANCIU",
         "RAMON RUIZ GARCIA"
       ],
       "code": "1-OK",
@@ -205,7 +205,7 @@
       "servers": [
         "tibbwp2"
       ],
-      "risk":"GENERICO /  SERVICE : NFS / IBM",
+      "risk": "GENERICO /  SERVICE : NFS / IBM",
       "impact": "GENERICO /  SERVICE : NFS / IBM",
       "variable": [
         ""
@@ -219,8 +219,8 @@
       "ownerGroup": "Group Soporte",
       "user": [
         "Soporte UNIX de FT sigifi:",
-        "FT-UNIX Angel Arribas Martinez", 
-        "FT-UNIX Juan Carlos Herranz Jimenez", 
+        "FT-UNIX Angel Arribas Martinez",
+        "FT-UNIX Juan Carlos Herranz Jimenez",
         "FT-UNIX_jose_ramon_alonso_dominguez",
         "PEDRO JAVIER PRIETO HOLGUIN"
       ],
@@ -228,7 +228,7 @@
       "servers": [
         "ALL Servers"
       ],
-      "risk":"Aplica a todos los server que no tengan conexiones FTP",
+      "risk": "Aplica a todos los server que no tengan conexiones FTP",
       "impact": "Pertenece al puerto 21",
       "variable": [
         "service=\"ftp\""
@@ -242,8 +242,8 @@
       "ownerGroup": "Group Soporte",
       "user": [
         "Soporte UNIX de FT sigifi:",
-        "FT-UNIX Angel Arribas Martinez", 
-        "FT-UNIX Juan Carlos Herranz Jimenez", 
+        "FT-UNIX Angel Arribas Martinez",
+        "FT-UNIX Juan Carlos Herranz Jimenez",
         "FT-UNIX_jose_ramon_alonso_dominguez",
         "PEDRO JAVIER PRIETO HOLGUIN"
       ],
@@ -251,7 +251,7 @@
       "servers": [
         "ALL Servers"
       ],
-      "risk":"Aplica a todos los server que no tengan shell `/bin/false`, para la cuenta FTP",
+      "risk": "Aplica a todos los server que no tengan shell `/bin/false`, para la cuenta FTP",
       "impact": "Pertenece al puerto 23",
       "variable": [
         "service=\"telnet\""
@@ -265,8 +265,8 @@
       "ownerGroup": "Group Soporte",
       "user": [
         "Soporte UNIX de FT sigifi:",
-        "FT-UNIX Angel Arribas Martinez", 
-        "FT-UNIX Juan Carlos Herranz Jimenez", 
+        "FT-UNIX Angel Arribas Martinez",
+        "FT-UNIX Juan Carlos Herranz Jimenez",
         "FT-UNIX_jose_ramon_alonso_dominguez",
         "PEDRO JAVIER PRIETO HOLGUIN"
       ],
@@ -274,7 +274,7 @@
       "servers": [
         "ALL Servers"
       ],
-      "risk":"GENERICO /  SENDMAIL / FT",
+      "risk": "GENERICO /  SENDMAIL / FT",
       "impact": "GENERICO /  SENDMAIL / FT",
       "variable": [
         "`sendmail` Lo usa el cliente para el envio de mails"
@@ -300,7 +300,7 @@
       "variable": [
         ""
       ],
-      "SO" : "Linux"
+      "SO": "Linux"
     }
   ],
   "LBK": [
@@ -310,8 +310,8 @@
       "tipo": "/S/",
       "ownerGroup": "Grupo de Sistemas",
       "user": [
-        "GEMMA ESCAR APARICIO", 
-        "NINELA ELENA PAVEL MANCIU", 
+        "GEMMA ESCAR APARICIO",
+        "NINELA ELENA PAVEL MANCIU",
         "RAMON RUIZ GARCIA"
       ],
       "code": "2-DOC",
@@ -322,6 +322,70 @@
       "impact": "GENERICO /  SERVICE Netsat / LBK",
       "variable": [
         ""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "PermitRootLogin CLOUDERA",
+      "owner": "Sistemas",
+      "tipo": "/S/",
+      "ownerGroup": "Grupo de Sistemas",
+      "user": [
+        "GEMMA ESCAR APARICIO",
+        "NINELA ELENA PAVEL MANCIU",
+        "RAMON RUIZ GARCIA"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "LBKCDPM01D",
+        "LBKCDPM01P",
+        "LBKCDPM02P",
+        "LBKCDPM03P",
+        "LBKCDPTOOLS01D",
+        "LBKCDPTOOLS01P",
+        "LBKCDPW01D",
+        "LBKCDPW01P",
+        "LBKCDPW02D",
+        "LBKCDPW02P",
+        "LBKCDPW03P",
+        "LBKCDPW04P",
+        "LBKCDPW05P"
+      ],
+      "risk": "CLOUDERA /  PermitRootLogin / LBK",
+      "impact": "CLOUDERA /  PermitRootLogin / LBK",
+      "variable": [
+        "Para servidores 'LBKCDPxxxxxx' en el entorno CLOUDERA, se debe permitir el PermitRootLogin a Yes."
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "PermitRootLogin SOFTLAYER",
+      "owner": "Sistemas",
+      "tipo": "/S/",
+      "ownerGroup": "Grupo de Sistemas",
+      "user": [
+        "GEMMA ESCAR APARICIO",
+        "NINELA ELENA PAVEL MANCIU",
+        "RAMON RUIZ GARCIA"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "LBKHORM01D",
+        "LBKHORM01P",
+        "LBKHORM02P",
+        "LBKHORM03P",
+        "LBKHORW01D",
+        "LBKHORW01P",
+        "LBKHORW02D",
+        "LBKHORW02P",
+        "LBKHORW03P",
+        "LBKHORW04P",
+        "LBKHORW05P"
+      ],
+      "risk": "SOFTLAYER /  PermitRootLogin / LBK",
+      "impact": "SOFTLAYER /  PermitRootLogin / LBK",
+      "variable": [
+        "Para servidores 'LBKHORxxxxxx' en el entorno SOFTLAYER, se debe permitir el PermitRootLogin a Yes."
       ],
       "SO": "Linux"
     }

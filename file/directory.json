@@ -486,7 +486,7 @@
       "object": "/tmp/",
       "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EGCLIN",
       "user": [
         "Grupo de Sistemas"
       ],
@@ -502,10 +502,29 @@
       "SO": "Linux"
     },
     {
+      "object": "/opt/IBM/ITM/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "*EGCLIN",
+      "user": [
+        "Grupo de Sistemas CTTI"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/opt/IBM/ITM/\""
+      ],
+      "SO": "Linux"
+    },
+    {
       "object": "/u03/export/33204768",
       "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EGCLIN",
       "user": [
         "Mirtha Caballero Acosta"
       ],
@@ -524,7 +543,7 @@
       "object": "/etc/oracle/maps",
       "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EGCLIN",
       "user": [
         "Mirtha Caballero Acosta"
       ],
