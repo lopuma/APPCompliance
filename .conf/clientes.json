@@ -1,30 +1,11 @@
 {
-  "INFRA": [
-    {
-      "policy": [
-        {
-          "ssh": [
-            {
-              "icon": "icon_ssh.png"
-            },
-            {
-              "scripts": [
-                "ssh_preg13",
-                "ssh_preg8"
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ],
   "AFB": [
     {
-      "policy": [
+      "politica": [
         {
-          "Systems": [
+          "Sistemas": [
             {
-              "icon": "icon_sys.png"
+              "icon": "icon_sys"
             },
             {
               "scripts": [
@@ -37,12 +18,31 @@
         {
           "Sudo": [
             {
-              "icon": "icon_sudo.png"
+              "icon": "icon_sys"
             },
             {
               "scripts": [
                 "sudo_preg4",
                 "sudo_preg14"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "INFRA": [
+    {
+      "politica": [
+        {
+          "Sistemas": [
+            {
+              "icon": "icon_sys"
+            },
+            {
+              "scripts": [
+                "os_preg4",
+                "os_preg14"
               ]
             }
           ]
