@@ -156,8 +156,7 @@ ls -la /var/adm/sudo.log
 /* CONTESTAR NO   */ : " Si la rotacion no es de 180 dias (13 semanas), o los ficheros de rotatos no existen o no estan rotando"
 		       
 		       " Current rotation is '4' 'weeks' should be set to '13' 'weeks'.
-		       " The file: '/var/adm/cron.log', does not exist.
-		       " The file: '/var/adm/sudo.log', exists, but is not rotating in '/etc/logrotate.conf'.
+		       " The file: '/var/adm/sudo.log', exists, but is not rotating, applies the correct configuration so that the sudo file has rotation.
 +-------------------------------------------------------------------------------------+
 ---ZY.1.4.2.1 System Settings	
 "Commands which allow shell escape

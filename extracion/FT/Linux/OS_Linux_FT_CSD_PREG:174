@@ -25,20 +25,20 @@ cat /etc/shadow | cut -d: -f1,2,5 | grep  -v ':90' | egrep -v "\*|\!\!|\!" | awk
 "CONTESTAR NO  */ : "Account $Account has invalid Password Max Age setting of 99999, should be set to Customer Required Setting: 90. More secure value can be set."
 +-------------------------------------------------------------------------------------+
 ---AD.1.1.2.0 Password Requirements
-"PASS_MIN_LEN, password complexity = MINLEN a 15
+"PASS_MIN_LEN, password complexity = MINLEN a 8
 
 /*
 Una de estas tres opciones debe aplicarse::
-* Parameters of "minlen=15 dcredit=-1 ucredit=0 lcredit=-1 ocredit=0 " in pam_pwquality.so
-* Parameters of "minlen=15 dcredit=-1 ucredit=0 lcredit=-1 ocredit=0 reject_username" in pam_cracklib.so
-* "password $CONTROL pam_pwquality.so ..." la stanza existe en /etc/pam.d/system-auth Y /etc/pam.d/password-auth sin ninguno de estos parámetros, Y los parámetros de minlen = 15, dcredit= -1, ucredit= 0, lcredit=-1 y ocredit= 0 se especifican en /etc/security/pwquality.conf
+* Parameters of "minlen=8 dcredit=-1 ucredit=0 lcredit=-1 ocredit=0 " in pam_pwquality.so
+* Parameters of "minlen=8 dcredit=-1 ucredit=0 lcredit=-1 ocredit=0 reject_username" in pam_cracklib.so
+* "password $CONTROL pam_pwquality.so ..." la stanza existe en /etc/pam.d/system-auth Y /etc/pam.d/password-auth sin ninguno de estos parámetros, Y los parámetros de minlen = 8, dcredit= -1, ucredit= 0, lcredit=-1 y ocredit= 0 se especifican en /etc/security/pwquality.conf
 */
 
 grep -i minlen /etc/pam.d/system-auth
 grep -i minlen /etc/pam.d/password-auth
 
 /* CONTESTAR YES */ : "Si esta implementado, ya sea pam_cracklib, o pam_pwquality con su configuracion"
-/* CONTESTAR NO  */ : "Incorrect System Default minimum password length or password complexity rules. Minimum password length should be set to 15 or more secure, in file /etc/pam.d/password-auth. It should be set through pam_cracklib.so or pam_pwquality.so. For more information about password length or password complexity rules see matrix coverage document."
+/* CONTESTAR NO  */ : "Incorrect System Default minimum password length or password complexity rules. Minimum password length should be set to 8 or more secure, in file /etc/pam.d/password-auth. It should be set through pam_cracklib.so or pam_pwquality.so. For more information about password length or password complexity rules see matrix coverage document."
 +-------------------------------------------------------------------------------------+
 ---AD.1.1.2.1 Password Requirements	
 "password specification within /etc/shadow
@@ -98,7 +98,7 @@ Nota: Es aceptable reemplazar "sha512" por "md5" en la configuración anterior.
 grep -i remember /etc/pam.d/system-auth
 grep -i remember /etc/pam.d/password-auth
 
-/* CONTESTAR YES */ : "Si en el campo 4, todos los usuarios tiene  minage a 1"
+
 /* CONTESTAR NO  */ : "The remember parameter value is 10, is recomended 5 in the configuration
 /* NO */ 	        The remember parameter does not exist in the configuration:  "System-auht y Password-auth"
 "
@@ -155,6 +155,8 @@ account     required      pam_faillock.so
 
 /* NO  */ : " It is a REHL 7, and there is no configuration of the pam_tally2.so, or the order.
 /* NO  */ : " It is a REHL 8, and there is no configuration of the pam_faillock.so, or the order.
+/* NO */ : " Non of the Login Retrie options was found in file: /etc/pam.d/password-auth AND /etc/pam.d/system-auth
+
 +-------------------------------------------------------------------------------------+
 ---AD.1.1.6.1 Password Requirements
 

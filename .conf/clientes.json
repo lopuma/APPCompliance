@@ -3,51 +3,69 @@
     {
       "politica": [
         {
-          "Sistemas": [
-            {
-              "icon": "icon_sys"
-            },
-            {
-              "scripts": [
-                "os_preg4",
-                "os_preg14"
-              ]
-            }
+          "OS": [
+            "os_preg4",
+            "os_preg45",
+            "os_preg35",
+            "os_preg15",
+            "os_preg16"
           ]
         },
         {
-          "Sudo": [
-            {
-              "icon": "icon_sys"
-            },
-            {
-              "scripts": [
-                "sudo_preg4",
-                "sudo_preg14"
-              ]
-            }
+          "SUDO": [
+            "sudo_preg4",
+            "sudo_preg14"
           ]
         }
       ]
     }
   ],
-  "INFRA": [
+  "ASISA": [
     {
       "politica": [
         {
-          "Sistemas": [
-            {
-              "icon": "icon_sys"
-            },
-            {
-              "scripts": [
-                "os_preg4",
-                "os_preg14"
-              ]
-            }
+          "SSH": [
+            "ssh_preg4",
+            "ssh_preg14"
+          ]
+        },
+        {
+          "SUDO": [
+            "sudo_preg4",
+            "sudo_preg14"
           ]
         }
       ]
     }
-  ]
+  ],
+  "CESCE": [
+    {
+      "politica": [
+        {
+          "VIOS": [
+            "vios_preg4",
+            "vios_preg44",
+            "vios_preg43",
+            "vios_preg2",
+            "vios_preg1"
+          ]
+        },
+        {
+          "HMC": [
+            "hmc_preg4",
+            "hmc_preg14"
+          ]
+        }
+      ]
+    }
+  ],
+  "CTTI": [],
+  "ENEL": [],
+  "EUROFRED": [],
+  "FT": [],
+  "INFRA": [],
+  "JGC": [],
+  "LBK": [],
+  "PLANETA": [],
+  "SERVIHABITAT": []  
 }

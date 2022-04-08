@@ -935,6 +935,28 @@
         "usuario para arrancar MYSQL Server"
       ],
       "SO": "Linux"
+    },
+    {
+      "object": "bigsql",
+      "owner": "bigsql",
+      "tipo": "/S/",
+      "ownerGroup": "*EPUXOS",
+      "user": [
+        "CARLOS PEREZ GARCIA", 
+        "DAVID DE MIGUEL HERRERO", 
+        "David Palomero Méndez", 
+        "JESUS SANCHEZ CRUZ"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / MAXAGE / IBM",
+      "impact": "GENERICO / MAXAGE / IBM",
+      "variable": [
+        "usuario para SERVICIOS de MYSQL Server"
+      ],
+      "SO": "Linux"
     }
   ]
 }
