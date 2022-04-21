@@ -335,7 +335,7 @@
         "NINELA ELENA PAVEL MANCIU",
         "RAMON RUIZ GARCIA"
       ],
-      "code": "2-DOC",
+      "code": "1-OK",
       "servers": [
         "LBKCDPM01D",
         "LBKCDPM01P",
@@ -351,15 +351,15 @@
         "LBKCDPW04P",
         "LBKCDPW05P"
       ],
-      "risk": "CLOUDERA /  PermitRootLogin / LBK",
-      "impact": "CLOUDERA /  PermitRootLogin / LBK",
+      "risk": "Para servidores 'LBKCDPxxxxxx' en el entorno CLOUDERA, debe estar el PermitRootLogin a NO.",
+      "impact": "",
       "variable": [
-        "Para servidores 'LBKCDPxxxxxx' en el entorno CLOUDERA, se debe permitir el PermitRootLogin a Yes."
+        "service=\"PermitRootLogin\""
       ],
       "SO": "Linux"
     },
     {
-      "object": "PermitRootLogin SOFTLAYER",
+      "object": "PermitRootLogin HORTONWORKS",
       "owner": "Sistemas",
       "tipo": "/S/",
       "ownerGroup": "Grupo de Sistemas",
@@ -368,7 +368,7 @@
         "NINELA ELENA PAVEL MANCIU",
         "RAMON RUIZ GARCIA"
       ],
-      "code": "2-DOC",
+      "code": "1-OK",
       "servers": [
         "LBKHORM01D",
         "LBKHORM01P",
@@ -382,10 +382,10 @@
         "LBKHORW04P",
         "LBKHORW05P"
       ],
-      "risk": "SOFTLAYER /  PermitRootLogin / LBK",
-      "impact": "SOFTLAYER /  PermitRootLogin / LBK",
+      "risk": "Para servidores 'LBKHORxxxxxx' en el entorno HORTONWORKS, se debe poner el PermitRootLogin a NO.",
+      "impact": "",
       "variable": [
-        "Para servidores 'LBKHORxxxxxx' en el entorno SOFTLAYER, se debe permitir el PermitRootLogin a Yes."
+        "service=\"PermitRootLogin\""
       ],
       "SO": "Linux"
     }
