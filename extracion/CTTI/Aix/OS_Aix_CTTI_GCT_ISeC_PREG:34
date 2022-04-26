@@ -151,9 +151,28 @@ find / -type f -nouser -ls
 /* CONTESTAR NO */ : " When checking for orphaned files, many files come out, the total number is: '$NUM', you can check with 'find / -nouser -ls'
 +-------------------------------------------------------------------------------------+
 ---E.1.4.7 System Settings
-"X server running
+"Login shell which supports time out
 
-/* CONTESTAR N/A */ : " only for system windows
+cat /etc/passwd  |  cut -d: -f1,7
+
+"Los ID de usuario individuales deben tener uno de los siguientes conjuntos como
+/usr/bin/rksh
+/usr/bin/psh
+/usr/bin/tsh
+/usr/bin/csh
+/bin/ksh
+/bin/rksh
+/bin/psh
+/bin/tsh
+/bin/csh
+/bin/sh
+/usr/bin/sh
+/bin/false
+/usr/bin/false
+/bin/ksh93
+/usr/rksh93
+/usr/bin/ksh93
+/usr/bin/rksh93
 +-------------------------------------------------------------------------------------+
 ---E.1.4.8 System Settings
 "SUID bit

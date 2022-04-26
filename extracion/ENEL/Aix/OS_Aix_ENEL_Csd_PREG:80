@@ -1,7 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 OS Aix Enel_Csd - Issue REF : 72640 / PRE 80
-
-
 +-------------------------------------------------------------------------------------+
 ---E.1.1.1.0 Password Requirements
 "UID
@@ -65,8 +63,6 @@ lssec -f /etc/security/user -s default -a minalpha
 lssec -f /etc/security/user -s default -a minother
 
 /*  CONTESTAR YES */ : "Si default tiene minother a 1."
-/* CONTESTAR NO  */ : ""
-/* CONTESTAR N/A */ : ""
 +-------------------------------------------------------------------------------------+
 ---E.1.1.5.1 Password Requirements	/usr/share/dict/words	File must contain:  $USER
 
@@ -78,9 +74,7 @@ oslevel -s
 tail /usr/share/dict/words
 
 /*  CONTESTAR YES */ : "Si tiene $USER al final."
-/* CONTESTAR NO  */ : "You do not have the $USER variable in the /usr/share/dict/words file."
-/* CONTESTAR N/A */ : ""
-+-------------------------------------------------------------------------------------+
+/* CONTESTAR NO  */ : "You do not have the $USER variable in the /usr/share/dict/words file."+-------------------------------------------------------------------------------------+
 ---E.1.1.5.2 Password Requirements	/etc/security/user
 
 "Debe contener dictionlist = /usr/share/dict/words, en el default.
@@ -90,9 +84,7 @@ tail /usr/share/dict/words
 lssec -f /etc/security/user -s default -a dictionlist
 
 /*  CONTESTAR YES */ : "Si en el default tiene dictionlist ="""
-/* CONTESTAR NO  */ : "You do not have the variable dictionary = /usr/share/dict/words in the /etc/security/user file."
-/* CONTESTAR N/A */ : ""
-+-------------------------------------------------------------------------------------+
+/* CONTESTAR NO  */ : "You do not have the variable dictionary = /usr/share/dict/words in the /etc/security/user file."+-------------------------------------------------------------------------------------+
 ---E.1.1.5.3 Password Requirements	/usr/share/dict/words file	File must exist.
 
 
@@ -100,8 +92,6 @@ lssec -f /etc/security/user -s default -a dictionlist
 ls -la /usr/share/dict/words
 
 /*  CONTESTAR YES */ : "Si existe el fichero"
-/* CONTESTAR NO  */ : ""
-/* CONTESTAR N/A */ : ""
 +-------------------------------------------------------------------------------------+
 ---E.1.1.6.0 Password Requirements	Password Length	Minimum 8 characters
 
@@ -111,9 +101,7 @@ ls -la /usr/share/dict/words
 lssec -f /etc/security/user -s default -a minlen
 
 /*  CONTESTAR YES */ : "Si el default tiene el minlen a 8."
-/* CONTESTAR NO  */ : "The value of the minlen is XX in the default."
-/* CONTESTAR N/A */ : ""
-+-------------------------------------------------------------------------------------+
+/* CONTESTAR NO  */ : "The value of the minlen is XX in the default."+-------------------------------------------------------------------------------------+
 ---E.1.1.6.1 Password Requirements	Password encryption/max length. 
 Applicable only to AIX 5.3 TL7 and later.
 Cualquiera de los siguientes: ssha512 ssha256 ssha1 smd5 
@@ -123,8 +111,6 @@ Cualquiera de los siguientes: ssha512 ssha256 ssha1 smd5
 lssec -f /etc/security/login.cfg -s usw -a pwd_algorithm
 
 /*  CONTESTAR YES */ : "Si pwd_algorithm, tiene cualquiera de los valores acordados."
-/* CONTESTAR NO  */ : ""
-/* CONTESTAR N/A */ : ""
 +-------------------------------------------------------------------------------------+
 ---E.1.1.6.2 Password Requirements	password Attribute within /etc/security/passwd
 Password may not be null
@@ -139,8 +125,6 @@ cat /etc/security/passwd | grep "password ="
 a='password = *$';grep -v '^\*' /etc/security/passwd | grep -p "$a" | egrep ":$|$a"
 
 /*  CONTESTAR YES */ : "Si no hay password nulas."
-/* CONTESTAR NO  */ : ""
-/* CONTESTAR N/A */ : ""
 +-------------------------------------------------------------------------------------+
 ---E.1.1.6.3 Password Requirements	second field of /etc/passwd
 
@@ -150,8 +134,6 @@ a='password = *$';grep -v '^\*' /etc/security/passwd | grep -p "$a" | egrep ":$|
 cat /etc/passwd | cut -d: -f 1,2
 
 /*  CONTESTAR YES */ : "Si no tiene valor nulo"
-/* CONTESTAR NO  */ : ""
-/* CONTESTAR N/A */ : ""
 +-------------------------------------------------------------------------------------+
 ---E.1.1.7 Password Requirements	histsize	10
 
@@ -160,8 +142,6 @@ cat /etc/passwd | cut -d: -f 1,2
 lssec -f /etc/security/user -s default -a histsize
 
 /*  CONTESTAR YES */ : "Si en el default el histsize es 10"
-/* CONTESTAR NO  */ : ""
-/* CONTESTAR N/A */ : ""
 +-------------------------------------------------------------------------------------+
 ---E.1.1.8 Password Requirements	flags=NOCHECK
 
@@ -173,8 +153,6 @@ a='flags = *NOCHECK'; grep -p "$a" /etc/security/passwd | egrep ":$|$a"
 cat /etc/security/passwd
 
 /*  CONTESTAR YES */ : "Si en las cuentas de usuarios no tiene flags=NOCHECK"
-/* CONTESTAR NO  */ : ""
-/* CONTESTAR N/A */ : ""
 +-------------------------------------------------------------------------------------+
 ---E.1.1.9 Password Requirements	loginretries	5
 
@@ -183,8 +161,6 @@ cat /etc/security/passwd
 lssec -f /etc/security/user -s default -a loginretries
 
 /*  CONTESTAR YES */ : "Si en el default el loginretries es 5."
-/* CONTESTAR NO  */ : ""
-/* CONTESTAR N/A */ : ""
 +-------------------------------------------------------------------------------------+
 ---E.1.1.10.1 Password Requirements
 "ROOT
@@ -208,9 +184,7 @@ lsuser -a rlogin root
 
 
 /*  CONTESTAR YES */ : "Si root tiene el rlogin=false"
-/* CONTESTAR NO  */ : "Root has rlogin=true."
-/* CONTESTAR N/A */ : ""
-+-------------------------------------------------------------------------------------+
+/* CONTESTAR NO  */ : "Root has rlogin=true."+-------------------------------------------------------------------------------------+
 ---E.1.1.10.3 Password Requirements
 
 Key system IDs to not be accessed via password.
@@ -222,8 +196,6 @@ Key system IDs to not be accessed via password.
 cat /etc/security/passwd | egrep -wp "daemon|bin|sys|adm|uucp|nuucp|lpd|imnadm|ipsec|ldap|lp|snapp|invscout|pconsole|nobody|esaadmin|sshd"
 
 /*  CONTESTAR YES */ : "Si las cuentas de sistemas no tienen contraseña."
-/* CONTESTAR NO  */ : ""
-/* CONTESTAR N/A */ : ""
 +-------------------------------------------------------------------------------------+
 ---E.1.1.11 Password Requirements
 "/etc/ftpusers	
@@ -243,7 +215,7 @@ grep "root" /etc/ftpusers
 ---E.1.1.12 Password Requirements	Sharing of passwords
 
 YES, es informacion del uso compartido de contraseñas
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ------E.1.1.14.0 Password Requirements	
 "Exemption to password expiration rule, non-privileged ids.
 
@@ -282,7 +254,7 @@ cat /etc/passwd | grep -i "$userid"
 
 SI NO CUMPLE LO ANTERIOR, REVISAR CUALQUIERA DE LAS 4 OPCIONES"
 
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 #Option A
 ------E. 1.1.15.0
 "Se divide en 3 partes"
@@ -294,7 +266,7 @@ SI NO CUMPLE LO ANTERIOR, REVISAR CUALQUIERA DE LAS 4 OPCIONES"
 		"Option A part 3 /etc/ftpusers
 
 /* CONTESTAR YES */ : " Si en la pregunta ------E.1.1.14.0, se ha contestado a YES : "Si el usuario no tiene password asignada(o si el usuario no valida por contraseña) y/o el ID es privilegiado".
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 #Option B
 ------E. 1.1.16.0
 "Se revisa:
@@ -302,7 +274,7 @@ SI NO CUMPLE LO ANTERIOR, REVISAR CUALQUIERA DE LAS 4 OPCIONES"
 		"/etc/passwd
 
 /* CONTESTAR YES */ : " Si en la pregunta ------E.1.1.14.0, se ha contestado a YES : "Si el usuario no tiene password asignada(o si el usuario no valida por contraseña) y/o el ID es privilegiado".
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 #Option C
 ------E. 1.1.17.0
 "Se revisa:
@@ -310,7 +282,7 @@ SI NO CUMPLE LO ANTERIOR, REVISAR CUALQUIERA DE LAS 4 OPCIONES"
 		"/etc/security/passwd
 
 /* CONTESTAR YES */ : " Si en la pregunta ------E.1.1.14.0, se ha contestado a YES : "Si el usuario no tiene password asignada(o si el usuario no valida por contraseña) y/o el ID es privilegiado".
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 #Option D
 ------E. 1.1.18.0
 "Se revisa:
@@ -318,7 +290,7 @@ SI NO CUMPLE LO ANTERIOR, REVISAR CUALQUIERA DE LAS 4 OPCIONES"
 		"/etc/passwd
 
 /* CONTESTAR YES */ : " Si en la pregunta ------E.1.1.14.0, se ha contestado a YES : "Si el usuario no tiene password asignada(o si el usuario no valida por contraseña) y/o el ID es privilegiado".
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ------E.1.1.14.1 Password Requirements
 "Exemption to password expiration rule, all ids.
 
@@ -328,7 +300,7 @@ SI NO CUMPLE LO ANTERIOR, REVISAR CUALQUIERA DE LAS 4 OPCIONES"
 /* CONTESTAR YES */ : " Si en la pregunta ------E.1.1.14.0, se ha contestado a YES : "Si el usuario no tiene password asignada(o si el usuario no valida por contraseña) y/o el ID es privilegiado".
 
 /* CONTESTAR N/A */ : " The user is already authenticated, has an approved exception (LIST OF ALREADY APPROVED EXCEPTIONS)."
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ------E.1.1.15.0 - Exemption to maxage rule - Option A
 //Nota: Esta regla NO se aplica a todos los ID, es simplemente una opción para los ID que necesitan contraseñas que no caducan.
 
@@ -336,7 +308,7 @@ SI NO CUMPLE LO ANTERIOR, REVISAR CUALQUIERA DE LAS 4 OPCIONES"
 "subcondiciones: ------E.1.1.15.1 y ------E.1.1.15.2 y ------E.1.1.15.3
 
 /* CONTESTAR YES */ : " Si cumple las 3 opciones siguientes, si no cumple una de las 3, pasar a la Exemption to maxage rule - Option B.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ------E.1.1.15.1 Password Requirements	
 "Option A part 1 /etc/security/user
 
@@ -347,7 +319,7 @@ lsuser -a login $userid
 /* CONTESTAR YES  */ : "Si la cuenta que no tiene maxage a 13, tiene el login a False"
 
 /* CONTESTAR NO   */ : "En la pregunta ---E.1.1.14.0 Password Requirements"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ------E.1.1.15.2 Password Requirements	
 "Option A part 2 /etc/security/user
 
@@ -358,7 +330,7 @@ lsuser -a rlogin $userid
 /* CONTESTAR YES  */ : "Si la cuenta no privilegiada, que no tenga maxage a 13, tiene el rlogin a False"
 
 /* CONTESTAR NO   */ : "En la pregunta ---E.1.1.14.0 Password Requirements"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ------E.1.1.15.3 Password Requirements	
 "Option A part 3 /etc/ftpusers
 
@@ -369,12 +341,12 @@ grep "$userid" /etc/ftpusers
 /* CONTESTAR YES  */ : "Si la cuenta no privilegiada, que no tenga maxage a 13, esta añadido en el fichero /etc/ftpusers"
 
 /* CONTESTAR NO   */ : "En la pregunta ---E.1.1.14.0 Password Requirements"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ------E.1.1.16.0 - Exemption to maxage rule - Option B
 "Opcion B, se revisa un ID específico si y sólo si el ID está configurado como requiere: ------E. 1.1.16.1
 
 /* CONTESTAR YES */ : " Si cumple la siguiente OPCION ---E. 1.1.16.1, si no cumple pasar a la Exemption to maxage rule - Option C.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ------E.1.1.16.1
 "Password Requirements	/etc/passwd
 //"*" specified in the password (2nd) field of the userID
@@ -391,12 +363,12 @@ cat /etc/passwd | grep -i "$userid"
 
 ##CUSTOMER
 /* CONTESTAR NO   */ : "Account $account has invalid Password Max Age setting = 0, must be Customer Required Setting: 13; Account Type: CUSTOMER (Strictest Setting Validated). Direct login: 1      must be set to "false". Remote login:  1      must be set to "false". Id must exist in file. Value of login shell:  /usr/bin/ksh must be "/bin/false""
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ------E.1.1.17.0 - Exemption to maxage rule - Option C
 "Se cumple la opción C para un ID específico si y sólo si el ID está configurado como requiere: ------E. 1.1.17.1
 
 /* CONTESTAR YES */ : " Si cumple la siguiente OPCION ---E. 1.1.17.1, si no cumple pasar a la Exemption to maxage rule - Option D.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ------E.1.1.17.1	Password Requirements	
 "en /etc/security/passwd debe tener password = *
 
@@ -409,12 +381,12 @@ cat /etc/security/passwd | grep -p "$userid"
 
 ##CUSTOMER
 /* CONTESTAR NO   */ : "Account $account has invalid Password Max Age setting = 0, must be Customer Required Setting: 13; Account Type: CUSTOMER (Strictest Setting Validated). Direct login: 1      must be set to "false". Remote login:  1      must be set to "false". Id must exist in file. Value of login shell:  /usr/bin/ksh must be "/bin/false""
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ------E.1.1.18.0 - Exemption to maxage rule - Option D
 "Se cumple la opción D para un ID específico si y sólo si el ID está configurado como requiere: ------E. 1.1.18.1
 
 /* CONTESTAR YES */ : " Si cumple la siguiente OPCION ---E. 1.1.18.1.
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ------E.1.1.18.1
 "el valor del shell de inicio de sesión en /etc/passwd debe ser /bin/false
 
@@ -423,7 +395,7 @@ grep "$userid" /etc/passwd | grep "/bin/false *$"
 /* CONTESTAR YES  */ : "Si para las cuentas que tiene passwd asignada y no caducan, la shell es /bin/false"
 
 /* CONTESTAR NO   */ : "En la pregunta ---E.1.1.14.0 Password Requirements"
-+--------------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
 ---E.1.1.14.1 Password Requirements
 Exemption to password expiration rule, all ids.
 #"Permitir maxage = 0 si ---E.1.1.16.0 y/o ---E.1.1.17.0 cumple para cualquier ID.
@@ -441,8 +413,6 @@ Exemption to password expiration rule, all ids.
 ls -la /var/adm/wtmp
 
 /*  CONTESTAR YES */ : "Si existe el fichero"
-/* CONTESTAR NO  */ : ""
-/* CONTESTAR N/A */ : ""
 +-------------------------------------------------------------------------------------+
 ---E.1.2.2 Logging	/var/adm/sulog
 /*  CONTESTAR YES*/ Must exist
@@ -454,68 +424,102 @@ ls -la /var/adm/sulog
 
 ls -la /etc/security/failedlogin
 +-------------------------------------------------------------------------------------+
-			  /* POLITICA OS - OS AIX*/ 
+			/* POLITICA OS - OS AIX */ 
 
----E.1.2.4 Logging	Log record retention time frame.
+---E.1.2.4 Logging
+"Log record retention time frame = 180 dias (26 semanas)
 
-#"Para la rotacion de log`s se revisa 2 cosas.
-1.- La rotacion que debe ser 180 dias.
-2.- El fichero del sudo.log debe estar rotando."#
-
-
-#COMPROBACIONES
-#1. - "La rotacion que debe ser 180 dias."#
-//Saber que sistema de rotacion USA
-
-"Si esta definido en el crontab
-crontab -l|grep -v ^#|grep logkeeper
-"Ejecutamos un -s del comando que nos devuelve
-//Ejmplo
-/end/bin/logkeeper/logkeeper -s
-
-"Mirar que los valores "$trim_retention_days, $backups_retention_days, " sean 180
-//Mirar el fichero de configuracion.
-cat /end/bin/logkeeper/logkeeper.cfg | egrep -i "trim_retention_days|backups_retention_days"
-
-#->sinofunciona mirar,Logrotate<-#
-
-cat /etc/logrotate.conf
-#->sinofunciona mirar sinLOGKEEPE&&&sinLOGROTATE<-#
-
-#->sinLOGKEEPE&&&sinLOGROTATE<-#
-cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+ // Para la rotacion de OS - AIX, Se revisa 2 cosas.
+	OPCION ➡ 1.- La rotacion que debe ser 180 dias (26 semanas).
+	OPCION ➡ 2.- El/Los ficheros de rotacion a 180 dias (26 semanas)."#
 
 
-#2.- "Los ficheros del sistema que deben estar rotando a 180 dias."#
-//Saber que Sistema Operativo estamos revisando "dependeran los ficheros".
-//Ya sea Linux o Aix.
-					    |		
-- Os / Linux				    |	- Os / Aix
---------------------		            |------------------------------
- /var/log/secure "*INFORMACION DE AUTENT."  | /var/adm/sulog "*REG.EL ORDEN EJECUCIONES SU"
- /var/adm/sudo.log "LOG`S INDIVIDUALES"	    | /var/log/sudo.log "LOG`S INDIVIDUALES"
- /var/log/messages "*MENSAJES DEL SISTEMAS" | /var/log/messages "*MENSAJES DEL SISTEMAS"
- /var/log/cron "*INF. INICIO DE TAREAS"	    | /var/adm/cron/log "*INF. INICIO DE TAREAS"
- /var/log/wtmp "*INF. DE LOS LOGUEOS"	    | /var/adm/wtmp "*INF. DE LOS LOGUEOS"
- 					    | /etc/security/failedlogin "*REG.INTENTOS FAIL"					            |
-		 |
+OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
+//Saber que sistema de rotacion USA, existen 3 OPCIONES
+
+	"Saber que sistema de rotacion USA
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 1. "#-> LOOGKEEPER <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	crontab -l|grep -v ^#|grep logkeeper
+
+	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper --trim 180 --keep 180
+
+	// -> si no funciona "LOGKEEPER" mirar Logrotate<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 2. "#-> LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	ls -la /etc/logrotate.conf
+
+	// La rotacion debe esta definida en semanas 'weekly' a 26:
+	head -10 /etc/logrotate.conf
+
+	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	OPCION ➡ 3. "#-> sin LOGKEEPER && sin LOGROTATE <-#
+	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+	
+	// Lo rotacion por rotalogs, la primera columna el fichero y la cuarta columna el valor a rotar:
+		
+	// EJEMPLO -> /var/adm/sudo.log:0:26:180:HP-UX,OSF1,SunOS
+
+OPCION ➡ 2. " Los ficheros de OS deben estar rotando.
+
+	"Saber que SO estamos revisando "dependera de los ficheros de sistemas a rotar", ya sea Linux o Aix
+        
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+          |                                                     |
+          |	- Os / Aix                                      |
+          |-----------------------------------------------------|
+          | /var/adm/sulog "*REG.EL ORDEN EJECUCIONES SU"       |
+          | /var/log/sudo.log "LOG`S INDIVIDUALES"              |
+          | /var/adm/messages "*MENSAJES DEL SISTEMAS"          |
+          | /var/adm/cron/log "*INF. INICIO DE TAREAS"          |
+          | /var/adm/wtmp "*INF. DE LOS LOGUEOS"                |
+          | /etc/security/failedlogin "*REG.INTENTOS FAIL"      |
+          | /etc/passwd                                         |
+          | /etc/group                                          |
+         ⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+
+// Debe existir
+# Aix: 
+
+ls -la /var/adm/sulog /var/log/sudo.log /var/adm/messages /var/adm/cron/log /var/adm/wtmp /etc/security/failedlogin
+
+// Debe existir una entrada de los ficheros de registro en la rotacion (OPCION ➡ 1. LOGKEEPER):
+
+	// Muestra resumen en la configuracion del SCRIPT de LOGKEEPER	
+	/usr/util/seguridad/logkeeper --trim 180 --keep 180 -s | egrep "sulog|messages|cron|wtmp|failedlogin|backup|sudo|config_file"
+
+	
+	// Si la rotacion se define en el fichero de configuracion de LOGKEEPER
+	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "sulog|messages|cron|wtmp|failedlogin|trim|backup|sudo"
+
+// Debe existir una entrada de los ficheros de registro en la rotacion (OPCION ➡ 2. LOGROTATE):
+
+	cat /etc/logrotate.conf | egrep -i "sulog|messages|cron|wtmp|failedlogin|sudo.log"
+
+	//Si la configuracion de rotado para OS, no existe en logrotate.conf, debe estar implementado en logrotate.d
+
+	cat /etc/logrotate.d/* | egrep -i "sulog|messages|cron|wtmp|failedlogin|sudo.log"
+
+// Debe existir una entrada de los ficheros de registro en la rotacion (OPCION ➡ 3. ROTALOGS):
+
+	// Si ejecuta en rotalogs con job de control.
+
+	cat /usr/local/bin/tareas/rotalogs.ksh | grep -v "^#"|grep -i logkee
+
+	//Debe existir /usr/local/bin/tareas/logkeeperalt.cfg en el codigo que se ejecuta.
 
 
-#3.- "Revisar si esta OK: "CONFIGURACION Y ROTACION PARA OS / Linux
-#"Deben existir "
-Linux: ls -la /var/log/secure /var/adm/sudo.log /var/log/messages /var/log/cron /var/log/wtmp
-Aix: ls -la /var/adm/sulog /var/log/sudo.log /var/log/messages /var/adm/cron/log /var/adm/wtmp /etc/security/failedlogin
+/* CONTESTAR YES */ : "Si la rotacion es 180 dias (26 semanas) y existen los ficheros de registro y estan rotando"
 
-#//Configuracion y Rotacion
-"Los ficheros del sistema deben estar implementados en el fichero de rotacion("ya sea logrotate.conf, loogkeeper").
-
-"Si no esta implementado en ninguno de los anteriores:
-	"- hay que revisar si esta incluido en "/etc/logrotate.d/syslog"
-
-cat /etc/logrotate.d/syslog
-
-/*  CONTESTAR YES*/: "Si esta rotando a 180 y existen los ficheros, y configurado en la rotacion"
-/* CONTESTAR NO*/ : "Si no esta rotando a 180 dias o no existen los ficheros, o no estan configurado en la rotacion.".#
+/* CONTESTAR NO   */ : " Si la rotacion no es de 180 dias (26 semanas), o los ficheros de rotatos no existen o no estan rotando"
+		       
+		       " Current rotation is '4' 'weeks' should be set to '26' 'weeks'.
+		       " The file: '/var/log/cron.log', does not exist.
+		       " The file: '/var/log/sudo.log', exists, but is not rotating in '/etc/logrotate.conf'.
 +-------------------------------------------------------------------------------------+
 ---E.1.2.5.1 Logging
 
@@ -571,8 +575,6 @@ authpriv.debug /var/log/secure
 cat /etc/syslog.conf|egrep "secure|auth"
 
 /*  CONTESTAR YES */ : "Si exsite authpriv.info /var/log/secure"
-/* CONTESTAR NO  */ : ""
-/* CONTESTAR N/A */ : ""
 +-------------------------------------------------------------------------------------+
 ---E.1.2.5.4 Logging
 //Must exist /var/log/secure
@@ -581,8 +583,6 @@ cat /etc/syslog.conf|egrep "secure|auth"
 ls -la /var/log/secure
 
 /*  CONTESTAR YES */ : "Si existe el fichero"
-/* CONTESTAR NO  */ : ""
-/* CONTESTAR N/A */ : ""
 +-------------------------------------------------------------------------------------+
 ---E.1.2.6.1 Logging	
 Synchronized clocks: active service	
@@ -593,8 +593,6 @@ xntpd active
 lssrc -s xntpd
    
 /*  CONTESTAR YES*/ "should return a status of 'active' for xntpd
-/* CONTESTAR NO  */ : ""
-/* CONTESTAR N/A */ : ""
 +-------------------------------------------------------------------------------------+
 ---E.1.2.6.2 Logging	Synchronized clocks: configured service
 //xntpd status reports valid configuration, specifically does not report 'insane'.
@@ -604,8 +602,6 @@ lssrc -s xntpd
 lssrc -ls xntpd | grep -i insane
 
 /*  CONTESTAR YES */ : "no debería devolver nada."
-/* CONTESTAR NO  */ : ""
-/* CONTESTAR N/A */ : ""
 +-------------------------------------------------------------------------------------+
 ---E.1.5.1.1 Network Settings	
 ftpd daemon options
@@ -630,8 +626,6 @@ ls -ld /home/ftp
 ls -la /usr/share/dict/words
 
 /*  CONTESTAR YES */ : "Si existe el fichero"
-/* CONTESTAR NO  */ : ""
-/* CONTESTAR N/A */ : ""
 +-------------------------------------------------------------------------------------+
 ---E.1.5.1.3 Network Settings	
 Configuration of bin subdirectory of the ftp account home directory.
@@ -712,8 +706,6 @@ grep 'deny:' /etc/tftpaccess.ctl
 cat /etc/exports
 
 /*  CONTESTAR YES */ : "Si existe el fichero, y esta vacio"
-/* CONTESTAR NO  */ : ""
-/* CONTESTAR N/A */ : ""
 +-------------------------------------------------------------------------------------+
 ---E.1.5.6 Network Settings	
 /etc/hosts.equiv file
