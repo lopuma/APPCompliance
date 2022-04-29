@@ -1,71 +1,182 @@
-{
-  "AFB": [
+[
     {
-      "politica": [
-        {
-          "OS": [
-            "os_preg4",
-            "os_preg45",
-            "os_preg35",
-            "os_preg15",
-            "os_preg16"
-          ]
-        },
-        {
-          "SUDO": [
-            "sudo_preg4",
-            "sudo_preg14"
-          ]
-        }
-      ]
-    }
-  ],
-  "ASISA": [
+        "name": "AFB",
+        "cod": 1,
+        "politica": [
+            {
+                "main": "SSH",
+                "script": [
+                    "ssh_preg4",
+                    "ssh_preg14"
+                ],
+                "icon": "icon_ssh.png"
+            },
+            {
+                "main": "VIOS",
+                "script": [
+                    "vios_preg4",
+                    "vios_preg44",
+                    "vios_preg43",
+                    "vios_preg2",
+                    "vios_preg1"
+                ],
+                "icon": "compliance.png"
+            }
+        ]
+    },
+    {   
+        "name": "ASISA",
+        "cod": 2,
+        "politica": [
+            {
+                "main": "SUDO",
+                "script": [
+                    "sudo_preg4",
+                    "sudo_preg14"
+                ],
+                "icon": "icon_sudo.png"
+            },
+            {
+                "main": "SISTEMAS",
+                "script": [
+                    "os_preg4",
+                    "os_preg45",
+                    "os_preg35",
+                    "os_preg15",
+                    "os_preg16"
+                ],
+                "icon": "icon_sys.png"
+            }
+        ]
+    },
     {
-      "politica": [
-        {
-          "SSH": [
-            "ssh_preg4",
-            "ssh_preg14"
-          ]
-        },
-        {
-          "SUDO": [
-            "sudo_preg4",
-            "sudo_preg14"
-          ]
-        }
-      ]
-    }
-  ],
-  "CESCE": [
+        "name": "CESCE",
+        "cod": 3,
+        "politica": [
+            {
+                "main": "",
+                "script": [
+                    ""
+                ],
+                "icon": ""
+            }
+        ]
+    },
     {
-      "politica": [
-        {
-          "VIOS": [
-            "vios_preg4",
-            "vios_preg44",
-            "vios_preg43",
-            "vios_preg2",
-            "vios_preg1"
-          ]
-        },
-        {
-          "HMC": [
-            "hmc_preg4",
-            "hmc_preg14"
-          ]
-        }
-      ]
+        "name": "CTTI",
+        "cod": 4,
+        "politica": [
+            {
+                "main": "",
+                "script": [
+                    ""
+                ],
+                "icon": ""
+            }
+        ]
+    },
+    {
+        "name": "ENEL",
+        "cod": 5,
+        "politica": [
+            {
+                "main": "",
+                "script": [
+                    ""
+                ],
+                "icon": ""
+            }
+        ]
+    },
+    {
+        "name": "EUROFRED",
+        "cod": 6,
+        "politica": [
+            {
+                "main": "",
+                "script": [
+                    ""
+                ],
+                "icon": ""
+            }
+        ]
+    },
+    {
+        "name": "FT",
+        "cod": 7,
+        "politica": [
+            {
+                "main": "",
+                "script": [
+                    ""
+                ],
+                "icon": ""
+            }
+        ]
+    },
+    {
+        "name": "INFRA",
+        "cod": 8,
+        "politica": [
+            {
+                "main": "",
+                "script": [
+                    ""
+                ],
+                "icon": ""
+            }
+        ]
+    },
+    {
+        "name": "JGC",
+        "cod": 9,
+        "politica": [
+            {
+                "main": "",
+                "script": [
+                    ""
+                ],
+                "icon": ""
+            }
+        ]
+    },
+    {
+        "name": "LBK",
+        "cod": 10,
+        "politica": [
+            {
+                "main": "",
+                "script": [
+                    ""
+                ],
+                "icon": ""
+            }
+        ]
+    },
+    {
+        "name": "PLANETA",
+        "cod": 11,
+        "politica": [
+            {
+                "main": "",
+                "script": [
+                    ""
+                ],
+                "icon": ""
+            }
+        ]
+    },
+    {
+        "name": "SERVIHABITAT",
+        "cod": 12,
+        "politica": [
+            {
+                "main": "",
+                "script": [
+                    ""
+                ],
+                "icon": ""
+            }
+        ]
     }
-  ],
-  "CTTI": [],
-  "ENEL": [],
-  "EUROFRED": [],
-  "FT": [],
-  "INFRA": [],
-  "JGC": [],
-  "LBK": [],
-  "PLANETA": [],
-  "SERVIHABITAT": []  
-}
+]
