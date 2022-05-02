@@ -54,11 +54,11 @@
         "cod": 3,
         "politica": [
             {
-                "main": "",
+                "main": "SISTEMAS",
                 "script": [
-                    ""
+                    "os_preg1"
                 ],
-                "icon": ""
+                "icon": "icon_sys.png"
             }
         ]
     },
@@ -67,11 +67,11 @@
         "cod": 4,
         "politica": [
             {
-                "main": "",
+                "main": "SISTEMAS4",
                 "script": [
-                    ""
+                    "os_preg1"
                 ],
-                "icon": ""
+                "icon": "icon_sys.png"
             }
         ]
     },
@@ -80,11 +80,11 @@
         "cod": 5,
         "politica": [
             {
-                "main": "",
+                "main": "SISTEMAS5",
                 "script": [
-                    ""
+                    "os_preg1"
                 ],
-                "icon": ""
+                "icon": "icon_sys.png"
             }
         ]
     },
@@ -93,11 +93,11 @@
         "cod": 6,
         "politica": [
             {
-                "main": "",
+                "main": "SISTEMAS6",
                 "script": [
-                    ""
+                    "os_preg1"
                 ],
-                "icon": ""
+                "icon": "icon_sys.png"
             }
         ]
     },
@@ -106,11 +106,11 @@
         "cod": 7,
         "politica": [
             {
-                "main": "",
+                "main": "SISTEMAS7",
                 "script": [
-                    ""
+                    "os_preg1"
                 ],
-                "icon": ""
+                "icon": "icon_sys.png"
             }
         ]
     },
@@ -119,11 +119,11 @@
         "cod": 8,
         "politica": [
             {
-                "main": "",
+                "main": "SISTEMAS8",
                 "script": [
-                    ""
+                    "os_preg1"
                 ],
-                "icon": ""
+                "icon": "icon_sys.png"
             }
         ]
     },
@@ -132,11 +132,11 @@
         "cod": 9,
         "politica": [
             {
-                "main": "",
+                "main": "SISTEMAS9",
                 "script": [
-                    ""
+                    "os_preg1"
                 ],
-                "icon": ""
+                "icon": "icon_sys.png"
             }
         ]
     },
@@ -145,11 +145,11 @@
         "cod": 10,
         "politica": [
             {
-                "main": "",
+                "main": "SISTEMAS10",
                 "script": [
-                    ""
+                    "os_preg1"
                 ],
-                "icon": ""
+                "icon": "icon_sys.png"
             }
         ]
     },
@@ -158,11 +158,11 @@
         "cod": 11,
         "politica": [
             {
-                "main": "",
+                "main": "SISTEMAS11",
                 "script": [
-                    ""
+                    "os_preg1"
                 ],
-                "icon": ""
+                "icon": "icon_sys.png"
             }
         ]
     },
@@ -171,11 +171,11 @@
         "cod": 12,
         "politica": [
             {
-                "main": "",
+                "main": "SISTEMAS12",
                 "script": [
-                    ""
+                    "os_preg1"
                 ],
-                "icon": ""
+                "icon": "icon_sys.png"
             }
         ]
     }

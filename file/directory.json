@@ -1329,7 +1329,7 @@
       "SO": "Linux"
     },
     {
-      "object": "/opt/IBM/ITM/lx8266/08/bin/",
+      "object": "/opt/IBM/ITM/",
       "owner": "root",
       "tipo": "/F/",
       "ownerGroup": "*EAUXOS",
@@ -1346,29 +1346,7 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "fileOPT=\"/opt/IBM/ITM/lx8266/08/bin/\""
-      ],
-      "SO": "Linux"
-    },
-    {
-      "object": "/opt/IBM/ITM/smitools/",
-      "owner": "root",
-      "tipo": "/F/",
-      "ownerGroup": "*EAUXOS",
-      "user": [
-        "Soporte LINUX de FT Sigifi",
-        "PABLO MOSCOSO SARABIA",
-        "FT-LINUX - Santiago Tirado Salvador",
-        "FT-LINUX - Antonio Gil López"
-      ],
-      "code": "1-OK",
-      "servers": [
-        "ALL Servers"
-      ],
-      "risk": "",
-      "impact": "",
-      "variable": [
-        "directory=\"/opt/IBM/ITM/smitools/\"","fileOPT=\"/opt/IBM/ITM/smitools/\""
+        "directory=\"/opt/IBM/ITM/\"","fileOPT=\"/opt/IBM/ITM/\""
       ],
       "SO": "Linux"
     },
