@@ -1224,6 +1224,25 @@
       "SO": "Linux"
     },
     {
+      "object": "/coherence/",
+      "owner": "cohmdgas",
+      "tipo": "/F/",
+      "ownerGroup": "CUSTOMER",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / STICKY / CUSTOMER",
+      "impact": "GENERICO / STICKY / CUSTOMER",
+      "variable": [
+        "Usuario para entorno de ASEGURAMIENTO.TAS000001519099"
+      ],
+      "SO": "Linux"
+    },
+    {
       "object": "/ogg_mdg/",
       "owner": "ogg_mdg",
       "tipo": "/C/",

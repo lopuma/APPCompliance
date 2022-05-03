@@ -1086,6 +1086,26 @@
             "SO": "Aix / Linux"
         },
         {
+            "object": "/home/esy9ar02/.ssh/authorized_keys",
+            "owner": "esy9ar02",
+            "tipo": "/E/",
+            "ownerGroup": "Infortec",
+            "user": [
+                "ft-bbdd-raul_bolano_diaz"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/esy9ar02/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/E/Y9F36N/INFORTEC/RAUL BOLANO DIAZ!!\""
+            ],
+            "SO": "Aix / Linux"
+        },
+        {
             "object": "/home/es086327/.ssh/authorized_keys",
             "owner": "es086327",
             "tipo": "/K/",
