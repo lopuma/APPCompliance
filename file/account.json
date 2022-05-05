@@ -528,9 +528,9 @@
       "object": "aotipat1",
       "owner": "CACF",
       "tipo": "/S/",
-      "ownerGroup": "Group FT Linux",
+      "ownerGroup": "Group Healtcheking",
       "user": [
-        "Group FT Linux"
+        "Group Healtcheking"
       ],
       "code": "2-DOC",
       "servers": [
@@ -568,8 +568,15 @@
       "tipo": "/F/",
       "ownerGroup": "*EAUXOS",
       "user": [
-        "Soporte LINUX de FT Sigifi",
-        "Soporte UNIX de FT Sigifi"
+        "--- Soporte LINUX de FT Sigifi ---",
+        "FT-LINUX - Antonio Gil López",
+        "FT-LINUX - Santiago Tirado Salvador",
+        "PABLO MOSCOSO SARABIA",
+        "--- Soporte UNIX de FT Sigifi ---",
+        "FT-UNIX Angel Arribas Martinez",
+        "FT-UNIX Juan Carlos Herranz Jimenez",
+        "FT-UNIX_jose_ramon_alonso_dominguez",
+        "PEDRO JAVIER PRIETO HOLGUIN"
       ],
       "code": "1-OK",
       "servers": [
@@ -580,7 +587,7 @@
       "variable": [
         "account=\"root\""
       ],
-      "SO": "Linux"
+      "SO": "Linux / Aix"
     },
     {
       "object": "ctmagent",
@@ -602,12 +609,37 @@
       "SO": "Linux"
     },
     {
+      "object": "operador",
+      "owner": "operador",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Soporte LINUX de FT Sigifi",
+        "FT-LINUX - Antonio Gil López",
+        "FT-LINUX - Santiago Tirado Salvador",
+        "PABLO MOSCOSO SARABIA"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"operador\""
+      ],
+      "SO": "Linux"
+    },
+    {
       "object": "tivoli",
       "owner": "tivoli",
       "tipo": "/F/",
       "ownerGroup": "MONITORING",
       "user": [
-        "Grupo FT Linux - Sigifi"
+        "Soporte LINUX de FT Sigifi",
+        "FT-LINUX - Antonio Gil López",
+        "FT-LINUX - Santiago Tirado Salvador",
+        "PABLO MOSCOSO SARABIA"
       ],
       "code": "1-OK",
       "servers": [
@@ -643,7 +675,7 @@
       "object": "cdevzbbx",
       "owner": "cdevzbbx",
       "tipo": "/C/",
-      "ownerGroup": "CUSTOMER Orange",
+      "ownerGroup": "CUSTOMER",
       "user": [
         "CUSTOMER"
       ],
@@ -662,7 +694,7 @@
       "object": "cdevdisc",
       "owner": "cdevdisc",
       "tipo": "/C/",
-      "ownerGroup": "CUSTOMER Orange",
+      "ownerGroup": "CUSTOMER",
       "user": [
         "CUSTOMER"
       ],

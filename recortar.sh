@@ -3,15 +3,15 @@
 miLista=(
     'Añadir Descripcion.'
     'Saber si es /C/S/F/ or /K/I/E/'
-    "MIN AGE - Linux"
-    'MAX AGE - Linux'
-    'MAX AGE - Linux - CTTI'
+    "Corregir MIN AGE - Linux"
+    'Corregir MAX AGE - Linux'
+    'Corregir MAX AGE - Linux - CTTI'
     '--- Listar CUENTAS - Linux'
-    'MIN AGE - Aix'
-    'MAX AGE - Aix'
+    'Corregir MIN AGE - Aix'
+    'Corregir MAX AGE - Aix'
     '--- Listar CUENTAS de MIN AGE- Aix'
     '--- Listar CUENTAS de MAX AGE- Aix'
-    'MIN LEN Sistemas Aix'
+    'Corregir MIN LEN Sistemas Aix'
     '---- Listar MIN LEN Sistemas Aix'
     'Salir'
 )

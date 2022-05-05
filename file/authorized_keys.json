@@ -217,18 +217,18 @@
             "object": "/home/afb-md/.ssh/authorized_keys",
             "owner": "afb-md",
             "tipo": "/C/",
-            "ownerGroup": "Customer",
+            "ownerGroup": "CUSTOMER",
             "user": [
-                "Customer"
+                "CUSTOMER"
             ],
             "code": "2-DOC",
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "GENERICO / LABEL / CUSTOMER",
-            "impact": "GENERICO / LABEL / CUSTOMER",
+            "risk": "Usuario de aplicativo, customer\n2-DOC para FROM / PASSPHRASE",
+            "impact": "1-OK para\nIdentify and Authenticate Users/Public Key Label",
             "variable": [
-                "Usuario de aplicativo"
+                ""
             ],
             "SO": "Linux"
         },
@@ -236,18 +236,18 @@
             "object": "/home/runadm/.ssh/authorized_keys",
             "owner": "runadm",
             "tipo": "/C/",
-            "ownerGroup": "Customer",
+            "ownerGroup": "CUSTOMER",
             "user": [
-                "Customer"
+                "CUSTOMER"
             ],
             "code": "2-DOC",
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "GENERICO / LABEL / CUSTOMER",
-            "impact": "GENERICO / LABEL / CUSTOMER",
+            "risk": "Usuario para automatizaciones, customer\n2-DOC para FROM / PASSPHRASE",
+            "impact": "1-OK para\nIdentify and Authenticate Users/Public Key Label",
             "variable": [
-                "Usuario para automatizaciones"
+                ""
             ],
             "SO": "Linux"
         },
@@ -255,18 +255,18 @@
             "object": "/home/ullink/.ssh/authorized_keys",
             "owner": "ulprd-md",
             "tipo": "/C/",
-            "ownerGroup": "Customer",
+            "ownerGroup": "CUSTOMER",
             "user": [
-                "Customer"
+                "CUSTOMER"
             ],
             "code": "2-DOC",
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "GENERICO / LABEL / CUSTOMER",
-            "impact": "GENERICO / LABEL / CUSTOMER",
+            "risk": "Usuario de aplicativo, customer\n2-DOC para FROM / PASSPHRASE",
+            "impact": "1-OK para\nIdentify and Authenticate Users/Public Key Label",
             "variable": [
-                "Usuario de aplicativo"
+                ""
             ],
             "SO": "Linux"
         },
@@ -274,18 +274,18 @@
             "object": "/home/userauto/.ssh/authorized_keys",
             "owner": "userauto",
             "tipo": "/C/",
-            "ownerGroup": "Customer",
+            "ownerGroup": "CUSTOMER",
             "user": [
-                "Customer"
+                "CUSTOMER"
             ],
             "code": "2-DOC",
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "GENERICO / LABEL / CUSTOMER",
-            "impact": "GENERICO / LABEL / CUSTOMER",
+            "risk": "Automation user rundeck, customer\n2-DOC para FROM / PASSPHRASE",
+            "impact": "1-OK para\nIdentify and Authenticate Users/Public Key Label",
             "variable": [
-                "automation user rundeck"
+                ""
             ],
             "SO": "Linux"
         },
@@ -415,14 +415,14 @@
             "tipo": "/C/",
             "ownerGroup": "CUSTOMER",
             "user": [
-                "Usuario sFTP IMfortia"
+                "Usuario sFTP Imfortia"
             ],
             "code": "2-DOC",
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "GENERICO / LABEL / CUSTOMER",
-            "impact": "GENERICO / LABEL / CUSTOMER",
+            "risk": "Usuario sFTP Imfortia, customer\n2-DOC para FROM / PASSPHRASE",
+            "impact": "1-OK para\nIdentify and Authenticate Users/Public Key Label",
             "variable": [
                 ""
             ],
@@ -1046,6 +1046,26 @@
             "SO": "Linux"
         },
         {
+            "object": "/homeuser/sigaux/.ssh/authorized_keys",
+            "owner": "sigaux",
+            "tipo": "/C/",
+            "ownerGroup": "CUSTOMER",
+            "user": [
+                "CUSTOMER"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Usuario Explotación customer\n2-DOC para FROM / PASSPHRASE\nGENERICO / AUTHORIZED_KEYS / CUSTOMER",
+            "impact": "1-OK para\nIdentify and Authenticate Users/Public Key Label",
+            "variable": [
+                "file_authorized=\"/homeuser/sigaux/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/C/FTE/FTE/Usuario Explotación!!\""
+            ],
+            "SO": "Linux"
+        },
+        {
             "object": "/home/esy9d5vc/.ssh/authorized_keys",
             "owner": "esy9d5vc",
             "tipo": "/E/",
@@ -1062,6 +1082,26 @@
             "variable": [
                 "file_authorized=\"/home/esy9d5vc/.ssh/authorized_keys\"",
                 "gecos=\"!!ES/E/Y9D5VC/INFORTEC/Javier Perez Miguel!!\""
+            ],
+            "SO": "Aix / Linux"
+        },
+        {
+            "object": "/home/esy9ar02/.ssh/authorized_keys",
+            "owner": "esy9ar02",
+            "tipo": "/E/",
+            "ownerGroup": "Infortec",
+            "user": [
+                "ft-bbdd-raul_bolano_diaz"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/esy9ar02/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/E/Y9F36N/INFORTEC/RAUL BOLANO DIAZ!!\""
             ],
             "SO": "Aix / Linux"
         },
@@ -1089,18 +1129,19 @@
             "object": "/home/sigaux/.ssh/authorized_keys",
             "owner": "sigaux",
             "tipo": "/C/",
-            "ownerGroup": "Customer",
+            "ownerGroup": "CUSTOMER",
             "user": [
-                "Customer"
+                "CUSTOMER"
             ],
             "code": "2-DOC",
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "GENERICO / LABEL / CUSTOMER",
-            "impact": "GENERICO / LABEL / CUSTOMER",
+            "risk": "Usuario Explotación customer\n2-DOC para FROM / PASSPHRASE",
+            "impact": "1-OK para\nIdentify and Authenticate Users/Public Key Label",
             "variable": [
-                ""
+                "file_authorized=\"/home/sigaux/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/C/FTE/FTE/Usuario Explotación!!\""
             ],
             "SO": "Aix / Linux"
         }

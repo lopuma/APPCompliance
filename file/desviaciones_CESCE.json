@@ -126,7 +126,7 @@
         "descripcion": "Duplicate GID for Group: $GRUPO, GID: xxxx. Each GID must only be used once",
         "comprobacion": "+-------------------------------------------------------------------------------------+\n## Hay que revisar si son grupo que tienen cuentas de clientes, y se excepcionan.\n\nGENERICO /  GID duplicate / CUSTOMER\n\n## Si no es de cliente, se debe revisar con el tecnico, por si es un error de creacion de grupo.\n\n## Debemos hacer un \"cat /etc/group\" al grupo y de la lista de usuario que nos da, hacer un \"cat /etc/passwd\" y comprobar que tipo de cuenta es.\n+-------------------------------------------------------------------------------------+",
         "copia": null,
-        "editar": "+-------------------------------------------------------------------------------------+\nLo deberia de cambiar el tecnico o almenos decirnos que GID deberia tener ese grupo\n+-------------------------------------------------------------------------------------+\n\ngroupmod -g NUEVOGID $GRUPO",
+        "editar": "+-------------------------------------------------------------------------------------+\n## Lo deberia de cambiar el tecnico o almenos decirnos que GID deberia tener ese grupo\n+-------------------------------------------------------------------------------------+\n\ngroupmod -g NUEVOGID $GRUPO",
         "refrescar": null,
         "evidencia": "clear\ndate\nhostname\ncat /etc/passwd | grep $GRUPO",
         "SO": "Linux"
