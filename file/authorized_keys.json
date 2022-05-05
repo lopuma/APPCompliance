@@ -364,7 +364,7 @@
                 "ALL Servers"
             ],
             "risk": "2-DOC para FROM\nGENERICO / AUTHORIZED_KEYS / CUSTOMER",
-            "impact": "1-OK para Public Key Label",
+            "impact": "Only 1-OK for Public Key Label",
             "variable": [
                 ""
             ],
@@ -383,7 +383,7 @@
                 "ALL Servers"
             ],
             "risk": "2-DOC para FROM\nGENERICO / AUTHORIZED_KEYS / CUSTOMER",
-            "impact": "1-OK para Public Key Label",
+            "impact": "Only 1-OK for Public Key Label",
             "variable": [
                 "file_authorized=\"/home/explot/.ssh/authorized_keys\"",
                 "gecos=\"!!ES/C/SISTEMAS/CESCE/Usuario cesce SD3219554!!\"" 
@@ -403,7 +403,7 @@
                 "ALL Servers"
             ],
             "risk": "2-DOC para FROM\nGENERICO / AUTHORIZED_KEYS / CUSTOMER",
-            "impact": "1-OK para Public Key Label",
+            "impact": "Only 1-OK for Public Key Label",
             "variable": [
                 ""
             ],
@@ -441,7 +441,7 @@
                 "ALL Servers"
             ],
             "risk": "2-DOC para FROM\nGENERICO / AUTHORIZED_KEYS / CUSTOMER",
-            "impact": "1-OK para Public Key Label",
+            "impact": "Only 1-OK for Public Key Label",
             "variable": [
                 ""
             ],
@@ -460,7 +460,7 @@
                 "ALL Servers"
             ],
             "risk": "2-DOC para FROM\nGENERICO / AUTHORIZED_KEYS / CUSTOMER",
-            "impact": "1-OK para Public Key Label",
+            "impact": "Only 1-OK for Public Key Label",
             "variable": [
                 ""
             ],
@@ -487,7 +487,7 @@
                 "INFLIORAPRO02"
             ],
             "risk": "2-DOC para FROM\nGENERICO / AUTHORIZED_KEYS / RAC Oracle",
-            "impact": "1-OK para Public Key Label",
+            "impact": "Only 1-OK for Public Key Label",
             "variable": [
                 "file_authorized=\"/home/oracle/.ssh/authorized_keys\"",
                 "gecos=\"!!ES/F/*EDDBA2/KYNDRYL/User Pool!!\""                
@@ -515,7 +515,7 @@
                 "INFLIORAPRO02"
             ],
             "risk": "GENERICO / AUTHORIZED_KEYS / RAC Oracle",
-            "impact": "1-OK para Public Key Label",
+            "impact": "Only 1-OK for Public Key Label",
             "variable": [
                 "file_authorized=\"/home/grid/.ssh/authorized_keys\"",
                 "gecos=\"!!ES/F/*EDDBA2/KYNDRYL/Usuario grid!!\""                
@@ -544,6 +544,46 @@
             "SO": "Linux"
         },
         {
+            "object": "/home/apachedep/.ssh/authorized_keys",
+            "owner": "apachedep",
+            "tipo": "/S/",
+            "ownerGroup": "*EGCEBH",
+            "user": [
+                "EBH"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "GENERICO / PUBLIC KEY / IBM",
+            "impact": "Only 1-OK for Public Key Label",
+            "variable": [
+                "file_authorized=\"/home/apachedep/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/S/*EGCEBH/IBM-SO/Apache Deployer!!\""
+            ],
+            "SO": "Linux"
+        },
+        {
+            "object": "/home/apagc0/.ssh/authorized_keys",
+            "owner": "apagc0",
+            "tipo": "/S/",
+            "ownerGroup": "*EGCEBH",
+            "user": [
+                "EBH"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "GENERICO / PUBLIC KEY / IBM",
+            "impact": "Only 1-OK for Public Key Label",
+            "variable": [
+                "file_authorized=\"/home/apagc0/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/S/*EGCEBH/IBM-SO/Apache Instance 0!!\""
+            ],
+            "SO": "Linux"
+        },
+        {
             "object": "/home/ansible/.ssh/authorized_keys",
             "owner": "ansible",
             "tipo": "/S/",
@@ -555,8 +595,8 @@
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "1-OK para Public Key Label",
-            "impact": "1-OK para Public Key Label",
+            "risk": "Only 1-OK for Public Key Label",
+            "impact": "Only 1-OK for Public Key Label",
             "variable": [
                 "file_authorized=\"/home/ansible/.ssh/authorized_keys\"",
                 "gecos=\"!!ES/S/*EGCLIN/IBM-SO/Ansible!!\""                
@@ -575,8 +615,8 @@
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "1-OK para Public Key Label",
-            "impact": "1-OK para Public Key Label",
+            "risk": "GENERICO / PUBLIC KEY / IBM",
+            "impact": "Only 1-OK for Public Key Label",
             "variable": [
                 "file_authorized=\"/home/ora4g3nt/.ssh/authorized_keys\"",
                 "gecos=\"!!ES/S/*EGCDDB/IBM-SO/Usuario Proprietario de los binarios de Oracle!!\""                
@@ -587,7 +627,7 @@
             "object": "/home/tomgc0/.ssh/authorized_keys",
             "owner": "tomgc0",
             "tipo": "/S/",
-            "ownerGroup": "Soporte",
+            "ownerGroup": "*EGCEBH",
             "user": [
                 "Soporte"
             ],
@@ -595,8 +635,8 @@
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "1-OK para Public Key Label",
-            "impact": "1-OK para Public Key Label",
+            "risk": "GENERICO / PUBLIC KEY / IBM",
+            "impact": "Only 1-OK for Public Key Label",
             "variable": [
                 "file_authorized=\"/home/tomgc0/.ssh/authorized_keys\"",
                 "gecos=\"!!ES/S/EGCEBH/CTTI/Tomcat CATALINA_BASE 0!!\""                

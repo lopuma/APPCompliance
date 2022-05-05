@@ -57,13 +57,13 @@
   {
     "modulo": "Password Requirements/Acceptance of the null password with nullok parameter",
     "clave": "PAM / NULLOK",
-    "descripcion": "PAM service: /etc/pam.d/system-auth\nPAM service: /etc/pam.d/password-auth\n\nuse pam_unix.so auth module with \"nullok\" parameter. This parameter is forbidden as it allows acceptance of the null password.",
-    "comprobacion": null,
-    "copia": null,
-    "editar": null,
-    "refrescar": null,
-    "evidencia": null,
-    "SO": "Linux"
+        "descripcion": "PAM service: '/etc/pam.d/password-auth', '/etc/pam.d/system-auth'   use pam_unix.so auth module with \"nullok\" parameter. This parameter is forbidden as it allows acceptance of the null password.",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n// NOTA : Hace referencia al parametro 'nullok' en RHEL 7 y RHEL 8.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n##--- RHEL 7 & RHEL 8 ('system-auth','password-auth')\n## Los ficheros del PAM, NO deben tener en el parametro 'nullok', en los diferentes modulos\n+-------------------------------------------------------------------------------------+\n\ncat /etc/pam.d/system-auth | grep \"nullok\"\ncat /etc/pam.d/password-auth | grep \"nullok\"",
+        "copia": "+-------------------------------------------------------------------------------------+\n## Obtener usuario logueado:\n+-------------------------------------------------------------------------------------+\n\nuser=$(logname)\n\n+-------------------------------------------------------------------------------------+\n## Backup con HOME en MAYÚSCULAS\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/pam.d/system-auth /home/${user^^}/system-auth_`date +%d%m%y_%T`\n\ncp -p /etc/pam.d/password-auth /home/${user^^}/password-auth_`date +%d%m%y_%T`\n\n+-------------------------------------------------------------------------------------+\n## Backup con HOME en minúsculas\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/pam.d/system-auth /home/${user,,}/system-auth_`date +%d%m%y_%T`\n\ncp -p /etc/pam.d/password-auth /home/${user,,}/password-auth_`date +%d%m%y_%T`",
+        "editar": "+-------------------------------------------------------------------------------------+\n // NOTA : Eliminar el parametro 'nullok', en los diferentes modulos del pam.d.\n+-------------------------------------------------------------------------------------+\n\n+-------------------------------------------------------------------------------------+\n## Editar\n+-------------------------------------------------------------------------------------+\n\nvi /etc/pam.d/system-auth\n\n+-------------------------------------------------------------------------------------+\n## Lo mismo con 'password-auth'\n+-------------------------------------------------------------------------------------+\n\nvi /etc/pam.d/password-auth\n",
+        "refrescar": null,
+        "evidencia": "clear\ndate;hostname\ncat /etc/*release | grep -i release\ncat /etc/pam.d/system-auth | grep \"nullok\"\ncat /etc/pam.d/password-auth | grep \"nullok\"\n",
+        "SO": "Linux"
   },
   {
     "modulo": "Password Requirements/Password MAX Age /etc/shadow",
