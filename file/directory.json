@@ -1675,6 +1675,28 @@
       "SO": "Linux"
     },
     {
+      "object": "/opt/IBM/ITM/lz_Silent_Config.txt",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "*EAUXOS",
+      "user": [
+        "Soporte LINUX de FT Sigifi",
+        "PABLO MOSCOSO SARABIA",
+        "FT-LINUX - Santiago Tirado Salvador",
+        "FT-LINUX - Antonio Gil López"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fichero=\"/opt/IBM/ITM/lz_Silent_Config.txt\""
+      ],
+      "SO": "Linux"
+    },
+    {
       "object": "/usr/sbin/cvuqdisk",
       "owner": "oracle",
       "tipo": "/F/",
