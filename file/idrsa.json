@@ -361,6 +361,28 @@
                 "Ademas del RISK e IMPACT, hay que adjuntar un PDF: llamado 'GSMA_OMNibus_Failover_Cookbook_10.1.1.0', ubicado en `documentos/`"
             ],
             "SO": "LINUX"
+        },
+        {
+            "object": "/root/.ssh/id_rsa",
+            "owner": "root",
+            "tipo": "/F/",
+            "ownerGroup": "Soporte Linux",
+            "user": [
+                "Fernando Roldan Garrote",
+                "Luis Isabel Saez", 
+                "RICARDO CIPRES BAGUESTE", 
+                "SILVIA PEREIRA LARA"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Server"
+            ],
+            "risk": "Usuario root no debe tener una clave publica, ni privada.",
+            "impact": "",
+            "variable": [
+                "file_idrsa=\"/root/.ssh/id_rsa\""
+            ],
+            "SO": "LINUX"
         }
     ],
     "LBK": [
