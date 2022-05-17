@@ -544,6 +544,101 @@
       "SO": "Linux"
     },
     {
+      "object": "ESY9XXXX",
+      "owner": "ESY9XXXX",
+      "tipo": "/E/",
+      "ownerGroup": "Cuenta externa de Kyndryl",
+      "user": [
+        "Cuenta externa de Kyndryl"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "Son cuentas externas de Kyndryl y deben expirar"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "PTIXXXXX",
+      "owner": "PTIXXXXX",
+      "tipo": "/E/",
+      "ownerGroup": "SOFTINSA",
+      "user": [
+        "Cuenta externa de Kyndryl"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "Son cuentas externas de Kyndryl y deben expirar"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "driter",
+      "owner": "driter",
+      "tipo": "/I/",
+      "ownerGroup": "KYNDRYL",
+      "user": [
+        "DAVID RITE RODRIGUEZ"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"driter\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "mpolofue",
+      "owner": "mpolofue",
+      "tipo": "/E/",
+      "ownerGroup": "INFORTEC",
+      "user": [
+        "MIGUEL POLO DE LA FUENTE"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"mpolofue\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "rdelatorre",
+      "owner": "rdelatorre",
+      "tipo": "/E/",
+      "ownerGroup": "INFORTEC",
+      "user": [
+        "RICARDO DE LA TORRE"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"rdelatorre\""
+      ],
+      "SO": "Linux"
+    },
+    {
       "object": "orarom",
       "owner": "Oracle",
       "tipo": "/F/",
@@ -586,6 +681,33 @@
       "impact": "",
       "variable": [
         "account=\"root\""
+      ],
+      "SO": "Linux / Aix"
+    },
+    {
+      "object": "cyberark",
+      "owner": "cyberark",
+      "tipo": "/F/",
+      "ownerGroup": "*EESECT",
+      "user": [
+        "--- Soporte LINUX de FT Sigifi ---",
+        "FT-LINUX - Antonio Gil López",
+        "FT-LINUX - Santiago Tirado Salvador",
+        "PABLO MOSCOSO SARABIA",
+        "--- Soporte UNIX de FT Sigifi ---",
+        "FT-UNIX Angel Arribas Martinez",
+        "FT-UNIX Juan Carlos Herranz Jimenez",
+        "FT-UNIX_jose_ramon_alonso_dominguez",
+        "PEDRO JAVIER PRIETO HOLGUIN"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "account=\"cyberark\""
       ],
       "SO": "Linux / Aix"
     },

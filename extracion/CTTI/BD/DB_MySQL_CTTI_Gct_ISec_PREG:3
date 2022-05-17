@@ -1,6 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////
 MYSQL CTTI GCT ISEC - Issue REF : 768148 / PREG 3
 +-------------------------------------------------------------------------------------+
+---R.1.2.2 Logging
 ---R.1.2.2.1 Logging	
 "Synchronized system clocks
 
@@ -12,11 +13,21 @@ MYSQL CTTI GCT ISEC - Issue REF : 768148 / PREG 3
 [mysqld] 
 log_error = /var/log/mysql/error.log 
 
+o 
+
+[mysqld]
+log-error=/var/log/mysql/mysqld.log
+
 */
 
 cat /etc/my.cnf | grep -v '^#'
 
-/* CONTESTAR YES  */ : "Si existe una entrada para error.log"
+// Si no existe el fichero de configuracion, puede estar incluido, en algun fcihero include : !includedir /etc/my.cnf.d
+
+cd /etc/my.cnf.d
+grep -ir error
+
+/* CONTESTAR YES  */ : "Si existe una entrada para error.log o mysqld.log"
 +-------------------------------------------------------------------------------------+
 ---R.1.2.3 Logging
 " Log retention

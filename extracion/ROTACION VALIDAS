@@ -1306,6 +1306,7 @@ OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
 	OPCION ➡ 1. "#-> LOOGKEEPER <-#
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	
 	crontab -l|grep -v ^#|grep logkeeper
 
 	//Si esta definido en el crontab , debe existir /usr/util/seguridad/logkeeper
@@ -1318,9 +1319,11 @@ OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
 	OPCION ➡ 2. "#-> LOGROTATE <-#
 	⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏⏏
+	
 	ls -la /etc/logrotate.conf
 
 	// La rotacion debe esta definida en semanas 'weekly' a 13:
+	
 	head -10 /etc/logrotate.conf
 
 	//#->si no funciona mirar sin LOGKEEPER & sin LOGROTATE<-#
@@ -1358,10 +1361,12 @@ ls -la /var/log/secure /var/log/messages
 // Debe existir una entrada de los ficheros de seguridad en la rotacion(OPCION ➡ 1. LOGKEEPER):
 
 	//Muestra resumen de la configuracion en LOGKEEPER	
+	
 	/usr/util/seguridad/logkeeper -s | "trim|backup|secure|message|config_fil"
 
 	
 	//Si La rotacion de log se define en el fichero de configuracion
+
 	cat /usr/util/seguridad/logkeeper.cfg | egrep -i "trim|backup|secure|message"
 
 	//EJEMPLO debe estar implementado:

@@ -727,7 +727,7 @@
       "object": "/tmp/javasharedresources/",
       "owner": "was",
       "tipo": "/S/",
-      "ownerGroup": "EBH",
+      "ownerGroup": "*EBHCL1",
       "user": [
         "Silvia Pereira",
         "Alfonso Marcos Tarancon",
@@ -817,6 +817,48 @@
       "impact": "",
       "variable": [
         "directory=\"/tmp/tsmclient/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/opt/WebSphere/AppServer/java/8.0/",
+      "owner": "was",
+      "tipo": "/F/",
+      "ownerGroup": "*EBHCL1",
+      "user": [
+        "Silvia Pereira",
+        "Alfonso Marcos Tarancon",
+        "Almudena Outeda Rodríguez"      
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fileOPT=\"/opt/WebSphere/AppServer/java/8.0/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/opt/IBM/ITMdepot/soft/6.3.0.7-TIV-ITM-Unix-SP0010/",
+      "owner": "was",
+      "tipo": "/F/",
+      "ownerGroup": "*EBHCL1",
+      "user": [
+        "Silvia Pereira",
+        "Alfonso Marcos Tarancon",
+        "Almudena Outeda Rodríguez"      
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fileOPT=\"/opt/IBM/ITMdepot/soft/6.3.0.7-TIV-ITM-Unix-SP0010/\""
       ],
       "SO": "Linux"
     }
@@ -1671,6 +1713,28 @@
       "impact": "",
       "variable": [
         "fichero=\"/opt/IBM/ITM/08_Silent_Config.txt\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/opt/IBM/ITM/lz_Silent_Config.txt",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "*EAUXOS",
+      "user": [
+        "Soporte LINUX de FT Sigifi",
+        "PABLO MOSCOSO SARABIA",
+        "FT-LINUX - Santiago Tirado Salvador",
+        "FT-LINUX - Antonio Gil López"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fichero=\"/opt/IBM/ITM/lz_Silent_Config.txt\""
       ],
       "SO": "Linux"
     },
