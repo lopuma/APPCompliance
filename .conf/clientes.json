@@ -178,5 +178,18 @@
                 "icon": "icon_sys.png"
             }
         ]
+    },
+    {
+        "name": "NUEVO",
+        "cod": 13,
+        "politica": [
+            {
+                "main": null,
+                "script": [
+                    null
+                ],
+                "icon": null
+            }
+        ]
     }
 ]

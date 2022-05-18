@@ -868,7 +868,7 @@
       "object": "/BDistribuido/",
       "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EPUXOS",
       "user": [
         "GEMMA ESCAR APARICIO", 
         "NINELA ELENA PAVEL MANCIU", 
@@ -889,7 +889,7 @@
       "object": "/BDistribuidoBatchDESA/",
       "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EPUXOS",
       "user": [
         "GEMMA ESCAR APARICIO", 
         "NINELA ELENA PAVEL MANCIU", 
@@ -910,7 +910,7 @@
       "object": "/BDistribuidoWf/",
       "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EPUXOS",
       "user": [
         "GEMMA ESCAR APARICIO", 
         "NINELA ELENA PAVEL MANCIU", 
@@ -931,7 +931,7 @@
       "object": "/BDistribuidoWfPRE/",
       "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EPUXOS",
       "user": [
         "GEMMA ESCAR APARICIO", 
         "NINELA ELENA PAVEL MANCIU", 
@@ -1049,7 +1049,9 @@
       "tipo": "/S/",
       "ownerGroup": "CACF",
       "user": [
-        "Grupo de Sistemas"
+        "GEMMA ESCAR APARICIO",
+        "NINELA ELENA PAVEL MANCIU",
+        "RAMON RUIZ GARCIA"      
       ],
       "code": "1-OK",
       "servers": [
@@ -1068,7 +1070,9 @@
       "tipo": "/S/",
       "ownerGroup": "CACF",
       "user": [
-        "Grupo de Sistemas"
+        "GEMMA ESCAR APARICIO",
+        "NINELA ELENA PAVEL MANCIU",
+        "RAMON RUIZ GARCIA"    
       ],
       "code": "1-OK",
       "servers": [
@@ -1105,7 +1109,7 @@
       "object": "/etc/adsm/Nodes/RESTORE/",
       "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EPUXOS",
       "user": [
         "GEMMA ESCAR APARICIO", 
         "NINELA ELENA PAVEL MANCIU", 
@@ -1127,7 +1131,7 @@
       "object": "/etc/adsm/",
       "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EPUXOS",
       "user": [
         "GEMMA ESCAR APARICIO", 
         "NINELA ELENA PAVEL MANCIU", 
@@ -1168,9 +1172,11 @@
       "object": "/opt/IBM/ITMdepot/",
       "owner": "root",
       "tipo": "/F/",
-      "ownerGroup": "Sistemas",
+      "ownerGroup": "*EPUXOS",
       "user": [
-        "Sistemas"
+        "GEMMA ESCAR APARICIO",
+        "NINELA ELENA PAVEL MANCIU",
+        "RAMON RUIZ GARCIA"
       ],
       "code": "1-OK",
       "servers": [
@@ -1181,6 +1187,72 @@
       "variable": [
         "directory=\"/opt/IBM/ITMdepot/\"",
         "fileOPT=\"/opt/IBM/ITMdepot/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/var/ibm/slm",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "*EPUXOS",
+      "user": [
+        "GEMMA ESCAR APARICIO",
+        "NINELA ELENA PAVEL MANCIU",
+        "RAMON RUIZ GARCIA"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/var/ibm/slm\"",
+        "fileVAR=\"/var/ibm/slm\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": " /var/log/bigsql/cli",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "*EPUXOS",
+      "user": [
+        "GEMMA ESCAR APARICIO",
+        "NINELA ELENA PAVEL MANCIU",
+        "RAMON RUIZ GARCIA"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/var/log/bigsql/cli\"",
+        "fileVAR=\"/var/log/bigsql/cli\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": " /tmp/bigsql",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "*EPUXOS",
+      "user": [
+        "GEMMA ESCAR APARICIO",
+        "NINELA ELENA PAVEL MANCIU",
+        "RAMON RUIZ GARCIA"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/tmp/bigsql\"",
+        "fileTMP=\"/tmp/bigsql\""
       ],
       "SO": "Linux"
     }
