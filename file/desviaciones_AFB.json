@@ -1,5 +1,8 @@
 [
   {
+    "CUSTOMER": "AFB"
+  },
+  {
     "modulo": "Protecting Resources-OSRs/Log File Restrictions",
     "clave": "WTMP",
     "descripcion": "Invalid Permissions or Ownership for log file: /var/log/wtmp;   -rw-rw-r--.;  owner:  root;   group:  utmp. For more information see rule description.",
