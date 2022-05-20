@@ -657,7 +657,7 @@
             "servers": [
                 "ALL servers"
             ],
-            "risk": "MONITORIZACION / AUTHORIZED_KEYS / INFRA",
+            "risk": "MONITORIZACION / AUTHORIZED_KEYS / INFRA\n\n'Ademas del RISK e IMPACT; hay que adjuntar un PDF: llamado GSMA_OMNibus_Failover_Cookbook_10.1.1.0; ubicado en \"../documentos/\"",
             "impact": "1-OK para `Identify and Authenticate Users/Public Key Label`",
             "variable": [
                 "file_authorized=\"/home/ncosftp/.ssh/authorized_keys\"",
@@ -677,7 +677,7 @@
             "servers": [
                 "ALL servers"
             ],
-            "risk": "MONITORIZACION / AUTHORIZED_KEYS / INFRA",
+            "risk": "MONITORIZACION / AUTHORIZED_KEYS / INFRA\n\n'Ademas del RISK e IMPACT; hay que adjuntar un PDF: llamado GSMA_OMNibus_Failover_Cookbook_10.1.1.0; ubicado en \"../documentos/\"",
             "impact": "1-OK para `Identify and Authenticate Users/Public Key Label`",
             "variable": [
                 "file_authorized=\"/home/ncosys/.ssh/authorized_keys\"",

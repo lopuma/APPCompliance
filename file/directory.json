@@ -709,17 +709,37 @@
         "tipo": "/S/",
         "ownerGroup": "Ansible",
         "user": [
-          "Grupo de Sistemas"
+          "@ANTONIO CANO NUÑEZ",
+          "Lorenzo Fuertes"
         ],
         "code": "1-OK",
         "servers": [
           "ALL Servers"
         ],
-        "risk": "",
+        "risk": "NOTA : Antonio Cano >> Pero solo se puede eliminar el permiso de Writable  al grupo others a un cierto patrón de ficheros\nNo a todos, por ejemplo al los de tipo  .sh   or  .ksh  o  .csrh   .profile   ,   si se puede",
         "impact": "",
         "variable": [
           "directory=\"/tmp/gts-ansible/\"",
           "fileTMP=\"/tmp/gts-ansible/\""
+        ],
+        "SO": "Linux"
+      },
+      {
+        "object": "/tmp/*.zip",
+        "owner": "Externos",
+        "tipo": "/E/",
+        "ownerGroup": "Externos",
+        "user": [
+          "Usuarios externos o internos"
+        ],
+        "code": "1-OK",
+        "servers": [
+          "ALL Servers"
+        ],
+        "risk": "NOTA : Dentro de /tmp, los ficheros que tengan permisos w a other, creados por cuentas internas, externas, se pueden corregir y quitar w a other.",
+        "impact": "File con extensiones .zip, .log, .sh, etc etc..",
+        "variable": [
+          "fileTMP=\"/tmp/*.zip\""
         ],
         "SO": "Linux"
       },
@@ -859,6 +879,26 @@
       "impact": "",
       "variable": [
         "fileOPT=\"/opt/IBM/ITMdepot/soft/6.3.0.7-TIV-ITM-Unix-SP0010/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/opt/lotus/Data/",
+      "owner": "notes",
+      "tipo": "/F/",
+      "ownerGroup": "*EETDOM",
+      "user": [
+        "LUIS MARIANO MARTIN MATUTE", 
+        "PIERRE TOUVAY"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "fileOPT=\"/opt/lotus/Data/\""
       ],
       "SO": "Linux"
     }

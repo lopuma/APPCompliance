@@ -383,6 +383,25 @@
                 "file_idrsa=\"/root/.ssh/id_rsa\""
             ],
             "SO": "LINUX"
+        },
+        {
+            "object": "/home/root/.ssh/id_rsa",
+            "owner": "root",
+            "tipo": "/F/",
+            "ownerGroup": "Soporte Linux",
+            "user": [
+                "@LORENZO FUERTES RAMON"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Server"
+            ],
+            "risk": "Usuario root no debe tener una clave publica, ni privada.",
+            "impact": "",
+            "variable": [
+                "file_idrsa=\"/home/root/.ssh/id_rsa\""
+            ],
+            "SO": "Aix"
         }
     ],
     "LBK": [
