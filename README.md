@@ -1,6 +1,11 @@
 # APP-COMPLIANCE
 Aplicacion de escritorio, para la soluciones de ISSUES compliance.
 
+NAME : APP Compliance
+Version : 2.5
+
+
+
 - Descargar Compliance.zip
 
 - Descomprimir en /home/
