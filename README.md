@@ -1,16 +1,21 @@
 # APP-COMPLIANCE
-Aplicacion de escritorio, para la soluciones de ISSUES compliance.
+## Aplicacion de escritorio, para la soluciones de ISSUES compliance.
 
-NAME : APP Compliance
-Version : 2.5
+- Descargar Compliance.zip.
 
+- Descomprimir en /home/$USER, se debe descomprimir la carpeta llamda Compliance y su contenido dentro de tu /home/, example : ***/home/$USER/Compliance/***
 
+> NOTA : $USER, es la variable de tu usuario.
 
-- Descargar Compliance.zip
+- Redirecionar : 
+```
+	cd /home/$USER/Compliance/  
+```
 
-- Descomprimir en /home/
-
-- Dar permisos de ejecucion al ejecutable Compliance
+- Dar permisos de ejecucion al ejecutable `Compliance`
+```
+	chmod +x Compliance
+```
 
 - Mover estos ficheros.
 	```
@@ -19,4 +24,4 @@ Version : 2.5
 	sudo mv compliance.png /usr/share/pixmaps/
 	sudo mv screamshot.png /usr/share/pixmaps/
 	```
-![APPCompliance](https://user-images.githubusercontent.com/86171869/159774005-f06ec648-4988-48c9-bebc-e332930437b8.png)
+![img_compliance](https://user-images.githubusercontent.com/86171869/166647737-00522195-5d1d-4c40-a400-d29dab098291.png)

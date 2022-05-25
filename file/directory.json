@@ -765,26 +765,7 @@
       "SO": "Linux"
     },
     {
-      "object": "/opt/SANnav/docker/docker/overlay2/19a827f987ca128698961358eb5b722794e55be4a515be5aabecb33cda1553e6/diff/usr/bin/docker",
-      "owner": "root",
-      "tipo": "/F/",
-      "ownerGroup": "SANnav",
-      "user": [
-        "SANnav"
-      ],
-      "code": "1-OK",
-      "servers": [
-        "ALL server"
-      ],
-      "risk": "directorio : /opt/SANnav/ : (parte de un sofware de monitorización de la red de almancenamiento llamado SANnav)",
-      "impact": "",
-      "variable": [
-        "fichero=\"/opt/SANnav/docker/docker/overlay2/19a827f987ca128698961358eb5b722794e55be4a515be5aabecb33cda1553e6/diff/usr/bin/docker\""
-      ],
-      "SO": "Linux"
-    },
-    {
-      "object": "/opt/SANnav/docker/",
+      "object": "/opt/SANnav/docker/docker/overlay2/",
       "owner": "root",
       "tipo": "/F/",
       "ownerGroup": "SANnav",
@@ -798,7 +779,8 @@
       "risk": "directorio : /opt/SANnav/ : (parte de un sofware de monitorización de la red de almancenamiento llamado SANnav)",
       "impact": "",
       "variable": [
-        "directory=\"/opt/SANnav/docker/\""
+        "directory=\"/opt/SANnav/docker/docker/overlay2/\"",
+        "fileOPT=\"/opt/SANnav/docker/docker/overlay2/\""
       ],
       "SO": "Linux"
     },

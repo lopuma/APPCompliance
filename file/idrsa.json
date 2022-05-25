@@ -316,10 +316,50 @@
             "servers": [
                 "ESMA2DN01SR15NM"
             ],
-            "risk": "",
-            "impact": "",
+            "risk": "El owner de la cuenta debe configurar la PASSPHRASE, se puede hacer con el siguiente comando, donde \"$file_idrsa\", es el fichero id_rsa a corregir.",
+            "impact": "## COMANDO\n\nssh-keygen -p -f $file_idrsa",
             "variable": [
                 "file_idrsa=\"/home/dnsadmin/.ssh/id_rsa\""
+            ],
+            "SO": "LINUX"
+        },
+        {
+            "object": "/etc/telegraf/.ssh/id_rsa",
+            "owner": "telegraf",
+            "tipo": "/S/",
+            "ownerGroup": "Comand Center N2P",
+            "user": [
+                "Alejandro Vicente Blázquez",
+                "Roberto Fuentes Moñita"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "El owner de la cuenta debe configurar la PASSPHRASE, se puede hacer con el siguiente comando, donde \"$file_idrsa\", es el fichero id_rsa a corregir.",
+            "impact": "## COMANDO\n\nssh-keygen -p -f $file_idrsa",
+            "variable": [
+                "file_idrsa=\"/etc/telegraf/.ssh/id_rsa\""
+            ],
+            "SO": "LINUX"
+        },
+        {
+            "object": "/home/smo/.ssh/id_rsa",
+            "owner": "smo",
+            "tipo": "/S/",
+            "ownerGroup": "Comand Center N2P",
+            "user": [
+                "Alejandro Vicente Blázquez",
+                "Roberto Fuentes Moñita"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "El owner de la cuenta debe configurar la PASSPHRASE, se puede hacer con el siguiente comando, donde \"$file_idrsa\", es el fichero id_rsa a corregir.",
+            "impact": "## COMANDO\n\nssh-keygen -p -f $file_idrsa",
+            "variable": [
+                "file_idrsa=\"/home/smo/.ssh/id_rsa\""
             ],
             "SO": "LINUX"
         },
