@@ -389,11 +389,11 @@
     },
     {
         "modulo": "IZ.1.4.6.3 System Settings",
-        "clave": "",
-        "descripcion": "/etc/profile.d/IBMsinit.sh Default: Set systems to terminate a session after 21600 seconds of inactivity. File must  contain \"TMOUT=21600\" followed by \"export TMOUT\". A shorter time frame may be specified.",
-        "comprobacion": "+-------------------------------------------------------------------------------------+\n## En /etc/profile.d/IBMsinit.sh, al final del SCRIPT de UMASK\n## Debe tener un TMOUT\n(\"TMOUT solo debe estar implementado en 'IBMsinit.sh'\")\n+-------------------------------------------------------------------------------------+\n\ncat /etc/profile.d/IBMsinit.sh\n\n+-------------------------------------------------------------------------------------+\n## SET muestra el valor por defecto\n+-------------------------------------------------------------------------------------+\n\nset | grep OUT",
+        "clave": "TMOUT SH",
+        "descripcion": "/etc/profile.d/IBMsinit.sh Default: Set systems to terminate a session after 1800 seconds of inactivity. File must  contain \"TMOUT=1800\" followed by \"export TMOUT\". A shorter time frame may be specified.",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## En /etc/profile.d/IBMsinit.sh, al final del SCRIPT de UMASK, debe tener un TMOUT\n\n##(\"TMOUT solo debe estar implementado en 'IBMsinit.sh'\")\n+-------------------------------------------------------------------------------------+\n\ncat /etc/profile.d/IBMsinit.sh\n\n+-------------------------------------------------------------------------------------+\n## SET muestra el valor por defecto\n+-------------------------------------------------------------------------------------+\n\nset | grep OUT",
         "copia": "+-------------------------------------------------------------------------------------+\n## Obtener usuario logueado:\n+-------------------------------------------------------------------------------------+\n\nuser=$(logname)\n\n+-------------------------------------------------------------------------------------+\n## Backup con HOME en MAYÚSCULAS\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/profile.d/IBMsinit.sh /home/${user^^}/IBMsinit.sh_`date +%d%m%y_%T`\n\n+-------------------------------------------------------------------------------------+\n## Backup con HOME en minúsculas\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/profile.d/IBMsinit.sh /home/${user,,}/IBMsinit.sh_`date +%d%m%y_%T`\n",
-        "editar": "+-------------------------------------------------------------------------------------+\n## Editar y Añadir al final del SCRIPT de UMASK\n+-------------------------------------------------------------------------------------+\n\nvi /etc/profile.d/IBMsinit.sh\n\nTMOUT=21600\nexport TMOUT",
+        "editar": "+-------------------------------------------------------------------------------------+\n## Editar\n+-------------------------------------------------------------------------------------+\n\nvi /etc/profile.d/IBMsinit.sh\n\n+-------------------------------------------------------------------------------------+\n## Añdir, al final del script de UMASK\n+-------------------------------------------------------------------------------------+\n\nTMOUT=1800\nexport TMOUT",
         "refrescar": null,
         "evidencia": "clear\ndate\nhostname\ncat /etc/profile.d/IBMsinit.sh\nset | grep OUT",
         "SO": "Linux"
@@ -495,6 +495,17 @@
         "editar": "+-------------------------------------------------------------------------------------+\n## Editar / Añadir UMASK 077\n+-------------------------------------------------------------------------------------+\n\nvi /etc/login.defs",
         "refrescar": null,
         "evidencia": "clear\ndate\nhostname\ncat /etc/login.defs | grep -i umask",
+        "SO": "Linux"
+    },
+    {
+        "modulo": "Password Requirements/Automatic Logoff IBMsinit sh TMOUT",
+        "clave": "TMOUT SH",
+        "descripcion": "/etc/profile.d/IBMsinit.sh Default: Set systems to terminate a session after 1800 seconds of inactivity. File must  contain \"TMOUT=1800\" followed by \"export TMOUT\". A shorter time frame may be specified.",
+        "comprobacion": "+-------------------------------------------------------------------------------------+\n## En /etc/profile.d/IBMsinit.sh, al final del SCRIPT de UMASK, debe tener un TMOUT\n\n##(\"TMOUT solo debe estar implementado en 'IBMsinit.sh'\")\n+-------------------------------------------------------------------------------------+\n\ncat /etc/profile.d/IBMsinit.sh\n\n+-------------------------------------------------------------------------------------+\n## SET muestra el valor por defecto\n+-------------------------------------------------------------------------------------+\n\nset | grep OUT",
+        "copia": "+-------------------------------------------------------------------------------------+\n## Obtener usuario logueado:\n+-------------------------------------------------------------------------------------+\n\nuser=$(logname)\n\n+-------------------------------------------------------------------------------------+\n## Backup con HOME en MAYÚSCULAS\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/profile.d/IBMsinit.sh /home/${user^^}/IBMsinit.sh_`date +%d%m%y_%T`\n\n+-------------------------------------------------------------------------------------+\n## Backup con HOME en minúsculas\n+-------------------------------------------------------------------------------------+\n\ncp -p /etc/profile.d/IBMsinit.sh /home/${user,,}/IBMsinit.sh_`date +%d%m%y_%T`\n",
+        "editar": "+-------------------------------------------------------------------------------------+\n## Editar\n+-------------------------------------------------------------------------------------+\n\nvi /etc/profile.d/IBMsinit.sh\n\n+-------------------------------------------------------------------------------------+\n## Añdir, al final del script de UMASK\n+-------------------------------------------------------------------------------------+\n\nTMOUT=1800\nexport TMOUT",
+        "refrescar": null,
+        "evidencia": "clear\ndate\nhostname\ncat /etc/profile.d/IBMsinit.sh\nset | grep OUT",
         "SO": "Linux"
     }
 ]
