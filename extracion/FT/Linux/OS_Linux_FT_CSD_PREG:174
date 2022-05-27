@@ -1047,7 +1047,7 @@ ls -la /var/log/wtmp
 
 /* CONTESTAR YES */ : "Si wtmp tiene los permisos requerido"
 
-/* CONTESTAR NO  */ : "Invalid Permissions or Ownership for log file: /var/log/wtmp;   -rw-rw-r--.;  owner:  root;   group:  utmp. For more information see rule description.
+/* CONTESTAR NO  */ : "Invalid Permissions or Ownership for log file: /var/log/wtmp;   -rw-rw-r--.;  owner:  root;   group:  utmp. should have ""0644"" permissions (or more restrictive). For more information see rule description.
 +-------------------------------------------------------------------------------------+
 ---AD.1.8.8 Protecting Resources - OSRs
 "Non-Debian: /var/log/secure
