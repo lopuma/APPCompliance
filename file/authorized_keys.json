@@ -1045,6 +1045,30 @@
             "SO": "Linux"
         }
     ],
+    "LBK":[
+        {
+            "object": "/home/bigsql/.ssh/authorized_keys",
+            "owner": "bigsql",
+            "tipo": "/S/",
+            "ownerGroup": "*EPUXOS",
+            "user": [
+                "CARLOS PEREZ GARCIA", 
+                "DG-distDBA-pf2.Sq2@kyndryl.com",
+                "sppf2dbbdd@kyndryl.com"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/bigsql/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/S/*EPUXOS/KYNDRYL/SERVICE.ACCOUNT!!\""
+            ],
+            "SO": "Linux"
+        }
+    ],
     "FT": [
         {
             "object": "/home/mpolofue/.ssh/authorized_keys",

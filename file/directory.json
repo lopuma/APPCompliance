@@ -645,8 +645,8 @@
   ],
   "EUROFRED": [
     {
-      "object": "",
-      "owner": "",
+      "object": "Null",
+      "owner": "Null",
       "tipo": "",
       "ownerGroup": "",
       "user": [
@@ -804,12 +804,46 @@
       "SO": "Linux"
     },
     {
+      "object": "/tmp/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "------------------------------",
+        "AIX",
+        "------------------------------",
+        " LORENZO FUERTES RAMON",
+        " Lech Bartlomiej",
+        " David de Frutos Garcia",
+        "-------------------------------",
+        "LINUX",
+        "-------------------------------",
+        " Fernando Roldan Garrote", 
+        " Luis Isabel Saez", 
+        " RICARDO CIPRES BAGUESTE", 
+        " SILVIA PEREIRA LARA"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL server"
+      ],
+      "risk": "Para quitar permisos de W a OTHER en ficheros de /tmp/",
+      "impact": "",
+      "variable": [
+        "fileTMP=\"/tmp/\""
+      ],
+      "SO": "Aix"
+    },
+    {
       "object": "/tmp/tsmclient/",
       "owner": "root",
       "tipo": "/F/",
       "ownerGroup": "Sistemas",
       "user": [
-        "Sistemas"
+        "Fernando Roldan Garrote", 
+        "Luis Isabel Saez", 
+        "RICARDO CIPRES BAGUESTE", 
+        "SILVIA PEREIRA LARA"
       ],
       "code": "1-OK",
       "servers": [
@@ -844,7 +878,7 @@
       "SO": "Linux"
     },
     {
-      "object": "/opt/IBM/ITMdepot/soft/6.3.0.7-TIV-ITM-Unix-SP0010/",
+      "object": "/opt/IBM/ITMdepot/soft/",
       "owner": "was",
       "tipo": "/F/",
       "ownerGroup": "*EBHCL1",
@@ -860,7 +894,7 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "fileOPT=\"/opt/IBM/ITMdepot/soft/6.3.0.7-TIV-ITM-Unix-SP0010/\""
+        "fileOPT=\"/opt/IBM/ITMdepot/soft/\""
       ],
       "SO": "Linux"
     },

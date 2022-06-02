@@ -1113,8 +1113,17 @@ ls -la /home/*/.ssh/* | grep -i "id_rsa"
 How implemented:
 /etc/motd or /etc/issue
 
-This system should be used for conducting IBM's business or for purposes authorized by IBM management. It is mandatory to comply with all the requirements listed in the applicable security policy and only process or store the data classes approved for this asset type. Use is subject to audit at any time by IBM management.
-
+* *--------------------------------------------------------------* *
+* * This system should be used for conducting Kyndryl’s          * *
+* * business or for purposes authorized by Kyndryl management.   * *
+* *                                                              * *
+* * It is mandatory to comply with all the requirements          * *
+* * listed in the applicable security policy and only process    * *
+* * or store the data classes approved for this asset type.      * *
+* *                                                              * *
+* * Use is subject to audit at any time by Kyndryl management.   * *
+* *                                                              * *
+* *--------------------------------------------------------------* *
 
 cat /etc/motd
 +-------------------------------------------------------------------------------------+

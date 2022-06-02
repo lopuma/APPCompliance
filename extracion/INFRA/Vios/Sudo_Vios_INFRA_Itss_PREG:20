@@ -176,7 +176,7 @@ cat /etc/sudoers /etc/sudoers.destandar/*  /etc/sudoers.d/* | grep -i noexec
 /*  CONTESTAR YES */ : "Si IBM_SHELLESCAPE_ALL,!IBM_NONE_EDITOR, tienen NOEXEC"
 /* CONTESTAR NO  */ : ""
 /* CONTESTAR N/A */ : ""
-/**************************************************************************************************************************************************************************************/
++-------------------------------------------------------------------------------------+
 ZY.1.4.2.3 System Settings	Commands which allow shell escape
 
 "En los servidores AIX smit y smitty se deben configurar para bloquear las salidas de shell a través de las 3 variables de entorno
@@ -199,24 +199,17 @@ cat /etc/sudo.env | grep -i SMIT
 /*  CONTESTAR YES */ : "SI el env_file esta definido y contiene esas 3 variables"
 /* CONTESTAR NO  */ : ""
 /* CONTESTAR N/A */ : "Si es un Red Hat Enterprise Linux"
-/**************************************************************************************************************************************************************************************/
-ZY.1.4.3.1 System Settings	Specific commands/programs executed via sudo:
+/+-------------------------------------------------------------------------------------+
+ZY.1.4.3.1 System Settings	
+" Specific commands/programs executed via sudo:
 
-"Debe ser listado por su camino completo en sudoers.
-"Este requisito se aplica al archivo de sudoers principal y a cualquier archivo sudoers.* adicional llamado a través de las sentencias include o includedir.
+// Debe ser listado por su camino completo (FULL PATH) en sudoers.
+// Este requisito se aplica al archivo de sudoers principal y a cualquier archivo sudoers.* adicional llamado a través de las sentencias include o includedir.
 
+ls -l `cat /etc/sudoers /etc/sudoers.d/* | grep -i "^#include" | awk '{print $2}' | tr "\n" " "`
 
-#Comprobar
-"Listar los include y ver si tienen PATH completo.
-cat /etc/sudoers /etc/sudoers.d/*  | grep -i "^#include"
-*/
-"Hacer un LS y ver si existen.
-ls -la /etc/sudoers.d/
-
-/*  CONTESTAR YES */ : "Si hay llamadas include o includedir, y esos ficheros tenga el PATH completo."
-/* CONTESTAR NO  */ : ""
-/* CONTESTAR N/A */ : ""
-/**************************************************************************************************************************************************************************************/
+/* CONTESTAR YES */ : " Si hay llamadas include o includedir, y esos ficheros tenga el PATH completo.
++-------------------------------------------------------------------------------------+
 ZY.1.4.3.3 System Settings	Preventing Nested Sudo invocation
 
 #Recommended Setting#
@@ -240,7 +233,7 @@ tail /etc/sudoers
 /*  CONTESTAR YES */ : "Si esta definido el cmd_alias SUDOSUDO, y si esta al final."
 /* CONTESTAR NO  */ : ""
 /* CONTESTAR N/A */ : ""
-/**************************************************************************************************************************************************************************************/
++-------------------------------------------------------------------------------------+
 ZY.1.4.4 System Settings	Logging of commands issued by individuals via sudo
 
 #"La extrada "ALL ALL=!SUDOSUDO" es permitida"
@@ -311,7 +304,7 @@ ls -la /etc/sudoers
 /* CONTESTAR NO  */ : ""
 /* CONTESTAR N/A */ : ""
 
-/**************************************************************************************************************************************************************************************/
++-------------------------------------------------------------------------------------+
 ZY.1.8.1.1 Protecting Resources - OSRs	Any directory or file referenced by a #includedir directive in /etc/sudoers 
 ZY.1.8.1.2 Protecting Resources - OSRs	Any directory referenced by a #includedir directive in /etc/sudoers 
 ZY.1.8.1.3 Protecting Resources - OSRs	Any directory referenced by a #includedir directive in /etc/sudoers 
@@ -331,7 +324,7 @@ ls -la /etc/sudoers.d/*
 /*  CONTESTAR YES */ : "Si los ficheros no tienen permisos en OTHER y tienen path completo"
 /* CONTESTAR NO  */ : ""
 /* CONTESTAR N/A */ : ""
-/**************************************************************************************************************************************************************************************/
++-------------------------------------------------------------------------------------+
 ZY.1.8.1.6 Protecting Resources - OSRs	Any file referenced by a  env_file directive in the /etc/sudoers 
 
 "Hay que revisar varias cosas.
@@ -345,10 +338,10 @@ ls -la /etc/sudo.env
 /*  CONTESTAR YES */ : "Si los ficheros no tienen permisos en OTHER y es propietario root"
 /* CONTESTAR NO  */ : ""
 /* CONTESTAR N/A */ : ""
-/**************************************************************************************************************************************************************************************/
++-------------------------------------------------------------------------------------+
 ZY.1.8.2.1 Protecting Resources - OSRs	sudoers config file
 ZY.1.8.2.2 Protecting Resources - OSRs	sudoers config file
 ZY.1.8.2.3 Protecting Resources - OSRs	sudoers config file
 
 "Lo mismo que la pregunta "ZY.1.4.3.1"
-/**************************************************************************************************************************************************************************************/
++-------------------------------------------------------------------------------------+

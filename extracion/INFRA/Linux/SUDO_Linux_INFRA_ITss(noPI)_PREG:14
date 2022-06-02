@@ -241,20 +241,14 @@ cat /etc/sudo.env | grep -i SMIT
 /* CONTESTAR N/A */ : "Si es un Red Hat Enterprise Linux"
 +-------------------------------------------------------------------------------------+
 ZY.1.4.3.1 System Settings	
-"Specific commands/programs executed via sudo:
+" Specific commands/programs executed via sudo:
 
-"Debe ser listado por su camino completo en sudoers.
-"Este requisito se aplica al archivo de sudoers principal y a cualquier archivo sudoers.* adicional llamado a través de las sentencias include o includedir.
+// Debe ser listado por su camino completo (FULL PATH) en sudoers.
+// Este requisito se aplica al archivo de sudoers principal y a cualquier archivo sudoers.* adicional llamado a través de las sentencias include o includedir.
 
+ls -l `cat /etc/sudoers /etc/sudoers.d/* | grep -i "^#include" | awk '{print $2}' | tr "\n" " "`
 
-#Comprobar
-"Listar los include y ver si tienen PATH completo.
-cat /etc/sudoers /etc/sudoers.d/*  | grep -i "^#include"
-*/
-"Hacer un LS y ver si existen.
-ls -la /etc/sudoers.d/
-
-/*CONTESTAR YES */ : "Si hay llamadas include o includedir, y esos ficheros tenga el PATH completo."
+/* CONTESTAR YES */ : " Si hay llamadas include o includedir, y esos ficheros tenga el PATH completo.
 +-------------------------------------------------------------------------------------+
 ---ZY.1.4.3.3 System Settings	
 "Preventing Nested Sudo invocation

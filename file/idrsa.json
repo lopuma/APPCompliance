@@ -465,6 +465,27 @@
             "SO": "Aix"
         },
         {
+            "object": "/home/bigsql/.ssh/id_rsa",
+            "owner": "bigsql",
+            "tipo": "/S/",
+            "ownerGroup": "*EPUXOS",
+            "user": [
+                "CARLOS PEREZ GARCIA", 
+                "DG-distDBA-pf2.Sq2@kyndryl.com",
+                "sppf2dbbdd@kyndryl.com"
+            ],
+            "code": "NULL",
+            "servers": [
+                "ALL Server"
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                ""
+            ],
+            "SO": "Aix"
+        },
+        {
             "object": "/home/nodejs/.ssh/id_rsa",
             "owner": "nodejs",
             "tipo": "/C/",

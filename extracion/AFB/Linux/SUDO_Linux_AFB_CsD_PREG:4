@@ -159,7 +159,6 @@ ls -la /var/adm/sudo.log
 		       " The file: '/var/adm/cron.log', does not exist.
 		       " The file: '/var/adm/sudo.log', exists, but is not rotating in '/etc/logrotate.conf'.
 +-------------------------------------------------------------------------------------+
-*********************************************************************************************/
 ZY.1.4.4 System Settings	Logging of commands issued by individuals via sudo
 
 cat /etc/sudoers | grep -v "#" | egrep -i "=(ALL)|ALL=|=ALL|"

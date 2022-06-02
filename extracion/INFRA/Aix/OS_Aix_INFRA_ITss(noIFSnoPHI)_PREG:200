@@ -1550,15 +1550,15 @@ cat /etc/motd
 
 "Debe tener este mensaje :
 * *--------------------------------------------------------------* *
-* * This system should be used for conducting IBM's		 * *
-* * business or for purposes authorized by IBM management.       * *
+* * This system should be used for conducting Kyndryl’s          * *
+* * business or for purposes authorized by Kyndryl management.   * *
 * *                                                              * *
-* * It is mandatory to comply with all the requirements	         * *
+* * It is mandatory to comply with all the requirements          * *
 * * listed in the applicable security policy and only process    * *
-* * or store the data classes approved for this asset typ---E.      * *
+* * or store the data classes approved for this asset type.      * *
 * *                                                              * *
-* * Use is subject to audit at any time by IBM management.       * *
-* * 								 * *
+* * Use is subject to audit at any time by Kyndryl management.   * *
+* *                                                              * *
 * *--------------------------------------------------------------* *
 
 * CONTESTAR NO   */ : ""
