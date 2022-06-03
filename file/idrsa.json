@@ -474,12 +474,12 @@
                 "DG-distDBA-pf2.Sq2@kyndryl.com",
                 "sppf2dbbdd@kyndryl.com"
             ],
-            "code": "NULL",
+            "code": "2-DOC",
             "servers": [
                 "ALL Server"
             ],
-            "risk": "",
-            "impact": "",
+            "risk": "Protection against inadequate access is weaker",
+            "impact": "The pipeline between the bigsql nodes might be affected and stop working.",
             "variable": [
                 ""
             ],

@@ -554,7 +554,7 @@
       "risk": "Directorios, sub-directorios y ficheros de Bases de datos",
       "impact": "",
       "variable": [
-        "directoryETC=\"/etc/oracle/maps/\""
+        "dirETC=\"/etc/oracle/maps/\""
       ],
       "SO": "Linux"
     },
@@ -720,7 +720,7 @@
         "impact": "",
         "variable": [
           "directory=\"/tmp/gts-ansible/\"",
-          "fileTMP=\"/tmp/gts-ansible/\""
+          "dirTMP=\"/tmp/gts-ansible/\""
         ],
         "SO": "Linux"
       },
@@ -739,7 +739,7 @@
         "risk": "NOTA : Dentro de /tmp, los ficheros que tengan permisos w a other, creados por cuentas internas, externas, se pueden corregir y quitar w a other.",
         "impact": "File con extensiones .zip, .log, .sh, etc etc..",
         "variable": [
-          "fileTMP=\"/tmp/*.zip\""
+          "dirTMP=\"/tmp/*.zip\""
         ],
         "SO": "Linux"
       },
@@ -765,7 +765,7 @@
       "SO": "Linux"
     },
     {
-      "object": "/opt/SANnav/docker/docker/overlay2/",
+      "object": "/opt/SANnav/docker/docker/",
       "owner": "root",
       "tipo": "/F/",
       "ownerGroup": "SANnav",
@@ -779,8 +779,8 @@
       "risk": "directorio : /opt/SANnav/ : (parte de un sofware de monitorización de la red de almancenamiento llamado SANnav)",
       "impact": "",
       "variable": [
-        "directory=\"/opt/SANnav/docker/docker/overlay2/\"",
-        "fileOPT=\"/opt/SANnav/docker/docker/overlay2/\""
+        "directory=\"/opt/SANnav/docker/docker/\"",
+        "fileOPT=\"/opt/SANnav/docker/docker/\""
       ],
       "SO": "Linux"
     },
@@ -830,7 +830,7 @@
       "risk": "Para quitar permisos de W a OTHER en ficheros de /tmp/",
       "impact": "",
       "variable": [
-        "fileTMP=\"/tmp/\""
+        "dirTMP=\"/tmp/\""
       ],
       "SO": "Aix"
     },
@@ -1137,7 +1137,7 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "fileTMP=\"/tmp/gts-ansible/uidext_endpoint_7057770/\"",
+        "dirTMP=\"/tmp/gts-ansible/uidext_endpoint_7057770/\"",
         "directory=\"/tmp/gts-ansible/uidext_endpoint_7057770/\""
       ],
       "SO": "Linux"
@@ -1178,8 +1178,8 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "directoryETC=\"/etc/adsm/Nodes/RESTORE/\"",
-        "directory=\"/etc/adsm/Nodes/RESTORE/\""
+        "directory=\"/etc/adsm/Nodes/RESTORE/\"",
+        "dirETC=\"/etc/adsm/Nodes/RESTORE/\""
       ],
       "SO": "Linux"
     },
@@ -1200,7 +1200,7 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "directoryETC=\"/etc/adsm/\"",
+        "dirETC=\"/etc/adsm/\"",
         "directory=\"/etc/adsm/\""
       ],
       "SO": "Linux"
@@ -1269,14 +1269,15 @@
       "SO": "Linux"
     },
     {
-      "object": " /var/log/bigsql/cli",
-      "owner": "root",
+      "object": "/var/log/bigsql/cli",
+      "owner": "bigsql",
       "tipo": "/F/",
       "ownerGroup": "*EPUXOS",
       "user": [
-        "GEMMA ESCAR APARICIO",
-        "NINELA ELENA PAVEL MANCIU",
-        "RAMON RUIZ GARCIA"
+        "CARLOS PEREZ GARCIA - BBDD Administrator",
+        "JESUS SANCHEZ CRUZ - Coordinador",
+        "DG-distDBA-pf2.Sq2@kyndryl.com",
+        "DG-distDBA-pf2.Sq2@kyndryl.com"
       ],
       "code": "1-OK",
       "servers": [
@@ -1291,14 +1292,15 @@
       "SO": "Linux"
     },
     {
-      "object": " /tmp/bigsql",
-      "owner": "root",
-      "tipo": "/F/",
+      "object": "/tmp/bigsql",
+      "owner": "bigsql",
+      "tipo": "/S/",
       "ownerGroup": "*EPUXOS",
       "user": [
-        "GEMMA ESCAR APARICIO",
-        "NINELA ELENA PAVEL MANCIU",
-        "RAMON RUIZ GARCIA"
+        "CARLOS PEREZ GARCIA - BBDD Administrator",
+        "JESUS SANCHEZ CRUZ - Coordinador",
+        "DG-distDBA-pf2.Sq2@kyndryl.com",
+        "DG-distDBA-pf2.Sq2@kyndryl.com"
       ],
       "code": "1-OK",
       "servers": [
@@ -1308,7 +1310,160 @@
       "impact": "",
       "variable": [
         "directory=\"/tmp/bigsql\"",
-        "fileTMP=\"/tmp/bigsql\""
+        "dirTMP=\"/tmp/bigsql\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/tmp/bbdd_extract/",
+      "owner": "esy9bkly",
+      "tipo": "/K/",
+      "ownerGroup": "BBDD Administrator",
+      "user": [
+        "CARLOS PEREZ GARCIA"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/tmp/bbdd_extract/\"",
+        "dirTMP=\"/tmp/bbdd_extract/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/home/bigsql/",
+      "owner": "bigsql",
+      "tipo": "/S/",
+      "ownerGroup": "*EPUXOS",
+      "user": [
+        "CARLOS PEREZ GARCIA - BBDD Administrator",
+        "JESUS SANCHEZ CRUZ - Coordinador",
+        "DG-distDBA-pf2.Sq2@kyndryl.com",
+        "DG-distDBA-pf2.Sq2@kyndryl.com"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / STICKY / KYNDRYL",
+      "impact": "GENERICO / STICKY / KYNDRYL",
+      "variable": [
+        "FY (JESUS SANCHEZ CRUZ - Coordinador), NO debería tocarse los accesos que tiene actualmente, la modificación podría provocar errores."
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/var/ibm/bigsql/logs/",
+      "owner": "bigsql",
+      "tipo": "/S/",
+      "ownerGroup": "*EPUXOS",
+      "user": [
+        "CARLOS PEREZ GARCIA - BBDD Administrator",
+        "JESUS SANCHEZ CRUZ - Coordinador",
+        "DG-distDBA-pf2.Sq2@kyndryl.com",
+        "DG-distDBA-pf2.Sq2@kyndryl.com"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "FY (Jesus Sanchez Cruz) : Son logs de instalación/parcheo, en las de producción, en cambio, sí está corregido. Entiendo que se podrá corregir ese subdirectorio concreto.",
+      "impact": "",
+      "variable": [
+        "directory=\"/var/ibm/bigsql/logs/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/var/ibm/bigsql/diag/",
+      "owner": "bigsql",
+      "tipo": "/S/",
+      "ownerGroup": "*EPUXOS",
+      "user": [
+        "CARLOS PEREZ GARCIA - BBDD Administrator",
+        "JESUS SANCHEZ CRUZ - Coordinador",
+        "DG-distDBA-pf2.Sq2@kyndryl.com",
+        "DG-distDBA-pf2.Sq2@kyndryl.com"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / STICKY / KYNDRYL",
+      "impact": "GENERICO / STICKY / KYNDRYL",
+      "variable": [
+        "FY (JESUS SANCHEZ CRUZ - Coordinador), NO debería tocarse los accesos que tiene actualmente, la modificación podría provocar errores."
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/etc/bigsql",
+      "owner": "bigsql",
+      "tipo": "/S/",
+      "ownerGroup": "*EPUXOS",
+      "user": [
+        "CARLOS PEREZ GARCIA - BBDD Administrator",
+        "JESUS SANCHEZ CRUZ - Coordinador",
+        "DG-distDBA-pf2.Sq2@kyndryl.com",
+        "DG-distDBA-pf2.Sq2@kyndryl.com"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / OSR ETC / IBM-KYNDRYL",
+      "impact": "GENERICO / OSR ETC / IBM-KYNDRYL",
+      "variable": [
+        "FY (JESUS SANCHEZ CRUZ - Coordinador), Está igual en desarrollo y producción, tiene los mismos permisos, owner y group, no veo el contenido si bien en desarrollo y producción está vacío. Mantendría los accesos tal cual, considerad bigsql y hadoop usuario y grupo privilegiado."
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/usr/ibmpacks/IBM-Big_SQL/",
+      "owner": "bigsql",
+      "tipo": "/S/",
+      "ownerGroup": "*EPUXOS",
+      "user": [
+        "CARLOS PEREZ GARCIA - BBDD Administrator",
+        "JESUS SANCHEZ CRUZ - Coordinador",
+        "DG-distDBA-pf2.Sq2@kyndryl.com",
+        "DG-distDBA-pf2.Sq2@kyndryl.com"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "dirUSR=\"/usr/ibmpacks/IBM-Big_SQL/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/usr/ibmpacks/IBM-Big_SQL/7.1.0.0/bigsql-cli/config/bigsql-config.active",
+      "owner": "bigsql",
+      "tipo": "/S/",
+      "ownerGroup": "*EPUXOS",
+      "user": [
+        "CARLOS PEREZ GARCIA - BBDD Administrator",
+        "JESUS SANCHEZ CRUZ - Coordinador",
+        "DG-distDBA-pf2.Sq2@kyndryl.com",
+        "DG-distDBA-pf2.Sq2@kyndryl.com"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "dirUSR=\"/usr/ibmpacks/IBM-Big_SQL/7.1.0.0/bigsql-cli/config/\"",
+        "fichero=\"/usr/ibmpacks/IBM-Big_SQL/7.1.0.0/bigsql-cli/config/bigsql-config.active\""
       ],
       "SO": "Linux"
     }
