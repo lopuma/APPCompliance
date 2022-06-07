@@ -942,6 +942,27 @@
       "SO": "Linux"
     },
     {
+      "object": "/opt/cloudera/parcels/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "*EPUXOS",
+      "user": [
+        "GEMMA ESCAR APARICIO", 
+        "NINELA ELENA PAVEL MANCIU", 
+        "RAMON RUIZ GARCIA"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/opt/cloudera/parcels/\""
+      ],
+      "SO": "Linux"
+    },
+    {
       "object": "/BDistribuidoBatchDESA/",
       "owner": "root",
       "tipo": "/F/",

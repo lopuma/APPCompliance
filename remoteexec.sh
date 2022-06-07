@@ -2,7 +2,7 @@
 . tsocks on
 servidores=$(cat /tmp/remotes.txt)
 
-SSHPASS=BailaconLOP4040
+SSHPASS=ibermatica-2024
 export SSHPASS
 
 echo $SSHPASS
