@@ -168,6 +168,27 @@
       "SO": "Linux"
     }
   ],
+  "CTTI": [
+    {
+      "object": "PermitRootLogin",
+      "owner": "root",
+      "tipo": "/S/",
+      "ownerGroup": "",
+      "user": [
+        ""
+      ],
+      "code": "Null",
+      "servers": [
+        ""
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        ""
+      ],
+      "SO": "Linux"
+    }
+  ],
   "FT": [
     {
       "object": "PermitRootLogin",

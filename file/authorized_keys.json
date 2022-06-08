@@ -1190,22 +1190,25 @@
             "SO": "Linux"
         },
         {
-            "object": "/home/sigaux/.ssh/authorized_keys",
-            "owner": "sigaux",
-            "tipo": "/C/",
-            "ownerGroup": "CUSTOMER",
+            "object": "/home/aotipat1/.ssh/authorized_keys",
+            "owner": "aotipat1",
+            "tipo": "/S/",
+            "ownerGroup": "CACF user Linux",
             "user": [
-                "CUSTOMER"
+                "Soporte LINUX de FT Sigifi",
+                "PABLO MOSCOSO SARABIA",
+                "FT-LINUX - Santiago Tirado Salvador",
+                "FT-LINUX - Antonio Gil López"
             ],
-            "code": "2-DOC",
+            "code": "null",
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "Usuario Explotación customer\n2-DOC para FROM / PASSPHRASE",
+            "risk": "Usuario de CACS Linux\n2-DOC para FROM / PASSPHRASE",
             "impact": "1-OK para\nIdentify and Authenticate Users/Public Key Label",
             "variable": [
-                "file_authorized=\"/home/sigaux/.ssh/authorized_keys\"",
-                "gecos=\"!!ES/C/FTE/FTE/Usuario Explotación!!\""
+                "file_authorized=\"/home/aotipat1/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/S/*EAUXOS/IBM-SO/CACF user Linux servers!!\""
             ],
             "SO": "Aix / Linux"
         }
