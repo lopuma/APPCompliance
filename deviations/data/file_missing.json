@@ -1,0 +1,56 @@
+{
+    "INFRA": [
+      {
+        "object": "/var/log/secure",
+        "owner": "root",
+        "tipo": "/F/",
+        "ownerGroup": "Sistemas",
+        "user": [
+          "Grupo de Soporte INFRA Linux",
+          "Fernando Roldan Garrote",
+          "Luis Isabel Saez",
+          "RICARDO CIPRES BAGUESTE",
+          "SILVIA PEREIRA LARA"
+        ],
+        "code": "1-OK",
+        "servers": [
+          "ALL Servers"
+        ],
+        "risk": "",
+        "impact": "",
+        "variable": [
+          "fileMissing=\"/var/log/secure\"",
+          "touch $fileMissing",
+          "chmod 0600 $fileMissing",
+          "chown root:root $fileMissing"
+        ],
+        "SO": "Linux"
+      },
+      {
+        "object": "/var/log/tallylog",
+        "owner": "root",
+        "tipo": "/F/",
+        "ownerGroup": "Sistemas",
+        "user": [
+          "Grupo de Soporte INFRA Linux",
+          "Fernando Roldan Garrote",
+          "Luis Isabel Saez",
+          "RICARDO CIPRES BAGUESTE",
+          "SILVIA PEREIRA LARA"
+        ],
+        "code": "1-OK",
+        "servers": [
+          "ALL Servers"
+        ],
+        "risk": "",
+        "impact": "",
+        "variable": [
+          "fileMissing=\"/var/log/tallylog\"",
+          "touch $fileMissing",
+          "chmod 0600 $fileMissing",
+          "chown root:root $fileMissing"
+        ],
+        "SO": "Linux"
+      }
+    ]
+}

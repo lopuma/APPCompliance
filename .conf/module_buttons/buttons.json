@@ -7,6 +7,13 @@
         "active" : "True"
     },
     {
+        "module" : "Logging/Log Files Required",
+        "keyword" : "MISSING",
+        "nameButton" : "File Missing",
+        "script" : "file_missing.json",
+        "active" : "True"
+    },
+    {
         "module" : "Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories",
         "keyword" : "STICKY",
         "nameButton" : "Permissions",
