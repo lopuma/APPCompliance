@@ -322,6 +322,25 @@
                 "file_idrsa=\"/home/esy9ar02/.ssh/id_rsa\""
             ],
             "SO": "Linux"
+        },
+        {
+            "object": "/home/spinol/.ssh/id_rsa",
+            "owner": "spinol",
+            "tipo": "/E/",
+            "ownerGroup": "Red de Datos",
+            "user": [
+                "Pinol Jane, Salvador"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "## Para implementar una FRASE DE PASO, se recomienda que lo haga el owner de la cuenta, se le puede indicar como hacer con el siguiente comando, donde \"$file_idrsa\", es el fichero id_rsa a corregir.",
+            "impact": "ssh-keygen -p -f $file_idrsa",
+            "variable": [
+                "file_idrsa=\"/home/spinol/.ssh/id_rsa\""
+            ],
+            "SO": "Linux"
         }
     ],
     "INFRA": [

@@ -979,7 +979,7 @@
             "impact": "1-OK Para : Identify and Authenticate Users/Public Key Label",
             "variable": [
                 "file_authorized=\"/home/efxuxat1/.ssh/authorized_keys\"",
-                "gecos=\"!!CZ/S/*ABJ83/IBM/Automation ID!!\","
+                "gecos=\"!!CZ/S/*ABJ83/IBM/Automation ID!!\""
             ],
             "SO": "Linux"
         },
@@ -999,7 +999,7 @@
             "impact": "1-OK Para : Identify and Authenticate Users/Public Key Label",
             "variable": [
                 "file_authorized=\"/home/efxuxat2/.ssh/authorized_keys\"",
-                "gecos=\"!!CZ/S/*ABJ83/IBM/Automation ID!!\","
+                "gecos=\"!!CZ/S/*ABJ83/IBM/Automation ID!!\""
             ],
             "SO": "Linux"
         },
@@ -1020,7 +1020,7 @@
             "impact": "1-OK Para : Identify and Authenticate Users/Public Key Label",
             "variable": [
                 "file_authorized=\"/home/tevprxy1/.ssh/authorized_keys\"",
-                "gecos=\"!!IL/F/*ILTEVA//-ES-20210115-009!!\","
+                "gecos=\"!!IL/F/*ILTEVA//-ES-20210115-009!!\""
             ],
             "SO": "Linux"
         },
@@ -1040,7 +1040,66 @@
             "impact": "1-OK Para : Identify and Authenticate Users/Public Key Label",
             "variable": [
                 "file_authorized=\"/home/cnpjbat1/.ssh/authorized_keys\"",
-                "gecos=\"!!CZ/S/*ABJ83/IBM/IPC automation!!\","
+                "gecos=\"!!CZ/S/*ABJ83/IBM/IPC automation!!\""
+            ],
+            "SO": "Linux"
+        },
+        {
+            "object": "/home/ESY9ADCL/.ssh/authorized_keys",
+            "owner": "esy9adcl",
+            "tipo": "/E/",
+            "ownerGroup": "Linux System Administrator",
+            "user": [
+                "Rogero Blasco, Juan"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "## Podemos preguntar si eliminar la clave o añadirle el FROM. ",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/ESY9ADCL/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/E/Y9F34M/KYNDRYL/Rogero Blasco, Juan!!\""            ],
+            "SO": "Linux"
+        },
+        {
+            "object": "/home/ES085740/.ssh/authorized_keys",
+            "owner": "es085740",
+            "tipo": "/E/",
+            "ownerGroup": "IT Specialist",
+            "user": [
+                "Cipres Bagueste, Ricardo"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "## Podemos preguntar si eliminar la clave o añadirle el FROM. ",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/ES085740/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/K/K01087/KYNDRYL/Cipres Bagueste, Ricardo!!\""
+            ],
+            "SO": "Linux"
+        },        {
+            "object": "/home/ESY9CC7S/.ssh/authorized_keys",
+            "owner": "esy9cc7s",
+            "tipo": "/E/",
+            "ownerGroup": "Spain EBH team",
+            "user": [
+                "Marcos, Alfonso"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "## Se puede añadir el FROM, en diferentes server.",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/ESY9CC7S/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/K/K02440/KYNDRYL/Marcos, Alfonso!!\"",
+                "from=\"from=`129.39.136.5`\""
             ],
             "SO": "Linux"
         }
@@ -1200,17 +1259,37 @@
                 "FT-LINUX - Santiago Tirado Salvador",
                 "FT-LINUX - Antonio Gil López"
             ],
-            "code": "null",
+            "code": "1-OK",
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "Usuario de CACS Linux\n2-DOC para FROM / PASSPHRASE",
-            "impact": "1-OK para\nIdentify and Authenticate Users/Public Key Label",
+            "risk": "## Usuario de CACF Linux.\n## 2-DOC para PASSPHRASE",
+            "impact": "## 1-OK para LABEL : [ Identify and Authenticate Users/Public Key Label ]\n\n## 1- OK para FROM : [ Password Requirements/Restrict Private Keys ] , lo añaden desde soporte.",
             "variable": [
                 "file_authorized=\"/home/aotipat1/.ssh/authorized_keys\"",
                 "gecos=\"!!ES/S/*EAUXOS/IBM-SO/CACF user Linux servers!!\""
             ],
             "SO": "Aix / Linux"
+        },
+        {
+            "object": "/home/spinol/.ssh/authorized_keys",
+            "owner": "spinol",
+            "tipo": "/E/",
+            "ownerGroup": "Red de Datos",
+            "user": [
+                "Pinol Jane, Salvador"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "## Podemos preguntar si eliminar la clave o añadirle el FROM",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/spinol/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/E/Y9FU2X/KYNDRYL/Pinol Jane, Salvador!!\""
+            ],
+            "SO": "Linux"
         }
     ]
 }

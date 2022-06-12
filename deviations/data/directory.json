@@ -73,7 +73,7 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "fileOPT=\"/opt/WebSphere/AppServer/\""
+        "dirOPT=\"/opt/WebSphere/AppServer/\""
       ],
       "SO": "Aix"
     },
@@ -92,7 +92,7 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "fileOPT=\"/opt/IBMIHS/\""
+        "dirOPT=\"/opt/IBMIHS/\""
       ],
       "SO": "Aix"
     },
@@ -168,7 +168,7 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "fileOPT=\"/opt/IBM/db2/V9.7/\""
+        "dirOPT=\"/opt/IBM/db2/V9.7/\""
       ],
       "SO": "Aix"
     },
@@ -725,6 +725,25 @@
         "SO": "Linux"
       },
       {
+        "object": "/tmp/*.CSV",
+        "owner": "Externos",
+        "tipo": "/E/",
+        "ownerGroup": "Externos",
+        "user": [
+          "Usuarios externos o internos"
+        ],
+        "code": "1-OK",
+        "servers": [
+          "ALL Servers"
+        ],
+        "risk": "NOTA : Dentro de /tmp, los ficheros que tengan permisos w a other, creados por cuentas internas, externas, se pueden corregir y quitar w a other.",
+        "impact": "File con extensiones .zip, .log, .sh, .CSV, etc etc..",
+        "variable": [
+          "dirTMP=\"/tmp/*.CSV\""
+        ],
+        "SO": "Linux"
+      },
+      {
         "object": "/tmp/*.zip",
         "owner": "Externos",
         "tipo": "/E/",
@@ -737,7 +756,7 @@
           "ALL Servers"
         ],
         "risk": "NOTA : Dentro de /tmp, los ficheros que tengan permisos w a other, creados por cuentas internas, externas, se pueden corregir y quitar w a other.",
-        "impact": "File con extensiones .zip, .log, .sh, etc etc..",
+        "impact": "File con extensiones .zip, .log, .sh, .CSV, etc etc..",
         "variable": [
           "dirTMP=\"/tmp/*.zip\""
         ],
@@ -780,7 +799,7 @@
       "impact": "",
       "variable": [
         "directory=\"/opt/SANnav/docker/docker/\"",
-        "fileOPT=\"/opt/SANnav/docker/docker/\""
+        "dirOPT=\"/opt/SANnav/docker/docker/\""
       ],
       "SO": "Linux"
     },
@@ -835,28 +854,6 @@
       "SO": "Aix"
     },
     {
-      "object": "/tmp/tsmclient/",
-      "owner": "root",
-      "tipo": "/F/",
-      "ownerGroup": "Sistemas",
-      "user": [
-        "Fernando Roldan Garrote", 
-        "Luis Isabel Saez", 
-        "RICARDO CIPRES BAGUESTE", 
-        "SILVIA PEREIRA LARA"
-      ],
-      "code": "1-OK",
-      "servers": [
-        "ALL server"
-      ],
-      "risk": "",
-      "impact": "",
-      "variable": [
-        "directory=\"/tmp/tsmclient/\""
-      ],
-      "SO": "Linux"
-    },
-    {
       "object": "/opt/WebSphere/AppServer/java/8.0/",
       "owner": "was",
       "tipo": "/F/",
@@ -873,7 +870,7 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "fileOPT=\"/opt/WebSphere/AppServer/java/8.0/\""
+        "dirOPT=\"/opt/WebSphere/AppServer/java/8.0/\""
       ],
       "SO": "Linux"
     },
@@ -894,7 +891,7 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "fileOPT=\"/opt/IBM/ITMdepot/soft/\""
+        "dirOPT=\"/opt/IBM/ITMdepot/soft/\""
       ],
       "SO": "Linux"
     },
@@ -914,9 +911,146 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "fileOPT=\"/opt/lotus/Data/\""
+        "dirOPT=\"/opt/lotus/Data/\""
       ],
       "SO": "Linux"
+    },
+    {
+      "object": "/opt/BNA1442/data/databases/",
+      "owner": "postgres",
+      "tipo": "/S/",
+      "ownerGroup": "*EEUXOS",
+      "user": [
+        ""
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "dirOPT=\"/opt/BNA1442/data/databases/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/tmp/tsmclient/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "*ESCL1L",
+      "user": [
+        "Fernando Roldan Garrote", 
+        "Luis Isabel Saez", 
+        "RICARDO CIPRES BAGUESTE", 
+        "SILVIA PEREIRA LARA"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/tmp/tsmclient/\"",
+        "dirTMP=\"/tmp/tsmclient/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/home/ESY9DJAY/",
+      "owner": "esy9djay",
+      "tipo": "/F/",
+      "ownerGroup": "PHC",
+      "user": [
+        "SERGIO HERMOSO LOZANO"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "directory=\"/home/ESY9DJAY/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/etc/profile.d/IBMsinit.sh",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "*ESCL1L",
+      "user": [
+        "-------------------------------",
+        "LINUX",
+        "-------------------------------",
+        " Fernando Roldan Garrote", 
+        " Luis Isabel Saez", 
+        " RICARDO CIPRES BAGUESTE", 
+        " SILVIA PEREIRA LARA"      
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL server"
+      ],
+      "risk": "## Los permisos para IBMsinit.sh es 755",
+      "impact": "",
+      "variable": [
+        "fichero=\"/etc/profile.d/IBMsinit.sh\"",
+        "chmod 755 $fichero"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/etc/profile.d/IBMsinit.csh",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "*ESCL1L",
+      "user": [
+        "-------------------------------",
+        "LINUX",
+        "-------------------------------",
+        " Fernando Roldan Garrote", 
+        " Luis Isabel Saez", 
+        " RICARDO CIPRES BAGUESTE", 
+        " SILVIA PEREIRA LARA"      
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL server"
+      ],
+      "risk": "## Los permisos para IBMsinit.csh es 755",
+      "impact": "",
+      "variable": [
+        "fichero=\"/etc/profile.d/IBMsinit.csh\"",
+        "chmod 755 $fichero"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/var/opt/BESRelay/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "*EBHCL1",
+      "user": [
+        "------------------------------",
+        "AIX",
+        "------------------------------",
+        " LORENZO FUERTES RAMON",
+        " Lech Bartlomiej",
+        " David de Frutos Garcia"   
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "dirVAR=\"/var/opt/BESRelay/\""
+      ],
+      "SO": "Aix"
     }
   ],
   "LBK": [
@@ -1263,7 +1397,7 @@
       "impact": "",
       "variable": [
         "directory=\"/opt/IBM/ITMdepot/\"",
-        "fileOPT=\"/opt/IBM/ITMdepot/\""
+        "dirOPT=\"/opt/IBM/ITMdepot/\""
       ],
       "SO": "Linux"
     },
@@ -1711,7 +1845,7 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "directory=\"/opt/IBM/ITM/\"","fileOPT=\"/opt/IBM/ITM/\""
+        "directory=\"/opt/IBM/ITM/\"","dirOPT=\"/opt/IBM/ITM/\""
       ],
       "SO": "Linux"
     },
@@ -1734,7 +1868,7 @@
       "impact": "",
       "variable": [
         "directory=\"/opt/tivoli/tsm/client/\"",
-        "fileOPT=\"/opt/tivoli/tsm/client/\""
+        "dirOPT=\"/opt/tivoli/tsm/client/\""
       ],
       "SO": "Linux"
     },
@@ -1756,7 +1890,7 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "fileOPT=\"/opt/tivoli/tsm/client/api/bin64/\""
+        "dirOPT=\"/opt/tivoli/tsm/client/api/bin64/\""
       ],
       "SO": "Linux"
     },
