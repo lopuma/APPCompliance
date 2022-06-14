@@ -2,21 +2,28 @@
     {
         "module" : "Password Requirements/Restrict Private Keys",
         "keyword" : "AUTHORIZED_KEY / FROM",
-        "nameButton" : "Authorized_keys",
+        "nameButton" : "Public Keys",
+        "script" : "authorized_keys.json",
+        "active" : "True"
+    },
+    {
+        "module" : "Identify and Authenticate Users/Public Key Authentication",
+        "keyword" : "AUTHORIZED_KEY / LENGTH",
+        "nameButton" : "Public Keys",
         "script" : "authorized_keys.json",
         "active" : "True"
     },
     {
         "module" : "Identify and Authenticate Users/Public Key Label",
         "keyword" : "AUTHORIZED_KEY / LABEL_KEY",
-        "nameButton" : "Authorized_keys",
+        "nameButton" : "Public Keys",
         "script" : "authorized_keys.json",
         "active" : "True"
     },
     {
         "module" : "Password Requirements/Private Key Passphrase",
         "keyword" : "ID_RSA / NOT PASSPHRASE",
-        "nameButton" : "Private Key",
+        "nameButton" : "Private Keys",
         "script" : "idrsa.json",
         "active" : "True"
     },
@@ -64,12 +71,27 @@
         "keyword" : "OSRUSR",
         "nameButton" : "Permissions",
         "script" : "directory.json",
-        "active" : "True"    },
+        "active" : "True"    
+    },
     {
         "module" : "Protecting Resources-OSRs/CRON Command Group Permissions",
         "keyword" : "OSRCRON",
         "nameButton" : "Permissions",
         "script" : "directory.json",
+        "active" : "True"    
+    },
+    {
+        "module" : "Password Requirements/Password MAX Age \\etc\\shadow",
+        "keyword" : "MAXAGE",
+        "nameButton" : "Maxage",
+        "script" : "account.json",
+        "active" : "True"    
+    },
+    {
+        "module" : "Network Settings/Disable NFS server",
+        "keyword" : "NFS",
+        "nameButton" : "Service",
+        "script" : "service.json",
         "active" : "True"    
     }
 ]

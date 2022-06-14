@@ -316,7 +316,7 @@
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "## Para implementar una FRASE DE PASO, se recomienda que lo haga el owner de la cuenta, se le puede indicar como hacer con el siguiente comando, donde \"$file_idrsa\", es el fichero id_rsa a corregir.",
+            "risk": "## El owner implemnta la passphrase.\n\n## Para implementar una FRASE DE PASO, se recomienda que lo haga el owner de la cuenta, se le puede indicar como hacer con el siguiente comando, donde \"$file_idrsa\", es el fichero id_rsa a corregir.",
             "impact": "ssh-keygen -p -f $file_idrsa",
             "variable": [
                 "file_idrsa=\"/home/esy9ar02/.ssh/id_rsa\""
@@ -341,6 +341,28 @@
                 "file_idrsa=\"/home/spinol/.ssh/id_rsa\""
             ],
             "SO": "Linux"
+        }
+    ],
+    "CTTI" :[
+        {
+            "object": "/home/gctjbat2/.ssh/id_rsa",
+            "owner": "gctjbat2",
+            "tipo": "/S/",
+            "ownerGroup": "Soporte CTTI",
+            "user": [
+                "Soporte CTII"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "2-DOC :\n\"Password Requirements/Private Key Passphrase.\n\nEsta asociado con las credenciales del Tower que se usan para conexion entre el y las maquinas o EndPoints",
+            "impact": "1-OK only for:\n\"Identify and Authenticate Users/Public Key Label",
+            "variable": [
+                "file_authorized=\"/home/gctjbat2/.ssh/id_rsa\"",
+                "gecos=\"!!ES/S/*ESCL1L/IBM-SO/ADMIN.USER!!\""                
+            ],
+            "SO": "LINUX"
         }
     ],
     "INFRA": [

@@ -620,6 +620,44 @@
         "directory=\"/opt/jws/t22stx03/webapps/manager/WEB-INF/jsp/\""
       ],
       "SO": "Linux"
+    },
+    {
+      "object": "/etc/Symantec.conf",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "avdefs",
+      "user": [
+        ""
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "Symantec Antivirus"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/etc/symc-defutils.conf",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "avdefs",
+      "user": [
+        ""
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "Symantec Antivirus"
+      ],
+      "SO": "Linux"
     }
   ],
   "ENEL": [

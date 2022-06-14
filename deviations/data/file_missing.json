@@ -51,6 +51,28 @@
           "chown root:root $fileMissing"
         ],
         "SO": "Linux"
+      },
+      {
+        "object": "/var/adm/sudo.log",
+        "owner": "root",
+        "tipo": "/F/",
+        "ownerGroup": "Sistemas",
+        "user": [
+          "Grupo de Soporte Linux"
+        ],
+        "code": "1-OK",
+        "servers": [
+          "ALL Servers"
+        ],
+        "risk": "",
+        "impact": "",
+        "variable": [
+          "fileMissing=\"/var/adm/sudo.log\"",
+          "touch $fileMissing",
+          "chmod 0600 $fileMissing",
+          "chown root:root $fileMissing"
+        ],
+        "SO": "Linux"
       }
     ]
 }

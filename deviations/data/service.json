@@ -322,6 +322,33 @@
         ""
       ],
       "SO": "Linux"
+    },
+    {
+      "object": "NFS",
+      "owner": "Sistemas",
+      "tipo": "/S/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "SOPORTE AIX:",
+        "   LORENZO FUERTES RAMON",
+        "   Lech Bartlomiej",
+        "   David de Frutos Garcia"   
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "niminfra",
+        "nimyec",
+        "es01pni02cs01xg",
+        "es01pni03cs01xg",
+        "es01hdw01sr01xg",
+        "ECCTMRR04"
+      ],
+      "risk": "GENERICO /  SERVICE : NFS / KYNDRYL",
+      "impact": "GENERICO /  SERVICE : NFS / KYNDRYL",
+      "variable": [
+        ""
+      ],
+      "SO": "Aix"
     }
   ],
   "LBK": [

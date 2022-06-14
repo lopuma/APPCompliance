@@ -1,123 +1,134 @@
 ///////////////////////////////////////////////////////////////////////////////////////
-OS HMCipBase - Issue REF : 705523 / PRE 11
+OS HMCipBase - Issue REF : 800301 / PRE 13
 
 +-------------------------------------------------------------------------------------+
-BB.1.1.1 Password Requirements	Complex passwords	"Set the 'Enforce Strict Password Rules' checkbox for each user. 
 
-"N/A - This does not exist as of HMC V7"
+--BB.1.1.1 Password Requirements
+"Complex password
 
-"Nota: este valor no es aplicable en el usuario root , hscroot, o hscpe. 
-"Con la Versión 7 release 3.4.0 
+// Definir una política de contraseñas de HMC que cumpla los requisitos principales del cuerpo para la complejidad de la contraseña
 
-"	Yes. (como no existe checkbox en el linux, se pone automáticamente,no hay que comprobar nada)
 
-"N/A Version
-lshmc -V
+lspwdpolicy -t p
+
+// Nos tenemos que fijar en active=1 .......... pwage=90
+
+
+/* CONTESTAR YES */ : " Si esta definido la politica de contraseña : `active=1,name=itss-hmc-4.1`.
+
+/* CONTESTAR NO */ : "  An HMC password policy that meets the main body requirements for password complexity is not defined.
 
 +-------------------------------------------------------------------------------------+
-BB.1.1.2 Password Requirements	Password expiration
+
+--- BB.1.1.2 Password Requirements
+"Password expiration
+
 
 lshmcusr|grep -v pwage=90
 
-"YES: Si todos los usuarios tienen pwage=90 excepto root y hscroot > Caso contrario: Users with pwage=99999: (name=y97030,name=Y97032)
 
-"Wrong account nom expire password, is recomended 90 days
+"todos los usuarios tienen pwage=90 excepto root, hscroot y hscpe"
 
-name=es082027
-name=esy9dj0n
-name=esy9dcpj
-name=ess01020
-name=esy9drcb
-name=esy9dwks
-name=es082009
-name=ess01033
-name=es086075
-name=esy9ceeg
-name=esy9djb2
-name=esy9ceee
-name=es082062
-name=es021317
-name=esy9d773
-name=esy9cpkd
-name=es010503
-name=esy9d7l1
-name=esy9c0dj
-name=es086472
-name=ess01014
-name=es023501
-name=ess01012
-name=ess01011
-name=ess01041
-name=esy9ceas
-name=esy9bx34
-name=es087922
-name=ess01028
+/* CONTESTAR YES */ : " Si todos los usuarios tienen pwage=90 excepto root, hscroot y hscpe.
 
-"todos los usuarios tienen pwage=90 excepto root y hscroot"
+/* CONTESTAR NO */ : "  Wrong account nom expire password pwage=99999, is recomende pwage=90.
 
 +-------------------------------------------------------------------------------------+
+
 BB.1.1.3 Password Requirements	Individual Accountability
 
-"Cada usuario debe iniciar sesión con los ID de usuario individuales. Estos pueden tener el rol hmcsuperadmin. hscroot se puede utilizar donde se mantiene la responsabilidad individual.
+" Cada usuario debe iniciar sesión con los ID de usuario individuales, estos deben tener el rol hmcsuperadmin. 
+
+// La cuentas root, hscroot y hscpe puede utilizar un ROL diferente a hmcsuperadmin.
 
 
 lshmcusr | grep -v ",taskrole=hmcsuperadmin,"
 
-"Wrong account taskrole=hmcsuperadmin, is recomended
 
-name=esR01198, 
-name=es023501, 
-name=es010503, 
-name=es021317, 
+/* CONTESTAR YES */ : " Si todas las cuentas tienen el ROL hmcsuperadmin.
 
-"todos los usuarios tienen que tener el rol hmcsuperadmin
+/* CONTESTAR NO */ : " Wrong $account taskrole=hmcsuperadmin, is recomended.
+
 +-------------------------------------------------------------------------------------+
-BB.1.1.6 Password Requirements	Password Length	15
+
+---BB.1.1.6 Password Requirements	
+"Password Length = 15
+
 
 lspwdpolicy -t p
 
-"ahi te pone el active=1, en el campo min_length si es 8 es NO"
 
-"Wrong Password Length=8, requerid 15"
+// Nos tenemos que fijar en active=1 .......... min_length=15
+
+
+/* CONTESTAR YES */ : " Si esta definido la politica de contraseña : `active=1,name=itss-hmc-4.1`.
+
+/* CONTESTAR NO */ : "  An HMC password policy that meets the main body requirements for password complexity is not defined.
+
 +-------------------------------------------------------------------------------------+
-BB.1.2.6 Logging 	Synchronized system clocks	
-"Enable xntpd and add a time server	
-"Keep system clocks synchronized with a common reference time source to improve log accuracy
+
+---BB.1.2.6 Logging 	
+"Synchronized system clocks	
+
+//Enable xntpd and add a time server	
+
 
 lshmc -r
 lshmc -r -Fxntp
 
-"ahi te pone el campo xntp si es disabled es NO"
 
-"Wron parametro xntp=disable, is enable Recommended Setting "Enable xntpd and add a time server""
+/* CONTESTAR YES */ : " Si esta activa la sincronizacion con el servidor NTP :  xntp=enable.
+
+/* CONTESTAR NO */ : "  Wron parametro xntp=disable, is enable Recommended Setting "Enable xntpd and add a time server".
+
 +-------------------------------------------------------------------------------------+
-BB.1.5.1 Network Settings
-BB.1.5.2 Network Settings
-BB.1.5.3 Network Settings
-BB.1.5.4 Network Settings
 
-"N/A Do not install
-"N/A TFTP is disabled 
-"N/A Do not install as an NFS server.
-"N/A Never activate or install
+---BB.1.5.1 Network Settings
+" Anonymous FTP System Settings
 
+/* CONTESTAR N/A  */ : " Do not install
 
-https://www.ibm.com/support/pages/hmc-firewall-information
 +-------------------------------------------------------------------------------------+
-BB.2.0.1 Business Use Notice 	Business use notice
 
-"Display business use notice in "Welcome Text" 
+---BB.1.5.2 Network Settings
+" Trivial File Transfer Protocol (TFTP) System Settings
 
-"segun la versión una u otra pregunta (lshmc -V)
-	cat /etc/motd
-	echo $RLOGIN_MESSAGE
+/* CONTESTAR N/A  */ : " TFTP is disabled 
+
++-------------------------------------------------------------------------------------+
+
+---BB.1.5.3 Network Settings
+" Network File System (NFS) System Settings
+
+/* CONTESTAR N/A  */ : " Do not install as an NFS server.
+
++-------------------------------------------------------------------------------------+
+
+---BB.1.5.4 Network Settings
+" Berkeley Remote Access Commands System Settings
+
+/* CONTESTAR N/A  */ : " Never activate or install
+
++-------------------------------------------------------------------------------------+
+---BB.2.0.1 Business Use Notice 	
+" Business use notice
+
+// Display business use notice in "Welcome Text" 
+
+
 lsusrtca  -t b
 
+/* CONTESTAR YES */ : " Si esta el BUN correcto, debe apareder `Kyndryl`.
+
+/* CONTESTAR NO */ : "  Missing or Incorrect Business Use Notice. It should be set in lsusrtca  -t b.
+
 +-------------------------------------------------------------------------------------+
-BB.2.1.3 Encryption	Data Transmission	
-"Meet the minimum bit length value specified in the base policy
 
-cat /etc/ssh/sshd_config | grep -i protocol
+---BB.2.1.3 Encryption	
+" Data Transmission	
 
-"debe ser protocol 2
+// Mínimo de 2048 bits para cifrados basados en RSA. Valor predeterminado para otros cifrados
+
+[ A la espera de solucion ]
+
 +-------------------------------------------------------------------------------------+

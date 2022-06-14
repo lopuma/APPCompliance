@@ -528,7 +528,7 @@
             "object": "/home/gctuxat2/.ssh/authorized_keys",
             "owner": "gctuxat2",
             "tipo": "/F/",
-            "ownerGroup": "",
+            "ownerGroup": "*ABJ83",
             "user": [
                 ""
             ],
@@ -536,10 +536,32 @@
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "",
+            "risk": "Usuario de IPC automation - CACF ",
             "impact": "",
             "variable": [
-                "file_authorized=\"/home/gctuxat2/.ssh/authorized_keys\""
+                "file_authorized=\"/home/gctuxat2/.ssh/authorized_keys\"",
+                "from=\"from=`10.50.112.*`\"",
+                "gecos=\"!!CZ/S/*ABJ83/IBM/IPC automation!!\""   
+            ],
+            "SO": "Linux"
+        },
+        {
+            "object": "/home/gctuxat1/.ssh/authorized_keys",
+            "owner": "gctuxat1",
+            "tipo": "/F/",
+            "ownerGroup": "*ABJ83",
+            "user": [
+                ""
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Usuario de IPC automation - CACF ",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/gctuxat1/.ssh/authorized_keys\"",
+                "gecos=\"!!CZ/S/*ABJ83/IBM/IPC automation!!\""
             ],
             "SO": "Linux"
         },
@@ -587,16 +609,16 @@
             "object": "/home/ansible/.ssh/authorized_keys",
             "owner": "ansible",
             "tipo": "/S/",
-            "ownerGroup": "Soporte",
+            "ownerGroup": "Soporte CTTI",
             "user": [
-                "Soporte"
+                "Soporte CTTI"
             ],
-            "code": "NULL",
+            "code": "2-DOC",
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "Only 1-OK for Public Key Label",
-            "impact": "Only 1-OK for Public Key Label",
+            "risk": "2-DOC :\n\"Password Requirements/Private Key Passphrase\nIdentify and Authenticate Users/Public Key Authentication\n\nEsta asociado con las credenciales del Tower que se usan para conexion entre el y las maquinas o EndPoints",
+            "impact": "1-OK only for:\n\"Identify and Authenticate Users/Public Key Label",
             "variable": [
                 "file_authorized=\"/home/ansible/.ssh/authorized_keys\"",
                 "gecos=\"!!ES/S/*EGCLIN/IBM-SO/Ansible!!\""                
@@ -611,7 +633,7 @@
             "user": [
                 "Soporte"
             ],
-            "code": "NULL",
+            "code": "2-DOC",
             "servers": [
                 "ALL Servers"
             ],
@@ -620,6 +642,26 @@
             "variable": [
                 "file_authorized=\"/home/ora4g3nt/.ssh/authorized_keys\"",
                 "gecos=\"!!ES/S/*EGCDDB/IBM-SO/Usuario Proprietario de los binarios de Oracle!!\""                
+            ],
+            "SO": "LINUX"
+        },
+        {
+            "object": "/home/orawls/.ssh/authorized_keys",
+            "owner": "orawls",
+            "tipo": "/S/",
+            "ownerGroup": "Soporte",
+            "user": [
+                "Soporte"
+            ],
+            "code": "2-DOC",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "GENERICO / PUBLIC KEY / IBM",
+            "impact": "Only 1-OK for Public Key Label",
+            "variable": [
+                "file_authorized=\"/home/orawls/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/S/*EGCEBH/IBM-SO/User for subsystem WEBLOGIC!!\""                
             ],
             "SO": "LINUX"
         },
@@ -640,6 +682,139 @@
             "variable": [
                 "file_authorized=\"/home/tomgc0/.ssh/authorized_keys\"",
                 "gecos=\"!!ES/S/EGCEBH/CTTI/Tomcat CATALINA_BASE 0!!\""                
+            ],
+            "SO": "LINUX"
+        },
+        {
+            "object": "/home/buradmin/.ssh/authorized_keys",
+            "owner": "root",
+            "tipo": "/F/",
+            "ownerGroup": "*EGCLIN",
+            "user": [
+                "Soporte"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Antiguo acceso a relay CMS, migrada de CMS a CMOS",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/buradmin/.ssh/authorized_keys\""            
+            ],
+            "SO": "LINUX"
+        },
+        {
+            "object": "/home/ibmadmin/.ssh/authorized_keys",
+            "owner": "root",
+            "tipo": "/F/",
+            "ownerGroup": "*EGCLIN",
+            "user": [
+                "Soporte"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Antiguo acceso a relay CMS, migrada de CMS a CMOS",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/ibmadmin/.ssh/authorized_keys\""            
+            ],
+            "SO": "LINUX"
+        },
+        {
+            "object": "/home/osadmin/.ssh/authorized_keys",
+            "owner": "root",
+            "tipo": "/F/",
+            "ownerGroup": "*EGCLIN",
+            "user": [
+                "Soporte"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Antiguo acceso a relay CMS, migrada de CMS a CMOS",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/osadmin/.ssh/authorized_keys\""            
+            ],
+            "SO": "LINUX"
+        },
+        {
+            "object": "/home/adrcc/.ssh/authorized_keys",
+            "owner": "root",
+            "tipo": "/F/",
+            "ownerGroup": "*EGCLIN",
+            "user": [
+                "Soporte"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Antiguo acceso a relay CMS, migrada de CMS a CMOS",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/adrcc/.ssh/authorized_keys\""            
+            ],
+            "SO": "LINUX"
+        },
+        {
+            "object": "/home/coeadmin/.ssh/authorized_keys",
+            "owner": "root",
+            "tipo": "/F/",
+            "ownerGroup": "*EGCLIN",
+            "user": [
+                "Soporte"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Antiguo acceso a relay CMS, migrada de CMS a CMOS",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/coeadmin/.ssh/authorized_keys\""            
+            ],
+            "SO": "LINUX"
+        },
+        {
+            "object": "/home/discover/.ssh/authorized_keys",
+            "owner": "root",
+            "tipo": "/F/",
+            "ownerGroup": "*EGCLIN",
+            "user": [
+                "Soporte"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Antiguo acceso a relay CMS, migrada de CMS a CMOS",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/discover/.ssh/authorized_keys\""            
+            ],
+            "SO": "LINUX"
+        },
+        {
+            "object": "/home/shclient/.ssh/authorized_keys",
+            "owner": "root",
+            "tipo": "/F/",
+            "ownerGroup": "*EGCLIN",
+            "user": [
+                "Soporte"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL Servers"
+            ],
+            "risk": "Antiguo acceso a relay CMS, migrada de CMS a CMOS",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/shclient/.ssh/authorized_keys\""            
             ],
             "SO": "LINUX"
         }
@@ -1220,7 +1395,7 @@
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "",
+            "risk": "## El owner implentara el FROM.",
             "impact": "",
             "variable": [
                 "file_authorized=\"/home/esy9ar02/.ssh/authorized_keys\"",
