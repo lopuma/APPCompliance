@@ -1,0 +1,74 @@
+[
+    {
+        "nameButton" : "Public Keys",
+        "module" : [ 
+        	"Password Requirements/Restrict Private Keys",
+        	"Identify and Authenticate Users/Public Key Authentication",
+        	"Identify and Authenticate Users/Public Key Label"
+        	
+        ],
+        "keyword" : "AUTHORIZED_KEY / FROM",
+        "script" : "include_authorized_keys.json",
+        "active" : "True"
+    },
+    {
+        "nameButton" : "Private Keys",
+        "module" : [ 
+        	"Password Requirements/Private Key Passphrase"
+        ],
+        "keyword" : "ID_RSA / NOT PASSPHRASE",
+        "script" : "include_idrsa.json",
+        "active" : "True"
+    },
+    {
+    	"nameButton" : "File Missing",
+        "module" : [ 
+        	"Logging/Log Files Required"
+        ],
+        "keyword" : "MISSING",
+        "script" : "include_fileMissing.json",
+        "active" : "True"
+    },
+    {
+        "nameButton" : "Permissions",
+        "module" : [ 
+        	"Protecting Resources-mixed/Ensure sticky bit is set on all world-writable directories",
+        	"Protecting Resources-OSRs/OSR /TMP Files Restrictions",
+        	"Protecting Resources-OSRs/OSR /VAR Files Restrictions",
+        	"Protecting Resources-OSRs/OSR /OPT Files Restrictions",
+        	"Protecting Resources-OSRs/OSR /ETC Restrictions",
+        	"Protecting Resources-OSRs/OSR /USR Restrictions",
+        	"Protecting Resources-OSRs/CRON Command Group Permissions"
+        ],
+        "keyword" : "STICKY",
+        "script" : "include_directory.json",
+        "active" : "True"
+    },
+    {
+        "nameButton" : "Maxage",
+        "module" : [ 
+        	"Password Requirements/Password MAX Age \\etc\\shadow" 
+        ],
+        "keyword" : "MAXAGE",
+        "script" : "include_account.json",
+        "active" : "True"    
+    },
+    {
+        "nameButton" : "Service",
+        "module" : [ 
+        	"Network Settings/Disable NFS server"
+        ],
+        "keyword" : "NFS",
+        "script" : "include_service.json",
+        "active" : "True"    
+    },
+    {
+        "nameButton" : "Crop Text",
+        "module" : [ 
+        	"Password Requirements/Password MAX Age \\etc\\shadow" 
+        ],
+        "keyword" : null,
+        "script" : "recortar.sh",
+        "active" : "True"    
+    }
+]
