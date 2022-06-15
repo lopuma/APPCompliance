@@ -212,7 +212,7 @@ grep -i DES /etc/ssh/sshd_config
 ---AV.2.1.1.4 Encryption //HABLA de la longitud mínima de bits para los algoritmos de clave pública
 "Data Transmission - Server host keys
 
-REF : "https://pages.github.ibm.com/ciso-psg/main/supplemental/acceptable_encryption.html"
+REF : "https://pages.github.kyndryl.net/Kyndryl-CISO/Cyber-Security-and-Data-Privacy-Standard/Requirements/Section-5.0-Use-of-Encryption/#section-53-acceptable-encryption-algorithms"
 
 "RSA (Rivest-Shamir-Aldeman)
 "La longitud de clve mínima para RSA que se debe utilizar es 2048"

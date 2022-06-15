@@ -483,25 +483,6 @@
       "SO": "Linux"
     },
     {
-      "object": "/tmp/",
-      "owner": "root",
-      "tipo": "/F/",
-      "ownerGroup": "*EGCLIN",
-      "user": [
-        "Grupo de Sistemas"
-      ],
-      "code": "2-DOC",
-      "servers": [
-        "ALL Servers"
-      ],
-      "risk": "GENERICO / OSR TMP / CTTI",
-      "impact": "GENERICO / OSR TMP / CTTI",
-      "variable": [
-        "Directorios, sub-directorios y ficheros, no se pueden editar permisos, sin authorizacion"
-      ],
-      "SO": "Linux"
-    },
-    {
       "object": "/opt/IBM/ITM/",
       "owner": "root",
       "tipo": "/F/",
@@ -627,14 +608,14 @@
       "tipo": "/F/",
       "ownerGroup": "avdefs",
       "user": [
-        ""
+        "Soporte Linux CTTI"
       ],
       "code": "2-DOC",
       "servers": [
         "ALL Servers"
       ],
-      "risk": "",
-      "impact": "",
+      "risk": "GENERICO / OSR ETC / IBM-KYNDRYL",
+      "impact": "GENERICO / OSR ETC / IBM-KYNDRYL",
       "variable": [
         "Symantec Antivirus"
       ],
@@ -646,14 +627,14 @@
       "tipo": "/F/",
       "ownerGroup": "avdefs",
       "user": [
-        ""
+        "Soporte Linux CTTI"
       ],
       "code": "2-DOC",
       "servers": [
         "ALL Servers"
       ],
-      "risk": "",
-      "impact": "",
+      "risk": "GENERICO / OSR ETC / IBM-KYNDRYL",
+      "impact": "GENERICO / OSR ETC / IBM-KYNDRYL",
       "variable": [
         "Symantec Antivirus"
       ],

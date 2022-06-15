@@ -129,6 +129,24 @@ lsusrtca  -t b
 
 // Mínimo de 2048 bits para cifrados basados en RSA. Valor predeterminado para otros cifrados
 
-[ A la espera de solucion ]
+## Primero mostrar las claves publicas que existen (Only authorized_keys)
+
+ls -la /home/*/.ssh/* | grep -i authorized_keys
+
+## De las claves que nos salga debemos comprobar el length de la clave, esto se puede saber en el tamaño de caracteres.
+
+" 2048
+
+// ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDM5lr8p04H/mFEP5vZPfVZb5ZsrI/0WhJ+N/287nOvDOpIgi4RekUfPT6cxNzNizrUIDoIZY8na+VBD9zSlMVG//hSvFMSZYiZ8Zj35MJgNn5tnX9iAOKq3jmbLMIFtuX74RYO59AKUN0J0JBfrR1AK59tUpMteYmKtKzAuey+uVmYr5LmAN5RUW1fmkMMFp30rrzO6JKeMqYQPGaBBjaHTVPBL358KgX5hoOHoaeX1rO158hANEiJJeFw8zKsA/8KeHhjgpYSLlIp6OEvbTyQpUYhPcj3+S2rP3EL5W5P7sAtmkQjvj+v+/hQVraRa+R+/KlJjDXf63G5DJv7TqM46/TFrC/VbiUZ9BsrYSHf8CdTBWB5FtRJtAL1eSjxTK5+VZ8uBeXz5TtpNdCxiLKoHjDB4iTGpX3Lo8sDTsngrWyP9RbpPqY14gsNSIQbbgoXty4KC4sjC809Ph3D/FCxjSVFWcUAH11cdaybHe3dzNGGhZR9UImiljwNiD8Rdm8=
+
+" 1024
+
+// ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDM5lr8p04H/mFEP5vZPfVZb5ZsrI/0WhJ+N/287nOvDOpIgi4RekUfPT6cxNzNizrUIDoIZY8na+VBD9zSlMVG//VbiUZ9BsrYSHf8CdTBWB5FtRJtAL1eSjxTK5+VZ8uBeXz5TtpNdCxiLKoHjDB4iTGpX3Lo8sDTsngrWyP9RbpPqY14gsNSIQbbgoXty4KC4sjC809Ph3D/FCxjSVFWcUAH11cdaybHe3dzNGGhZR9UImiljwNiD8Rdm8=
+
+/* CONTESTAR YES */ : " Si las claves publicas, basadas en RSA tienen una longitud de 2048bits.
+
+/* CONTESTAR N/A */ : " No such file authorized_keys
+
+/* CONTESTAR NO */ : "  SSH authorized_keys file: $authorized_keys; Invalid public host key length: 1024   Key type: ssh-rsa..
 
 +-------------------------------------------------------------------------------------+

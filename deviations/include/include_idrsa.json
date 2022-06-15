@@ -356,7 +356,7 @@
             "servers": [
                 "ALL Servers"
             ],
-            "risk": "2-DOC :\n\"Password Requirements/Private Key Passphrase.\n\nEsta asociado con las credenciales del Tower que se usan para conexion entre el y las maquinas o EndPoints",
+            "risk": "2-DOC : GENERICO / ID_RSA / CTTI\n\n\"Password Requirements/Private Key Passphrase.\n\nEsta asociado con las credenciales del Tower que se usan para conexion entre el y las maquinas o EndPoints",
             "impact": "1-OK only for:\n\"Identify and Authenticate Users/Public Key Label",
             "variable": [
                 "file_authorized=\"/home/gctjbat2/.ssh/id_rsa\"",
