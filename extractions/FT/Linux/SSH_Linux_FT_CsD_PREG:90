@@ -334,24 +334,80 @@ AV.2.0.1.4 Business Use Notice
 
 grep -i PrintMotd /etc/ssh/sshd_config
 +-------------------------------------------------------------------------------------+
-AV.2.1.1.2 Encryption
-AV.2.1.1.3 Encryption
-AV.2.1.1.4 Encryption
 
-sshd -T|grep protocol
-grep -i protocol /etc/ssh/sshd_config
-grep -i ServerKeyBits /etc/ssh/sshd_config /usr/local/etc/sshd_config
+---AV.2.1.1.2 Encryption // HABLA del cifrado de claves compartidas.
+"Data Transmission - All native encryption ciphers 
 
-"Si sale comentado mirar el MAN y ver el default"
+[ REF: https://pages.github.kyndryl.net/Kyndryl-CISO/Cyber-Security-and-Data-Privacy-Standard/Requirements/Section-5.0-Use-of-Encryption/#section-53-acceptable-encryption-algorithms ]
 
-man sshd_config
-/ServerKeyBits
+// AES (Advanced Encryption Standard)
 
-" el ssh a partir de la la versión OpenSSH_7.4p1 ya no utiliza protocolo 1.
+
+// Se debe mirar que esten los cifrados aprobados o por defecto.
+
+sshd -tT | grep ciphers
+grep Ciphers /etc/ssh/sshd_config
+
+" Ejemplo:
+
+Ciphers aes128-ctr,aes192-ctr,aes256-ctr
+
+
+/*CONTESTAR YES */ : " Si Ciphers tiene los algoritmo de cifrados aprobados.
+
+/*CONTESTAR NO*/ : " Cipher aes128-ctr is not available\n Cipher aes192-ctr is not available\n Cipher aes256-ctr is not available
+
 +-------------------------------------------------------------------------------------+
-AV.2.2.1.1 Passphrases	Private Key Passphrases
+---AV.2.1.1.3 Encryption // HABLA del algoritmo de cifrado DES, este algoritmo no se usa. 
+" Data Transmission - DES algorithm
 
-"lo mismo que AV.1.1.4"
+// Se debe mirar que no esten los cifrados DES
+
+
+sshd -tT | grep -i DES
+grep -i DES /etc/ssh/sshd_config
+
+
+/* CONTESTAR N/A */ : " The DES algorithm is not used"
+
+/* CONTESTAR NO */ : " Cipher cast128-cbc should not be used \n  Cipher 3des-cbc should not be used
+
++-------------------------------------------------------------------------------------+
+
+---AV.2.1.1.4 Encryption // HABLA de la longitud mínima de bits para los algoritmos de clave pública
+" Data Transmission - Server host keys
+
+[ REF : https://pages.github.kyndryl.net/Kyndryl-CISO/Cyber-Security-and-Data-Privacy-Standard/Requirements/Section-5.0-Use-of-Encryption/#section-53-acceptable-encryption-algorithms ]
+
+// Mínimo de 2048 bits para cifrados basados en RSA. Valor predeterminado para otros cifrados
+
+## Primero mostrar las claves publicas que existen (Only authorized_keys)
+
+ls -la /home/*/.ssh/* | grep -i authorized_keys
+
+## De las claves que nos salga debemos comprobar el length de la clave, esto se puede saber en el tamaño de caracteres.
+
+" 2048
+
+// ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDM5lr8p04H/mFEP5vZPfVZb5ZsrI/0WhJ+N/287nOvDOpIgi4RekUfPT6cxNzNizrUIDoIZY8na+VBD9zSlMVG//hSvFMSZYiZ8Zj35MJgNn5tnX9iAOKq3jmbLMIFtuX74RYO59AKUN0J0JBfrR1AK59tUpMteYmKtKzAuey+uVmYr5LmAN5RUW1fmkMMFp30rrzO6JKeMqYQPGaBBjaHTVPBL358KgX5hoOHoaeX1rO158hANEiJJeFw8zKsA/8KeHhjgpYSLlIp6OEvbTyQpUYhPcj3+S2rP3EL5W5P7sAtmkQjvj+v+/hQVraRa+R+/KlJjDXf63G5DJv7TqM46/TFrC/VbiUZ9BsrYSHf8CdTBWB5FtRJtAL1eSjxTK5+VZ8uBeXz5TtpNdCxiLKoHjDB4iTGpX3Lo8sDTsngrWyP9RbpPqY14gsNSIQbbgoXty4KC4sjC809Ph3D/FCxjSVFWcUAH11cdaybHe3dzNGGhZR9UImiljwNiD8Rdm8=
+
+" 1024
+
+// ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDM5lr8p04H/mFEP5vZPfVZb5ZsrI/0WhJ+N/287nOvDOpIgi4RekUfPT6cxNzNizrUIDoIZY8na+VBD9zSlMVG//VbiUZ9BsrYSHf8CdTBWB5FtRJtAL1eSjxTK5+VZ8uBeXz5TtpNdCxiLKoHjDB4iTGpX3Lo8sDTsngrWyP9RbpPqY14gsNSIQbbgoXty4KC4sjC809Ph3D/FCxjSVFWcUAH11cdaybHe3dzNGGhZR9UImiljwNiD8Rdm8=
+
+/* CONTESTAR YES */ : " Si las claves publicas, basadas en RSA tienen una longitud de 2048bits.
+
+/* CONTESTAR N/A */ : " No such file authorized_keys
+
+/* CONTESTAR NO */ : "  SSH authorized_keys file: $authorized_keys; Invalid public host key length: 1024   Key type: ssh-rsa..
+
++-------------------------------------------------------------------------------------+
+
+--- AV.2.2.1.1 Passphrases
+" Private Key Passphrases
+
+// lo mismo que AV.1.1.4
+
 +-------------------------------------------------------------------------------------+
 ##AV.1.1.5 Password Requirements	Private Key Passphrases
 ##AV.1.1.6 Password Requirements

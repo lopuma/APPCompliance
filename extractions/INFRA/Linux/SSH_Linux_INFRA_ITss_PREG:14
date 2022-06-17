@@ -1,6 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 SSH Linux IGS Itss - Issue REF : 737938 / PRE 14
-/**************************************************************************************************************************************************************************************/
+
+/+-------------------------------------------------------------------------------------+
 AV.1.1.1 Password Requirements	"PermitEmptyPasswords" = no
 
 cat /etc/ssh/sshd_config | grep -i PermitEmptypassword
@@ -9,12 +10,16 @@ cat /etc/ssh/sshd_config | grep -i PermitEmptypassword
 
 man sshd_config
 /PermitEmptyPasswords
+
 +-------------------------------------------------------------------------------------+
+
 ---AV.1.1.5 Password Requirements	
 "Private Key Passphrases
 // Nos habla de la caracteristicas de la Passphrases
 // Las frases de contraseña deben tener un número mínimo de 15 caracteres. Todas las demás reglas de contraseña son aplicables.
+
 +-------------------------------------------------------------------------------------+
+
 ---AV.1.1.6 Password Requirements	
 "Restrict Private Keys access using  "from=" parameter on Public Keys.
 
@@ -57,11 +62,14 @@ find /home/*/.ssh -name authorized_keys2|while read kfil; do cat $kfil|grep -vEe
 /* CONTESTAR YES */ : " Si los archivos authorized_keys son accesibles solo al owner del archivo y debe contener un FROM"
 
 /* CONTESTAR NO  */ : " SSH authorized_keys file: $file_authorized_keys; Invalid from section: *º or *.*.*.* or 0/0 or 0.0.0.0/0.  or empty are forbidden values in the `from=` parameter
+
 +-------------------------------------------------------------------------------------+
+
 AV.1.2.2 Logging	"QuietMode
 "	no
 N/A OpenSSH
-/**************************************************************************************************************************************************************************************/
+
+/+-------------------------------------------------------------------------------------+
 			  /* POLITICA SSH - AIX*/ 
 
 AV.1.2.4 Logging 	
@@ -115,11 +123,11 @@ cat /etc/rsyslog.conf |grep -v "#" |egrep -i "secure|messages"
 /* CONTESTAR NO*/ : "Si no esta rotando a 180 dias o existen los fichero " MESSAGES / SECURE ", y configurado en la rotacion.".#
 
 /*NO*/                  "The rotation is based on logkeeper, and is configured in 90 days, it is recommended 180 days in the configuration."
-/**************************************************************************************************************************************************************************************/
+/+-------------------------------------------------------------------------------------+
 AV.1.4.4 System Settings	"MaxConnections"
 
 N/A	OpenSSH
-/**************************************************************************************************************************************************************************************/
+/+-------------------------------------------------------------------------------------+
 AV.1.7.1.2 Identify and Authenticate Users	"PermitRootLogin" = NO
 
 cat /etc/ssh/sshd_config | grep -i PermitRootLogin
@@ -128,7 +136,7 @@ cat /etc/ssh/sshd_config | grep -i PermitRootLogin
 
 man sshd_config
 /PermitRootLogin
-/**************************************************************************************************************************************************************************************/
+/+-------------------------------------------------------------------------------------+
 AV.1.7.2.1 Identify and Authenticate Users	
 Public Key Authentication Key Label for Private Key Ownership Identification
 
@@ -148,7 +156,7 @@ ls -la /home/*/.ssh/* | grep -i "id_rsa.pub"
 
 "
 /* CONTESTAR N/A */ : ""
-/**************************************************************************************************************************************************************************************/
+/+-------------------------------------------------------------------------------------+
 AV.1.7.3.2 Identify and Authenticate Users	Host-Based Authentication    =NO
 
 grep HostbasedAuthentication /etc/ssh/sshd_config
@@ -157,7 +165,7 @@ grep HostbasedAuthentication /etc/ssh/sshd_config
 
 man sshd_config
 /HostbasedAuthentication
-/**************************************************************************************************************************************************************************************/
+/+-------------------------------------------------------------------------------------+
 AV.1.7.3.3 Identify and Authenticate Users	Host-Based Authentication  =NO   /etc/shosts.equiv file
 
 grep HostbasedAuthentication /etc/ssh/sshd_config
@@ -175,61 +183,77 @@ man sshd_config
 /ServerKeyBits
 
 ## el ssh a partir de la la versión OpenSSH_7.4p1 ya no utiliza protocolo 1.##
-+--------------------------------------------------------------------------------------------------------------+
----AV.2.1.1.2 Encryption //HABLA del cifrado de claves compartidas.
+
++-------------------------------------------------------------------------------------+
+
+---AV.2.1.1.2 Encryption // HABLA del cifrado de claves compartidas.
 "Data Transmission - All native encryption ciphers 
 
-REF : "https://pages.github.ibm.com/ciso-psg/main/supplemental/acceptable_encryption.html"
+[ REF: https://pages.github.kyndryl.net/Kyndryl-CISO/Cyber-Security-and-Data-Privacy-Standard/Requirements/Section-5.0-Use-of-Encryption/#section-53-acceptable-encryption-algorithms ]
 
-"AES (Advanced Encryption Standard)
-"La longitud de clve mínima para RSA que se debe utilizar es 128-bit"
+// AES (Advanced Encryption Standard)
 
-#"Se debe mirar que esten los cifrados aprobados o por defecto"#
+
+// Se debe mirar que esten los cifrados aprobados o por defecto.
+
 sshd -tT | grep ciphers
 grep Ciphers /etc/ssh/sshd_config
 
-#---Ejemplo:
+" Ejemplo:
+
 Ciphers aes128-ctr,aes192-ctr,aes256-ctr
 
-#"Si sale comentado mirar el MAN y ver el default"
-man sshd_config
-/Ciphers
 
-/*  CONTESTAR YES */ : "Si Ciphers tiene los algoritmo de cifrados aprobados"
-/* CONTESTAR NO*/ : "Si Ciphers no tiene los algoritmo de cifrados aprobados"
-+--------------------------------------------------------------------------------------------------------------+
----AV.2.1.1.3 Encryption //HABLA del algoritmo de cifrado DES, este algoritmo no se usa. 
-"Data Transmission - DES algorithm
+/*CONTESTAR YES */ : " Si Ciphers tiene los algoritmo de cifrados aprobados.
+
+/*CONTESTAR NO*/ : " Cipher aes128-ctr is not available\n Cipher aes192-ctr is not available\n Cipher aes256-ctr is not available
+
++-------------------------------------------------------------------------------------+
+---AV.2.1.1.3 Encryption // HABLA del algoritmo de cifrado DES, este algoritmo no se usa. 
+" Data Transmission - DES algorithm
+
+// Se debe mirar que no esten los cifrados DES
 
 
-/* CONTESTAR N/A */ : "The DES algorithm is not used"
-+--------------------------------------------------------------------------------------------------------------+
----AV.2.1.1.4 Encryption //HABLA de la longitud mínima de bits para los algoritmos de clave pública
-"Data Transmission - Server host keys
+sshd -tT | grep -i DES
+grep -i DES /etc/ssh/sshd_config
 
-REF : "https://pages.github.ibm.com/ciso-psg/main/supplemental/acceptable_encryption.html"
 
-"RSA (Rivest-Shamir-Aldeman)
-"La longitud de clve mínima para RSA que se debe utilizar es 2048"
+/* CONTESTAR N/A */ : " The DES algorithm is not used"
 
-#"Se debe mirar el protocol que sea 2 o serverkey sea 2048, y RSA activo."#
-cat /etc/ssh/sshd_config | egrep -i "protocol|ServerKeyBits|RSAAuthentication"
+/* CONTESTAR NO */ : " Cipher cast128-cbc should not be used \n  Cipher 3des-cbc should not be used
 
-//Si sale comentado mirar en el MAN
-man sshd_config
++-------------------------------------------------------------------------------------+
 
-//Si no muestra resultado en el MAN, mirar que exista uno de estos 2 ficheros.
+---AV.2.1.1.4 Encryption // HABLA de la longitud mínima de bits para los algoritmos de clave pública
+" Data Transmission - Server host keys
 
-rpm -q coreutils
-rpm -q openssl
+[ REF : https://pages.github.kyndryl.net/Kyndryl-CISO/Cyber-Security-and-Data-Privacy-Standard/Requirements/Section-5.0-Use-of-Encryption/#section-53-acceptable-encryption-algorithms ]
 
-##"el ssh a partir de la la versión OpenSSH_7.4p1 ya no utiliza protocolo 1."##
-##"y en RHEL 7.8 o > (ServerKeyBits|RSAAuthentication) ambos están deprecated (obsoletos)"##
+// Mínimo de 2048 bits para cifrados basados en RSA. Valor predeterminado para otros cifrados
 
-cat /etc/*release
+## Primero mostrar las claves publicas que existen (Only authorized_keys)
 
-#*/
-+--------------------------------------------------------------------------------------------------------------+
+ls -la /home/*/.ssh/* | grep -i authorized_keys
+
+## De las claves que nos salga debemos comprobar el length de la clave, esto se puede saber en el tamaño de caracteres.
+
+" 2048
+
+// ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDM5lr8p04H/mFEP5vZPfVZb5ZsrI/0WhJ+N/287nOvDOpIgi4RekUfPT6cxNzNizrUIDoIZY8na+VBD9zSlMVG//hSvFMSZYiZ8Zj35MJgNn5tnX9iAOKq3jmbLMIFtuX74RYO59AKUN0J0JBfrR1AK59tUpMteYmKtKzAuey+uVmYr5LmAN5RUW1fmkMMFp30rrzO6JKeMqYQPGaBBjaHTVPBL358KgX5hoOHoaeX1rO158hANEiJJeFw8zKsA/8KeHhjgpYSLlIp6OEvbTyQpUYhPcj3+S2rP3EL5W5P7sAtmkQjvj+v+/hQVraRa+R+/KlJjDXf63G5DJv7TqM46/TFrC/VbiUZ9BsrYSHf8CdTBWB5FtRJtAL1eSjxTK5+VZ8uBeXz5TtpNdCxiLKoHjDB4iTGpX3Lo8sDTsngrWyP9RbpPqY14gsNSIQbbgoXty4KC4sjC809Ph3D/FCxjSVFWcUAH11cdaybHe3dzNGGhZR9UImiljwNiD8Rdm8=
+
+" 1024
+
+// ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDM5lr8p04H/mFEP5vZPfVZb5ZsrI/0WhJ+N/287nOvDOpIgi4RekUfPT6cxNzNizrUIDoIZY8na+VBD9zSlMVG//VbiUZ9BsrYSHf8CdTBWB5FtRJtAL1eSjxTK5+VZ8uBeXz5TtpNdCxiLKoHjDB4iTGpX3Lo8sDTsngrWyP9RbpPqY14gsNSIQbbgoXty4KC4sjC809Ph3D/FCxjSVFWcUAH11cdaybHe3dzNGGhZR9UImiljwNiD8Rdm8=
+
+/* CONTESTAR YES */ : " Si las claves publicas, basadas en RSA tienen una longitud de 2048bits.
+
+/* CONTESTAR N/A */ : " No such file authorized_keys
+
+/* CONTESTAR NO */ : "  SSH authorized_keys file: $authorized_keys; Invalid public host key length: 1024   Key type: ssh-rsa..
+
++-------------------------------------------------------------------------------------+
+
 ---AV.1.1.5 Password Requirements	Private Key Passphrases
 ---AV.1.1.6 Password Requirements
 "# YES Informativo

@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 SSH LINUX CESCE CSD(split) - Issue REF : 742474 / PRE 13
-/**************************************************************************************************************************************************************************************************/
+/+-------------------------------------------------------------------------------------+
 ---AV.1.1.1 Password Requirements	
 "PermitEmptyPasswords 
 
@@ -69,7 +69,7 @@ find /home/*/.ssh -name authorized_keys2|while read kfil; do cat $kfil|grep -vEe
 (F-Secure/SSH Communications Only - OS: Unix, Linux)"
 
 #"N/A OpenSSH"
-/**************************************************************************************************************************************************************************************************/			   
+/+-------------------------------------------------------------------------------------+			   
 /* POLITICA SSH - Linux */ 
 
 ---AV.1.2.4 Logging
@@ -139,12 +139,12 @@ cat /etc/logrotate.d/syslog | egrep -i "messages|secure"
 /* CONTESTAR NO*/ : "Si no esta rotando a 90 dias o no existen los fichero "SECURE / MESSAGES", o no estan configurado en la rotacion.".
 
  /*NO*/    "The rotation is based on logrotate, and is configured in 45 days, it is recommended 90 days in the configuration."
-/**************************************************************************************************************************************************************************************************/
+/+-------------------------------------------------------------------------------------+
 ---AV.1.4.4 System Settings
 MaxConnections
 
 #"N/A OpenSSH"
-/**************************************************************************************************************************************************************************************************/
+/+-------------------------------------------------------------------------------------+
 ---AV.1.7.1.2 Identify and Authenticate Users	
 PermitRootLogin forced-commands 
 PermitRootLogin without-password 
@@ -157,7 +157,7 @@ cat /etc/ssh/sshd_config | grep -i PermitRootLogin
 
 /*  CONTESTAR YES */ : "Si PermitRootLogin es YES"
 /* CONTESTAR N/A */ : "Si PermitRootLogin es NO"
-/**************************************************************************************************************************************************************************************************/
+/+-------------------------------------------------------------------------------------+
 ---AV.1.7.3.2 Identify and Authenticate Users
 ---AV.1.7.3.3 Identify and Authenticate Users
 "Host-Based Authentication /etc/hosts.equiv file
@@ -171,7 +171,7 @@ man sshd_config
 
 /*  CONTESTAR YES */ : "Si HostbasedAuthentication es NO"
 /* CONTESTAR NO*/ : "Si HostbasedAuthentication es distinto a NO"
-/**************************************************************************************************************************************************************************************************/
+/+-------------------------------------------------------------------------------------+
 ---AV.2.1.1.2 Data Transmission - All native encryption ciphers "HABLA del cifrado de claves compartidas.
 
 REF : "https://pages.github.ibm.com/ciso-psg/main/supplemental/acceptable_encryption.html"
@@ -192,31 +192,35 @@ man sshd_config
 
 /*  CONTESTAR YES */ : "Si Ciphers tiene los algoritmo de cifrados aprobados"
 /* CONTESTAR NO*/ : "Si Ciphers no tiene los algoritmo de cifrados aprobados"
-/**************************************************************************************************************************************************************************************************/
+/+-------------------------------------------------------------------------------------+
 ---AV.2.1.1.3 Encryption "HABLA del algoritmo de cifrado DES, este algoritmo no se usa. 
 
 /* CONTESTAR N/A */ : "The DES algorithm is not used"
-/**************************************************************************************************************************************************************************************************/
----AV.2.1.1.4 Encryption "HABLA de la longitud mínima de bits para los algoritmos de clave pública
+/+-------------------------------------------------------------------------------------+
 
-REF : "https://pages.github.ibm.com/ciso-psg/main/supplemental/acceptable_encryption.html"
+---AV.2.1.1.4 Encryption //HABLA de la longitud mínima de bits para los algoritmos de clave pública
+"Data Transmission - Server host keys
 
-"RSA (Rivest-Shamir-Aldeman)
-"La longitud de clve mínima para RSA que se debe utilizar es 2048-bit"
+// Mínimo de 2048 bits para cifrados basados en RSA. Valor predeterminado para otros cifrados
 
-#"Se debe mirar el protocol que sea 2 o serverkey sea 2048, y RSA activo."#
-cat /etc/ssh/sshd_config | egrep -wi "protocol|ServerKeyBits|RSAAuthentication"
+## Primero mostrar las claves publicas que existen (Only authorized_keys)
 
-//Si sale comentado mirar en el MAN
-man sshd_config
+ls -la /home/*/.ssh/* | grep -i authorized_keys
 
-//Si no muestra resultado en el MAN, mirar que exista uno de estos 2 ficheros.
+## De las claves que nos salga debemos comprobar el length de la clave, esto se puede saber en el tamaño de caracteres.
 
-rpm -q coreutils
-rpm -q openssl
+" 2048
 
-##"el ssh a partir de la la versión OpenSSH_7.4p1 ya no utiliza protocolo 1."##
-##"y en RHEL 7.8 o > ambos están deprecated (obsoletos)"##
+// ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDM5lr8p04H/mFEP5vZPfVZb5ZsrI/0WhJ+N/287nOvDOpIgi4RekUfPT6cxNzNizrUIDoIZY8na+VBD9zSlMVG//hSvFMSZYiZ8Zj35MJgNn5tnX9iAOKq3jmbLMIFtuX74RYO59AKUN0J0JBfrR1AK59tUpMteYmKtKzAuey+uVmYr5LmAN5RUW1fmkMMFp30rrzO6JKeMqYQPGaBBjaHTVPBL358KgX5hoOHoaeX1rO158hANEiJJeFw8zKsA/8KeHhjgpYSLlIp6OEvbTyQpUYhPcj3+S2rP3EL5W5P7sAtmkQjvj+v+/hQVraRa+R+/KlJjDXf63G5DJv7TqM46/TFrC/VbiUZ9BsrYSHf8CdTBWB5FtRJtAL1eSjxTK5+VZ8uBeXz5TtpNdCxiLKoHjDB4iTGpX3Lo8sDTsngrWyP9RbpPqY14gsNSIQbbgoXty4KC4sjC809Ph3D/FCxjSVFWcUAH11cdaybHe3dzNGGhZR9UImiljwNiD8Rdm8=
 
-cat /etc/*release
-/**************************************************************************************************************************************************************************************************/
+" 1024
+
+// ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDM5lr8p04H/mFEP5vZPfVZb5ZsrI/0WhJ+N/287nOvDOpIgi4RekUfPT6cxNzNizrUIDoIZY8na+VBD9zSlMVG//VbiUZ9BsrYSHf8CdTBWB5FtRJtAL1eSjxTK5+VZ8uBeXz5TtpNdCxiLKoHjDB4iTGpX3Lo8sDTsngrWyP9RbpPqY14gsNSIQbbgoXty4KC4sjC809Ph3D/FCxjSVFWcUAH11cdaybHe3dzNGGhZR9UImiljwNiD8Rdm8=
+
+/* CONTESTAR YES */ : " Si las claves publicas, basadas en RSA tienen una longitud de 2048bits.
+
+/* CONTESTAR N/A */ : " No such file authorized_keys
+
+/* CONTESTAR NO */ : "  SSH authorized_keys file: $authorized_keys; Invalid public host key length: 1024   Key type: ssh-rsa..
+
++-------------------------------------------------------------------------------------+

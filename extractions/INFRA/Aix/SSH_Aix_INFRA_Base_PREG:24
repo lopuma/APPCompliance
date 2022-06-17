@@ -1,7 +1,8 @@
+////////////////////////////////////////////////////////////////////////////////////////
 Preguntas: 24
 SSH BASE igs aIX
-***********************************************************************************
-###################################################################################***********************************************************************************
+
+
 AV.1.1.1 Password Requirements	"PermitEmptyPasswords" = no
 
 cat /etc/ssh/sshd_config | grep -i PermitEmptypassword
@@ -67,16 +68,16 @@ cat /etc/ssh/sshd_config | grep -i logLevel
 
 man sshd_config
 /LogLevel
-***********************************************************************************
-###################################################################################***********************************************************************************
+
++-------------------------------------------------------------------------------------+
 AV.1.2.2 Logging 	"QuietMode"
 
 "Specifies that only fatal errors should be logged.
 (F-Secure/SSH Communications Only - OS: Unix, Linux)"
 
 #"N/A OpenSSH"
-***********************************************************************************
-###################################################################################***********************************************************************************
+
++-------------------------------------------------------------------------------------+
 AV.1.2.4 Logging 	Retain Log Files	90 days
 
 #->Logrotate<-#
@@ -87,8 +88,8 @@ cat /etc/logrotate.conf
 
 #->sinLOGKEEPE&&&sinLOGROTATE<-#
 cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
-***********************************************************************************
-###################################################################################***********************************************************************************
+
++-------------------------------------------------------------------------------------+
 AV.1.4.3 System Settings	"LoginGraceTime"  "120 or less and must not be 0"
 
 cat /etc/ssh/sshd_config | grep -i LoginGraceTime
@@ -97,13 +98,13 @@ cat /etc/ssh/sshd_config | grep -i LoginGraceTime
 
 man sshd_config
 /LoginGraceTime
-***********************************************************************************
-###################################################################################***********************************************************************************
+
++-------------------------------------------------------------------------------------+
 AV.1.4.4 System Settings	"MaxConnections"
 
 #"N/A OpenSSH"
-***********************************************************************************
-###################################################################################***********************************************************************************
+
++-------------------------------------------------------------------------------------+
 AV.1.4.5 System Settings	"MaxStartups"  "100 or less"
 
 cat /etc/ssh/sshd_config | grep -i MaxStartups
@@ -112,13 +113,13 @@ cat /etc/ssh/sshd_config | grep -i MaxStartups
 
 man sshd_config
 /MaxStartups
-***********************************************************************************
-###################################################################################***********************************************************************************
+
++-------------------------------------------------------------------------------------+
 AV.1.4.14 System Settings	AuthKbdInt.Retries
 
 #"N/A OpenSSH"
-***********************************************************************************
-###################################################################################***********************************************************************************
+
++-------------------------------------------------------------------------------------+
 AV.1.7.1.1 Identify and Authenticate Users	"PermitRootLogin" = NO
 
 cat /etc/ssh/sshd_config | grep -i PermitRootLogin
@@ -127,13 +128,13 @@ cat /etc/ssh/sshd_config | grep -i PermitRootLogin
 
 man sshd_config
 /PermitRootLogin
-***********************************************************************************
-###################################################################################***********************************************************************************
+
++-------------------------------------------------------------------------------------+
 #AV.1.7.1.2 Identify and Authenticate Users
 
 #"N/A PermitRootLogin no"
-***********************************************************************************
-###################################################################################***********************************************************************************
+
++-------------------------------------------------------------------------------------+
 AV.1.7.2 Identify and Authenticate Users	Public Key Authentication = YES
 
 cat /etc/ssh/sshd_config | grep -i PubkeyAuthentication
@@ -145,8 +146,8 @@ man sshd_config
 
 /
 q
-***********************************************************************************
-###################################################################################***********************************************************************************
+
++-------------------------------------------------------------------------------------+
 AV.1.7.3.2 Identify and Authenticate Users	Host-Based Authentication    =NO
 
 grep HostbasedAuthentication /etc/ssh/sshd_config
@@ -155,49 +156,102 @@ grep HostbasedAuthentication /etc/ssh/sshd_config
 
 man sshd_config
 /HostbasedAuthentication
-***********************************************************************************
-###################################################################################***********************************************************************************
+
++-------------------------------------------------------------------------------------+
 AV.1.7.3.3 Identify and Authenticate Users	Host-Based Authentication  =NO   /etc/shosts.equiv file
 
 grep HostbasedAuthentication /etc/ssh/sshd_config
-***********************************************************************************
-###################################################################################***********************************************************************************
+
++-------------------------------------------------------------------------------------+
 AV.1.9.2 Protecting Resources - User Resources	"StrictModes"	= yes
 
 grep StrictModes /etc/ssh/sshd_config
-***********************************************************************************
-###################################################################################***********************************************************************************
+
++-------------------------------------------------------------------------------------+
 AV.2.0.1.4 Business Use Notice	Business use Notice - Attachmate RSIT Windows Server
 
 "N/A OpenSSSH"
-***********************************************************************************
-###################################################################################***********************************************************************************
-AV.2.1.1.2 Encryption
-AV.2.1.1.3 Encryption
-AV.2.1.1.4 Encryption
 
-sshd -T|grep protocol
-grep -i protocol /etc/ssh/sshd_config
-grep -i ServerKeyBits /etc/ssh/sshd_config /usr/local/etc/sshd_config
++-------------------------------------------------------------------------------------+
 
-#"Si sale comentado mirar el MAN y ver el default"
+---AV.2.1.1.2 Encryption // HABLA del cifrado de claves compartidas.
+"Data Transmission - All native encryption ciphers 
 
-man sshd_config
-/ServerKeyBits
+[ REF: https://pages.github.kyndryl.net/Kyndryl-CISO/Cyber-Security-and-Data-Privacy-Standard/Requirements/Section-5.0-Use-of-Encryption/#section-53-acceptable-encryption-algorithms ]
 
-## el ssh a partir de la la versión OpenSSH_7.4p1 ya no utiliza protocolo 1.##
-***********************************************************************************
-###################################################################################***********************************************************************************
+// AES (Advanced Encryption Standard)
+
+
+// Se debe mirar que esten los cifrados aprobados o por defecto.
+
+sshd -tT | grep ciphers
+grep Ciphers /etc/ssh/sshd_config
+
+" Ejemplo:
+
+Ciphers aes128-ctr,aes192-ctr,aes256-ctr
+
+
+/*CONTESTAR YES */ : " Si Ciphers tiene los algoritmo de cifrados aprobados.
+
+/*CONTESTAR NO*/ : " Cipher aes128-ctr is not available\n Cipher aes192-ctr is not available\n Cipher aes256-ctr is not available
+
++-------------------------------------------------------------------------------------+
+---AV.2.1.1.3 Encryption // HABLA del algoritmo de cifrado DES, este algoritmo no se usa. 
+" Data Transmission - DES algorithm
+
+// Se debe mirar que no esten los cifrados DES
+
+
+sshd -tT | grep -i DES
+grep -i DES /etc/ssh/sshd_config
+
+
+/* CONTESTAR N/A */ : " The DES algorithm is not used"
+
+/* CONTESTAR NO */ : " Cipher cast128-cbc should not be used \n  Cipher 3des-cbc should not be used
+
++-------------------------------------------------------------------------------------+
+
+---AV.2.1.1.4 Encryption // HABLA de la longitud mínima de bits para los algoritmos de clave pública
+" Data Transmission - Server host keys
+
+[ REF : https://pages.github.kyndryl.net/Kyndryl-CISO/Cyber-Security-and-Data-Privacy-Standard/Requirements/Section-5.0-Use-of-Encryption/#section-53-acceptable-encryption-algorithms ]
+
+// Mínimo de 2048 bits para cifrados basados en RSA. Valor predeterminado para otros cifrados
+
+## Primero mostrar las claves publicas que existen (Only authorized_keys)
+
+ls -la /home/*/.ssh/* | grep -i authorized_keys
+
+## De las claves que nos salga debemos comprobar el length de la clave, esto se puede saber en el tamaño de caracteres.
+
+" 2048
+
+// ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDM5lr8p04H/mFEP5vZPfVZb5ZsrI/0WhJ+N/287nOvDOpIgi4RekUfPT6cxNzNizrUIDoIZY8na+VBD9zSlMVG//hSvFMSZYiZ8Zj35MJgNn5tnX9iAOKq3jmbLMIFtuX74RYO59AKUN0J0JBfrR1AK59tUpMteYmKtKzAuey+uVmYr5LmAN5RUW1fmkMMFp30rrzO6JKeMqYQPGaBBjaHTVPBL358KgX5hoOHoaeX1rO158hANEiJJeFw8zKsA/8KeHhjgpYSLlIp6OEvbTyQpUYhPcj3+S2rP3EL5W5P7sAtmkQjvj+v+/hQVraRa+R+/KlJjDXf63G5DJv7TqM46/TFrC/VbiUZ9BsrYSHf8CdTBWB5FtRJtAL1eSjxTK5+VZ8uBeXz5TtpNdCxiLKoHjDB4iTGpX3Lo8sDTsngrWyP9RbpPqY14gsNSIQbbgoXty4KC4sjC809Ph3D/FCxjSVFWcUAH11cdaybHe3dzNGGhZR9UImiljwNiD8Rdm8=
+
+" 1024
+
+// ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDM5lr8p04H/mFEP5vZPfVZb5ZsrI/0WhJ+N/287nOvDOpIgi4RekUfPT6cxNzNizrUIDoIZY8na+VBD9zSlMVG//VbiUZ9BsrYSHf8CdTBWB5FtRJtAL1eSjxTK5+VZ8uBeXz5TtpNdCxiLKoHjDB4iTGpX3Lo8sDTsngrWyP9RbpPqY14gsNSIQbbgoXty4KC4sjC809Ph3D/FCxjSVFWcUAH11cdaybHe3dzNGGhZR9UImiljwNiD8Rdm8=
+
+/* CONTESTAR YES */ : " Si las claves publicas, basadas en RSA tienen una longitud de 2048bits.
+
+/* CONTESTAR N/A */ : " No such file authorized_keys
+
+/* CONTESTAR NO */ : "  SSH authorized_keys file: $authorized_keys; Invalid public host key length: 1024   Key type: ssh-rsa..
+
++-------------------------------------------------------------------------------------+
+
 ##AV.1.1.5 Password Requirements	Private Key Passphrases
 ##AV.1.1.6 Password Requirements
 # YES Informativo
 #SIMILAR 
 ##AV.2.2.1.2 Passphrases
 ##AV.2.2.1.3 Passphrases
-***********************************************************************************
-###################################################################################***********************************************************************************
+
++-------------------------------------------------------------------------------------+
 AV.2.2.1.4 Passphrases	Private Key Passphrases - security administrative and system authority
 
 #"lo mismo que AV.1.1.7"
-***********************************************************************************
-###################################################################################***********************************************************************************
+
++-------------------------------------------------------------------------------------+

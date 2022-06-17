@@ -11,7 +11,8 @@ OS HMCipBase - Issue REF : 800301 / PRE 13
 
 lspwdpolicy -t p
 
-// Nos tenemos que fijar en active=1 .......... pwage=90
+// Nos tenemos que fijar que este en active=1 .......... name=itss-hmc-4.1
+
 
 
 /* CONTESTAR YES */ : " Si esta definido la politica de contraseña : `active=1,name=itss-hmc-4.1`.
@@ -31,7 +32,7 @@ lshmcusr|grep -v pwage=90
 
 /* CONTESTAR YES */ : " Si todos los usuarios tienen pwage=90 excepto root, hscroot y hscpe.
 
-/* CONTESTAR NO */ : "  Wrong account nom expire password pwage=99999, is recomende pwage=90.
+/* CONTESTAR NO */ : "  Account ESY9F47K has invalid Password Max Age setting of 99999, should be set to Customer Required Setting: 90. More secure value can be set.
 
 +-------------------------------------------------------------------------------------+
 

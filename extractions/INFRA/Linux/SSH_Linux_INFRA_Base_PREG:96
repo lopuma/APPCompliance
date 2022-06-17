@@ -1,14 +1,6 @@
-       *
-      /`\ 
-     /   \
-  ,,´¨¨¨¨¨`,,
-    (* _ *) 
-     (   )
-   /(     )\
-  m (     ) m
-   Oo.   .oO
+///////////////////////////////////////////////////////////////////////////////////////
 +-------------------------------------------------------------------------------------+
-AV.1.1.1 Password Requirements	"PermitEmptyPasswords" = no
+---AV.1.1.1 Password Requirements	"PermitEmptyPasswords" = no
 
 cat /etc/ssh/sshd_config | grep -i PermitEmptypassword
 
@@ -17,7 +9,7 @@ cat /etc/ssh/sshd_config | grep -i PermitEmptypassword
 man sshd_config
 /PermitEmptyPasswords
 +-------------------------------------------------------------------------------------+
----AV.1.1.4 Password Requirements	
+------AV.1.1.4 Password Requirements	
 "Private Key Passphrases	
 
 // Debe asignarse una frase de contraseña a todas las claves privadas que se utilizan para la autenticación de usuario y no deben compartirse y solo accesible al owner
@@ -32,12 +24,12 @@ find /home/*/.ssh -name id_rsa|while read fil; do echo $fil; head $fil|grep -v E
 
 /* CONTESTAR NO */ : " SSH Private Key: $file_idrsa not passphrase protected
 +-------------------------------------------------------------------------------------+
----AV.1.1.5 Password Requirements	
+------AV.1.1.5 Password Requirements	
 "Private Key Passphrases
 // Nos habla de la caracteristicas de la Passphrases
 // Las frases de contraseña deben tener un número mínimo de 15 caracteres. Todas las demás reglas de contraseña son aplicables.
 +-------------------------------------------------------------------------------------+
----AV.1.1.6 Password Requirements	
+------AV.1.1.6 Password Requirements	
 "Restrict Private Keys access using  "from=" parameter on Public Keys.
 
 // Nos habla de los valores adecuados que debe tener un FROM=
@@ -48,7 +40,7 @@ La entrada "authorized_keys" (o archivo configurado equivalente) del usuario par
 "*" o "*. *. *. *" o "0/0" o "0.0.0.0/0" son valores prohibidos en el parámetro "from =", ya que permiten el acceso sin restricciones de todos/todos los hosts.
 */
 
----AV.1.1.7 Password Requirements	
+------AV.1.1.7 Password Requirements	
 "Private Key Passphrases - security administrative and system authority
 
 // Nos habla de que la clave privada(id_rsa), puede no tener un passphrase, siempre que la clave_publica(authorized_keys), tenga un FROM.
@@ -80,8 +72,8 @@ find /home/*/.ssh -name authorized_keys2|while read kfil; do cat $kfil|grep -vEe
 
 /* CONTESTAR NO  */ : " SSH authorized_keys file: $file_authorized_keys; Invalid from section: *º or *.*.*.* or 0/0 or 0.0.0.0/0.  or empty are forbidden values in the `from=` parameter
 +-------------------------------------------------------------------------------------+
-AV.1.2.1.2 Logging 	"LogLevel"
-AV.1.2.1.3 Logging 	"LogLevel"
+---AV.1.2.1.2 Logging 	"LogLevel"
+---AV.1.2.1.3 Logging 	"LogLevel"
 
 cat /etc/ssh/sshd_config | grep -i logLevel
 
@@ -90,14 +82,14 @@ cat /etc/ssh/sshd_config | grep -i logLevel
 man sshd_config
 /LogLevel
 +-------------------------------------------------------------------------------------+
-AV.1.2.2 Logging 	"QuietMode"
+---AV.1.2.2 Logging 	"QuietMode"
 
 "Specifies that only fatal errors should be logged.
 (F-Secure/SSH Communications Only - OS: Unix, Linux)"
 
 #"N/A OpenSSH"
 +-------------------------------------------------------------------------------------+
-AV.1.2.4 Logging 	Retain Log Files	90 days
+---AV.1.2.4 Logging 	Retain Log Files	90 days
 
 #->Logrotate<-#
 cat /etc/logrotate.conf
@@ -108,7 +100,7 @@ cat /etc/logrotate.conf
 #->sinLOGKEEPE&&&sinLOGROTATE<-#
 cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
 +-------------------------------------------------------------------------------------+
----AV.1.4.1 System Settings
+------AV.1.4.1 System Settings
 
 "TCP KeepAlive (Old)
 //(OpenSSH 3.7 and prior, SunSSH)
@@ -129,7 +121,7 @@ o
 
 /* CONTESTAR N/A  */ : " Por la version de SSH
 +-------------------------------------------------------------------------------------+
-AV.1.4.2 System Settings	"TCPKeepAlive" = YES
+---AV.1.4.2 System Settings	"TCPKeepAlive" = YES
 
 cat /etc/ssh/sshd_config | grep -i TCPKeepAlive
 
@@ -138,7 +130,7 @@ cat /etc/ssh/sshd_config | grep -i TCPKeepAlive
 man sshd_config
 /TCPKeepAlive
 +-------------------------------------------------------------------------------------+
-AV.1.4.3 System Settings	"LoginGraceTime" = 120 or less and must not be 0 
+---AV.1.4.3 System Settings	"LoginGraceTime" = 120 or less and must not be 0 
  
 cat /etc/ssh/sshd_config | grep -i LoginGraceTime
 
@@ -147,11 +139,11 @@ cat /etc/ssh/sshd_config | grep -i LoginGraceTime
 man sshd_config
 /LoginGraceTime
 +-------------------------------------------------------------------------------------+
-AV.1.4.4 System Settings	"MaxConnections"
+---AV.1.4.4 System Settings	"MaxConnections"
 
 #"N/A openSSH"#
 +-------------------------------------------------------------------------------------+
-AV.1.4.8 System Settings	"MaxAuthTries" = "100 or less"
+---AV.1.4.8 System Settings	"MaxAuthTries" = "100 or less"
 cat /etc/ssh/sshd_config | grep -i MaxStartups
 
 #"Si sale comentado mirar el MAN y ver el default"
@@ -159,11 +151,11 @@ cat /etc/ssh/sshd_config | grep -i MaxStartups
 man sshd_config
 /MaxStartups
 +-------------------------------------------------------------------------------------+
-AV.1.4.14 System Settings	AuthKbdInt.Retries
+---AV.1.4.14 System Settings	AuthKbdInt.Retries
 
 #"N/A OpenSSH"
 +-------------------------------------------------------------------------------------+
-AV.1.5.1 Network Settings	"KeyRegenerationInterval"	3600 or less, and must not be 0
+---AV.1.5.1 Network Settings	"KeyRegenerationInterval"	3600 or less, and must not be 0
 
 cat /etc/ssh/sshd_config | grep -i KeyRegenerationInterval
 
@@ -172,7 +164,7 @@ cat /etc/ssh/sshd_config | grep -i KeyRegenerationInterval
 man sshd_config
 /KeyRegenerationInterval
 +-------------------------------------------------------------------------------------+
-AV.1.5.2 Network Settings	"Protocol" = "2", 2,1 or "1,2"
+---AV.1.5.2 Network Settings	"Protocol" = "2", 2,1 or "1,2"
 
 sshd -T|grep protocol
 grep -i protocol /etc/ssh/sshd_config
@@ -185,7 +177,7 @@ man sshd_config
 
 ## el ssh a partir de la la versión OpenSSH_7.4p1 ya no utiliza protocolo 1.##
 +-------------------------------------------------------------------------------------+
-AV.1.5.5 Network Settings	"GatewayPorts" = NO
+---AV.1.5.5 Network Settings	"GatewayPorts" = NO
 
 grep -i GatewayPorts /etc/ssh/sshd_config
 
@@ -194,8 +186,8 @@ grep -i GatewayPorts /etc/ssh/sshd_config
 man sshd_config
 /GatewayPorts
 +-------------------------------------------------------------------------------------+
-AV.1.7.1.1 Identify and Authenticate Users	"PermitRootLogin" = NO
-AV.1.7.1.2 Identify and Authenticate Users	
+---AV.1.7.1.1 Identify and Authenticate Users	"PermitRootLogin" = NO
+---AV.1.7.1.2 Identify and Authenticate Users	
 
 cat /etc/ssh/sshd_config | grep -i PermitRootLogin
 
@@ -203,11 +195,12 @@ cat /etc/ssh/sshd_config | grep -i PermitRootLogin
 
 man sshd_config
 /PermitRootLogin
-####################################################################################AV.1.7.1.2 Identify and Authenticate Users
++-------------------------------------------------------------------------------------+
+------AV.1.7.1.2 Identify and Authenticate Users
 
 #"N/A PermitRootLogin no"
 +-------------------------------------------------------------------------------------+
-AV.1.7.2 Identify and Authenticate Users	Public Key Authentication = YES
+---AV.1.7.2 Identify and Authenticate Users	Public Key Authentication = YES
 
 cat /etc/ssh/sshd_config | grep -i PubkeyAuthentication
 
@@ -216,8 +209,8 @@ cat /etc/ssh/sshd_config | grep -i PubkeyAuthentication
 man sshd_config
 /PubkeyAuthentication
 +-------------------------------------------------------------------------------------+
-AV.1.7.3.2 Identify and Authenticate Users
-AV.1.7.3.3 Identify and Authenticate Users
+---AV.1.7.3.2 Identify and Authenticate Users
+---AV.1.7.3.3 Identify and Authenticate Users
 
 grep HostbasedAuthentication /etc/ssh/sshd_config
 
@@ -226,65 +219,65 @@ grep HostbasedAuthentication /etc/ssh/sshd_config
 man sshd_config
 /HostbasedAuthentication
 +-------------------------------------------------------------------------------------+
-AV.1.8.2.1 Protecting Resources  OSRs
-AV.1.8.2.2 Protecting Resources  OSRs
-AV.1.8.2.3 Protecting Resources  OSRs
-AV.1.8.2.4 Protecting Resources  OSRs
-AV.1.8.2.5 Protecting Resources  OSRs
-AV.1.8.2.6 Protecting Resources  OSRs
-AV.1.8.2.7 Protecting Resources  OSRs
-AV.1.8.2.8 Protecting Resources  OSRs
-AV.1.8.2.9 Protecting Resources  OSRs
-AV.1.8.2.10 Protecting Resources  OSRs
-AV.1.8.2.11 Protecting Resources  OSRs
-AV.1.8.2.12 Protecting Resources  OSRs
-AV.1.8.2.13 Protecting Resources  OSRs
-AV.1.8.2.14 Protecting Resources  OSRs
-AV.1.8.2.15 Protecting Resources  OSRs
-AV.1.8.2.16 Protecting Resources  OSRs
-AV.1.8.2.17 Protecting Resources  OSRs
-AV.1.8.2.18 Protecting Resources  OSRs
-AV.1.8.2.19 Protecting Resources  OSRs
-AV.1.8.2.20 Protecting Resources  OSRs
-AV.1.8.2.21 Protecting Resources  OSRs
-AV.1.8.2.22 Protecting Resources  OSRs
-AV.1.8.2.23 Protecting Resources  OSRs
-AV.1.8.2.24 Protecting Resources  OSRs
-AV.1.8.2.25 Protecting Resources  OSRs
-AV.1.8.2.26 Protecting Resources  OSRs
-AV.1.8.2.27 Protecting Resources  OSRs
-AV.1.8.2.28 Protecting Resources  OSRs
-AV.1.8.2.29 Protecting Resources  OSRs
-AV.1.8.2.30 Protecting Resources  OSRs
-AV.1.8.2.31 Protecting Resources  OSRs
-AV.1.8.2.32 Protecting Resources  OSRs
-AV.1.8.2.33 Protecting Resources  OSRs
-AV.1.8.2.34 Protecting Resources  OSRs
-AV.1.8.2.35 Protecting Resources  OSRs
-AV.1.8.2.36 Protecting Resources  OSRs
-AV.1.8.2.37 Protecting Resources  OSRs
-AV.1.8.2.38 Protecting Resources  OSRs
-AV.1.8.2.39 Protecting Resources  OSRs
-AV.1.8.2.40 Protecting Resources  OSRs
-AV.1.8.2.41 Protecting Resources  OSRs
-AV.1.8.2.42 Protecting Resources  OSRs
-AV.1.8.2.43 Protecting Resources  OSRs
-AV.1.8.2.44 Protecting Resources  OSRs
-AV.1.8.2.45 Protecting Resources  OSRs
-AV.1.8.2.46 Protecting Resources  OSRs
-AV.1.8.2.47 Protecting Resources  OSRs
-AV.1.8.2.49 Protecting Resources  OSRs
-AV.1.8.2.50 Protecting Resources  OSRs
-AV.1.8.3.1 Protecting Resources  OSRs
-AV.1.8.3.2 Protecting Resources  OSRs
-AV.1.8.3.3 Protecting Resources  OSRs
-AV.1.8.3.4 Protecting Resources  OSRs
-AV.1.8.3.5 Protecting Resources  OSRs
-AV.1.8.3.6 Protecting Resources  OSRs
-AV.1.8.3.7 Protecting Resources  OSRs
-AV.1.8.3.8 Protecting Resources  OSRs
-AV.1.8.3.9 Protecting Resources  OSRs
-AV.1.8.3.10 Protecting Resources  OSRs
+---AV.1.8.2.1 Protecting Resources  OSRs
+---AV.1.8.2.2 Protecting Resources  OSRs
+---AV.1.8.2.3 Protecting Resources  OSRs
+---AV.1.8.2.4 Protecting Resources  OSRs
+---AV.1.8.2.5 Protecting Resources  OSRs
+---AV.1.8.2.6 Protecting Resources  OSRs
+---AV.1.8.2.7 Protecting Resources  OSRs
+---AV.1.8.2.8 Protecting Resources  OSRs
+---AV.1.8.2.9 Protecting Resources  OSRs
+---AV.1.8.2.10 Protecting Resources  OSRs
+---AV.1.8.2.11 Protecting Resources  OSRs
+---AV.1.8.2.12 Protecting Resources  OSRs
+---AV.1.8.2.13 Protecting Resources  OSRs
+---AV.1.8.2.14 Protecting Resources  OSRs
+---AV.1.8.2.15 Protecting Resources  OSRs
+---AV.1.8.2.16 Protecting Resources  OSRs
+---AV.1.8.2.17 Protecting Resources  OSRs
+---AV.1.8.2.18 Protecting Resources  OSRs
+---AV.1.8.2.19 Protecting Resources  OSRs
+---AV.1.8.2.20 Protecting Resources  OSRs
+---AV.1.8.2.21 Protecting Resources  OSRs
+---AV.1.8.2.22 Protecting Resources  OSRs
+---AV.1.8.2.23 Protecting Resources  OSRs
+---AV.1.8.2.24 Protecting Resources  OSRs
+---AV.1.8.2.25 Protecting Resources  OSRs
+---AV.1.8.2.26 Protecting Resources  OSRs
+---AV.1.8.2.27 Protecting Resources  OSRs
+---AV.1.8.2.28 Protecting Resources  OSRs
+---AV.1.8.2.29 Protecting Resources  OSRs
+---AV.1.8.2.30 Protecting Resources  OSRs
+---AV.1.8.2.31 Protecting Resources  OSRs
+---AV.1.8.2.32 Protecting Resources  OSRs
+---AV.1.8.2.33 Protecting Resources  OSRs
+---AV.1.8.2.34 Protecting Resources  OSRs
+---AV.1.8.2.35 Protecting Resources  OSRs
+---AV.1.8.2.36 Protecting Resources  OSRs
+---AV.1.8.2.37 Protecting Resources  OSRs
+---AV.1.8.2.38 Protecting Resources  OSRs
+---AV.1.8.2.39 Protecting Resources  OSRs
+---AV.1.8.2.40 Protecting Resources  OSRs
+---AV.1.8.2.41 Protecting Resources  OSRs
+---AV.1.8.2.42 Protecting Resources  OSRs
+---AV.1.8.2.43 Protecting Resources  OSRs
+---AV.1.8.2.44 Protecting Resources  OSRs
+---AV.1.8.2.45 Protecting Resources  OSRs
+---AV.1.8.2.46 Protecting Resources  OSRs
+---AV.1.8.2.47 Protecting Resources  OSRs
+---AV.1.8.2.49 Protecting Resources  OSRs
+---AV.1.8.2.50 Protecting Resources  OSRs
+---AV.1.8.3.1 Protecting Resources  OSRs
+---AV.1.8.3.2 Protecting Resources  OSRs
+---AV.1.8.3.3 Protecting Resources  OSRs
+---AV.1.8.3.4 Protecting Resources  OSRs
+---AV.1.8.3.5 Protecting Resources  OSRs
+---AV.1.8.3.6 Protecting Resources  OSRs
+---AV.1.8.3.7 Protecting Resources  OSRs
+---AV.1.8.3.8 Protecting Resources  OSRs
+---AV.1.8.3.9 Protecting Resources  OSRs
+---AV.1.8.3.10 Protecting Resources  OSRs
 
 
 #Comprobar que no tenga escrituras en other, si el fichero o directorio existe#
@@ -312,7 +305,7 @@ ls -la /usr/local/etc/sshd_config
 ls -la /usr/local/etc/sshd2_config
 ls -la /usr/lib/ssh/ssh-keysign
 +-------------------------------------------------------------------------------------+
-AV.1.9.1 Protecting Resources - User Resources	"PermitUserEnvironment"
+---AV.1.9.1 Protecting Resources - User Resources	"PermitUserEnvironment"
 
 #Aplica a la version del ssh 3.5#
 
@@ -320,7 +313,7 @@ ssh -V
 
 #"N/A OpeSSH#
 +-------------------------------------------------------------------------------------+
-AV.1.9.2 Protecting Resources - User Resources	"StrictModes" = YES
+---AV.1.9.2 Protecting Resources - User Resources	"StrictModes" = YES
 
 grep StrictModes /etc/ssh/sshd_config
 
@@ -329,42 +322,98 @@ grep StrictModes /etc/ssh/sshd_config
 man sshd_config
 /StrictModes
 +-------------------------------------------------------------------------------------+
-AV.1.9.3 Protecting Resources - User Resources	"AcceptEnv" = TODO COMENTADO
+---AV.1.9.3 Protecting Resources - User Resources	"AcceptEnv" = TODO COMENTADO
 
 grep AcceptEnv /etc/ssh/sshd_config
 +-------------------------------------------------------------------------------------+
-AV.2.0.1.1 Business Use Notice	Business Use Notice / PrintMotd = yes
-AV.2.0.1.4 Business Use Notice
+---AV.2.0.1.1 Business Use Notice	Business Use Notice / PrintMotd = yes
+---AV.2.0.1.4 Business Use Notice
 
 grep -i PrintMotd /etc/ssh/sshd_config
+
 +-------------------------------------------------------------------------------------+
-AV.2.1.1.2 Encryption
-AV.2.1.1.3 Encryption
-AV.2.1.1.4 Encryption
 
-sshd -T|grep protocol
-grep -i protocol /etc/ssh/sshd_config
-grep -i ServerKeyBits /etc/ssh/sshd_config /usr/local/etc/sshd_config
+---AV.2.1.1.2 Encryption // HABLA del cifrado de claves compartidas.
+"Data Transmission - All native encryption ciphers 
 
-#"Si sale comentado mirar el MAN y ver el default"
+[ REF: https://pages.github.kyndryl.net/Kyndryl-CISO/Cyber-Security-and-Data-Privacy-Standard/Requirements/Section-5.0-Use-of-Encryption/#section-53-acceptable-encryption-algorithms ]
 
-man sshd_config
-/ServerKeyBits
+// AES (Advanced Encryption Standard)
 
-## el ssh a partir de la la versión OpenSSH_7.4p1 ya no utiliza protocolo 1.##
+
+// Se debe mirar que esten los cifrados aprobados o por defecto.
+
+sshd -tT | grep ciphers
+grep Ciphers /etc/ssh/sshd_config
+
+" Ejemplo:
+
+Ciphers aes128-ctr,aes192-ctr,aes256-ctr
+
+
+/*CONTESTAR YES */ : " Si Ciphers tiene los algoritmo de cifrados aprobados.
+
+/*CONTESTAR NO*/ : " Cipher aes128-ctr is not available\n Cipher aes192-ctr is not available\n Cipher aes256-ctr is not available
+
 +-------------------------------------------------------------------------------------+
-AV.2.2.1.1 Passphrases	Private Key Passphrases
+---AV.2.1.1.3 Encryption // HABLA del algoritmo de cifrado DES, este algoritmo no se usa. 
+" Data Transmission - DES algorithm
 
-#"lo mismo que AV.1.1.4"
+// Se debe mirar que no esten los cifrados DES
+
+
+sshd -tT | grep -i DES
+grep -i DES /etc/ssh/sshd_config
+
+
+/* CONTESTAR N/A */ : " The DES algorithm is not used"
+
+/* CONTESTAR NO */ : " Cipher cast128-cbc should not be used \n  Cipher 3des-cbc should not be used
+
 +-------------------------------------------------------------------------------------+
-##AV.1.1.5 Password Requirements	Private Key Passphrases
-##AV.1.1.6 Password Requirements
+
+---AV.2.1.1.4 Encryption // HABLA de la longitud mínima de bits para los algoritmos de clave pública
+" Data Transmission - Server host keys
+
+[ REF : https://pages.github.kyndryl.net/Kyndryl-CISO/Cyber-Security-and-Data-Privacy-Standard/Requirements/Section-5.0-Use-of-Encryption/#section-53-acceptable-encryption-algorithms ]
+
+// Mínimo de 2048 bits para cifrados basados en RSA. Valor predeterminado para otros cifrados
+
+## Primero mostrar las claves publicas que existen (Only authorized_keys)
+
+ls -la /home/*/.ssh/* | grep -i authorized_keys
+
+## De las claves que nos salga debemos comprobar el length de la clave, esto se puede saber en el tamaño de caracteres.
+
+" 2048
+
+// ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDM5lr8p04H/mFEP5vZPfVZb5ZsrI/0WhJ+N/287nOvDOpIgi4RekUfPT6cxNzNizrUIDoIZY8na+VBD9zSlMVG//hSvFMSZYiZ8Zj35MJgNn5tnX9iAOKq3jmbLMIFtuX74RYO59AKUN0J0JBfrR1AK59tUpMteYmKtKzAuey+uVmYr5LmAN5RUW1fmkMMFp30rrzO6JKeMqYQPGaBBjaHTVPBL358KgX5hoOHoaeX1rO158hANEiJJeFw8zKsA/8KeHhjgpYSLlIp6OEvbTyQpUYhPcj3+S2rP3EL5W5P7sAtmkQjvj+v+/hQVraRa+R+/KlJjDXf63G5DJv7TqM46/TFrC/VbiUZ9BsrYSHf8CdTBWB5FtRJtAL1eSjxTK5+VZ8uBeXz5TtpNdCxiLKoHjDB4iTGpX3Lo8sDTsngrWyP9RbpPqY14gsNSIQbbgoXty4KC4sjC809Ph3D/FCxjSVFWcUAH11cdaybHe3dzNGGhZR9UImiljwNiD8Rdm8=
+
+" 1024
+
+// ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDM5lr8p04H/mFEP5vZPfVZb5ZsrI/0WhJ+N/287nOvDOpIgi4RekUfPT6cxNzNizrUIDoIZY8na+VBD9zSlMVG//VbiUZ9BsrYSHf8CdTBWB5FtRJtAL1eSjxTK5+VZ8uBeXz5TtpNdCxiLKoHjDB4iTGpX3Lo8sDTsngrWyP9RbpPqY14gsNSIQbbgoXty4KC4sjC809Ph3D/FCxjSVFWcUAH11cdaybHe3dzNGGhZR9UImiljwNiD8Rdm8=
+
+/* CONTESTAR YES */ : " Si las claves publicas, basadas en RSA tienen una longitud de 2048bits.
+
+/* CONTESTAR N/A */ : " No such file authorized_keys
+
+/* CONTESTAR NO */ : "  SSH authorized_keys file: $authorized_keys; Invalid public host key length: 1024   Key type: ssh-rsa..
+
++-------------------------------------------------------------------------------------+
+
+---AV.2.2.1.1 Passphrases	Private Key Passphrases
+
+#"lo mismo que ---AV.1.1.4"
+
++-------------------------------------------------------------------------------------+
+##---AV.1.1.5 Password Requirements	Private Key Passphrases
+##---AV.1.1.6 Password Requirements
 # YES Informativo
 #SIMILAR 
-##AV.2.2.1.2 Passphrases
-##AV.2.2.1.3 Passphrases
+##---AV.2.2.1.2 Passphrases
+##---AV.2.2.1.3 Passphrases
 +-------------------------------------------------------------------------------------+
-AV.2.2.1.4 Passphrases	Private Key Passphrases - security administrative and system authority
+---AV.2.2.1.4 Passphrases	Private Key Passphrases - security administrative and system authority
 
-#"lo mismo que AV.1.1.7"
+#"lo mismo que ---AV.1.1.7"
 +-------------------------------------------------------------------------------------+
