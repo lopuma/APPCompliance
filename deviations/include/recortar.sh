@@ -87,9 +87,9 @@ function command_sed () {
 function listar_linux () {
     command_sed
     echo "clear;date;hostname"
-    cat  ${home}'descripciones.txt' | awk '{print "chage -l "$2 " | grep ^Maximum"}'
+    cat  ${home}'descripciones.txt' | awk '{print "chage -l "$2 " | egrep \"^Maximum|^Minimum\""}'
     echo "clear;date;hostname" >  ${home}'resultado.txt'
-    cat  ${home}'descripciones.txt' | awk '{print "chage -l "$2 " | grep ^Maximum"}' >> ${home}'resultado.txt'
+    cat  ${home}'descripciones.txt' | awk '{print "chage -l "$2 " | egrep \"^Maximum|^Minimum\""}' >> ${home}'resultado.txt'
     gedit ${home}'resultado.txt'
 }
 
