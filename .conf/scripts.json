@@ -1,195 +1,20 @@
 [
     {
-        "name": "AFB",
-        "cod": 1,
-        "politica": [
-            {
-                "main": "SSH",
-                "script": [
-                    "ssh_preg4",
-                    "ssh_preg14"
-                ],
-                "icon": "icon_ssh.png"
-            },
-            {
-                "main": "VIOS",
-                "script": [
-                    "vios_preg4",
-                    "vios_preg44",
-                    "vios_preg43",
-                    "vios_preg2",
-                    "vios_preg1"
-                ],
-                "icon": "compliance.png"
-            }
-        ]
-    },
-    {   
-        "name": "ASISA",
-        "cod": 2,
-        "politica": [
-            {
-                "main": "SUDO",
-                "script": [
-                    "sudo_preg4",
-                    "sudo_preg14"
-                ],
-                "icon": "icon_sudo.png"
-            },
-            {
-                "main": "SISTEMAS",
-                "script": [
-                    "os_preg4",
-                    "os_preg45",
-                    "os_preg35",
-                    "os_preg15",
-                    "os_preg16"
-                ],
-                "icon": "icon_sys.png"
-            }
-        ]
+        "name":"Script Crop Text",
+        "script":"Recortar.sh",
+        "label": "Crop Text",
+        "command": "gnome-terminal --"
     },
     {
-        "name": "CESCE",
-        "cod": 3,
-        "politica": [
-            {
-                "main": "SISTEMAS",
-                "script": [
-                    "os_preg1"
-                ],
-                "icon": "icon_sys.png"
-            }
-        ]
+        "name":"Decorador SFIT SUDO",
+        "script":"DecoradorSFIT",
+        "label": "SFIT Sudo",
+        "command": "gnome-terminal --"
     },
     {
-        "name": "CTTI",
-        "cod": 4,
-        "politica": [
-            {
-                "main": "SISTEMAS4",
-                "script": [
-                    "os_preg1"
-                ],
-                "icon": "icon_sys.png"
-            }
-        ]
-    },
-    {
-        "name": "ENEL",
-        "cod": 5,
-        "politica": [
-            {
-                "main": "SISTEMAS5",
-                "script": [
-                    "os_preg1"
-                ],
-                "icon": "icon_sys.png"
-            }
-        ]
-    },
-    {
-        "name": "EUROFRED",
-        "cod": 6,
-        "politica": [
-            {
-                "main": "SISTEMAS6",
-                "script": [
-                    "os_preg1"
-                ],
-                "icon": "icon_sys.png"
-            }
-        ]
-    },
-    {
-        "name": "FT",
-        "cod": 7,
-        "politica": [
-            {
-                "main": "SISTEMAS7",
-                "script": [
-                    "os_preg1"
-                ],
-                "icon": "icon_sys.png"
-            }
-        ]
-    },
-    {
-        "name": "INFRA",
-        "cod": 8,
-        "politica": [
-            {
-                "main": "SISTEMAS8",
-                "script": [
-                    "os_preg1"
-                ],
-                "icon": "icon_sys.png"
-            }
-        ]
-    },
-    {
-        "name": "JGC",
-        "cod": 9,
-        "politica": [
-            {
-                "main": "SISTEMAS9",
-                "script": [
-                    "os_preg1"
-                ],
-                "icon": "icon_sys.png"
-            }
-        ]
-    },
-    {
-        "name": "LBK",
-        "cod": 10,
-        "politica": [
-            {
-                "main": "SISTEMAS10",
-                "script": [
-                    "os_preg1"
-                ],
-                "icon": "icon_sys.png"
-            }
-        ]
-    },
-    {
-        "name": "PLANETA",
-        "cod": 11,
-        "politica": [
-            {
-                "main": "SISTEMAS11",
-                "script": [
-                    "os_preg1"
-                ],
-                "icon": "icon_sys.png"
-            }
-        ]
-    },
-    {
-        "name": "SERVIHABITAT",
-        "cod": 12,
-        "politica": [
-            {
-                "main": "SISTEMAS12",
-                "script": [
-                    "os_preg1"
-                ],
-                "icon": "icon_sys.png"
-            }
-        ]
-    },
-    {
-        "name": "NUEVO",
-        "cod": 13,
-        "politica": [
-            {
-                "main": null,
-                "script": [
-                    null
-                ],
-                "icon": null
-            }
-        ]
+        "name":"Prueba",
+        "script":"hola",
+        "label": "SFIT Sudo",
+        "command": "echo"
     }
 ]

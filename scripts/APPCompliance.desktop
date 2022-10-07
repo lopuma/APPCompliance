@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name[es]=APPCompliance
+Comment[es]=Aplicacion para la gestion de issues de Extarciones y Desviaciones
+Keywords[es]=APPCompliance,app;compliance;issues;
+Terminal=false
+Type=Application
+StartupNotify=true
+Exec=bash -c "$HOME/APPCompliance/APPCompliance"
+Icon=/usr/share/pixmaps/APPCompliance.png
+Icon[es]=/usr/share/pixmaps/APPCompliance.png
+Name[es_ES]=APPCompliance

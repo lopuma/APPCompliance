@@ -9,11 +9,12 @@ SISTENAS VIOS / POLITICA OS / 180 DIAS
 "Retain Logging for a period of time - either online or backups = 180 dias (26 semanas)
 
  // Para la rotacion de OS - VIOS, Se revisa 2 cosas.
-	OPCION ➡ 1.- La rotacion que debe ser 180 dias (26 semanas).
-	OPCION ➡ 2.- Los ficheros de rotacion deben rotar a 180 dias (26 semanas).
+	REQUIRED ➡ 1: La rotacion que debe ser 180 dias (26 semanas).
+	REQUIRED ➡ 2: Los ficheros de rotacion deben rotar a 180 dias (26 semanas).
 
 
-OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
+REQUIRED ➡ 1\. "La rotacion debe ser 180 dias (26 semanas).
+
 //Saber que sistema de rotacion USA, existen 3 OPCIONES
 
 	"Saber que sistema de rotacion USA
@@ -43,7 +44,7 @@ OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
 		
 	// EJEMPLO -> /var/adm/sudo.log:0:13:180:HP-UX,OSF1,SunOS
 
-OPCION ➡ 2. " Los ficheros de OS deben estar rotando.
+REQUIRED ➡ 2: " Los ficheros de OS deben estar rotando.
 
 	"Saber que SO estamos revisando "dependera de los ficheros de sistemas a rotar", ya sea Linux o Aix
         
@@ -109,11 +110,11 @@ SISTENAS VIOS / POLITICA SUDO / 180 DIAS
 "Log retention timeframe = 180 dias (26 semanas)
 
 // Para la rotacion de log`s se revisa 2 cosas.
-	OPCION ➡ 1.- La rotacion que debe ser 180 dias (26 semanas).
-	OPCION ➡ 2.- El fichero del sudo.log debe estar rotando 180 dias (26 semanas).
+	REQUIRED ➡ 1: La rotacion que debe ser 180 dias (26 semanas).
+	REQUIRED ➡ 2: El fichero del sudo.log debe estar rotando 180 dias (26 semanas).
 
 
-OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
+REQUIRED ➡ 1\. "La rotacion debe ser 180 dias (26 semanas).
 //Saber que sistema de rotacion USA, existen 3 OPCIONES
 
 	"Saber que sistema de rotacion USA
@@ -143,7 +144,7 @@ OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
 		
 	// EJEMPLO -> /var/adm/sudo.log:0:13:180:HP-UX,OSF1,SunOS
 
-OPCION ➡ 2. //El fichero del sudo.log debe estar rotando a 180 dias  (26 semanas).
+REQUIRED ➡ 2: //El fichero del sudo.log debe estar rotando a 180 dias  (26 semanas).
 
 	"Saber que SO estamos revisando "dependera del fichero de sudo.log a rotar", ya sea Linux o Unix (vios)
         
@@ -202,11 +203,11 @@ SISTENAS AIX / POLITICA OS / 90 DIAS
 "Log record retention time frame = 90 dias (13 semanas)
 
  // Para la rotacion de OS - AIX, Se revisa 2 cosas.
-	OPCION ➡ 1.- La rotacion que debe ser 90 dias (13 semanas).
-	OPCION ➡ 2.- El/Los ficheros de rotacion a 90 dias (13 semanas)
+	REQUIRED ➡ 1: La rotacion que debe ser 90 dias (13 semanas).
+	REQUIRED ➡ 2: El/Los ficheros de rotacion a 90 dias (13 semanas)
 
 
-OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
+REQUIRED ➡ 1\. "La rotacion debe ser 90 dias (13 semanas).
 //Saber que sistema de rotacion USA, existen 3 OPCIONES
 
 	"Saber que sistema de rotacion USA
@@ -236,7 +237,7 @@ OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
 		
 	// EJEMPLO -> /var/adm/sudo.log:0:13:90:HP-UX,OSF1,SunOS
 
-OPCION ➡ 2. " Los ficheros de OS deben estar rotando.
+REQUIRED ➡ 2: " Los ficheros de OS deben estar rotando.
 
 	"Saber que SO estamos revisando "dependera de los ficheros de sistemas a rotar", ya sea Linux o Aix
         
@@ -303,11 +304,11 @@ SISTENAS AIX / POLITICA SUDO / 90 DIAS
 "Log retention timeframe = 90 dias (13 semanas)
 
  // Para la rotacion de SUDO - AIX, Se revisa 2 cosas.
-	OPCION ➡ 1.- La rotacion que debe ser 90 dias (13 semanas).
-	OPCION ➡ 2.- El fichero de sudo.log a 90 dias (13 semanas).
+	REQUIRED ➡ 1: La rotacion que debe ser 90 dias (13 semanas).
+	REQUIRED ➡ 2: El fichero de sudo.log a 90 dias (13 semanas).
 
 
-OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
+REQUIRED ➡ 1\. "La rotacion debe ser 90 dias (13 semanas).
 //Saber que sistema de rotacion USA, existen 3 OPCIONES
 
 	"Saber que sistema de rotacion USA
@@ -337,7 +338,7 @@ OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
 		
 	// EJEMPLO -> /var/adm/sudo.log:0:13:90:HP-UX,osF1,Sunos
 
-OPCION ➡ 2. // El fichero de sudo.log deben estar rotando.
+REQUIRED ➡ 2: // El fichero de sudo.log deben estar rotando.
 
 	"Saber que SO estamos revisando "dependera del fichero de sudo.log a rotar", ya sea Linux o Aix
         
@@ -398,10 +399,10 @@ SISTENAS AIX / POLITICA SSH / 90 DIAS
 "Log retention timeframe = 90 dias (13 semanas)
 
  // Para la rotacion de SSH - AIX, Se revisa 2 cosas.
-	OPCION ➡ 1.- La rotacion que debe ser 90 dias (13 semanas).
-	OPCION ➡ 2.- El fichero de messages a 90 dias (13 semanas).
+	REQUIRED ➡ 1: La rotacion que debe ser 90 dias (13 semanas).
+	REQUIRED ➡ 2: El fichero de messages a 90 dias (13 semanas).
 
-OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
+REQUIRED ➡ 1\. "La rotacion debe ser 90 dias (13 semanas).
 //Saber que sistema de rotacion USA, existen 3 OPCIONES
 
 	"Saber que sistema de rotacion USA
@@ -431,7 +432,7 @@ OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
 		
 	// EJEMPLO ->  /var/adm/messages:0:13:90:HP-UX,osF1,Sunos
 
-OPCION ➡ 2. // El fichero de messages deben estar rotando.
+REQUIRED ➡ 2: // El fichero de messages deben estar rotando.
 
 	"Saber que SO estamos revisando "dependera del fichero de messages a rotar", ya sea Linux o Aix
         
@@ -494,11 +495,11 @@ SISTENAS AIX / POLITICA OS / 180 DIAS
 "Log record retention time frame = 180 dias (26 semanas)
 
  // Para la rotacion de OS - AIX, Se revisa 2 cosas.
-	OPCION ➡ 1.- La rotacion que debe ser 180 dias (26 semanas).
-	OPCION ➡ 2.- El/Los ficheros de rotacion a 180 dias (26 semanas)."#
+	REQUIRED ➡ 1: La rotacion que debe ser 180 dias (26 semanas).
+	REQUIRED ➡ 2: El/Los ficheros de rotacion a 180 dias (26 semanas)."#
 
 
-OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
+REQUIRED ➡ 1\. "La rotacion debe ser 180 dias (26 semanas).
 //Saber que sistema de rotacion USA, existen 3 OPCIONES
 
 	"Saber que sistema de rotacion USA
@@ -528,7 +529,7 @@ OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
 		
 	// EJEMPLO -> /var/adm/sudo.log:0:26:180:HP-UX,OSF1,SunOS
 
-OPCION ➡ 2. " Los ficheros de OS deben estar rotando.
+REQUIRED ➡ 2: " Los ficheros de OS deben estar rotando.
 
 	"Saber que SO estamos revisando "dependera de los ficheros de sistemas a rotar", ya sea Linux o Aix
         
@@ -588,18 +589,18 @@ ls -la /var/adm/sulog /var/log/sudo.log /var/adm/messages /var/adm/cron/log /var
 +-------------------------------------------------------------------------------------+
 SISTENAS AIX / POLITICA SUDO / 180 DIAS
 +-------------------------------------------------------------------------------------+	
-			/* POLITICA SUDO - SUDO AIX*/ 
+			/* POLITICA SUDO - SUDO AIX */ 
 
 ---ZY.1.2.4 Logging
 
 "Log retention timeframe = 180 dias (26 semanas)
 
  // Para la rotacion de SUDO - AIX, Se revisa 2 cosas.
-	OPCION ➡ 1.- La rotacion que debe ser 180 dias (26 semanas).
-	OPCION ➡ 2.- El fichero de sudo.log a 180 dias (26 semanas)."#
+	REQUIRED ➡ 1: La rotacion que debe ser 180 dias (26 semanas).
+	REQUIRED ➡ 2: El fichero de sudo.log deben rotar a 180 dias (26 semanas).
 
 
-OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
+REQUIRED ➡ 1\. "La rotacion debe ser 180 dias (26 semanas).
 //Saber que sistema de rotacion USA, existen 3 OPCIONES
 
 	"Saber que sistema de rotacion USA
@@ -629,7 +630,7 @@ OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
 		
 	// EJEMPLO -> /var/adm/sudo.log:0:26:180:HP-UX,osF1,Sunos
 
-OPCION ➡ 2. // El fichero de sudo.log deben estar rotando.
+REQUIRED ➡ 2: // El fichero de sudo.log deben estar rotando.
 
 	"Saber que SO estamos revisando "dependera del fichero de sudo.log a rotar", ya sea Linux o Aix
         
@@ -690,10 +691,10 @@ SISTENAS AIX / POLITICA SSH / 180 DIAS
 "Log retention timeframe = 180 dias (26 semanas)
 
  // Para la rotacion de SSH - AIX, Se revisa 2 cosas.
-	OPCION ➡ 1.- La rotacion que debe ser 180 dias (26 semanas).
-	OPCION ➡ 2.- El fichero de messages a 180 dias (26 semanas).
+	REQUIRED ➡ 1: La rotacion que debe ser 180 dias (26 semanas).
+	REQUIRED ➡ 2: El fichero de messages a 180 dias (26 semanas).
 
-OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
+REQUIRED ➡ 1\. "La rotacion debe ser 180 dias (26 semanas).
 //Saber que sistema de rotacion USA, existen 3 OPCIONES
 
 	"Saber que sistema de rotacion USA
@@ -723,7 +724,7 @@ OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
 		
 	// EJEMPLO ->  /var/adm/messages:0:26:180:HP-UX,osF1,Sunos
 
-OPCION ➡ 2. // El fichero de messages deben estar rotando.
+REQUIRED ➡ 2: // El fichero de messages deben estar rotando.
 
 	"Saber que SO estamos revisando "dependera del fichero de messages a rotar", ya sea Linux o Aix
         
@@ -787,11 +788,11 @@ SISTENAS DEBIAN / POLITICA OS / 180 DIAS
 "Retain Log files = 180 DIAS (26 semanas)
 
 // Para la rotacion de OS se revisa 2 cosas.
-	OPCION ➡ 1.- La rotacion que debe ser 180 dias (26 semanas).
-	OPCION ➡ 2.- Los ficheros de rotacion a 180 dias (26 semanas)."#
+	REQUIRED ➡ 1: La rotacion que debe ser 180 dias (26 semanas).
+	REQUIRED ➡ 2: Los ficheros de rotacion a 180 dias (26 semanas)."#
 
 
-OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas). 
+REQUIRED ➡ 1\. "La rotacion debe ser 180 dias (26 semanas). 
 //Saber que sistema de rotacion USA, existen 3 OPCIONES
 
 	"Saber que sistema de rotacion USA
@@ -826,7 +827,7 @@ OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
 		
 	// EJEMPLO -> /var/log/secure.log:0:13:90:HP-UX,OSF1,SunOS
 
-OPCION ➡ 2. //Los ficheros de OS deben estar rotando.
+REQUIRED ➡ 2: //Los ficheros de OS deben estar rotando.
 
 	"Saber que SO estamos revisando "dependera de los ficheros de sistemas a rotar", ya sea Linux o Linux (debian)
 
@@ -889,10 +890,10 @@ SISTENAS LINUX / POLITICA OS / 90 DIAS
 "Log record retention time frame = 90 dias (13 semanas)
 
 //Para la rotacion de archivos de registros del sistema se revisa 2 cosas.
-	OPCION ➡ 	OPCION ➡ 1.- La rotacion que debe ser 90 dias (13 semanas).
-	OPCION ➡ 	OPCION ➡ 2.- Los ficheros de rotacion deben rotar a 90 dias (13 semanas).	
+	REQUIRED ➡ 1: La rotacion que debe ser 90 dias (13 semanas).
+	REQUIRED ➡ 2: Los ficheros de rotacion deben rotar a 90 dias (13 semanas).	
 
-OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
+REQUIRED ➡ 1\. "La rotacion debe ser 90 dias (13 semanas).
 //Saber que sistema de rotacion USA, existen 3 OPCIONES
 
 	"Saber que sistema de rotacion USA
@@ -926,7 +927,7 @@ OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
 		
 	// EJEMPLO -> /var/adm/sudo.log:0:13:90:HP-UX,OSF1,SunOS
 
-OPCION ➡ 2.-  " Los ficheros de OS deben estar rotando
+REQUIRED ➡ 2:  " Los ficheros de OS deben estar rotando
 	
 	" Saber que SO estamos revisando "dependeran los ficheros", ya sea Linux o Aix
 
@@ -990,10 +991,10 @@ SISTENAS LINUX / POLITICA OS / 180 DIAS
 "Log record retention time frame = 180 dias (26 semanas)
 
 //Para la rotacion de archivos de registros del sistema se revisa 2 cosas.
-	OPCION ➡ 	OPCION ➡ 1.- La rotacion que debe ser 180 dias (26 semanas).
-	OPCION ➡ 	OPCION ➡ 2.- Los ficheros de rotacion deben rotar a 180 dias (26 semanas).	
+	REQUIRED ➡ 1: La rotacion que debe ser 180 dias (26 semanas).
+	REQUIRED ➡ 2: Los ficheros de OS deben rotar a 180 dias (26 semanas).	
 
-OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
+REQUIRED ➡ 1\. "La rotacion debe ser 180 dias (26 semanas).
 //Saber que sistema de rotacion USA, existen 3 OPCIONES
 
 	"Saber que sistema de rotacion USA
@@ -1027,7 +1028,7 @@ OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
 		
 	// EJEMPLO -> /var/adm/sudo.log:0:26:180:HP-UX,OSF1,SunOS
 
-OPCION ➡ 2.-  " Los ficheros de OS deben estar rotando
+REQUIRED ➡ 2:  "Los ficheros de OS deben rotar a 180 dias (26 semanas).
 	
 	" Saber que SO estamos revisando "dependeran los ficheros", ya sea Linux o Aix
 
@@ -1091,11 +1092,11 @@ SISTENAS LINUX / POLITICA SUDO / 180 DIAS
 "Log retention timeframe = 180 dias (26 semanas)
 
 // Para la rotacion de log`s se revisa 2 cosas.
-	OPCION ➡ 1.- La rotacion que debe ser 180 dias (26 semanas).
-	OPCION ➡ 2.- El fichero del sudo.log debe estar rotando a 180 dias (26 semanas).
+	REQUIRED ➡ 1: La rotacion que debe ser 180 dias (26 semanas).
+	REQUIRED ➡ 2: El fichero del sudo.log debe estar rotando a 180 dias (26 semanas).
 
 
-OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
+REQUIRED ➡ 1\. "La rotacion debe ser 180 dias (26 semanas).
 // Saber que sistema de rotacion USA, existen 3 OPCIONES
 
 	"Saber que sistema de rotacion USA
@@ -1129,7 +1130,7 @@ OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
 		
 	// EJEMPLO -> /var/adm/sudo.log:0:26:180:HP-UX,OSF1,SunOS
 
-OPCION ➡ 2. " El fichero del sudo.log debe estar rotando a 180 dias.
+REQUIRED ➡ 2: " El fichero del sudo.log debe estar rotando a 180 dias.
 
 	"Saber que SO estamos revisando "dependera de los ficheros de sistemas a rotar", ya sea Linux o Aix
         
@@ -1193,11 +1194,11 @@ SISTENAS LINUX / POLITICA SUDO / 90 DIAS
 "Log retention timeframe = 90 dias (13 semanas)
 
 // Para la rotacion de log`s se revisa 2 cosas.
-	OPCION ➡ 1.- La rotacion que debe ser 90 dias (13 semanas).
-	OPCION ➡ 2.- El fichero del sudo.log debe estar rotando a 90 dias (13 semanas).
+	REQUIRED ➡ 1: La rotacion que debe ser 90 dias (13 semanas).
+	REQUIRED ➡ 2: El fichero del sudo.log debe estar rotando a 90 dias (13 semanas).
 
 
-OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
+REQUIRED ➡ 1\. "La rotacion debe ser 90 dias (13 semanas).
 // Saber que sistema de rotacion USA, existen 3 OPCIONES
 
 	"Saber que sistema de rotacion USA
@@ -1231,7 +1232,7 @@ OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
 		
 	// EJEMPLO -> /var/adm/sudo.log:0:13:90:HP-UX,OSF1,SunOS
 
-OPCION ➡ 2. " El fichero del sudo.log debe estar rotando a 90 dias.
+REQUIRED ➡ 2: " El fichero del sudo.log debe estar rotando a 90 dias.
 
 	"Saber que SO estamos revisando "dependera de los ficheros de sistemas a rotar", ya sea Linux o Aix
         
@@ -1295,11 +1296,11 @@ SISTENAS LINUX / POLITICA SSH / 90 DIAS
 "Retain Log Files = 90 days (13 semanas)
 
 // Para la rotacion de los ficheros de seguridad se revisan 2 cosas.
-	OPCION ➡ 1.- La rotacion que debe ser 90 dias (13 semanas).
-	OPCION ➡ 2.- Los ficheros de seguridad debe estar rotando a 90 dias (13 semanas).
+	REQUIRED ➡ 1: La rotacion que debe ser 90 dias (13 semanas).
+	REQUIRED ➡ 2: Los ficheros de seguridad debe estar rotando a 90 dias (13 semanas).
 
 
-OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
+REQUIRED ➡ 1\. "La rotacion debe ser 90 dias (13 semanas).
 // Saber que sistema de rotacion USA, existen 3 OPCIONES
 
 	"Saber que sistema de rotacion USA
@@ -1336,7 +1337,7 @@ OPCION ➡ 1. "La rotacion debe ser 90 dias (13 semanas).
 		
 	// EJEMPLO -> /var/log/secure.log:0:13:90:HP-UX,OSF1,SunOS
 
-OPCION ➡ 2. " El fichero del sudo.log debe estar rotando a 90 dias.
+REQUIRED ➡ 2: " El fichero del sudo.log debe estar rotando a 90 dias.
 
 	"Saber que SO estamos revisando "dependera de los ficheros de sistemas a rotar", ya sea Linux o Aix
         
@@ -1408,11 +1409,11 @@ SISTENAS LINUX / POLITICA SSH / 180 DIAS
 "Retain Log Files = 180 days (26 semanas)
 
 // Para la rotacion de los ficheros de seguridad se revisan 2 cosas.
-	OPCION ➡ 1.- La rotacion que debe ser 180 dias (26 semanas).
-	OPCION ➡ 2.- Los ficheros de seguridad debe estar rotando a 180 dias (26 semanas).
+	REQUIRED ➡ 1: La rotacion que debe ser 180 dias (26 semanas).
+	REQUIRED ➡ 2: Los ficheros de seguridad debe estar rotando a 180 dias (26 semanas).
 
 
-OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
+REQUIRED ➡ 1\. "La rotacion debe ser 180 dias (26 semanas).
 // Saber que sistema de rotacion USA, existen 3 OPCIONES
 
 	"Saber que sistema de rotacion USA
@@ -1446,7 +1447,7 @@ OPCION ➡ 1. "La rotacion debe ser 180 dias (26 semanas).
 		
 	// EJEMPLO -> /var/log/secure.log:0:26:180:HP-UX,OSF1,SunOS
 
-OPCION ➡ 2. " El fichero del sudo.log debe estar rotando a 180 dias.
+REQUIRED ➡ 2: " El fichero del sudo.log debe estar rotando a 180 dias.
 
 	"Saber que SO estamos revisando "dependera de los ficheros de sistemas a rotar", ya sea Linux o Aix
         

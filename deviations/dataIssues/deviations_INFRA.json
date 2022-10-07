@@ -1051,7 +1051,7 @@
       "descripcion": "Required log file missing: $fileMissing",
       "comprobacion": "+-------------------------------------------------------------------------------------+\n## Debe existir y tener los permisos correctos\n+-------------------------------------------------------------------------------------+\n\nls -l $fileMissing",
       "copia": null,
-      "editar": "+-------------------------------------------------------------------------------------+\n## Si no existe, se debe crear y Añadir los permisos correctos.\n+-------------------------------------------------------------------------------------+\n\n// NOTA : Revisar `File Missing`, para comprobar los permisos correctos",
+      "editar": "+-------------------------------------------------------------------------------------+\n## Si no existe, se debe crear y Añadir los permisos correctos.\n+-------------------------------------------------------------------------------------+\n\n// NOTA : Revisar `File Missing`, para añadir / comprobar los permisos correctos",
       "refrescar": null,
       "evidencia": "clear\ndate\nhostname\nls -la $fileMissing",
       "SO": "Linux"

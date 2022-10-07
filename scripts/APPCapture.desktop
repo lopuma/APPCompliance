@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name[es]=APPCapture
+Comment[es]=Guarde imágenes de su pantalla o de ventanas individuales
+Keywords[es]=pantallazo;capturar;imprimir;
+Terminal=false
+Type=Application
+StartupNotify=true
+Exec=gnome-screenshot --area
+Icon[es]=/usr/share/pixmaps/APPCapture.png
+Icon=/usr/share/pixmaps/APPCapture.png
+Name[es_ES]=APPCapture
