@@ -3,18 +3,14 @@
         "name":"Script Crop Text",
         "script":"Recortar.sh",
         "label": "Crop Text",
-        "command": "gnome-terminal --"
+        "command": "start",
+        "system": "linux"
     },
     {
         "name":"Decorador SFIT SUDO",
         "script":"DecoradorSFIT",
         "label": "SFIT Sudo",
-        "command": "gnome-terminal --"
-    },
-    {
-        "name":"Prueba",
-        "script":"hola",
-        "label": "SFIT Sudo",
-        "command": "echo"
+        "command": "python3",
+        "system": "linux / win32"
     }
 ]
