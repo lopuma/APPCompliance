@@ -18,7 +18,7 @@ miLista=(
 
 
 user=$(logname)
-home="/home/${user}/Compliance/"
+home="/home/${user}/APPCompliance/"
 
 function descripcion_delMenu() {
     index=0
