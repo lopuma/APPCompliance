@@ -3,12 +3,12 @@
         "name":"Script Crop Text",
         "script":"Recortar.sh",
         "label": "Crop Text",
-        "command": "start",
+        "command": "",
         "system": "linux"
     },
     {
         "name":"Decorador SFIT SUDO",
-        "script":"DecoradorSFIT",
+        "script":"DecoradorSFIT.py",
         "label": "SFIT Sudo",
         "command": "python3",
         "system": "linux / win32"
