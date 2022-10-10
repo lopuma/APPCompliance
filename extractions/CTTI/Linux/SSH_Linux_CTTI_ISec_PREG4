@@ -1,0 +1,27 @@
+////////////////////////////////////////////////////////////////////////////////////////////
+SSH LINUX CTTI GCT ISeC- Ref:714716 - Preguntas 4
+/************************************************************************************************************************************/
+AV.1.1.1 Password Requirements	PermitEmptyPasswords 	="no
+
+cat /etc/ssh/sshd_config | grep -i PermitEmptypassword
+
+"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/PermitEmptyPasswords
+/************************************************************************************************************************************/
+AV.1.2.2 Logging	QuietMode 	no
+
+N/A "OpenSSh"
+/************************************************************************************************************************************/
+AV.1.2.4 Logging	Retain Log Files	90 days
+
+N/A "Rotation is reviewed in an AlienVault
+/************************************************************************************************************************************/
+AV.1.7.1.2 Identify and Authenticate Users
+
+cat /etc/ssh/sshd_config | grep -i PermitRootLogin
+
+"Si PermitRootLogin es YES, contestamos #"YES
+"Si PermitRootLogin es NO, contestamos  #"N/A PermitRootLogin no"
+/************************************************************************************************************************************/

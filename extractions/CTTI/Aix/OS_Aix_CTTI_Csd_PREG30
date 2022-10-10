@@ -1,0 +1,306 @@
++-------------------------------------------------------------------------------------+
+---E.1.1.5.2 Passwords	/etc/security/user
+
+#"si es superior a 7.1 debe existir"#
+
+oslevel -s
+
+cat /etc/security/user|grep -v "*" | head -n 33 | egrep "default|dictionlist"
++-------------------------------------------------------------------------------------+
+---E.1.2.4 Logging	Log record retention time frame.
+
+N/A "La Rotacion de log se realizan desde un ALIENVAULT" 
++-------------------------------------------------------------------------------------+
+---E.1.3.1 AntiVirus	
+"Antivirus required
+
+//Es requerido en windows
+
+/* CONTESTAR N/A */ : " does not apply to unix systems"
++-------------------------------------------------------------------------------------+
+---E.1.4.1 System Settings
+"PATH
+
+// mirar dentro si existen PATH completos en /etc/environment
+
+cat /etc/environment | grep -v "^#" | tr ',' ' '| tr '\t' ' ' | tr ':' ' ' | tr '>' ' ' | tr ' ' '\n' | tr ';' ' '| sort -u
+
+/* CONTESTAR YES */ : " Si los path son completos
++-------------------------------------------------------------------------------------+
+---E.1.4.10 System Settings
+"etc/security/limits
+
+// Que el valor de data no sea -1 para el defautl"
+
+cat /etc/security/limits |grep -v "*" | head -n 10 | grep -p "default"
+
+/* CONTESTAR YES  */ : " Si data no tiene -1
++-------------------------------------------------------------------------------------+
+---E.1.4.11 System Settings	
+"Userid to run services
+
+// Evite ejecutar servicios como root
+
+/* CONTESTAR YES  */ : " Es informacion.
++-------------------------------------------------------------------------------------+
+---E.1.4.12 System Settings	
+"Interfaces for Admin Services
+
+// Los servicios de administración no deben ser accesables en interfaces de producción/servicio.
+
+/* CONTESTAR YES  */ : " Es informacion.
++-------------------------------------------------------------------------------------+
+---E.1.4.13 System Settings	
+"Userid in cron.allow / at.allow
+
+// En los ficheros cron.allow / at.allow, debe solo existir ROOT.
+
+
+cat /var/adm/cron/cron.allow
+cat /var/adm/cron/at.allow
+
+/* CONTESTAR YES  */ : " Si en los ficheros .allow existe la cuenta root
++-------------------------------------------------------------------------------------+
+---E.1.4.14 System Settings	
+"cron.deny, at.deny
+
+// No debe existir 'cron.deny, at.deny' en el directorio /var/adm/cron
+
+cd /var/adm/cron
+ls -la 
+
+/* CONTESTAR YES  */ : " Si no existen los ficheros .deny en /var/adm/cron/
+
+/* CONTESTAR NO */ " En otro caso
++-------------------------------------------------------------------------------------+
+---E.1.4.15 System Settings
+"cron and at files permisions
+
+// Dentro del CRON, root solo debe tener permisos de owner, si existen log's puede ser otro owner 
+
+ls -la /var/adm/cron
+
+/* CONTESTAR YES  */ : " Si root solo es accesible a los ficheros en /var/adm/cron/
++-------------------------------------------------------------------------------------+
+---E.1.4.2 System Settings
+"Guest
+
+// NO DEBE ESTAR HABILITADO EL USUARIO INVITADO / ANONYMOUS en el FTPACCESS"#
+
+cat /etc/ftpaccess 
+
+// Ejemplo de habilitado : guestuser anonymous
+
+/* CONTESTAR YES  */ : " Si no existe la cuenta anonymous habilitada
++-------------------------------------------------------------------------------------+
+---E.1.4.4 System Settings
+"NTP used
+
+// Comprobar que existe un servicio NTP, debe estar configurada una IP al servidor NTP.
+
+grep -i server /etc/ntp.conf
+
+/* CONTESTAR YES  */ : " Si nos muestra una IP al servidor NTP
++-------------------------------------------------------------------------------------+ 
+---E.1.4.5 System Settings
+"Default Userids and Groups
+
+/* CONTESTAR YES */ : "Porque no podemos saber que usuarios se usa para una instalacion
++-------------------------------------------------------------------------------------+
+---E.1.4.6 System Settings	
+"Orphan files
+
+// No debe existir ficheros sin propietario.
+// El siguiente comando te muestra el numero total de fichero sin owner $NUM
+find / -nouser | wc -l
+
+// El siguiente comando te enlista todos los ficheros sin owner
+find / -nouser -ls
+
+// Al ejecutar el comando salen muchos ficheros, lo mejor es poner NO y que lo gestiones los tecnicos.
+
+/* CONTESTAR YES */ : " Si no existen ficheros huerfanos (Orphan)
+
+/* CONTESTAR NO */ : " When checking for orphaned files, many files come out, the total number is: '$NUM', you can check with 'find / -nouser -ls'
++-------------------------------------------------------------------------------------+
+---E.1.4.7 System Settings
+"Login shell which supports time out
+
+cat /etc/passwd  |  cut -d: -f1,7
+
+"Los ID de usuario individuales deben tener uno de los siguientes conjuntos como
+/usr/bin/rksh
+/usr/bin/psh
+/usr/bin/tsh
+/usr/bin/csh
+/bin/ksh
+/bin/rksh
+/bin/psh
+/bin/tsh
+/bin/csh
+/bin/sh
+/usr/bin/sh
+/bin/false
+/usr/bin/false
+/bin/ksh93
+/usr/rksh93
+/usr/bin/ksh93
+/usr/bin/rksh93
++-------------------------------------------------------------------------------------+
+---E.1.4.8 System Settings
+"SUID bit
+
+/* CONTESTAR YES */ : " Es informativo... no sabemos los script utilizados.
++-------------------------------------------------------------------------------------+
+---E.1.4.9 System Settings
+"PATH files not writeable
+
+// Moestrar los directorios de la variable PATH
+echo $PATH
+
+// Listar y comprobar que no tengan permisos de W en OTHER, si son LINK (L), son validos.
+ls -ld /usr/bin
+ls -ld /etc
+ls -ld /usr/sbin
+ls -ld /usr/ucb
+ls -ld /usr/bin/X11
+ls -ld /sbin
+ls -ld /usr/java5/jre/bin
+ls -ld /usr/java5/bin
+ls -ld /usr/opt/perl5/bin
+ls -ld /opt/DoOnceAIX/SecTools/aix64db2cops
+ls -ld /opt/DoOnceAIX/SecTools/aixdb2cops
+ls -ld /opt/DoOnceAIX/SecTools/aixtsmcops
+ls -ld /opt/DoOnceAIX/SecTools/logkeeper
+ls -ld /opt/DoOnceAIX/SecTools/loglooker
+ls -ld /usr/ETC/CommonImage
+ls -ld /usr/ETC/bin
+ls -ld /home/tsmctti1/sqllib/bin
+ls -ld /home/tsmctti1/sqllib/adm
+ls -ld /home/tsmctti1/sqllib/misc
+
+/* CONTESTAR YES */ : " Si los directorios de la variable PATH no tengan permisos W en OTHER
++-------------------------------------------------------------------------------------+
+---E.1.5.9 Network Settings
+"NNTP authentication and identification
+
+grep nntp /etc/services
+telnet localhost 119
+
+/* CONTESTAR YES */ : "Si la conexión al puerto 119 nos da refused.
++-------------------------------------------------------------------------------------+
+---E.1.5.22.5 Network Settings
+"Ipforwarding
+
+// Debe estar el valor de ipforwarding a 0
+
+no -L ipforwarding
+
+// Mirar los valores
+CUR = current value (Valor actual)
+DEF = default value (Valor por defecto)
+
+/* CONTESTAR YES */ : " Si el valor de CUR es 0
++-------------------------------------------------------------------------------------+
+---E.1.5.22.6 Network Settings
+"Bcastping and dicrected_broadcast
+
+// Debe estar el valor de bcastping a 0, directed_broadcast a 0
+
+no -L bcastping
+no -L directed_broadcast
+
+// Mirar los valores
+CUR = current value (Valor actual)
+DEF = default value (Valor por defecto)
+
+/* CONTESTAR YES */ : " Si el valor de CUR es 0
++-------------------------------------------------------------------------------------+
+---E.1.5.22.8 Network Settings
+"Clean_partial_conns
+
+// onfigurar el sistema de AIX para que fuerce una política de secuencia TCP fuerte (strong TCP secuencing), que sea resistente a ataques de syn flooding i DOS
+
+no -L clean_partial_conns
+
+// Mirar los valores
+CUR = current value (Valor actual)
+DEF = default value (Valor por defecto)
+
+/* CONTESTAR YES */ : " Si el valor de CUR o DEF es 1
++-------------------------------------------------------------------------------------+
+---E.1.5.22.9 Network Settings
+".rhosts i .netrc
+
+// No deben existir ficheros .rhosts i .netrc, ya que almacenan contraseñas "#
+
+ls -la ~root/.rhosts
+ls -ld  ~root/.netrc
+
+// Si no existe ~root/.rhosts entonces ejecutar:
+ls -la /.rhosts
+
+/* CONTESTAR YES */ : " Si no existen ficheros .rhostse y .netrc
++-------------------------------------------------------------------------------------+
+---E.1.8.16.4 System Settings
+"log files access
+
+// Los ficheros del LOG, no deben tener permisos de escritura para other y el owner sea privilegiado
+
+ls -la /var/log/
+
+/* CONTESTAR YES */ : " Si los ficheros en '/var/log/', no tiene permisos de W a OTHER
++-------------------------------------------------------------------------------------+ 
+---E.1.5.18.2 Network Settings
+"Directories that may contain confidential files 
+
+---E.1.5.18.1 Network Settings	
+"/etc/exports
+
+// Si se permite que NFS esté activo y se permite este método, el cliente debe proporcionar una lista de directorios/servidore,   exportados donde se permiten datos confidenciales/sensibles.
+
+lssrc -s nfsd
+
+//Si sale activo, comprobar lo siguiente::
+grep -v "^[[:space:]]*#" /etc/exports | egrep -v "sec=dh|sec=krb5|secure"
+
+// no debería devolver nada. Si se devuelve alguna exportación, compararlas con la lista proporcionada por el cliente. 
+// Si alguno de los directorios/servidores listados está presente.
+
+/* CONTESTAR YES  */ : " Si /etc/exports esta vacio, o tenga datos con restrinciones."
+
+/* CONTESTAR NO   */ : " File /etc/exports has invalid line: /ptfs -public,sec=sys:krb5p:krb5i:krb5:dh,rw
+		       " File /etc/exports has invalid line: /temporal -sec=sys:krb5p:krb5i:krb5:dh,rw
+
+/* CONTESTAR N/A  */ : " Si sale inoperative"
+/* N/A */              " the NFS serial is inoperative 
++-------------------------------------------------------------------------------------+
+---E.1.5.18.3 Network Settings
+---E.1.5.18.4 Network Settings
+---E.1.5.18.5 Network Settings
+
+Es igual a la pregunta ---E.1.5.18.1, donde si el fichero esta vacio estas preguntas no aplican o directamente conestar YES.
+
++-------------------------------------------------------------------------------------+
+---E.1.5.22.2 Network Settings	
+"rlogin
+
+// Entry in /etc/inetd.conf must be removed or disabled
+
+egrep -i "rlogin" /etc/inetd.conf
+
+/* CONTESTAR YES  */ : " Si el resultado sale comentado (#) o esta vacio, o son redes seguras"
+
+/* CONTESTAR NO   */ : " The entry is not removed or disabled : entry rlogin
++-------------------------------------------------------------------------------------+
+---E.1.5.22.3 Network Settings	
+"rsh
+
+// Entry in /etc/inetd.conf must be removed or disabled
+
+egrep -i "rsh" /etc/inetd.conf
+
+/* CONTESTAR YES  */ : " Si el resultado sale comentado (#) o esta vacio, o son redes seguras"
+
+/* CONTESTAR NO   */ : " The entry is not removed or disabled : entry rsh
++-------------------------------------------------------------------------------------+

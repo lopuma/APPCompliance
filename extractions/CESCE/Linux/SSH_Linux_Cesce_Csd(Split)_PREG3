@@ -1,0 +1,226 @@
+////////////////////////////////////////////////////////////////////////////////////////////
+SSH LINUX CESCE CSD(split) - Issue REF : 742474 / PRE 13
+/+-------------------------------------------------------------------------------------+
+---AV.1.1.1 Password Requirements	
+"PermitEmptyPasswords 
+
+cat /etc/ssh/sshd_config | grep -i PermitEmptypassword
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/PermitEmptyPasswords
+
+/*  CONTESTAR YES */ : "Si PermitEmptyPasswords es NO"
+/* CONTESTAR NO  */ : "Si PermitEmptyPasswords es diferente a NO"
+/* CONTESTAR N/A */ : ""
++-------------------------------------------------------------------------------------+
+---AV.1.1.5 Password Requirements	
+"Private Key Passphrases
+// Nos habla de la caracteristicas de la Passphrases
+// Las frases de contraseña deben tener un número mínimo de 15 caracteres. Todas las demás reglas de contraseña son aplicables.
++-------------------------------------------------------------------------------------+
+---AV.1.1.6 Password Requirements	
+"Restrict Private Keys access using  "from=" parameter on Public Keys.
+
+// Nos habla de los valores adecuados que debe tener un FROM=
+
+/*
+La entrada "authorized_keys" (o archivo configurado equivalente) del usuario para una clave pública debe contener el parámetro "from =" con los valores adecuados.
+
+"*" o "*. *. *. *" o "0/0" o "0.0.0.0/0" son valores prohibidos en el parámetro "from =", ya que permiten el acceso sin restricciones de todos/todos los hosts.
+*/
+
+---AV.1.1.7 Password Requirements	
+"Private Key Passphrases - security administrative and system authority
+
+// Nos habla de que la clave privada(id_rsa), puede no tener un passphrase, siempre que la clave_publica(authorized_keys), tenga un FROM.
+
+/*
+Las claves publicas que se utilizan para obtener acceso a los ID que tienen autorización administrativa o del sistema de seguridad deben ser accesibles únicamente por los usuarios que tengan autorización administrativa o del sistema. 
+
+Cualquier archivo authorized_keys o authorized_keys2 que otorgue acceso a un ID que tenga autorización administrativa o del sistema de seguridad debe limitar el acceso sólo de hosts específicos especificando la opción "from" con el valor adecuado.
+*/
+
+ls -la /home/*/.ssh/* | grep -i authorized_keys
+
+"*/
+// En el caso de existir ficheros authorized_keys o authorized_keys2  ,hay que realizar un cat de los ficheros  y ver que tiene entradas del estilo:
+
+'from=*HOSTNAME*' // Esto se supone que es para limitar el acceso sólo desde sistemas principales específicos.
+
+// El siguiente comando saca, por cada fichero authorized_keys y authorized_keys2, aquellos que no tengan un FROM y los saca directo para poner NO en la extracion.
+
+find /home/*/.ssh -name authorized_keys|while read kfil; do cat $kfil|grep -vEe '^from=|^$'|awk -v var=$kfil '{print "SSH authorized_keys file: " var "; Invalid from section: *º or *.*.*.* or 0/0 or 0.0.0.0/0.  or empty are forbidden values in the `from=` parameter"}'; done
+
+find /home/*/.ssh -name authorized_keys2|while read kfil; do cat $kfil|grep -vEe '^from=|^$'|awk -v var=$kfil '{print "SSH authorized_keys file: " var "; Invalid from section: *º or *.*.*.* or 0/0 or 0.0.0.0/0.  or empty are forbidden values in the `from=` parameter"}'; done
+
+## NOTA
+// SI HAY ARCHIVOS authorized_keys CON OWNER HUERFANOS, SE PUEDE COMPROBAR QUE NO EXISTE EL OWNER Y SE PUEDEN BORRAR (" en la DESVIACION ")
+
+
+/* CONTESTAR YES */ : " Si los archivos authorized_keys son accesibles solo al owner del archivo y debe contener un FROM"
+
+/* CONTESTAR NO  */ : " SSH authorized_keys file: $file_authorized_keys; Invalid from section: *º or *.*.*.* or 0/0 or 0.0.0.0/0.  or empty are forbidden values in the `from=` parameter
++-------------------------------------------------------------------------------------+
+---AV.1.2.2 Logging 	"QuietMode"
+
+"Specifies that only fatal errors should be logged.
+(F-Secure/SSH Communications Only - OS: Unix, Linux)"
+
+#"N/A OpenSSH"
+/+-------------------------------------------------------------------------------------+			   
+/* POLITICA SSH - Linux */ 
+
+---AV.1.2.4 Logging
+Retain Log Files = 90 days
+
+ "Para la rotacion de SSH se revisa 3 cosas.
+ 1.- La rotacion que debe ser 90 dias, en cualqueira de los 3 sistemas de rotado.
+ 2.- Rotacion de fichero en sistemas Linux en politica SSH
+ 3.- Revisar que los ficheros de segurida debe estar rotando a 90 dias.
+
+ 
+ #COMPROBACIONES
+
+➡ 1. - "La rotacion que debe ser 90 dias."#
+ //Saber que sistema de rotado utiliza.
+
+# ➡ /* si no funciona mirar --> */"Logrotate" <--#
+/usr/util/seguridad/logkeeper -s
+
+# ➡ /* si no funciona mirar --> */"sinLOGKEEPE & sinLOGROTATE" <--#
+cat /etc/logrotate.conf
+
+# ➡ /*--> sinLOGKEEPE & sinLOGROTATE <--*/#
+cat /usr/local/bin/tareas/rotalogs.ksh | grep -i /var/adm
+
+➡ 2.- "Rotacion de fichero en sistemas Aix."#
+ //Saber que SO estamos revisando "dependeran los ficheros de seguridad", ya sea Linux o Aix
+
+ |*******************************************|
+ |	    - OpenSSH / Linux -              |  
+ |-------------------------------------------|
+ |      "Fichero de configuracion "          |
+ |	 /etc/rsyslog.conf                   |
+ |	                                     |
+ |      "Ficheros de rotacion para SSH"      |
+ |	 /var/log/messages                   |
+ |	 /var/log/secure                     |
+ |                                           |
+ |*******************************************|
+
+➡ 3.- "Revisar que los ficheros de segurida deben estar rotando a 90 dias y configurados."
+#//Configuracion
+cat /etc/rsyslog.conf |grep -v "#" |egrep -i "messages|secure"
+  //debe salir algo como  auth.info /var/adm/messages 
+  //*.info;mail.none;authpriv.none;cron.none                /var/log/messages
+  //authpriv.*                                              /var/log/secure
+
+#//Rotacion
+"El fichero de sudo.log, debe estar implementado en el sistema de rotado".
+(/* ya sea --> logrotate.conf, loogkeeper o sinLogrotate&sinLogkeeper <-- */).
+
+"Si la rotacion se basa en el sistema de rotado "Logrotate," deben existir los ficheros de seguridad dentro de la configuracion de logrotate.conf".
+
+cat /etc/logrotate.conf | egrep -i "messages|secure"
+
+"- Si no esta dentro de logrotate.conf, hay que revisar si esta incluido en."
+(// include /etc/logrotate.d )
+
+ls -la /etc/logrotate.d
+
+"Debe existir un fichero llamado "messages o secure"
+"Si no existe buscar si esta implementado en "/etc/logrotate.d/syslog"
+
+cat /etc/logrotate.d/syslog | egrep -i "messages|secure"
+
+/*  CONTESTAR YES*/: "Si esta rotando a 90 y existen los fichero "SECURE / MESSAGES", y configurado en la rotacion"
+/* CONTESTAR NO*/ : "Si no esta rotando a 90 dias o no existen los fichero "SECURE / MESSAGES", o no estan configurado en la rotacion.".
+
+ /*NO*/    "The rotation is based on logrotate, and is configured in 45 days, it is recommended 90 days in the configuration."
+/+-------------------------------------------------------------------------------------+
+---AV.1.4.4 System Settings
+MaxConnections
+
+#"N/A OpenSSH"
+/+-------------------------------------------------------------------------------------+
+---AV.1.7.1.2 Identify and Authenticate Users	
+PermitRootLogin forced-commands 
+PermitRootLogin without-password 
+PermitRootLogin yes
+
+#//Yes si PermitRootLogin = YES
+#//N/A PermitRootLogin = no"
+
+cat /etc/ssh/sshd_config | grep -i PermitRootLogin
+
+/*  CONTESTAR YES */ : "Si PermitRootLogin es YES"
+/* CONTESTAR N/A */ : "Si PermitRootLogin es NO"
+/+-------------------------------------------------------------------------------------+
+---AV.1.7.3.2 Identify and Authenticate Users
+---AV.1.7.3.3 Identify and Authenticate Users
+"Host-Based Authentication /etc/hosts.equiv file
+
+grep HostbasedAuthentication /etc/ssh/sshd_config
+
+#"Si sale comentado mirar el MAN y ver el default"
+
+man sshd_config
+/HostbasedAuthentication
+
+/*  CONTESTAR YES */ : "Si HostbasedAuthentication es NO"
+/* CONTESTAR NO*/ : "Si HostbasedAuthentication es distinto a NO"
+/+-------------------------------------------------------------------------------------+
+---AV.2.1.1.2 Data Transmission - All native encryption ciphers "HABLA del cifrado de claves compartidas.
+
+REF : "https://pages.github.ibm.com/ciso-psg/main/supplemental/acceptable_encryption.html"
+
+"AES (Advanced Encryption Standard)
+"La longitud de clve mínima para RSA que se debe utilizar es 128-bit"
+
+#"Se debe mirar que esten los cifrados aprobados o por defecto"#
+sshd -tT | grep ciphers
+grep Ciphers /etc/ssh/sshd_config
+
+#---Ejemplo:
+Ciphers *,aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+
+#"Si sale comentado mirar el MAN y ver el default"
+man sshd_config
+/Ciphers
+
+/*  CONTESTAR YES */ : "Si Ciphers tiene los algoritmo de cifrados aprobados"
+/* CONTESTAR NO*/ : "Si Ciphers no tiene los algoritmo de cifrados aprobados"
+/+-------------------------------------------------------------------------------------+
+---AV.2.1.1.3 Encryption "HABLA del algoritmo de cifrado DES, este algoritmo no se usa. 
+
+/* CONTESTAR N/A */ : "The DES algorithm is not used"
+/+-------------------------------------------------------------------------------------+
+
+---AV.2.1.1.4 Encryption //HABLA de la longitud mínima de bits para los algoritmos de clave pública
+"Data Transmission - Server host keys
+
+// Mínimo de 2048 bits para cifrados basados en RSA. Valor predeterminado para otros cifrados
+
+## Primero mostrar las claves publicas que existen (Only authorized_keys)
+
+ls -la /home/*/.ssh/* | grep -i authorized_keys
+
+## De las claves que nos salga debemos comprobar el length de la clave, esto se puede saber en el tamaño de caracteres.
+
+" 2048
+
+// ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDM5lr8p04H/mFEP5vZPfVZb5ZsrI/0WhJ+N/287nOvDOpIgi4RekUfPT6cxNzNizrUIDoIZY8na+VBD9zSlMVG//hSvFMSZYiZ8Zj35MJgNn5tnX9iAOKq3jmbLMIFtuX74RYO59AKUN0J0JBfrR1AK59tUpMteYmKtKzAuey+uVmYr5LmAN5RUW1fmkMMFp30rrzO6JKeMqYQPGaBBjaHTVPBL358KgX5hoOHoaeX1rO158hANEiJJeFw8zKsA/8KeHhjgpYSLlIp6OEvbTyQpUYhPcj3+S2rP3EL5W5P7sAtmkQjvj+v+/hQVraRa+R+/KlJjDXf63G5DJv7TqM46/TFrC/VbiUZ9BsrYSHf8CdTBWB5FtRJtAL1eSjxTK5+VZ8uBeXz5TtpNdCxiLKoHjDB4iTGpX3Lo8sDTsngrWyP9RbpPqY14gsNSIQbbgoXty4KC4sjC809Ph3D/FCxjSVFWcUAH11cdaybHe3dzNGGhZR9UImiljwNiD8Rdm8=
+
+" 1024
+
+// ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDM5lr8p04H/mFEP5vZPfVZb5ZsrI/0WhJ+N/287nOvDOpIgi4RekUfPT6cxNzNizrUIDoIZY8na+VBD9zSlMVG//VbiUZ9BsrYSHf8CdTBWB5FtRJtAL1eSjxTK5+VZ8uBeXz5TtpNdCxiLKoHjDB4iTGpX3Lo8sDTsngrWyP9RbpPqY14gsNSIQbbgoXty4KC4sjC809Ph3D/FCxjSVFWcUAH11cdaybHe3dzNGGhZR9UImiljwNiD8Rdm8=
+
+/* CONTESTAR YES */ : " Si las claves publicas, basadas en RSA tienen una longitud de 2048bits.
+
+/* CONTESTAR N/A */ : " No such file authorized_keys
+
+/* CONTESTAR NO */ : "  SSH authorized_keys file: $authorized_keys; Invalid public host key length: 1024   Key type: ssh-rsa..
+
++-------------------------------------------------------------------------------------+
