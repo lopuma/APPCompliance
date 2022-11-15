@@ -894,7 +894,7 @@
       "SO": "Linux"
     },
     {
-      "object": "/opt/IBM/ITMdepot/soft/",
+      "object": "/opt/IBM/ITMdepot/",
       "owner": "was",
       "tipo": "/F/",
       "ownerGroup": "*EBHCL1",
@@ -910,9 +910,34 @@
       "risk": "",
       "impact": "",
       "variable": [
-        "dirOPT=\"/opt/IBM/ITMdepot/soft/\""
+        "dirOPT=\"/opt/IBM/ITMdepot/\"",
+        "directory=\"/opt/IBM/ITMdepot/\""
       ],
       "SO": "Linux"
+    },
+    {
+      "object": "/opt/IBM/ITMdepot/PACKAGES/",
+      "owner": "root",
+      "tipo": "/F/",
+      "ownerGroup": "*EPUNIX",
+      "user": [
+        "------------------------------",
+        "AIX",
+        "------------------------------",
+        " LORENZO FUERTES RAMON",
+        " Lech Bartlomiej",
+        " David de Frutos Garcia"  
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL server"
+      ],
+      "risk": "",
+      "impact": "",
+      "variable": [
+        "dirOPT=\"/opt/IBM/ITMdepot/PACKAGES/\""
+      ],
+      "SO": "Aix"
     },
     {
       "object": "/opt/lotus/Data/",
@@ -1662,6 +1687,25 @@
       "impact": "GENERICO / OSR TMP / FT",
       "variable": [
         "Directorios, sub-directorios y ficheros, no se pueden editar permisos, sin authorizacion"
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/app/big/",
+      "owner": "bigUser",
+      "tipo": "/C/",
+      "ownerGroup": "ORANGE",
+      "user": [
+        "Customer"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "GENERICO / STICKY / CUSTOMER",
+      "impact": "GENERICO / STICKY / CUSTOMER",
+      "variable": [
+        ""
       ],
       "SO": "Linux"
     },

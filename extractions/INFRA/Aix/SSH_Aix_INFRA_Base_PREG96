@@ -144,12 +144,12 @@ AV.1.4.4 System Settings	"MaxConnections"
 #"N/A openSSH"#
 +-------------------------------------------------------------------------------------+
 AV.1.4.8 System Settings	"MaxAuthTries" = "100 or less"
-cat /etc/ssh/sshd_config | grep -i MaxStartups
+cat /etc/ssh/sshd_config | grep -i MaxAuthTries
 
 #"Si sale comentado mirar el MAN y ver el default"
 
 man sshd_config
-/MaxStartups
+/MaxAuthTries
 +-------------------------------------------------------------------------------------+
 AV.1.4.14 System Settings	AuthKbdInt.Retries
 

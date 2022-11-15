@@ -173,16 +173,36 @@
       "object": "PermitRootLogin",
       "owner": "root",
       "tipo": "/S/",
-      "ownerGroup": "",
+      "ownerGroup": "Ssitemas",
       "user": [
         ""
       ],
-      "code": "Null",
+      "code": "1-OK",
       "servers": [
-        ""
+        "ALL Servers"
       ],
-      "risk": "",
+      "risk": "Se corrige el PermitRootLogin a no, en todos los servidores de CTTI.",
       "impact": "",
+      "variable": [
+        "service=\"PermitRootLogin=no\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "vsftpd",
+      "owner": "root",
+      "tipo": "/S/",
+      "ownerGroup": "Sistemas",
+      "user": [
+        "Group sistemas",
+        "SM : ROGER GRAS PARRAMON"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "LSFTXST1"
+      ],
+      "risk": "GENERICO /  SERVICE VSFTPD / KYNDRYL",
+      "impact": "GENERICO /  SERVICE VSFTPD / KYNDRYL",
       "variable": [
         ""
       ],
@@ -434,6 +454,32 @@
       "impact": "",
       "variable": [
         "service=\"PermitRootLogin\""
+      ],
+      "SO": "Linux"
+    }
+  ],
+  "NUEVO": [
+    {
+      "object": "http",
+      "owner": "Customer",
+      "tipo": "/C/",
+      "ownerGroup": "Favico",
+      "user": [
+        "Grupo de soporte CESCE - Linux",
+        "GEMMA ESCAR APARICIO", 
+        "NINELA ELENA PAVEL MANCIU", 
+        "RAMON RUIZ GARCIA"
+      ],
+      "code": "2-DOC",
+      "servers": [
+        "serrver1",
+        "server2",
+        "server3"
+      ],
+      "risk": "GENERICO /  SERVICE VSFTPD / KYNDRYL",
+      "impact": "GENERICO /  SERVICE VSFTPD / KYNDRYL",
+      "variable": [
+        ""
       ],
       "SO": "Linux"
     }

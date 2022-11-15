@@ -5,7 +5,7 @@
         	"Password Requirements/Restrict Private Keys",
         	"Identify and Authenticate Users/Public Key Authentication",
         	"Identify and Authenticate Users/Public Key Label"
-        	
+            
         ],
         "keyword" : "AUTHORIZED_KEY / FROM",
         "script" : "include_authorized_keys.json",
@@ -40,7 +40,7 @@
         	"Protecting Resources-OSRs/OSR /USR Restrictions",
         	"Protecting Resources-OSRs/CRON Command Group Permissions"
         ],
-        "keyword" : "STICKY",
+        "keyword" : "STICKY / \/ETC / \/USR",
         "script" : "include_directory.json",
         "active" : "True"
     },
@@ -56,19 +56,12 @@
     {
         "nameButton" : "Service",
         "module" : [ 
-        	"Network Settings/Disable NFS server"
+        	"Network Settings/Disable NFS server",
+            "Network Settings/Ensure vsftpd is not enabled and active",
+            "MODULO1"
         ],
         "keyword" : "NFS",
         "script" : "include_service.json",
-        "active" : "True"    
-    },
-    {
-        "nameButton" : "Crop Text",
-        "module" : [ 
-        	"Password Requirements/Password MAX Age \\etc\\shadow" 
-        ],
-        "keyword" : null,
-        "script" : "recortar.sh",
         "active" : "True"    
     }
 ]

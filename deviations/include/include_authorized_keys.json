@@ -841,6 +841,26 @@
             "SO": "AIX"
         },
         {
+            "object": "/home/esy9cv3e/.ssh/authorized_keys",
+            "owner": "esy9cv3e",
+            "tipo": "/E/",
+            "ownerGroup": "Y9F3X1",
+            "user": [
+                "ALBERTO RODRIGUEZ TORO"
+            ],
+            "code": "1-OK",
+            "servers": [
+                "ALL servers"
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_authorized=\"/home/esy9cv3e/.ssh/authorized_keys\"",
+                "gecos=\"!!ES/E/Y9F3X1/PSS/GDD/ALBERTO RODRIGUEZ TORO11 ES-20200402-120!!\""
+            ],
+            "SO": "AIX"
+        },
+        {
             "object": "/home/ncosys/.ssh/authorized_keys",
             "owner": "ncosys",
             "tipo": "/F/",

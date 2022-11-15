@@ -341,6 +341,44 @@
                 "file_idrsa=\"/home/spinol/.ssh/id_rsa\""
             ],
             "SO": "Linux"
+        },
+        {
+            "object": "/home/oracle/.ssh/id_rsa",
+            "owner": "",
+            "tipo": "//",
+            "ownerGroup": "",
+            "user": [
+                ""
+            ],
+            "code": "",
+            "servers": [
+                ""
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_idrsa=\"/home/oracle/.ssh/id_rsa\""
+            ],
+            "SO": "Linux"
+        },
+        {
+            "object": "/postgresql/.ssh/id_rsa",
+            "owner": "",
+            "tipo": "//",
+            "ownerGroup": "",
+            "user": [
+                ""
+            ],
+            "code": "",
+            "servers": [
+                ""
+            ],
+            "risk": "",
+            "impact": "",
+            "variable": [
+                "file_idrsa=\"/home/oracle/.ssh/id_rsa\""
+            ],
+            "SO": "Linux"
         }
     ],
     "CTTI" :[
