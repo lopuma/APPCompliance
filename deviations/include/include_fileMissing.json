@@ -74,5 +74,34 @@
         ],
         "SO": "Linux"
       }
+    ],
+    "FT": [
+      {
+        "object": "/var/log/tallylog",
+        "owner": "root",
+        "tipo": "/F/",
+        "ownerGroup": "Sistemas",
+        "user": [
+          "----------------------------------",
+          "Soporte LINUX de FT Sigifi",
+          "----------------------------------",
+          "PABLO MOSCOSO SARABIA",
+          "FT-LINUX - Santiago Tirado Salvador",
+          "FT-LINUX - Antonio Gil López"
+        ],
+        "code": "1-OK",
+        "servers": [
+          "ALL Servers"
+        ],
+        "risk": "",
+        "impact": "",
+        "variable": [
+          "fileMissing=\"/var/log/tallylog\"",
+          "touch $fileMissing",
+          "chmod 0600 $fileMissing",
+          "chown root:root $fileMissing"
+        ],
+        "SO": "Linux"
+      }
     ]
 }

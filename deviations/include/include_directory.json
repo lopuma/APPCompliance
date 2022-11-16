@@ -1691,6 +1691,54 @@
       "SO": "Linux"
     },
     {
+      "object": "/home/tsm10007/",
+      "owner": "tsm10007",
+      "tipo": "/F/",
+      "ownerGroup": "*EAUTSM",
+      "user": [
+        "----------------------------------",
+        "Soporte LINUX de FT Sigifi",
+        "----------------------------------",
+        "PABLO MOSCOSO SARABIA",
+        "FT-LINUX - Santiago Tirado Salvador",
+        "FT-LINUX - Antonio Gil López"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "Cuentas /home/, ya sea S/F o E/I/K se pueden corregir permisos",
+      "impact": "",
+      "variable": [
+        "directory=\"/home/tsm10007/\""
+      ],
+      "SO": "Linux"
+    },
+    {
+      "object": "/home/tsm10008/",
+      "owner": "tsm10007",
+      "tipo": "/F/",
+      "ownerGroup": "*EAUTSM",
+      "user": [
+        "----------------------------------",
+        "Soporte LINUX de FT Sigifi",
+        "----------------------------------",
+        "PABLO MOSCOSO SARABIA",
+        "FT-LINUX - Santiago Tirado Salvador",
+        "FT-LINUX - Antonio Gil López"
+      ],
+      "code": "1-OK",
+      "servers": [
+        "ALL Servers"
+      ],
+      "risk": "Cuentas /home/, ya sea S/F o E/I/K se pueden corregir permisos",
+      "impact": "",
+      "variable": [
+        "directory=\"/home/tsm10008/\""
+      ],
+      "SO": "Linux"
+    },
+    {
       "object": "/app/big/",
       "owner": "bigUser",
       "tipo": "/C/",
